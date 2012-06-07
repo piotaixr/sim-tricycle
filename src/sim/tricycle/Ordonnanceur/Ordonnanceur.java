@@ -3,12 +3,12 @@
  * and open the template in the editor.
  */
 
-package sim.tricycle;
+package sim.tricycle.Ordonnanceur;
 
 /**
  *
- * @author Thomas Nds nds.thomas@gmail.com
+ * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
  */
-public abstract class Team {
-    
+public class Ordonnanceur {
+
 }
