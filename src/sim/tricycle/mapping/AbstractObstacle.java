@@ -14,5 +14,9 @@ public class AbstractObstacle implements PossedeCaseInterface{
     public Case getPosition() {
        return pos;
     }
+    
+    public void supprimerObstacle(){
+        pos.setObstacle(null);
+    }
 
 }
