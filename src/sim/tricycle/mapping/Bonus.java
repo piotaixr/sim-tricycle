@@ -1,8 +1,6 @@
 package sim.tricycle.mapping;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
  */
 
 /**
@@ -10,5 +8,9 @@ package sim.tricycle.mapping;
  * @author Thomas Nds nds.thomas@gmail.com
  */
 public class Bonus extends AbstractObjet{
-
+    
+    public Bonus (Case pos) {
+        this.pos=pos;
+        pos.setItem(this);
+    }
 }

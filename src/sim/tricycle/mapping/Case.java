@@ -2,6 +2,7 @@
  */
 package sim.tricycle.mapping;
 
+import sim.tricycle.Robot;
 import sim.tricycle.mapping.mapException.CaseMultipleObjetException;
 import sim.tricycle.mapping.mapException.CaseMultipleObstacleException;
 
@@ -13,13 +14,13 @@ import sim.tricycle.mapping.mapException.CaseMultipleObstacleException;
  * Peut porter un objet
  */
 public class Case {
-    private Mur obs;
-    private AbstractObjet obj;
+    private AbstractObstacle obstacle;
+    private AbstractObjet objet;
 
     
     public Case (){
-        obs=null;
-        obj=null;
+        obstacle=null;
+        objet=null;
     }
     
     /*
@@ -27,7 +28,7 @@ public class Case {
      * @return 0 si absence d'objet.
      */
     public boolean hasItem() {
-        return (obj != null);
+        return (objet != null);
     }
     
      /*
@@ -35,7 +36,7 @@ public class Case {
      * @return 0 si absence d'objet.
      */
     public boolean hasObstacle() {
-        return (obs != null);
+        return (obstacle != null);
     }
 
     /*
@@ -46,7 +47,7 @@ public class Case {
         if (this.hasItem()) {
             throw new CaseMultipleObjetException("Superpostion d'objets.");
         } else {
-            this.obj = ob;
+            this.objet = ob;
         }
     }
     
@@ -54,13 +55,14 @@ public class Case {
      * setItem place un objet sur la case. @param: l'objet à placer.
      * @param l'objet à placer.
      */
-    public void setObstacle(Mur obst) {
+    public void setObstacle(AbstractObstacle obst) {
         if (this.hasObstacle()) {
             throw new CaseMultipleObstacleException("Superpostion d'obstacles.");
         } else {
-            this.obs = obst;
+            this.obstacle = obst;
         }
     }
+
     
     
 }

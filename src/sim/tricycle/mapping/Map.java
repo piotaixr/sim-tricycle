@@ -13,18 +13,18 @@ public class Map implements MapInterface {
     public Map(int tailleX, int tailleY) {
         carte = new Case[tailleX][tailleY];
         int i, j;
-
-        //parcours du tableau pour initialiser les cases.
         
-    }
-    
-    public void initMap (){
-        int i, j;
+        this.tailleX=tailleX;
+        this.tailleY=tailleY;
+        
+        //parcours du tableau pour initialiser les cases.
         for (i = 1; i <= tailleX; i++) {
             for (j = 1; j <= tailleY; j++) {
                 carte[i][j] = new Case();
             }
         }
     }
+    
+  
     
 }
