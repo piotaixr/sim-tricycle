@@ -1,13 +1,17 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
  */
 package sim.tricycle.mapping;
 
 /**
  *
  * @author augustin
+ * @author Thomas Nds nds.thomas@gmail.com
  */
-public class Obstacle {
-    
+public class Obstacle implements PossedeCase{
+        private Case pos;
+        
+        public Obstacle (Case pos){
+            this.pos=pos;
+            pos.setObstacle(this);
+        }
 }

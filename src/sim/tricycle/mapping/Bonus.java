@@ -9,6 +9,6 @@ package sim.tricycle.mapping;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class Bonus extends Objet{
+public class Bonus extends AbstractObjet{
 
 }

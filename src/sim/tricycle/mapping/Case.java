@@ -2,6 +2,9 @@
  */
 package sim.tricycle.mapping;
 
+import sim.tricycle.mapping.mapException.CaseMultipleObjetException;
+import sim.tricycle.mapping.mapException.CaseMultipleObstacleException;
+
 /**
  *
  * @author Thomas Nds nds.thomas@gmail.com
@@ -11,7 +14,7 @@ package sim.tricycle.mapping;
  */
 public class Case {
     private Obstacle obs;
-    private Objet obj;
+    private AbstractObjet obj;
 
     
     public Case (){
@@ -39,11 +42,23 @@ public class Case {
      * setItem place un objet sur la case. @param: l'objet à placer.
      * @param l'objet à placer.
      */
-    public void setItem(Objet ob) throws CaseMultipleObjet {
+    public void setItem(AbstractObjet ob) {
         if (this.hasItem()) {
-            throw new CaseMultipleObjet("Objet placer sur une case objet.");
+            throw new CaseMultipleObjetException("Superpostion d'objets.");
         } else {
             this.obj = ob;
+        }
+    }
+    
+     /*
+     * setItem place un objet sur la case. @param: l'objet à placer.
+     * @param l'objet à placer.
+     */
+    public void setObstacle(Obstacle obst) {
+        if (this.hasObstacle()) {
+            throw new CaseMultipleObstacleException("Superpostion d'obstacles.");
+        } else {
+            this.obs = obst;
         }
     }
     

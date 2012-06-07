@@ -7,8 +7,8 @@ package sim.tricycle.mapping;
 
 /**
  *
- * @author Thomas Nds nds.thomas@gmail.com
+ * @author Thomas nds <nds.thomas@gmail.com>
  */
-public abstract class Objet {
+public interface PossedeCase {
 
 }
