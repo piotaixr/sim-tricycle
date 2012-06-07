@@ -3,15 +3,12 @@
  * and open the template in the editor.
  */
 
-package sim.tricycle;
-
-import sim.tricycle.mapping.Map;
+package sim.tricycle.mapping;
 
 /**
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class Team {
-private Map carte;
+public class Case {
 
 }

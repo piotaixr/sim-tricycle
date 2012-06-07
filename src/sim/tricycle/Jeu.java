@@ -5,7 +5,7 @@
 
 package sim.tricycle;
 
-import mapping.Map;
+import sim.tricycle.mapping.Map;
 
 /**
  *

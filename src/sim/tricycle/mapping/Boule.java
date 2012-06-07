@@ -3,13 +3,12 @@
  * and open the template in the editor.
  */
 
-package mapping;
+package sim.tricycle.mapping;
 
 /**
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class Map {
-    private Case[][] carte;
-    
+public class Boule extends Objet{
+
 }

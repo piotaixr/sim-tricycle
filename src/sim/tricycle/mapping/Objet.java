@@ -2,12 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sim.tricycle;
+
+package sim.tricycle.mapping;
 
 /**
  *
- * @author augustin
+ * @author Thomas Nds nds.thomas@gmail.com
  */
-public class Obstacle {
-    
+public abstract class Objet {
+
 }
