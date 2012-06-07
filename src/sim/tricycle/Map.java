@@ -1,14 +1,14 @@
-package sim.tricycle;
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
+package sim.tricycle;
+
 /**
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class jeu {
+public class Map {
 
 }
