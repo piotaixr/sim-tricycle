@@ -1,6 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
  */
 package sim.tricycle.mapping;
 
@@ -8,7 +6,7 @@ package sim.tricycle.mapping;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public abstract class AbstractObjet implements PossedeCase{
+public abstract class AbstractObjet implements PossedeCaseInterface{
 
     protected Case pos;
 

@@ -1,14 +1,15 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+
  */
 
 package sim.tricycle;
+
+import sim.tricycle.mapping.AbstractObstacle;
 
 /**
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class Robot {
+public class Robot extends AbstractObstacle {
 
 }

@@ -13,7 +13,7 @@ import sim.tricycle.mapping.mapException.CaseMultipleObstacleException;
  * Peut porter un objet
  */
 public class Case {
-    private Obstacle obs;
+    private Mur obs;
     private AbstractObjet obj;
 
     
@@ -54,7 +54,7 @@ public class Case {
      * setItem place un objet sur la case. @param: l'objet à placer.
      * @param l'objet à placer.
      */
-    public void setObstacle(Obstacle obst) {
+    public void setObstacle(Mur obst) {
         if (this.hasObstacle()) {
             throw new CaseMultipleObstacleException("Superpostion d'obstacles.");
         } else {
