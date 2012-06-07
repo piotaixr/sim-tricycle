@@ -5,10 +5,13 @@
 
 package sim.tricycle;
 
+import mapping.Map;
+
 /**
  *
  * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
  */
 public class Jeu {
+private Map carte;
 
 }

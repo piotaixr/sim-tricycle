@@ -10,5 +10,6 @@ package mapping;
  * @author Thomas Nds nds.thomas@gmail.com
  */
 public class Map {
-
+    private Case[][] carte;
+    
 }
