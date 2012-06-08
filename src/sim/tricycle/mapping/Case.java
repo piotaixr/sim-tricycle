@@ -25,11 +25,11 @@ public class Case {
         objet = null;
     }
 
-    int getX() {
+    public int getX() {
         return x;
     }
 
-    int getY() {
+    public int getY() {
         return y;
     }
 
