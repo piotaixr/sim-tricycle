@@ -1,24 +1,18 @@
-/*fichier automate*/
-
-type robot{
-	tantque partie{
+robot{
+	while partie{
 		etat;
 		scan(vision);
 		interroger_carte;
-		cas_etat{
-			quand porteur alors seq{aller_a(base);
-						cas_case{quand base alors seq{
-									       avancer;
-									       deposer;
-									  }	
-							}
+		switch{
+			quand {etat==porteur alors switch{quand case==base alors deposer;
+							quand case==autre alors aller_a(base);
 					    }
-			quand normal alors seq{aller_a(piece);
-					       cas_case{quand piece alors seq{avancer;
-									      ramasser;
-									     }
-						       }
-					   }
+			      }
+			quand {etat==normal alors switch{quand case==piece alors ramasser;
+							quand case==autre aller_a(piece);
+				            }
+				}
 		}
 	}
 }
+fin

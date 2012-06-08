@@ -3,7 +3,6 @@
 package sim.tricycle.mapping;
 
 import java.util.HashSet;
-import java.util.Set;
 import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
 
 /**
@@ -15,16 +14,16 @@ public class Carte implements CarteInterface {
     private int tailleX, tailleY;
     private Case[][] carte;
 
-    public Carte(int X, int Y) {
-        carte = new Case[X][Y];
+    public Carte(int cx, int cy) {
+        carte = new Case[cx][cy];
         int i, j;
 
-        this.tailleX = X;
-        this.tailleY = Y;
+        this.tailleX = cx;
+        this.tailleY = cy;
 
         //parcours du tableau pour initialiser les cases.
-        for (i = 1; i <= tailleX; i++) {
-            for (j = 1; j <= tailleY; j++) {
+        for (i = 0; i < tailleX; i++) {
+            for (j = 0; j < tailleY; j++) {
                 carte[i][j] = new Case(i, j);
             }
         }
@@ -43,8 +42,8 @@ public class Carte implements CarteInterface {
         int i, j;
 
         //parcours du tableau pour initialiser les cases.
-        for (i = 1; i <= tailleX; i++) {
-            for (j = 1; j <= tailleY; j++) {
+        for (i = 0; i < tailleX; i++) {
+            for (j = 0; j < tailleY; j++) {
                 carte[i][j] = new Case(tab[i][j], i, j);
             }
         }
@@ -68,11 +67,9 @@ public class Carte implements CarteInterface {
             rayon--;
         }
         // Traitement des cases selectionnées:
-      //  for (int i = 0; i < liste.size(); ++i) {
-            
-        //}
-
-
+        for (Case x: liste) {
+            this.getCase(x.getX(), x.getY()).copy(x);
+        }
     }
 
     @Override
@@ -108,11 +105,13 @@ public class Carte implements CarteInterface {
         }
         return liste;
     }
-
+    
+    @Override
     public int getHauteur() {
         return this.tailleY;
     }
-
+    
+    @Override
     public int getLargeur() {
         return this.tailleX;
     }

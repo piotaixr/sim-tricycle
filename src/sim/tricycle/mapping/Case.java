@@ -18,9 +18,9 @@ public class Case {
     private int x;
     private int y;
 
-    public Case(int X, int Y) {
-        this.x = X;
-        this.y = Y;
+    public Case(int cx, int cy) {
+        this.x = cx;
+        this.y = cy;
         obstacle = null;
         objet = null;
     }
@@ -37,9 +37,9 @@ public class Case {
      * boule. 'B': case avec un bonus. 'P': case avec une pièce. 'X': case
      * obstacle.
      */
-    public Case(char id, int X, int Y) {
-        this.x = X;
-        this.y = Y;
+    public Case(char id, int cx, int cy) {
+        this.x = cx;
+        this.y = cy;
         switch (id) {
             case 'X':
                 obstacle = new Mur(this);

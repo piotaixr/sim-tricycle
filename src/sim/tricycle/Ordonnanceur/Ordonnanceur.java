@@ -157,8 +157,11 @@ public class Ordonnanceur implements OrdonnanceurInterface {
     }
 
     @Override
-    public void setTime(int time) {
+    public void setTime(long time) {
         period = time;
+        timer.cancel();
+        timer = new Timer();
+        timer.schedule(new TaskAction(), 0, period);
     }
 
     @Override

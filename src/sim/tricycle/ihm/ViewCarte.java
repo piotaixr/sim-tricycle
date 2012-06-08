@@ -22,6 +22,7 @@ public class ViewCarte extends javax.swing.JPanel {
      */
     public ViewCarte(CarteInterface carte) {
         initComponents();
+        this.carte = carte;
     }
 
     @Override

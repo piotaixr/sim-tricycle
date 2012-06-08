@@ -31,7 +31,7 @@ public interface OrdonnanceurInterface {
     /*
      * Met un timer pour l'ordonnanceur
      */
-    public void setTime(int time);
+    public void setTime(long time);
     /*
      * Choisi un timer pour l'ordonnanceur
      */
