@@ -2,17 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sim.tricycle.xmlparser;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Iterator;
+import java.util.List;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+import sim.tricycle.robot.Automate;
+import sim.tricycle.robot.Etat;
 
 /**
  *
@@ -20,22 +19,48 @@ import org.jdom2.input.SAXBuilder;
  */
 public class RobotParser {
 
-    
-    public Object parse(File f){
-        Object retour = null;
+    public Automate parse(File f) {
+        Automate automate = new Automate();
         try {
             SAXBuilder builder = new SAXBuilder();
             Document document = builder.build(f);
-            
-            Element e = document.getRootElement();
-            
-            
-            
-        } catch (JDOMException ex) {
-            Logger.getLogger(RobotParser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RobotParser.class.getName()).log(Level.SEVERE, null, ex);
+
+            Element racine = document.getRootElement();
+
+            parseRobot(racine, automate);
+
+        } catch (Exception ex) {
+            throw new RuntimeException("Parse error :(", ex);
         }
-        return retour;
+        return automate;
+    }
+
+    private void parseRobot(Element racine, Automate automate) {
+        List<Element> etats = racine.getChildren("etat");
+        createEtats(etats, automate);
+        
+        Iterator<Element> it = etats.iterator();
+        while(it.hasNext()){
+            Element elementEtat = it.next();
+            int id = Integer.parseInt(elementEtat.getAttributeValue("id"));
+            Etat e = automate.getEtat(id);
+            addTransitions(e, elementEtat, automate);
+        }
+        
+    }
+
+    private void createEtats(List<Element> etats, Automate automate) {
+        Iterator<Element> it = etats.iterator();
+        while(it.hasNext()){
+            Element e = it.next();
+            int id = Integer.parseInt(e.getAttributeValue("id"));
+            Etat etat = new Etat(id);
+            automate.addEtat(etat);
+        }
+    }
+
+    private void addTransitions(Etat e, Element elementEtat, Automate automate) {
+        List<Element> transitions = elementEtat.getChildren("transition");
+        
     }
 }

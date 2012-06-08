@@ -2,8 +2,9 @@
  */
 package sim.tricycle.robot;
 
-import sim.tricycle.robot.action.Action;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import sim.tricycle.robot.action.Action;
 
 /**
  *
@@ -14,10 +15,10 @@ public abstract class Robot {
     protected Point position;
     protected Sens direction;
     protected int portee;
-    protected ArrayList<Action> fileActions;
-    protected ArrayList<EventType> ordreTest;
+    protected ArrayDeque<Action> fileActions = new ArrayDeque();
+    protected ArrayList<EventType> ordreTest = new ArrayList();
     protected Etat etatCourant;
-    
+
     public Robot() {
     }
 
@@ -45,20 +46,28 @@ public abstract class Robot {
         this.portee = newPortee;
     }
 
-    public void setFileAction(ArrayList<Action> newFileActions) {
-        this.fileActions = newFileActions;
-    }
-    
-    public Etat getEtat(){
-        return this.etatCourant;
-    }
-    
-    public void setEtat(Etat newEtat){
-        this.etatCourant=newEtat;
+    public ArrayDeque<Action> getFileActions() {
+        return fileActions;
     }
 
-    public ArrayList<Action> setFileAction() {
-        return this.fileActions;
+    public Etat getEtat() {
+        return this.etatCourant;
+    }
+
+    public void setEtat(Etat newEtat) {
+        this.etatCourant = newEtat;
+    }
+
+    public void setFileActions(ArrayDeque<Action> fileActions) {
+        this.fileActions = fileActions;
+    }
+
+    public ArrayList<EventType> getOrdreTest() {
+        return ordreTest;
+    }
+
+    public void setOrdreTest(ArrayList<EventType> ordreTest) {
+        this.ordreTest = ordreTest;
     }
 
     public Evenement scan() {
@@ -85,12 +94,11 @@ public abstract class Robot {
         this.fileActions.get(0).executer(this);
         this.fileActions.remove(0);
     }
-    
-    public void changerEtat(Evenement evt){
-         
+
+    public void changerEtat(Evenement evt) {
     }
-    
-    public void agir(){
+
+    public void agir() {
         changerEtat(scan());
         depilerActionCourante();
     }

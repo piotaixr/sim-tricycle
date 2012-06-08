@@ -4,32 +4,37 @@
  */
 package sim.tricycle.robot;
 
-import sim.tricycle.robot.action.Action;
 import java.util.ArrayList;
+import sim.tricycle.robot.action.Action;
 
 /**
  *
  * @author Adri
  */
 public class Transition {
-    
-    private Etat etatDest;
-    private ArrayList<Action> listeAction;
-    
-    public Transition(){
-        
+    private Etat etatDepart;
+    private Etat etatDestination;
+    private ArrayList<Action> listeAction = new ArrayList();
+
+    public Transition(Etat depart, Etat destination) {
+        this.etatDepart = depart;
+        this.etatDestination = destination;
     }
-    
-    public void enfilerAllActions(Robot bot){
-        bot.setFileAction().addAll(listeAction);
+
+    /**
+     *
+     * @param bot
+     */
+    public void enfilerAllActions(Robot bot) {
+        bot.getFileActions().addAll(listeAction);
     }
-    
-    public void addAction(Action act){
+
+    public void addAction(Action act) {
         this.listeAction.add(act);
     }
     
     public void effectuerTransition(Robot bot){
         enfilerAllActions(bot);
-        bot.setEtat(this.etatDest);
+        bot.setEtat(this.etatDestination);
     }
 }
