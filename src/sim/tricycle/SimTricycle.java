@@ -5,6 +5,7 @@
 package sim.tricycle;
 
 import sim.tricycle.Ordonnanceur.TestOrdonnanceur;
+import sim.tricycle.mapping.TestMap;
 
 /**
  *
@@ -18,7 +19,9 @@ public class SimTricycle {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        TestOrdonnanceur test = new TestOrdonnanceur();
-        test.goTest();
+       // TestOrdonnanceur test = new TestOrdonnanceur();
+      //  test.goTest();
+     //   TestMap test2 = new TestMap();
+       // test2.startTest();
     }
 }
