@@ -3,7 +3,6 @@
 package sim.tricycle.mapping;
 
 import java.util.HashSet;
-import java.util.Set;
 import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
 
 /**
@@ -106,11 +105,13 @@ public class Map implements MapInterface {
         }
         return liste;
     }
-
+    
+    @Override
     public int getHauteur() {
         return this.tailleY;
     }
-
+    
+    @Override
     public int getLargeur() {
         return this.tailleX;
     }
