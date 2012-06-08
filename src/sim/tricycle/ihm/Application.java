@@ -6,6 +6,7 @@ package sim.tricycle.ihm;
 
 import java.awt.FlowLayout;
 import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.TestMap;
 
 
 /**
@@ -19,11 +20,15 @@ public class Application extends javax.swing.JFrame {
      */
     public Application() {
         
+        TestMap test2 = new TestMap();
+        test2.startTest();
+       Carte e= test2.getCarte();
+        
         setLocationRelativeTo(null);
-        initComponents();setSize(500, 500);
+        initComponents();setSize(700, 700);
         this.setLayout(new FlowLayout());
         Carte c = new Carte(25,25);
-        ViewCarte vc = new ViewCarte(c);
+        ViewCarte vc = new ViewCarte(e);
         this.add(vc);
     }
 

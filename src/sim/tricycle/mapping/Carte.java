@@ -60,11 +60,15 @@ public class Carte implements CarteInterface {
     @Override
     public void actualiserCarte(Carte source, int rayon, Case pos) {
         HashSet<Case> liste = new HashSet<Case>();
-        
-        liste.add(source.getCase(pos.getX(), pos.getY()));
+
         // Capture de toute les cases dans le rayon souhaité.
+        liste.add(source.getCase(pos.getX(), pos.getY()));
         while (rayon > 0) {
-            casesVoisines(source,source.getCase(pos.getX(), pos.getY()), liste);
+          HashSet<Case>  newliste= (HashSet<Case>) liste.clone();
+          
+            for (Case x : newliste) {
+                casesVoisines(source, source.getCase(x.getX(), x.getY()), liste);
+            }
             rayon--;
         }
         System.out.print("liste crée    ");
@@ -76,7 +80,7 @@ public class Carte implements CarteInterface {
     }
 
     @Override
-    public HashSet<Case> casesVoisines(Carte source,Case pos, HashSet<Case> liste) {
+    public void casesVoisines(Carte source, Case pos, HashSet<Case> liste) {
 
         // Si case en bordure verticale droite:
         if (this.tailleX > pos.getX()) {
@@ -106,7 +110,6 @@ public class Carte implements CarteInterface {
                 liste.add(bas);
             }
         }
-        return liste;
     }
 
     @Override
