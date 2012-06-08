@@ -8,7 +8,8 @@ package sim.tricycle.robot.action;
  *
  * @author Adri
  */
-public abstract class Action implements ActionInterface{
-    
-    public Action(){}
+public abstract class Action implements ActionInterface {
+
+    public Action() {
+    }
 }

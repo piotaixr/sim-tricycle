@@ -12,27 +12,27 @@ import sim.tricycle.robot.Sens;
  * @author Adri
  */
 public class Tourner {
-    
+
     private Sens direction;
-    
-    public Tourner(){
-        direction=Sens.NORD;
+
+    public Tourner() {
+        direction = Sens.NORD;
     }
-    
-    public Tourner(Sens dir){
-        this.direction=dir;
+
+    public Tourner(Sens dir) {
+        this.direction = dir;
     }
-    
-    public void executer(Robot bot){
-        
-       bot.setDirection(this.direction);
+
+    public void executer(Robot bot) {
+
+        bot.setDirection(this.direction);
     }
-    
-    public void setDirection(Sens newDir){
-        this.direction=newDir;
+
+    public void setDirection(Sens newDir) {
+        this.direction = newDir;
     }
-    
-    public Sens setDirection(){
+
+    public Sens setDirection() {
         return this.direction;
     }
 }
