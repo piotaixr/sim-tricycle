@@ -5,8 +5,11 @@
 package sim.tricycle.ihm;
 
 import java.awt.FlowLayout;
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import sim.tricycle.mapping.Carte;
-
+import sim.tricycle.xmlparser.RobotParser;
 
 /**
  *
@@ -18,11 +21,12 @@ public class Application extends javax.swing.JFrame {
      * Creates new form Application
      */
     public Application() {
-        
+
         setLocationRelativeTo(null);
-        initComponents();setSize(500, 500);
+        initComponents();
+        setSize(500, 500);
         this.setLayout(new FlowLayout());
-        Carte c = new Carte(25,25);
+        Carte c = new Carte(25, 25);
         ViewCarte vc = new ViewCarte(c);
         this.add(vc);
     }
@@ -36,21 +40,50 @@ public class Application extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("Charger un fichier");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 366, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(193, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 143, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser chooser = new JFileChooser(".");
+        // Note: source for ExampleFileFilter can be found in FileChooserDemo,
+        // under the demo/jfc directory in the Java 2 SDK, Standard Edition.
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File f = chooser.getSelectedFile();
+            
+            RobotParser parser = new RobotParser();
+            
+            parser.parse(f);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -94,5 +127,6 @@ public class Application extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
