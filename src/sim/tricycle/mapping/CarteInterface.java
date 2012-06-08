@@ -9,7 +9,7 @@ import java.util.Set;
  *
  * @author Thomas nds <nds.thomas@gmail.com>
  */
-public interface MapInterface {
+public interface CarteInterface {
 
     /*
      * Renvoie la case correspondante aux coordonnées x et y. @param x
@@ -21,7 +21,7 @@ public interface MapInterface {
      * Actualise les cases dans un rayon particulier. @param source La carte
      * source. @param rayon le rayon d'actualisation de la carte.
      */
-    public void actualiserCarte(Map source, int rayon, Case pos);
+    public void actualiserCarte(Carte source, int rayon, Case pos);
 
     public HashSet<Case> casesVoisines(Case pos, HashSet<Case> liste);
 

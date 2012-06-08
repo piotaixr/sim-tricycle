@@ -10,12 +10,12 @@ import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class Map implements MapInterface {
+public class Carte implements CarteInterface {
 
     private int tailleX, tailleY;
     private Case[][] carte;
 
-    public Map(int X, int Y) {
+    public Carte(int X, int Y) {
         carte = new Case[X][Y];
         int i, j;
 
@@ -36,7 +36,7 @@ public class Map implements MapInterface {
      * boule. 'B': case avec un bonus. 'P': case avec une pièce. 'X': case
      * obstacle.
      */
-    public Map(char[][] tab) {
+    public Carte(char[][] tab) {
         this.tailleX = tab.length;
         this.tailleY = tab[0].length;
         carte = new Case[this.tailleX][this.tailleY];
@@ -59,7 +59,7 @@ public class Map implements MapInterface {
     }
 
     @Override
-    public void actualiserCarte(Map source, int rayon, Case pos) {
+    public void actualiserCarte(Carte source, int rayon, Case pos) {
         HashSet<Case> liste = null;
 
         // Capture de toute les cases dans le rayon souhaité.
