@@ -8,7 +8,7 @@ package sim.tricycle.robot;
  *
  * @author Adri
  */
-abstract class $Action implements _Action{
-    
-    public $Action(){}
+public enum EventType {
+    BALLE,
+    ENNEMI,
 }

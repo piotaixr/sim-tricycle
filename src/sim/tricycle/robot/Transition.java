@@ -14,17 +14,17 @@ public class Transition {
     
     private Etat etatDep;
     private Etat etatDest;
-    private ArrayList<$Action> listeAction;
+    private ArrayList<Action> listeAction;
     
     public Transition(){
         
     }
     
-    public void EnfilerAllActions($Robot bot){
+    public void EnfilerAllActions(Robot bot){
         bot.GetFileAction().addAll(listeAction);
     }
     
-    public void AddAction($Action act){
+    public void AddAction(Action act){
         this.listeAction.add(act);
     }
 }

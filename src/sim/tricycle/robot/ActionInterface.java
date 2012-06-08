@@ -9,10 +9,10 @@ package sim.tricycle.robot;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public interface _Action {
+public interface ActionInterface {
     
     
-    public void Executer($Robot bot);
+    public void Executer(Robot bot);
 
     
 }

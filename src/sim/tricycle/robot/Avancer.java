@@ -8,7 +8,7 @@ package sim.tricycle.robot;
  *
  * @author Adri
  */
-public class Avancer extends $Action{
+public class Avancer extends Action{
     
     private int nbCases;
     
@@ -18,7 +18,7 @@ public class Avancer extends $Action{
 
     
     @Override 
-    public void Executer($Robot bot){
+    public void Executer(Robot bot){
         
         Point p=new Point(bot.GetPosition());
         

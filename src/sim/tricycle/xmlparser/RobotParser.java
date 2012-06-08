@@ -30,6 +30,7 @@ public class RobotParser {
             Element e = document.getRootElement();
             
             
+            
         } catch (JDOMException ex) {
             Logger.getLogger(RobotParser.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

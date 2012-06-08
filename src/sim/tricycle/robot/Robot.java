@@ -8,15 +8,15 @@ import java.util.ArrayList;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-abstract class $Robot {
+abstract class Robot {
 
     protected Point position;
     protected Sens direction;
     protected int portee;
-    protected ArrayList<$Action> fileActions;
-    protected ArrayList<Type_Event> ordreTest;
+    protected ArrayList<Action> fileActions;
+    protected ArrayList<EventType> ordreTest;
 
-    public $Robot() {
+    public Robot() {
     }
 
     public Point GetPosition() {
@@ -43,19 +43,19 @@ abstract class $Robot {
         this.portee = newPortee;
     }
 
-    public void SetFileAction(ArrayList<$Action> newFileActions) {
+    public void SetFileAction(ArrayList<Action> newFileActions) {
         this.fileActions = newFileActions;
     }
 
-    public ArrayList<$Action> GetFileAction() {
+    public ArrayList<Action> GetFileAction() {
         return this.fileActions;
     }
 
-    public $Evenement Scan() {
+    public Evenement Scan() {
 
         int i = 0;
         boolean eventFound = false;
-        $Evenement evt = new $Evenement();
+        Evenement evt = new Evenement();
 
         while (i < this.ordreTest.size() && !eventFound) {
 

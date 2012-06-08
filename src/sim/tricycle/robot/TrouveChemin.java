@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Adri
  */
-public class TrouveChemin extends $Action{
+public class TrouveChemin extends Action{
     
     Point pDest;
     ArrayList<Noeud> chemin;
@@ -20,7 +20,7 @@ public class TrouveChemin extends $Action{
         this.chemin=new ArrayList<Noeud>();
     }
     
-    public void Executer($Robot bot){
+    public void Executer(Robot bot){
         
        
     }

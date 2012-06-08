@@ -8,10 +8,7 @@ package sim.tricycle.robot;
  *
  * @author Adri
  */
-public class $Evenement {
+abstract class Action implements ActionInterface{
     
-    
-    public $Evenement(){
-    
-   }
+    public Action(){}
 }
