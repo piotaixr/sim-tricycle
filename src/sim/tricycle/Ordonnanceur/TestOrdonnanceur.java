@@ -25,7 +25,7 @@ public class TestOrdonnanceur {
 
         @Override
         public void executeAction() {
-            System.out.println("Salut moi c'est :" + this.nom);         
+            System.out.println("Salut moi c'est : " + this.nom);         
         }
 
     }             
@@ -42,6 +42,7 @@ public class TestOrdonnanceur {
         public void run() {
             ord.stop();
             System.out.println(" --> Stop <--");
+            start(ord);
         }
         
     }
@@ -63,14 +64,29 @@ public class TestOrdonnanceur {
         
     }
     
+    class TaskSpeedUp extends TimerTask {
+
+        Ordonnanceur ord;
+
+        public TaskSpeedUp(Ordonnanceur o){
+            ord = o;
+        }
+
+        @Override
+        public void run() {
+            ord.setTime(ord.getTime()/2);
+            System.out.println(" --> SPEED !! <--");
+        }
+        
+    }
+    
     /*
      * Stop au bout de 5sec
      */
     public void stop(Ordonnanceur o){
         timer = new Timer();
         System.out.println(" --> Stop dans 5sec <--");
-        timer.schedule(new TaskStop(o),0, 5000);
-        start(o);
+        timer.schedule(new TaskStop(o),5000, 5000);
     }
     
     /*
@@ -78,8 +94,14 @@ public class TestOrdonnanceur {
      */
     public void start(Ordonnanceur o){
         timer = new Timer();
-        System.out.println(" --> Start dans 5sec <--");
-        timer.schedule(new TaskStart(o),2000, 5000);
+        System.out.println(" --> Start dans 2sec <--");
+        timer.schedule(new TaskStart(o),2000);
+    }
+    
+    public void doubleSpeed(Ordonnanceur o){
+        timer = new Timer();
+        System.out.println(" --> Vitesse doublé dans 6 sec <--");
+        timer.schedule(new TaskSpeedUp(o),6000);
     }
     
     public void goTest(){
@@ -98,8 +120,8 @@ public class TestOrdonnanceur {
         ordo.add(bot06);
         ordo.start();
         System.out.println("C'est parti pour l'ordonnanceur !!");
-        stop(ordo);
-        //tart(ordo);
+        //stop(ordo);
+        doubleSpeed(ordo);
     }
     
 }
