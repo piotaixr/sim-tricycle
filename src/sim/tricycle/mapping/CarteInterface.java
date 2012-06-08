@@ -24,7 +24,7 @@ public interface CarteInterface {
      * casesVoisines fournit les cases voisines de pos. @param pos la case de
      * départ. @param liste Les cases déja présentes.
      */
-    public HashSet<Case> casesVoisines(Case pos, HashSet<Case> liste);
+    public HashSet<Case> casesVoisines(Carte source,Case pos, HashSet<Case> liste);
 
     /*
      * Fournit la hauteur de la carte.

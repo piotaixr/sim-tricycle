@@ -21,7 +21,7 @@ public class SimTricycle {
         
        // TestOrdonnanceur test = new TestOrdonnanceur();
       //  test.goTest();
-     //   TestMap test2 = new TestMap();
-       // test2.startTest();
+        TestMap test2 = new TestMap();
+        test2.startTest();
     }
 }
