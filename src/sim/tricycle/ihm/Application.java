@@ -31,10 +31,16 @@ public class Application extends javax.swing.JFrame {
         initComponents();
         setSize(700, 700);
         this.setLayout(new FlowLayout());
-        Carte c = new Carte(25, 25);
+        //Carte c = new Carte(25, 25);
         ViewCarte vc = new ViewCarte(e);
-        this.add(vc);
+        scrollView.add(vc);
+        //scrollView.setLayout();        
+        
+        this.add(scrollView);
+        //this.add(vc);
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,50 +51,23 @@ public class Application extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        scrollView = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jButton1.setText("Charger un fichier");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(193, Short.MAX_VALUE))
+            .addComponent(scrollView, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(106, Short.MAX_VALUE))
+            .addComponent(scrollView, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JFileChooser chooser = new JFileChooser(".");
-        // Note: source for ExampleFileFilter can be found in FileChooserDemo,
-        // under the demo/jfc directory in the Java 2 SDK, Standard Edition.
-        int returnVal = chooser.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File f = chooser.getSelectedFile();
-
-            RobotParser parser = new RobotParser();
-
-            parser.parse(f);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,6 +111,6 @@ public class Application extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane scrollView;
     // End of variables declaration//GEN-END:variables
 }
