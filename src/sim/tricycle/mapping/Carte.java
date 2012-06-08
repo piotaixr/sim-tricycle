@@ -9,12 +9,12 @@ import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class Map implements MapInterface {
+public class Carte implements CarteInterface {
 
     private int tailleX, tailleY;
     private Case[][] carte;
 
-    public Map(int cx, int cy) {
+    public Carte(int cx, int cy) {
         carte = new Case[cx][cy];
         int i, j;
 
@@ -22,8 +22,8 @@ public class Map implements MapInterface {
         this.tailleY = cy;
 
         //parcours du tableau pour initialiser les cases.
-        for (i = 1; i <= tailleX; i++) {
-            for (j = 1; j <= tailleY; j++) {
+        for (i = 0; i < tailleX; i++) {
+            for (j = 0; j < tailleY; j++) {
                 carte[i][j] = new Case(i, j);
             }
         }
@@ -35,15 +35,15 @@ public class Map implements MapInterface {
      * boule. 'B': case avec un bonus. 'P': case avec une pièce. 'X': case
      * obstacle.
      */
-    public Map(char[][] tab) {
+    public Carte(char[][] tab) {
         this.tailleX = tab.length;
         this.tailleY = tab[0].length;
         carte = new Case[this.tailleX][this.tailleY];
         int i, j;
 
         //parcours du tableau pour initialiser les cases.
-        for (i = 1; i <= tailleX; i++) {
-            for (j = 1; j <= tailleY; j++) {
+        for (i = 0; i < tailleX; i++) {
+            for (j = 0; j < tailleY; j++) {
                 carte[i][j] = new Case(tab[i][j], i, j);
             }
         }
@@ -58,7 +58,7 @@ public class Map implements MapInterface {
     }
 
     @Override
-    public void actualiserCarte(Map source, int rayon, Case pos) {
+    public void actualiserCarte(Carte source, int rayon, Case pos) {
         HashSet<Case> liste = null;
 
         // Capture de toute les cases dans le rayon souhaité.

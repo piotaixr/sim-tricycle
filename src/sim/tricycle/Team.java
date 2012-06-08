@@ -5,13 +5,13 @@
 
 package sim.tricycle;
 
-import sim.tricycle.mapping.Map;
+import sim.tricycle.mapping.Carte;
 
 /**
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
 public class Team {
-private Map carte;
+private Carte carte;
 
 }
