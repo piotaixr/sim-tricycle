@@ -7,11 +7,12 @@ package sim.tricycle.ihm;
 import java.awt.FlowLayout;
 import java.io.File;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.TestMap;
 import sim.tricycle.xmlparser.RobotParser;
 
 /**
+ * @boss 16
  *
  * @author nell
  */
@@ -22,12 +23,16 @@ public class Application extends javax.swing.JFrame {
      */
     public Application() {
 
+        TestMap test2 = new TestMap();
+        test2.startTest();
+        Carte e = test2.getCarte();
+
         setLocationRelativeTo(null);
         initComponents();
-        setSize(500, 500);
+        setSize(700, 700);
         this.setLayout(new FlowLayout());
         Carte c = new Carte(25, 25);
-        ViewCarte vc = new ViewCarte(c);
+        ViewCarte vc = new ViewCarte(e);
         this.add(vc);
     }
 
@@ -78,9 +83,9 @@ public class Application extends javax.swing.JFrame {
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File f = chooser.getSelectedFile();
-            
+
             RobotParser parser = new RobotParser();
-            
+
             parser.parse(f);
         }
     }//GEN-LAST:event_jButton1ActionPerformed

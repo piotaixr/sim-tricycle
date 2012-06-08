@@ -39,8 +39,12 @@ public class TestMap {
         this.carte = new Carte(matChar);
         Carte ctest = new Carte(carte.getLargeur(), carte.getHauteur());
 
-          ctest.actualiserCarte(carte, 1, ctest.getCase(0,0));
+          ctest.actualiserCarte(carte, 3, ctest.getCase(0,0));
         afficherCarte(carte);
         afficherCarte(ctest);
+    }
+    
+    public Carte getCarte (){
+        return carte;
     }
 }
