@@ -2,7 +2,6 @@
  */
 package sim.tricycle.mapping;
 
-import sim.tricycle.Robot;
 import sim.tricycle.mapping.mapException.CaseMultipleObjetException;
 import sim.tricycle.mapping.mapException.CaseMultipleObstacleException;
 
@@ -10,44 +9,61 @@ import sim.tricycle.mapping.mapException.CaseMultipleObstacleException;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  *
- * Une case de la carte. Peut porter un objet
+ * Une case de la carte. Peut porter un objet ou être un obstacle.
  */
 public class Case {
 
     private AbstractObstacle obstacle;
     private AbstractObjet objet;
+    private int x;
+    private int y;
 
-    public Case() {
+    public Case(int X, int Y) {
+        this.x = X;
+        this.y = Y;
         obstacle = null;
         objet = null;
     }
-    /* Crée une case selon un identificateur:
-     * 0: case vide.
-     * 1: case avec une boule.
-     * 2: case avec un bonus.
-     * 3: case avec une pièce.
-     * 4: case obstacle.
+
+    int getX() {
+        return x;
+    }
+
+    int getY() {
+        return y;
+    }
+
+    /* Crée une case selon un identificateur: ' ': case vide. 'O': case avec une
+     * boule. 'B': case avec un bonus. 'P': case avec une pièce. 'X': case
+     * obstacle.
      */
-    public Case(int id) {
+    public Case(char id, int X, int Y) {
+        this.x = X;
+        this.y = Y;
         switch (id) {
-            case 1:
+            case 'X':
                 obstacle = new Mur(this);
                 objet = null;
                 break;
 
-            case 2:
+            case 'O':
                 obstacle = null;
                 objet = new Boule(this);
                 break;
 
-            case 3:
+            case 'B':
                 obstacle = null;
                 objet = new Bonus(this);
                 break;
-                
-            case 4:
+
+            case 'P':
                 obstacle = null;
                 objet = new Piece(this);
+                break;
+
+            case '#':
+                obstacle = new Mur(this);
+                objet = null;
                 break;
 
             default:
@@ -56,15 +72,13 @@ public class Case {
         }
     }
 
-    /*
-     * Retourne si a case possède t-elle un objet. @return 0 si absence d'objet.
+    /* Retourne si a case possède t-elle un objet. @return 0 si absence d'objet.
      */
     public boolean hasItem() {
         return (objet != null);
     }
 
-    /*
-     * Retourne si a case est un obstacle. @return 0 si absence d'objet.
+    /* Retourne si a case est un obstacle. @return 0 si absence d'objet.
      */
     public boolean hasObstacle() {
         return (obstacle != null);
@@ -82,8 +96,7 @@ public class Case {
         }
     }
 
-    /*
-     * setItem place un objet sur la case. @param: l'objet à placer. @param
+    /* setItem place un objet sur la case. @param: l'objet à placer. @param
      * l'objet à placer.
      */
     public void setObstacle(AbstractObstacle obst) {
@@ -93,4 +106,14 @@ public class Case {
             this.obstacle = obst;
         }
     }
+    
+    /* Copie d'une autre case.
+     * @param nouv la case à copiée.
+     * @ensure nouv == this
+     */
+    public void copy(Case nouv){
+        this.objet= nouv.objet;
+        this.obstacle=nouv.obstacle;
+    }
+    
 }
