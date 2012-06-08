@@ -4,8 +4,12 @@
  */
 package sim.tricycle.ihm;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
+import javax.swing.border.LineBorder;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.CarteInterface;
 
@@ -22,17 +26,19 @@ public class ViewCarte extends javax.swing.JPanel {
      */
     public ViewCarte(CarteInterface carte) {
         initComponents();
+        this.setBorder(new LineBorder(Color.BLACK));
         this.carte = carte;
     }
 
     @Override
     public void paint(Graphics graphic) {
         super.paint(graphic);
-        Graphics2D g = (Graphics2D) graphic;
+        Graphics2D g = (Graphics2D) graphic;        
+        
         int maxWidth = this.getWidth() / carte.getLargeur();
         int maxHeight = this.getHeight() / carte.getHauteur();
         int maxSize = Math.min(maxHeight, maxWidth);
-
+        
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
                 paintCase(g, carte.getCase(i, j), maxSize);
@@ -41,7 +47,10 @@ public class ViewCarte extends javax.swing.JPanel {
     }
 
     private void paintCase(Graphics2D g, Case c, int width) {
-        g.drawRect(width*c.getX(), width*getY(), width, width);
+        System.out.println("Paint case " +width + "/" + c.getX() + " " + c.getY());
+        int x = c.getX() * width;
+        int y = c.getY() * width;
+        g.drawRect(x, y, width, width);
     }
 
     /**
