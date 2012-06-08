@@ -10,8 +10,17 @@ package sim.tricycle.robot;
  */
 public class Evenement {
     
+    private EventType type;
     
     public Evenement(){
     
    }
+    
+    public void setType(EventType newType){
+        this.type=newType;
+    }
+    
+    public EventType getType(){
+        return this.type;
+    }
 }

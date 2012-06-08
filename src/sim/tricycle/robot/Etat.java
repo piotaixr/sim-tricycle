@@ -4,7 +4,7 @@
  */
 package sim.tricycle.robot;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -12,10 +12,15 @@ import java.util.ArrayList;
  */
 public class Etat {
     
-    private ArrayList<Transition> listeTransition;
+    private HashMap<EventType,Transition> listeTransition;
+    private Robot bot;
     
     public Etat(){
         
+    }
+    
+    public void etatSuivant(Evenement evt){
+        listeTransition.get(evt.getType()).effectuerTransition(this.bot);
     }
     
     

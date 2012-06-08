@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public class Transition {
     
-    private Etat etatDep;
     private Etat etatDest;
     private ArrayList<Action> listeAction;
     
@@ -27,5 +26,10 @@ public class Transition {
     
     public void addAction(Action act){
         this.listeAction.add(act);
+    }
+    
+    public void effectuerTransition(Robot bot){
+        enfilerAllActions(bot);
+        bot.setEtat(this.etatDest);
     }
 }

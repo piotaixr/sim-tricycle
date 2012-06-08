@@ -16,7 +16,8 @@ public abstract class Robot {
     protected int portee;
     protected ArrayList<Action> fileActions;
     protected ArrayList<EventType> ordreTest;
-
+    protected Etat etatCourant;
+    
     public Robot() {
     }
 
@@ -47,6 +48,14 @@ public abstract class Robot {
     public void setFileAction(ArrayList<Action> newFileActions) {
         this.fileActions = newFileActions;
     }
+    
+    public Etat getEtat(){
+        return this.etatCourant;
+    }
+    
+    public void setEtat(Etat newEtat){
+        this.etatCourant=newEtat;
+    }
 
     public ArrayList<Action> setFileAction() {
         return this.fileActions;
@@ -70,5 +79,19 @@ public abstract class Robot {
             }
         }
         return evt;
+    }
+
+    public void depilerActionCourante() {
+        this.fileActions.get(0).executer(this);
+        this.fileActions.remove(0);
+    }
+    
+    public void changerEtat(Evenement evt){
+         
+    }
+    
+    public void agir(){
+        changerEtat(scan());
+        depilerActionCourante();
     }
 }
