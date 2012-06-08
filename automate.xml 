@@ -3,12 +3,12 @@
         <etat id="normal">
             <transition>
                 <condition nom="piece_trouvee"/>
-                <etat id="deplacement"/>
+                <etat id="deplacement_norm"/>
             </transition>
             <transition>
                 <condition nom="true"/>
                 <action nom="sleep">
-                    <para> temps </para>
+                    <para> tempos </para>
                 </action>
                 <etat id="normal"/>
             </transition>
@@ -17,7 +17,7 @@
             <transition>
                <condition nom="case==piece"/>
                    <action nom="ramasser">
-                       <para>temps</para>
+                       <para>tempos</para>
                    </action>
                    <etat id="porteur"/>
             </transition>
@@ -25,7 +25,7 @@
                 <condition nom="true"/>
                 <action nom="aller">
                     <para>piece</para>
-                    <para>temps</para>
+                    <para>tempos</para>
                 </action>
                 <etat id="deplacement_norm"/>
             </transition>
@@ -41,20 +41,16 @@
                 <condition nom="case==base"/>
                 <action>
                     <para>base</para>
-                    <para>temps</para>
+                    <para>tempos</para>
                 </action>
                 <etat id="normal"/>
             </transition>
             <transition>
                 <condition nom="true"/>
                 <action>
-                    <para>temps</para>
+                    <para>tempos</para>
                 </action>
                 <etat id="deplacement_port"/>
             </transition>
         </etat>
     </robot>
-           
-       
-            
-        

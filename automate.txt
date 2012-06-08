@@ -1,18 +1,30 @@
+/*fichier automate*/
+
 robot{
-	while partie{
-		etat;
-		scan(vision);
-		interroger_carte;
-		switch{
-			quand {etat==porteur alors switch{quand case==base alors deposer;
-							quand case==autre alors aller_a(base);
-					    }
+
+	etat==normal{
+		Si piece_trouvee alors etat=deplacement_norm;
+		Sinon{ attente(temps);
+		       etat=normal;
+		}
+	}
+	etat==deplacement_norm{
+		Si case=piece alors{ ramasser(temps);
+				     etat=porteur;
 			      }
-			quand {etat==normal alors switch{quand case==piece alors ramasser;
-							quand case==autre aller_a(piece);
-				            }
-				}
+		Sinon{aller(piece,temps);
+		      etat=normal;
+		}
+	}
+	etat==porteur{
+		etat=deplacement_port
+	}
+	etat==deplacement_port{
+		Si case=base alors{deposer(temps);
+				   etat=normal;
+			     }
+		Sinon{aller(base,temps);
+		      etat=deplacement_port;
 		}
 	}
 }
-fin

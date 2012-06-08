@@ -7,6 +7,7 @@ let char_to_string c = String.make 1 c;;
 let fichier = open_in "automate.txt" ;;(* ouvre le fichier*)
 
 let lecture fichier = input_line fichier;;
+lecture fichier;;
 
 let parseur  fichier =
 let rec parseur_aux s p = match s with parser
@@ -14,6 +15,7 @@ let rec parseur_aux s p = match s with parser
 |[<''\n'>] -> p
 |[<''0'..'9'|'a'..'z'|'A'..'Z'|'('|')'  as n; f>] -> parseur_aux f (p^(char_to_string n))
 |[<>] -> p in parseur_aux fichier "";;
+
 
 
 let rec indenter i sortie = 
