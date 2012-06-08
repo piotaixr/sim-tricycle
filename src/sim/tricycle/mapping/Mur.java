@@ -7,11 +7,11 @@ package sim.tricycle.mapping;
  * @author augustin
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class Obstacle implements PossedeCase{
-        private Case pos;
+public class Mur extends AbstractObstacle{
         
-        public Obstacle (Case pos){
+        public Mur (Case pos){
             this.pos=pos;
             pos.setObstacle(this);
         }
+
 }

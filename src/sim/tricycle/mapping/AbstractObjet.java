@@ -1,6 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
  */
 package sim.tricycle.mapping;
 
@@ -8,8 +6,7 @@ package sim.tricycle.mapping;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public abstract class AbstractObjet implements PossedeCase{
-
+public abstract class AbstractObjet implements PossedeCaseInterface{
     protected Case pos;
 
     /*
@@ -18,5 +15,20 @@ public abstract class AbstractObjet implements PossedeCase{
      */
     public Case getPosition() {
         return pos;
+    }
+    /* Supprimer l'objet de la case.
+     * @ensure l'objet n'est plus sur la carte.
+     */
+    public void supprimerObjet(){
+        pos.setItem(null);
+    }
+    
+    /* Déplace l'objet vers une autre case.
+     * @param nouv la nouvelle case.
+     */
+    public void deplacerObjet(Case nouv){
+        this.supprimerObjet();
+        this.pos=nouv;
+        pos.setItem(this);
     }
 }

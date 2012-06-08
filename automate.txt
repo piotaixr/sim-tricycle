@@ -1,0 +1,24 @@
+/*fichier automate*/
+
+type robot{
+	tantque partie{
+		etat;
+		scan(vision);
+		interroger_carte;
+		cas_etat{
+			quand porteur alors seq{aller_a(base);
+						cas_case{quand base alors seq{
+									       avancer;
+									       deposer;
+									  }	
+							}
+					    }
+			quand normal alors seq{aller_a(piece);
+					       cas_case{quand piece alors seq{avancer;
+									      ramasser;
+									     }
+						       }
+					   }
+		}
+	}
+}
