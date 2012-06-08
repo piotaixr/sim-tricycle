@@ -2,7 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sim.tricycle.robot;
+package sim.tricycle.robot.action;
+
+import sim.tricycle.robot.Robot;
+import sim.tricycle.robot.Sens;
 
 /**
  *

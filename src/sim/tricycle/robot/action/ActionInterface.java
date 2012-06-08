@@ -3,7 +3,9 @@
  * and open the template in the editor.
  */
 
-package sim.tricycle.robot;
+package sim.tricycle.robot.action;
+
+import sim.tricycle.robot.Robot;
 
 /**
  *

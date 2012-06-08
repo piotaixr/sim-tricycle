@@ -2,13 +2,14 @@
  */
 package sim.tricycle.robot;
 
+import sim.tricycle.robot.action.Action;
 import java.util.ArrayList;
 
 /**
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-abstract class Robot {
+public abstract class Robot {
 
     protected Point position;
     protected Sens direction;

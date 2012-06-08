@@ -4,6 +4,7 @@
  */
 package sim.tricycle.robot;
 
+import sim.tricycle.robot.action.Action;
 import java.util.ArrayList;
 
 /**

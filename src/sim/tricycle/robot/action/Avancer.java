@@ -2,7 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sim.tricycle.robot;
+package sim.tricycle.robot.action;
+
+import sim.tricycle.robot.Point;
+import sim.tricycle.robot.Robot;
 
 /**
  *
@@ -23,7 +26,7 @@ public class Avancer extends Action{
         Point p=new Point(bot.getPosition());
         
        for(int i=0;i<nbCases;i++){
-        switch(bot.direction){
+        switch(bot.getDirection()){
             case NORD:
                 p.setX(p.getX()+1);
                 break;
