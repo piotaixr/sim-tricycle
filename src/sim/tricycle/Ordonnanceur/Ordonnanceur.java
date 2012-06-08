@@ -118,6 +118,13 @@ public class Ordonnanceur implements OrdonnanceurInterface {
         }
     }
 
+    /*
+     * Fonction pour faire les actions les unes après les autres manuellement.
+     */
+    public void nextManual(){
+        new TaskAction().run();
+    }
+    
     @Override
     /*
      * Enlève définitivement l'objet entré en paramètre
