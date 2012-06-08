@@ -1,5 +1,4 @@
 /*fichier automate*/
-
 robot{
 
 	etat==normal{
@@ -9,7 +8,7 @@ robot{
 		}
 	}
 	etat==deplacement_norm{
-		Si case=piece alors{ ramasser(temps);
+		Si case==piece alors{ ramasser(temps);
 				     etat=porteur;
 			      }
 		Sinon{aller(piece,temps);
@@ -20,7 +19,7 @@ robot{
 		etat=deplacement_port
 	}
 	etat==deplacement_port{
-		Si case=base alors{deposer(temps);
+		Si case==base alors{deposer(temps);
 				   etat=normal;
 			     }
 		Sinon{aller(base,temps);
@@ -28,3 +27,4 @@ robot{
 		}
 	}
 }
+fin

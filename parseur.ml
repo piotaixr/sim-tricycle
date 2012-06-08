@@ -2,12 +2,88 @@
 
 #load "camlp4o.cma";; (* nécessaire pour faire fonctionner le parseur*)
 
+type 'a pile= Pile_vide|Pile_non_vide of 'a*'a pile;;
+(*_______________________________________________________________________*)
+
+(* corps du .ml *)
+let sommet_pile p = match p with
+  |Pile_non_vide(s,p')->s
+  |Pile_vide->failwith "pile vide";;
+
+let empiler e p = Pile_non_vide(e,p);;
+empiler "harry" Pile_vide;;
+
+let depiler p = match p with
+  |Pile_non_vide(e,p')->p'
+  |Pile_vide->failwith "pile vide";;
+
 let char_to_string c = String.make 1 c;;
 
-let fichier = open_in "automate.txt" ;;(* ouvre le fichier*)
 
-let lecture fichier = input_line fichier;;
-lecture fichier;;
+let lecture_aux fichier = input_line fichier;;
+let ecriture_aux sortie  mot = output sortie mot 0 (String.length mot);;
+let ecriture_aux_char sortie char = output_char sortie char;;
+let transf entree= Stream.of_string(input_line entree);;
+let transf2 string = Stream.of_string(string);;
+
+let rec indenter i sortie = 
+  while !i>0 do 
+    output_char sortie '\t';
+    i:=!i-1
+  done ;;
+
+let rec parseur pile sortie string nom= match string with parser 
+  |[<'' '>] ->pile
+  |[<''\n'>] ->pile
+  |[<''\t';f>]-> (*ecriture_aux_char sortie '\t';*)(parseur pile sortie f nom)
+  |[<''a'..'z'|'A'..'Z'|'('|')'|'='|'_'  as n; f>] -> parseur pile sortie f (nom^(char_to_string n))
+  |[<''}';f>]->let name = (sommet_pile pile)
+	     in (ecriture_aux sortie ("<"^name^"/"^">"));
+	       (ecriture_aux_char sortie '\n');
+	     let p=(depiler pile) in (parseur p sortie f "")
+
+  |[<''{';f>]-> ecriture_aux sortie ("<"^nom^">");(ecriture_aux_char sortie '\n');let p= (empiler nom pile) in (parseur p sortie f "")
+  |[<>] ->pile;;
+
+let analyse () = 
+  let entree = open_in "pile.txt"
+  in let sortie = open_out "test" 
+	in if (lecture_aux entree)<>"/*fichier automate*/"
+	  then failwith "erreur de fichier"
+	  else let lect = (lecture_aux entree)
+	       in  let rec boucle pile lect = match lect with
+		 |"fin"->()
+		 |lect->let p=(parseur pile sortie(transf2 lect) "")
+			in (boucle p (lecture_aux entree))
+		  in boucle Pile_vide lect;
+     close_out sortie;
+     close_in entree;;
+
+analyse();;
+
+(*__________________________________________________________________________*)
+
+(* test pour transformation de fonction *)
+
+
+let entree = open_in "automate.txt";;
+let sortie = open_out "test";;
+lecture_aux entree;;
+let transf entree= Stream.of_string(input_line entree);;
+parseur sortie (transf fichier) "";;
+let ecriture_aux sortie  mot = output sortie mot 0 (String.length mot);;
+  (*close_out sortie;;*)
+ecriture_aux sortie "blabla";;
+
+close_out sortie;;
+close_in entree;;
+let inserer
+
+
+(*______________________________________________________________________*)
+
+(* fonction de base (pour revenir si y a un problème 
+objectivement ne sert pas )*)
 
 let parseur  fichier =
 let rec parseur_aux s p = match s with parser
@@ -16,51 +92,3 @@ let rec parseur_aux s p = match s with parser
 |[<''0'..'9'|'a'..'z'|'A'..'Z'|'('|')'  as n; f>] -> parseur_aux f (p^(char_to_string n))
 |[<>] -> p in parseur_aux fichier "";;
 
-
-
-let rec indenter i sortie = 
-  while !i>0 do 
-    output_char sortie '\t';
-    i:=!i-1
-  done ;;
-
-let analyse () = 
-  let k = ref 0
-  in let i= ref 0
-     in let entree = open_in "automate.txt"
-	in let sortie = open_out "test" 
-	   in  if ((lecture entree)<> "/*automate*/")
-	     then failwith "erreur de fichier"
-	     else 
-	       while ((lecture entree)<> "fin")&&(!i<11) do
-		 indenter k sortie;
-		 output sortie "ecriture" 0 8;
-		 output_char sortie '\n';
-		 i:=!i+1;
-		 k:=!i
-	       done ;
-	     while ((lecture entree)<> "fin")&&(!i>0) do
-	       k:=!i;
-	       indenter k sortie;
-	       output sortie "ecriture" 0 8;
-	       output_char sortie '\n';
-	       i:=!i-1
-	     done ;
-	   close_out sortie;
-	   close_in entree;;
-
-
-  
-analyse();;
-
-
-
-
-let rec fact n = match n with 
-  |0->1
-  |k->k*(fact (k-1));;
-let n =ref 0 in
-while fact !n <= 1000 do
-  n:=!n+1
-done;
-!n;;
