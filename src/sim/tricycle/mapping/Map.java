@@ -15,12 +15,12 @@ public class Map implements MapInterface {
     private int tailleX, tailleY;
     private Case[][] carte;
 
-    public Map(int X, int Y) {
-        carte = new Case[X][Y];
+    public Map(int cx, int cy) {
+        carte = new Case[cx][cy];
         int i, j;
 
-        this.tailleX = X;
-        this.tailleY = Y;
+        this.tailleX = cx;
+        this.tailleY = cy;
 
         //parcours du tableau pour initialiser les cases.
         for (i = 1; i <= tailleX; i++) {
@@ -68,11 +68,9 @@ public class Map implements MapInterface {
             rayon--;
         }
         // Traitement des cases selectionnées:
-      //  for (int i = 0; i < liste.size(); ++i) {
-            
-        //}
-
-
+        for (Case x: liste) {
+            this.getCase(x.getX(), x.getY()).copy(x);
+        }
     }
 
     @Override
