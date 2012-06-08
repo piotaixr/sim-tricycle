@@ -18,50 +18,50 @@ public class Avancer extends Action{
 
     
     @Override 
-    public void Executer(Robot bot){
+    public void executer(Robot bot){
         
-        Point p=new Point(bot.GetPosition());
+        Point p=new Point(bot.getPosition());
         
        for(int i=0;i<nbCases;i++){
         switch(bot.direction){
             case NORD:
-                p.SetX(p.GetX()+1);
+                p.setX(p.getX()+1);
                 break;
                 
             case EST:
-                p.SetX(p.GetY()+1);
+                p.setX(p.getY()+1);
                 break;
                  
             case OUEST:
-                p.SetX(p.GetY()-1);
+                p.setX(p.getY()-1);
                 break;
             
             case SUD:
-                p.SetX(p.GetX()-1);
+                p.setX(p.getX()-1);
                 break;
                 
             case SUD_EST:
-                p.SetX(p.GetX()-1);
-                p.SetY(p.GetY()+1);
+                p.setX(p.getX()-1);
+                p.setY(p.getY()+1);
                 break;
                 
             case SUD_OUEST:
-                p.SetX(p.GetX()-1);
-                p.SetY(p.GetY()-1);
+                p.setX(p.getX()-1);
+                p.setY(p.getY()-1);
                 break;
                 
             case NORD_EST:
-                p.SetX(p.GetX()+1);
-                p.SetY(p.GetY()+1);
+                p.setX(p.getX()+1);
+                p.setY(p.getY()+1);
                 break;
                 
             case NORD_OUEST:
-                p.SetX(p.GetX()+1);
-                p.SetY(p.GetY()-1);
+                p.setX(p.getX()+1);
+                p.setY(p.getY()-1);
                 break;
         }
        }
-        bot.SetPosition(p);
+        bot.setPosition(p);
     }
     
 }

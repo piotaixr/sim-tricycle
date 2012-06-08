@@ -20,16 +20,16 @@ public class Tourner {
         this.direction=dir;
     }
     
-    public void Executer($Robot bot){
+    public void executer(Robot bot){
         
-       bot.SetDirection(this.direction);
+       bot.setDirection(this.direction);
     }
     
-    public void SetDirection(Sens newDir){
+    public void setDirection(Sens newDir){
         this.direction=newDir;
     }
     
-    public Sens SetDirection(){
+    public Sens setDirection(){
         return this.direction;
     }
 }

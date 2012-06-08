@@ -20,7 +20,7 @@ public class TrouveChemin extends Action{
         this.chemin=new ArrayList<Noeud>();
     }
     
-    public void Executer(Robot bot){
+    public void executer(Robot bot){
         
        
     }
@@ -31,7 +31,7 @@ public class TrouveChemin extends Action{
         
     }
     
-    private void PlusCourtChemin(Point pDep){
+    private void plusCourtChemin(Point pDep){
         
         ArrayList<Noeud> listeOuverte;
         ArrayList<Noeud> listeFermee;

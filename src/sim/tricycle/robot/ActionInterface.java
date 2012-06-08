@@ -12,7 +12,7 @@ package sim.tricycle.robot;
 public interface ActionInterface {
     
     
-    public void Executer(Robot bot);
+    public void executer(Robot bot);
 
     
 }

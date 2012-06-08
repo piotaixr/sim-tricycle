@@ -8,7 +8,7 @@ package sim.tricycle.robot;
  *
  * @author Adri
  */
-public class Collecteur extends $Robot{
+public class Collecteur extends Robot{
     
     
 }

@@ -19,39 +19,39 @@ abstract class Robot {
     public Robot() {
     }
 
-    public Point GetPosition() {
+    public Point getPosition() {
         return this.position;
     }
 
-    public void SetPosition(Point newP) {
+    public void setPosition(Point newP) {
         this.position = newP;
     }
 
-    public Sens GetDirection() {
+    public Sens getDirection() {
         return this.direction;
     }
 
-    public void SetDirection(Sens newDirection) {
+    public void setDirection(Sens newDirection) {
         this.direction = newDirection;
     }
 
-    public int GetPortee() {
+    public int getPortee() {
         return this.portee;
     }
 
-    public void SetPortee(int newPortee) {
+    public void setPortee(int newPortee) {
         this.portee = newPortee;
     }
 
-    public void SetFileAction(ArrayList<Action> newFileActions) {
+    public void setFileAction(ArrayList<Action> newFileActions) {
         this.fileActions = newFileActions;
     }
 
-    public ArrayList<Action> GetFileAction() {
+    public ArrayList<Action> setFileAction() {
         return this.fileActions;
     }
 
-    public Evenement Scan() {
+    public Evenement scan() {
 
         int i = 0;
         boolean eventFound = false;

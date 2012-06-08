@@ -20,11 +20,11 @@ public class Transition {
         
     }
     
-    public void EnfilerAllActions(Robot bot){
-        bot.GetFileAction().addAll(listeAction);
+    public void enfilerAllActions(Robot bot){
+        bot.setFileAction().addAll(listeAction);
     }
     
-    public void AddAction(Action act){
+    public void addAction(Action act){
         this.listeAction.add(act);
     }
 }
