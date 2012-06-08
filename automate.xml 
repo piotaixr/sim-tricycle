@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding='ISO-8859-1' standalone='yes' ?>
+    <robot> 
+        <etat id="normal">
+            <transition>
+                <condition nom="piece_trouvee"/>
+                <etat id="deplacement"/>
+            </transition>
+            <transition>
+                <condition nom="true"/>
+                <action nom="sleep">
+                    <para> temps </para>
+                </action>
+                <etat id="normal"/>
+            </transition>
+       </etat>
+       <etat id="deplacement_norm">
+            <transition>
+               <condition nom="case==piece"/>
+                   <action nom="ramasser">
+                       <para>temps</para>
+                   </action>
+                   <etat id="porteur"/>
+            </transition>
+            <transition>
+                <condition nom="true"/>
+                <action nom="aller">
+                    <para>piece</para>
+                    <para>temps</para>
+                </action>
+                <etat id="deplacement_norm"/>
+            </transition>
+        </etat>
+        <etat id="porteur">
+            <transition>
+                <etat id="deplacement_port">
+                </etat>
+            </transition>
+        </etat> 
+        <etat id="deplacement_port">
+            <transition>
+                <condition nom="case==base"/>
+                <action>
+                    <para>base</para>
+                    <para>temps</para>
+                </action>
+                <etat id="normal"/>
+            </transition>
+            <transition>
+                <condition nom="true"/>
+                <action>
+                    <para>temps</para>
+                </action>
+                <etat id="deplacement_port"/>
+            </transition>
+        </etat>
+    </robot>
+           
+       
+            
+        
