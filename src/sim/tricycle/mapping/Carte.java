@@ -51,7 +51,7 @@ public class Carte implements CarteInterface {
 
     @Override
     public Case getCase(int x, int y) {
-        if (x > tailleX || y > tailleY) {
+        if (x > tailleX || y > tailleY || x<0 || y<0) {
             throw new CasesHorsMatriceDemandeException("Hors limite de la matrice");
         }
         return carte[x][y];
@@ -66,6 +66,7 @@ public class Carte implements CarteInterface {
             liste.addAll(casesVoisines(pos, liste));
             rayon--;
         }
+                    System.out.print("liste crée");
         // Traitement des cases selectionnées:
         for (Case x: liste) {
             this.getCase(x.getX(), x.getY()).copy(x);
@@ -76,31 +77,31 @@ public class Carte implements CarteInterface {
     public HashSet<Case> casesVoisines(Case pos, HashSet<Case> liste) {
         Case gauche = this.getCase(pos.getX() - 1, pos.getY());
         Case droite = this.getCase(pos.getX() + 1, pos.getY());
-        Case haut = this.getCase(pos.getX(), pos.getY() + 1);
+        Case haut = this.getCase(pos.getX(), pos.getY() - 1);
         Case bas = this.getCase(pos.getX(), pos.getY() + 1);
 
         // Si case en bordure verticale droite:
-        if (this.tailleX <= pos.getX()) {
-            if (!liste.contains(droite)) {
-                liste.add(this.getCase(pos.getX() + 1, pos.getY()));
+        if (this.tailleX <= pos.getX() && droite !=null) {
+            if (!(liste.contains(droite))) {
+                liste.add(this.getCase(pos.getX() + 1, pos.getY()));                   
             }
-        }
+        } 
         // Si case en bordure verticale gauche:
-        if (this.tailleX >= 0) {
-            if (!liste.contains(gauche)) {
+        if (this.tailleX >= 0 && gauche != null) {
+            if (liste.contains(gauche)) {
                 liste.add(gauche);
             }
         }
         // Si case en bordure horizontale gauche:
-        if (this.tailleY >= 0) {
-            if (!liste.contains(bas)) {
-                liste.add(bas);
+        if (this.tailleY >= 0&& haut != null) {
+            if (!liste.contains(haut)) {
+                liste.add(haut);
             }
         }
         // Si case en bordure horizontale droite:
-        if (this.tailleY <= pos.getY()) {
-            if (!liste.contains(haut)) {
-                liste.add(haut);
+        if (this.tailleY <= pos.getY() && bas != null) {
+            if (!liste.contains(bas)) {
+                liste.add(bas);
             }
         }
         return liste;
