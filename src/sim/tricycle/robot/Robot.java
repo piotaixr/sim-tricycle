@@ -91,8 +91,9 @@ public abstract class Robot {
     }
 
     public void depilerActionCourante() {
-        this.fileActions.get(0).executer(this);
-        this.fileActions.remove(0);
+        Action a = fileActions.pollFirst();
+        if(a != null)
+            a.executer(this);
     }
 
     public void changerEtat(Evenement evt) {
