@@ -1,6 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
  */
 package sim.tricycle.ihm;
 
@@ -24,7 +22,7 @@ public class ViewCarte extends javax.swing.JPanel {
      */
     public ViewCarte(CarteInterface carte) {
         initComponents();
-        this.setBorder(new LineBorder(Color.BLACK));
+        //this.setBorder(new LineBorder(Color.BLACK));
         this.carte = carte;
     }
 
@@ -39,7 +37,7 @@ public class ViewCarte extends javax.swing.JPanel {
         
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
-                paintCase(g, carte.getCase(i, j), maxSize);
+                paintCase(g, carte.getCase(i, j), 20);
             }
         }
     }
@@ -60,7 +58,7 @@ public class ViewCarte extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(255, 51, 51));
+        setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

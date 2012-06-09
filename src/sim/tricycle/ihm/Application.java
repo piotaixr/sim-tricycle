@@ -4,9 +4,12 @@
  */
 package sim.tricycle.ihm;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.TestMap;
 import sim.tricycle.xmlparser.RobotParser;
@@ -30,17 +33,18 @@ public class Application extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         initComponents();
         setSize(700, 700);
-        this.setLayout(new FlowLayout());
+//                        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.setLayout(new BorderLayout());
         //Carte c = new Carte(25, 25);
         ViewCarte vc = new ViewCarte(e);
+
         scrollView.add(vc);
-        //scrollView.setLayout();        
-        
-        this.add(scrollView);
+        this.getContentPane().add(scrollView, BorderLayout.CENTER);
+        // this.add(scrollView);
+ this.setVisible(true);
         //this.add(vc);
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,11 +59,16 @@ public class Application extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        scrollView.setBackground(new java.awt.Color(102, 153, 0));
+        scrollView.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollView, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(scrollView, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
