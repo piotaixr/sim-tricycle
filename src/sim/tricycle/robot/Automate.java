@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class Automate {
 
-    private Map<Integer, Etat> etats = new HashMap();
+    private Map<String, Etat> etats = new HashMap();
 
     public void addEtat(Etat etat) {
         if (!hasEtat(etat.getId())) {
@@ -21,11 +21,11 @@ public class Automate {
         }
     }
 
-    public boolean hasEtat(int id) {
+    public boolean hasEtat(String id) {
         return etats.containsKey(id);
     }
 
-    public Etat getEtat(int id) {
+    public Etat getEtat(String id) {
         return etats.get(id);
     }
 }

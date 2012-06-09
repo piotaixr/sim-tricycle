@@ -12,11 +12,11 @@ import java.util.HashMap;
  */
 public class Etat {
 
-    private int id;
+    private String id;
     private HashMap<EventType, Transition> listeTransition;
     private Robot bot;
 
-    public Etat(int id) {
+    public Etat(String id) {
         this.id = id;
     }
 
@@ -24,12 +24,12 @@ public class Etat {
         listeTransition.get(evt.getType()).effectuerTransition(this.bot);
     }
 
-    public int getId() {
+    public String getId() {
         return id;
 
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
