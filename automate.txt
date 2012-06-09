@@ -1,25 +1,26 @@
 /*fichier automate*/
 robot{
 
-	etat==normal{
-		Si piece_trouvee alors etat=deplacement_norm;
-		Sinon{ attente(temps);
+	etat=normal{
+		Si(piece_trouvee){etat=deplacement_norm;}
+		Sinon{attente(temps);
 		       etat=normal;
 		}
 	}
-	etat==deplacement_norm{
-		Si case==piece alors{ ramasser(temps);
+	etat=deplacement_norm{
+		Si(case==piece){ ramasser(temps);
 				     etat=porteur;
-			      }
+                                     }
+                }
 		Sinon{aller(piece,temps);
 		      etat=normal;
 		}
 	}
-	etat==porteur{
+	etat=porteur{
 		etat=deplacement_port
 	}
-	etat==deplacement_port{
-		Si case==base alors{deposer(temps);
+	etat=deplacement_port{
+		Si(case==base){deposer(temps);
 				   etat=normal;
 			     }
 		Sinon{aller(base,temps);
