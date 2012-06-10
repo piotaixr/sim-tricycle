@@ -5,36 +5,44 @@
 package sim.tricycle.robot;
 
 import java.util.ArrayList;
+import java.util.List;
 import sim.tricycle.robot.action.Action;
+import sim.tricycle.robot.condition.ConditionInterface;
 
 /**
  *
  * @author Adri
  */
 public class Transition {
+
     private Etat etatDepart;
     private Etat etatDestination;
-    private ArrayList<Action> listeAction = new ArrayList();
+    private ConditionInterface condition = null;
+    private List<Action> actions = new ArrayList();
 
-    public Transition(Etat depart, Etat destination) {
+    public Transition(Etat depart, Etat destination, ConditionInterface condition) {
         this.etatDepart = depart;
         this.etatDestination = destination;
+        this.condition = condition;
     }
 
-    /**
-     *
-     * @param bot
-     */
-    public void enfilerAllActions(Robot bot) {
-        bot.getFileActions().addAll(listeAction);
+    public ConditionInterface getCondition() {
+        return condition;
+    }
+
+    public List<Action> getActions() {
+        return actions;
     }
 
     public void addAction(Action act) {
-        this.listeAction.add(act);
+        this.actions.add(act);
     }
-    
-    public void effectuerTransition(Robot bot){
-        enfilerAllActions(bot);
-        bot.setEtat(this.etatDestination);
+
+    public Etat getEtatDepart() {
+        return etatDepart;
+    }
+
+    public Etat getEtatDestination() {
+        return etatDestination;
     }
 }

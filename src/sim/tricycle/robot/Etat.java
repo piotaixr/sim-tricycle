@@ -4,7 +4,8 @@
  */
 package sim.tricycle.robot;
 
-import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -13,15 +14,10 @@ import java.util.HashMap;
 public class Etat {
 
     private String id;
-    private HashMap<EventType, Transition> listeTransition;
-    private Robot bot;
+    private List<Transition> transitions;
 
     public Etat(String id) {
         this.id = id;
-    }
-
-    public void etatSuivant(Evenement evt) {
-        listeTransition.get(evt.getType()).effectuerTransition(this.bot);
     }
 
     public String getId() {
@@ -33,19 +29,15 @@ public class Etat {
         this.id = id;
     }
 
-    public Robot getBot() {
-        return bot;
+    public List<Transition> getTransitions() {
+        return transitions;
     }
 
-    public void setBot(Robot bot) {
-        this.bot = bot;
+    public void getTransitions(List<Transition> transitions) {
+        this.transitions = transitions;
     }
 
-    public HashMap<EventType, Transition> getListeTransition() {
-        return listeTransition;
-    }
-
-    public void setListeTransition(HashMap<EventType, Transition> listeTransition) {
-        this.listeTransition = listeTransition;
+    public void addTransition(Transition t) {
+        transitions.add(t);
     }
 }

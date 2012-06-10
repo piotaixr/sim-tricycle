@@ -9,6 +9,10 @@ package sim.tricycle.robot;
  * @author Adri
  */
 public class Collecteur extends Robot{
+
+    public Collecteur(Automate automate) {
+        super(automate);
+    }
     
     
 }
