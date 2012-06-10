@@ -13,6 +13,8 @@ import org.jdom2.input.SAXBuilder;
 import sim.tricycle.robot.Automate;
 import sim.tricycle.robot.Etat;
 import sim.tricycle.robot.Transition;
+import sim.tricycle.robot.action.Action;
+import sim.tricycle.robot.action.ActionInterface;
 import sim.tricycle.robot.condition.ConditionInterface;
 import sim.tricycle.robot.condition.factory.ConditionFactoryInterface;
 import sim.tricycle.utils.params.ParamConverterProviderInterface;
@@ -103,11 +105,20 @@ public class RobotParser {
         List<Element> actions = elemTransition.getChildren("action");
         Iterator<Element> it = actions.iterator();
         while (it.hasNext()) {
+            Element actionelem = it.next();
+            ActionInterface action = creerAction(actionelem);
         }
     }
 
     private ConditionInterface creerCondition(Element conditionTransitionElement) {
         String conditionNom = conditionTransitionElement.getAttributeValue("nom").trim();
         return condifionFactory.create(conditionNom, conditionTransitionElement.getChildren("parametre"));
+    }
+
+    private ActionInterface creerAction(Element actionelem) {
+        ActionInterface action = null;
+        
+        
+        return action;
     }
 }
