@@ -12,12 +12,24 @@ import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 import sim.tricycle.robot.Automate;
 import sim.tricycle.robot.Etat;
+import sim.tricycle.robot.Transition;
+import sim.tricycle.robot.condition.ConditionInterface;
+import sim.tricycle.robot.condition.factory.ConditionFactoryInterface;
+import sim.tricycle.utils.params.ParamConverterProviderInterface;
 
 /**
- *
+ * @todo implementation non finie. Il doit rester des fonctions a ajouter
  * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
  */
 public class RobotParser {
+
+    private ConditionFactoryInterface condifionFactory;
+    private ParamConverterProviderInterface paramConverterProvider;
+
+    public RobotParser(ConditionFactoryInterface condifionFactory, ParamConverterProviderInterface paramConverterProvider) {
+        this.condifionFactory = condifionFactory;
+        this.paramConverterProvider = paramConverterProvider;
+    }
 
     public Automate parse(File f) {
         Automate automate = new Automate();
@@ -37,23 +49,23 @@ public class RobotParser {
 
     private void parseRobot(Element racine, Automate automate) {
         List<Element> etats = racine.getChildren("etat");
-        createEtats(etats, automate);
-        
+        creerEtats(etats, automate);
+
         Iterator<Element> it = etats.iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             Element elementEtat = it.next();
-            int id = Integer.parseInt(elementEtat.getAttributeValue("id"));
+            String id = elementEtat.getAttributeValue("id");
             Etat e = automate.getEtat(id);
             addTransitions(e, elementEtat, automate);
         }
-        
+
     }
 
-    private void createEtats(List<Element> etats, Automate automate) {
+    private void creerEtats(List<Element> etats, Automate automate) {
         Iterator<Element> it = etats.iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             Element e = it.next();
-            int id = Integer.parseInt(e.getAttributeValue("id"));
+            String id = e.getAttributeValue("id");
             Etat etat = new Etat(id);
             automate.addEtat(etat);
         }
@@ -61,6 +73,41 @@ public class RobotParser {
 
     private void addTransitions(Etat e, Element elementEtat, Automate automate) {
         List<Element> transitions = elementEtat.getChildren("transition");
-        
+        Iterator<Element> it = transitions.iterator();
+        while (it.hasNext()) {
+            Element elemTransition = it.next();
+
+            Element elemEtatDestination = elemTransition.getChild("etat");
+            if (elemEtatDestination == null) {
+                throw new DocumentMalformedException("etat");
+            }
+            String etatId = elemEtatDestination.getAttributeValue("id");
+            Etat etatDestination = automate.getEtat(etatId);
+
+            Element conditionTransitionElement = elemTransition.getChild("condition");
+            ConditionInterface condition = creerCondition(conditionTransitionElement);
+
+            Transition t = new Transition(e, etatDestination, condition);
+            ajouterActions(t, elemTransition, automate);
+            
+            e.addTransition(t);
+        }
+    }
+/**
+ * @todo Finir l'implementation de cette fonction
+ * @param t
+ * @param elemTransition
+ * @param automate 
+ */
+    private void ajouterActions(Transition t, Element elemTransition, Automate automate) {
+        List<Element> actions = elemTransition.getChildren("action");
+        Iterator<Element> it = actions.iterator();
+        while (it.hasNext()) {
+        }
+    }
+
+    private ConditionInterface creerCondition(Element conditionTransitionElement) {
+        String conditionNom = conditionTransitionElement.getAttributeValue("nom").trim();
+        return condifionFactory.create(conditionNom, conditionTransitionElement.getChildren("parametre"));
     }
 }
