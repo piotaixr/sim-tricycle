@@ -18,6 +18,7 @@ let depiler p = match p with
   |Pile_vide->failwith "pile vide";;
 
 let char_to_string c = String.make 1 c;;
+char_to_string 'a';;
 
 
 let lecture_aux fichier = input_line fichier;;
@@ -33,23 +34,39 @@ let rec indenter i sortie =
   done ;;
 
 let rec parseur pile sortie stream nom= match stream with parser 
-  |[<'' ';f>] ->(parseur pile sortie f "");
-  |[<''\n';f>] ->(parseur pile sortie f "");
-  |[<''\t';f>]->(parseur pile sortie f "");
+  |[<'' ';f>]->(parseur pile sortie f nom);
+  |[<''\n';f>]->(parseur pile sortie f nom);
+  |[<''\t';f>]->(parseur pile sortie f nom);
+  |[<'',';f>]-> (let name =(sommet_pile pile)
+		in match name with
+		  |"action"-> ecriture_aux sortie ("<para>"^" "^nom^" "^"</para>");(ecriture_aux_char sortie '\n');(parseur pile sortie f "")
+		  |post->pile)
+
+ (* |[<''=';f]->(let name = nom 
+	      in match name with
+		|"etat"->  ecriture_aux sortie ("<etat id=");
+		           (parseur pile sortie f "");
+		|mot->parseur pile sortie f(mot^(char_to_string '=')))
+ *)
   |[<''(';f>]-> (let name = nom 
 		 in match name with
 		   |"si"-> ecriture_aux sortie ("<condition nom=");
 		     let p= (empiler "condition" pile) in (parseur p sortie f "")
-		   |post-> parseur pile sortie f "")
+		   |post-> ecriture_aux sortie ("<action nom="^"\""^post^"\""^">");(ecriture_aux_char sortie '\n'); let p= (empiler "action" pile) in (parseur p sortie f ""))
 
    |[<'')';f>]->(let name = (sommet_pile pile)
 		in match name with 
 		  |"condition"-> ecriture_aux sortie ("\""^nom^"\""^">");
 		    (ecriture_aux_char sortie '\n');
 		    (parseur pile sortie f "")
+		  |"action"-> ecriture_aux sortie ("<para>"^" "^nom^" "^"</para>");
+		    (ecriture_aux_char sortie '\n');
+		    ecriture_aux sortie ("</action>");
+		    (ecriture_aux_char sortie '\n');
+		    let p=(depiler pile) in (parseur p sortie f "")
 		  |post->pile)
 
-  |[<''a'..'z'|'A'..'Z'|'='|'_'  as n; f>] -> parseur pile sortie f (nom^(char_to_string n))
+  |[<''a'..'z'|'A'..'Z'|'_'|'='  as n; f>] -> parseur pile sortie f (nom^(char_to_string n))
 
   |[<''}';f>]->let name = (sommet_pile pile)
 	     in (ecriture_aux sortie ("<"^"/"^name^">"));
@@ -62,7 +79,7 @@ let rec parseur pile sortie stream nom= match stream with parser
 		    (ecriture_aux_char sortie '\n');
 		    let p= (empiler "condition" pile) in (parseur p sortie f "")
 
-		  |""->pile
+		  |""->parseur pile sortie f ""
 
 		  |post-> ecriture_aux sortie ("<"^post^">");
 		    (ecriture_aux_char sortie '\n');
@@ -97,8 +114,16 @@ lecture_aux entree;;
 let transf entree= Stream.of_string(input_line entree);;
 parseur sortie (transf fichier) "";;
 let ecriture_aux sortie  mot = output sortie mot 0 (String.length mot);;
-  (*close_out sortie;;*)
 ecriture_aux sortie "blabla";;
+
+
+let p nom f =
+   let t name k=  match name with
+		|"etat"->  ecriture_aux sortie ("<etat id=");
+		           (parseur pile sortie k "");
+		|mot->(parseur pile sortie k (mot^(char_to_string '=')))
+   in (t nom f);;
+
 
 close_out sortie;;
 close_in entree;;
