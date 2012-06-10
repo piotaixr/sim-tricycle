@@ -9,6 +9,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.TestMap;
+import sim.tricycle.utils.ObjectBuilder;
 import sim.tricycle.xmlparser.RobotParser;
 
 /**
@@ -17,7 +18,7 @@ import sim.tricycle.xmlparser.RobotParser;
  * @author nell
  */
 public class Application extends javax.swing.JFrame {
-
+    private ObjectBuilder builder = new ObjectBuilder();
     /**
      * Creates new form Application
      */
@@ -84,7 +85,7 @@ public class Application extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File f = chooser.getSelectedFile();
 
-            RobotParser parser = new RobotParser();
+            RobotParser parser = builder.getRobotParser();
 
             parser.parse(f);
         }
