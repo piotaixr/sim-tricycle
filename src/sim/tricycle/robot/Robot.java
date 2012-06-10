@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
 import sim.tricycle.robot.action.Action;
+import sim.tricycle.robot.action.ActionInterface;
 
 /**
  *
@@ -18,7 +19,7 @@ public abstract class Robot implements OrdonnancableInterface {
     protected Point position;
     protected Sens direction;
     protected int portee;
-    protected ArrayDeque<Action> actions = new ArrayDeque();
+    protected ArrayDeque<ActionInterface> actions = new ArrayDeque();
     /**
      * @deprecated
      */
@@ -61,11 +62,11 @@ public abstract class Robot implements OrdonnancableInterface {
         this.portee = newPortee;
     }
 
-    public ArrayDeque<Action> getActions() {
+    public ArrayDeque<ActionInterface> getActions() {
         return actions;
     }
 
-    public void setActions(ArrayDeque<Action> fileActions) {
+    public void setActions(ArrayDeque<ActionInterface> fileActions) {
         this.actions = fileActions;
     }
 
@@ -118,7 +119,7 @@ public abstract class Robot implements OrdonnancableInterface {
      * @deprecated
      */
     public void depilerActionCourante() {
-        Action a = actions.pollFirst();
+        ActionInterface a = actions.pollFirst();
         if (a != null) {
             a.executer(this);
         }
@@ -158,7 +159,7 @@ public abstract class Robot implements OrdonnancableInterface {
                     continue;
                 }
                 //ajout des actions
-                List<Action> newActions = t.getActions();
+                List<ActionInterface> newActions = t.getActions();
                 actions.addAll(newActions);
                 //on donne l'etat de destination
                 etatDestination = t.getEtatDestination();

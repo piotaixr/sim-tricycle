@@ -6,7 +6,7 @@ package sim.tricycle.robot;
 
 import java.util.ArrayList;
 import java.util.List;
-import sim.tricycle.robot.action.Action;
+import sim.tricycle.robot.action.ActionInterface;
 import sim.tricycle.robot.condition.ConditionInterface;
 
 /**
@@ -18,7 +18,7 @@ public class Transition {
     private Etat etatDepart;
     private Etat etatDestination;
     private ConditionInterface condition = null;
-    private List<Action> actions = new ArrayList();
+    private List<ActionInterface> actions = new ArrayList();
 
     public Transition(Etat depart, Etat destination, ConditionInterface condition) {
         this.etatDepart = depart;
@@ -30,11 +30,11 @@ public class Transition {
         return condition;
     }
 
-    public List<Action> getActions() {
+    public List<ActionInterface> getActions() {
         return actions;
     }
 
-    public void addAction(Action act) {
+    public void addAction(ActionInterface act) {
         this.actions.add(act);
     }
 
