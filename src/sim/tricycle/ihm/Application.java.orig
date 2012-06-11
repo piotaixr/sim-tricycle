@@ -6,10 +6,8 @@ package sim.tricycle.ihm;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.io.File;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.TestMap;
 import sim.tricycle.xmlparser.RobotParser;
@@ -33,16 +31,18 @@ public class Application extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         initComponents();
         setSize(700, 700);
-//                        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        
         this.setLayout(new BorderLayout());
         //Carte c = new Carte(25, 25);
         ViewCarte vc = new ViewCarte(e);
-
+        jPanel1 = vc;
         scrollView.add(vc);
+        this.add(scrollView);
+        this.add(jPanel1);
+       
+        
         this.getContentPane().add(scrollView, BorderLayout.CENTER);
-        // this.add(scrollView);
- this.setVisible(true);
+
         //this.add(vc);
 
     }
@@ -94,9 +94,7 @@ public class Application extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(scrollView, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(scrollView, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
