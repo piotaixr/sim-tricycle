@@ -6,7 +6,6 @@ package sim.tricycle.utils.params;
 
 import java.util.Collection;
 import java.util.HashMap;
-import sim.tricycle.utils.ProviderInterface;
 
 /**
  *
@@ -18,7 +17,7 @@ public class ParamConverterProvider implements ParamConverterProviderInterface {
 
     @Override
     public ParamConverterInterface get(String nom) {
-        if (!hasConverter(nom)) {
+        if (!has(nom)) {
             throw new RuntimeException("Le ParamConverter " + nom + " n'existe pas ou n'est pas enregistré dans le systeme.");
         }
 
@@ -26,7 +25,7 @@ public class ParamConverterProvider implements ParamConverterProviderInterface {
     }
 
     @Override
-    public boolean hasConverter(String nom) {
+    public boolean has(String nom) {
         return converters.containsKey(nom);
     }
 

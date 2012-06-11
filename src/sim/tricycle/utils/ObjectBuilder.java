@@ -34,7 +34,7 @@ public class ObjectBuilder {
     public ConditionFactoryInterface getConditionFactory() {
         if (conditionFactory == null) {
             conditionFactory = new ConditionFactory(getParamConverterProvider());
-            conditionFactory.registerCondition(new ConditionTrue());
+            conditionFactory.register(new ConditionTrue());
         }
 
         return conditionFactory;

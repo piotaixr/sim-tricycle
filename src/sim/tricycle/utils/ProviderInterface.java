@@ -10,7 +10,7 @@ public interface ProviderInterface<K, V> {
 
     public V get(K nom);
 
-    public boolean hasConverter(K nom);
+    public boolean has(K nom);
 
     public void register(V paramConverter);
 
