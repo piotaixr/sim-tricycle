@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import sim.tricycle.mapping.CarteInterface;
 import sim.tricycle.mapping.Case;
+import sim.tricycle.mapping.TypeCase;
 
 /**
  *
@@ -25,7 +26,7 @@ public class ViewCarte extends javax.swing.JPanel {
     //private int decalageX;    //pour plus tard essayer de centrer la carte dans le JScrollPane
     //private int decalageY;
     private int tailleOpti;
-    private Image imgMur,imgVide;
+    private Image imgPiece,imgMur, imgVide, imgRobot, imgBonus, imgBoule;
 
     /**
      * Creates new form ViewCarte
@@ -40,9 +41,14 @@ public class ViewCarte extends javax.swing.JPanel {
         //this.setPreferredSize(this.getSize());
 
         try {
-            //imgMur = ImageIO.read(new File("sim-tricycle\\src\\sim\\tricycle\\ihm\\mur.jpg"));
+
+            // Initialisation des images:
             imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/mur.jpg"));
             imgVide = ImageIO.read(new File("./src/sim/tricycle/ihm/vide.jpg"));
+            imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/robot.jpg"));
+            imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/bonus.jpg"));
+            imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/boule.jpg"));
+            imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/piece.jpg"));           
 
         } catch (IOException ex) {
             Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
@@ -85,20 +91,38 @@ public class ViewCarte extends javax.swing.JPanel {
 
         int x = c.getX() * width;
         int y = c.getY() * width;
-        if (" O ".equals(c.toString())) {
+
+        if (c.whoIam() == TypeCase.mur) {                             //MUR
+            g.drawImage(imgMur, x, y, width, width, this);
             g.drawRect(x, y, width, width);
-            g.drawImage(imgMur, x, y, width, width, this);
-        } else if (" X ".equals(c.toString())) {
-            g.drawImage(imgMur, x, y, width, width, this);
+
+        } else if (c.whoIam() == TypeCase.vide) {                     //VIDE
+            g.drawImage(imgVide, x, y, width, width, this);
+            g.drawRect(x, y, width, width);
+
+        } else if (c.whoIam() == TypeCase.piece) {                    //PIECE
+            g.drawImage(imgPiece, x, y, width, width, this);
+            g.drawRect(x, y, width, width);
+
+        } else if (c.whoIam() == TypeCase.bonus) {                    //BONUS
+            g.drawImage(imgBonus, x, y, width, width, this);
+            g.drawRect(x, y, width, width);
+
+        } else if (c.whoIam() == TypeCase.robot) {                    //ROBOT
+            g.drawImage(imgRobot, x, y, width, width, this);
+            g.drawRect(x, y, width, width);
+
+        } else if (c.whoIam() == TypeCase.boule) {                    //BOULE
+            g.drawImage(imgBoule, x, y, width, width, this);
             g.drawRect(x, y, width, width);
         } else {
             g.drawImage(imgVide, x, y, width, width, this);
             g.drawRect(x, y, width, width);
         }
     }
-    
-    public void setTaille(int txZoom){
-        tailleCase = tailleCaseBase * txZoom/100;
+
+    public void setTaille(int txZoom) {
+        tailleCase = tailleCaseBase * txZoom / 100;
         this.repaint();
     }
 
