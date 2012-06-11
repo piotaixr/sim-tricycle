@@ -5,6 +5,7 @@
 package sim.tricycle.ihm;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.CarteInterface;
 import sim.tricycle.mapping.TestMap;
@@ -26,10 +27,14 @@ public class FrameGame1 extends javax.swing.JFrame {
         //Creer et utilise cette carte car plus grande
         //Carte c = new Carte(25, 25);
         
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        this.setSize(tk.getScreenSize().width,tk.getScreenSize().height);
+        
         TestMap test2 = new TestMap();
         test2.startTest();
-        Carte c = test2.getCarte();
-
+        //Carte c = test2.getCarte();
+        Carte c = new Carte(50, 50);
+        
         vc = new ViewCarte(c);
         //jpanMap.setSize(vc.getWidth(), vc.getHeight());
         //panMap.add(vc);
