@@ -92,8 +92,6 @@ public abstract class Robot implements OrdonnancableInterface {
     public Carte getMapTeam(){
         return this.mapTeam;
     }
-    
-
 
     @Override
     /**
