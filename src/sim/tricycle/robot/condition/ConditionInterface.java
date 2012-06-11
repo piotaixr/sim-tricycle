@@ -1,12 +1,13 @@
 package sim.tricycle.robot.condition;
 
+import sim.tricycle.utils.IdentifiableInterface;
+
 /**
  *
  * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
  */
-public interface ConditionInterface extends Cloneable {
+public interface ConditionInterface extends Cloneable, IdentifiableInterface<String> {
 
     public boolean test();
-
-    public String getName();
+    public ConditionInterface clone() throws CloneNotSupportedException;
 }
