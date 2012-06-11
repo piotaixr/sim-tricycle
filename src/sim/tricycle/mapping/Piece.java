@@ -19,5 +19,9 @@ public class Piece extends AbstractObjet {
     public TypeCase whoIam() {
             return (TypeCase.piece);
         }
+    
+            public String toString(){
+            return "P";
+        }
     }
     

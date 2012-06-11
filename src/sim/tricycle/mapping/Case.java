@@ -34,9 +34,11 @@ public class Case {
     }
 
     /*
-     * Crée une case selon un identificateur: ' ': case vide. 'O': case avec une
-     * boule. 'B': case avec un bonus. 'P': case avec une pièce. 'X': case
-     * obstacle.
+     * Crée une case selon un identificateur: 
+     * ' ': case vide. 'O': case avec une boule. 
+     * 'B': case avec un bonus. 
+     * 'P': case avec une pièce. 
+     * 'X': case obstacle.
      */
     public Case(char id, int cx, int cy) {
         this.x = cx;
@@ -74,22 +76,25 @@ public class Case {
     }
 
     /*
-     * Retourne si a case possède t-elle un objet. @return 0 si absence d'objet.
+     * Retourne si a case possède t-elle un objet. 
+     * @return 0 si absence d'objet.
      */
     public boolean hasItem() {
         return (objet != null);
     }
 
     /*
-     * Retourne si a case est un obstacle. @return 0 si absence d'objet.
+     * Retourne si a case est un obstacle. 
+     * @return 0 si absence d'objet.
      */
     public boolean hasObstacle() {
         return (obstacle != null);
     }
 
     /*
-     * setItem place un objet sur la case. @param: l'objet à placer. @param
-     * l'objet à placer.
+     * setItem place un objet sur la case. 
+     * @param l'objet à placer. 
+     * @param l'objet à placer.
      */
     public void setItem(AbstractObjet ob) {
         if (this.hasItem()) {
@@ -100,8 +105,8 @@ public class Case {
     }
 
     /*
-     * setItem place un objet sur la case. @param: l'objet à placer. @param
-     * l'objet à placer.
+     * setItem place un objet sur la case. 
+     * @param l'objet à placer. 
      */
     public void setObstacle(AbstractObstacle obst) {
         if (this.hasObstacle()) {
@@ -112,8 +117,8 @@ public class Case {
     }
 
     /*
-     * Copie d'une autre case. @param nouv la case à copiée. @ensure nouv ==
-     * this
+     * Copie d'une autre case. 
+     * @param nouv la case à copiée.
      */
     public void copy(Case nouv) {
         this.objet = nouv.objet;
@@ -121,40 +126,52 @@ public class Case {
     }
 
     public String toString() {
-        if (this.hasItem()) {
-            return " O ";
-        }
-        if (this.hasObstacle()) {
-            return " X ";
+        if (this.hasItem() && this.hasObstacle()) {
+            return " ";
         }
 
-        return " . ";
+        if (this.hasItem()) {
+            return this.myItem().toString();
+        }
+        if (this.hasObstacle()) {
+            return this.myObstacle().toString();
+        }
+
+        return ".";
     }
-     /* Indique quel est le type de la case.
+
+    /*
+     * Indique quel est le type de la case. 
      * @return le type de la case
-     */   
-    public TypeCase whoIam(){
-        if (this.hasItem()){
+     */
+    public TypeCase whoIam() {
+        if (this.hasItem() && this.hasObstacle()) {
+            return TypeCase.vide;
+        }
+
+        if (this.hasItem()) {
             return this.myItem().whoIam();
         }
-        if (this.hasObstacle()){
+        if (this.hasObstacle()) {
             return this.myObstacle().whoIam();
         }
-        
+
         return TypeCase.vide;
     }
-    
-    /* Renvoi l'objet associé.
+
+    /*
+     * Renvoi l'objet associé. 
      * @return l'objet.
      */
-    public AbstractObjet myItem(){
+    public AbstractObjet myItem() {
         return this.objet;
     }
-    
-        /* Renvoi l'obstacle associé.
+
+    /*
+     * Renvoi l'obstacle associé. 
      * @return l'obstacle.
      */
-    public AbstractObstacle myObstacle(){
+    public AbstractObstacle myObstacle() {
         return this.obstacle;
     }
 }

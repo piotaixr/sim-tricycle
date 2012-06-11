@@ -22,4 +22,5 @@ public interface PossedeCaseInterface {
      */
     public TypeCase whoIam();
     
+    public String toString ();
 }

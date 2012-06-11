@@ -17,4 +17,8 @@ public class Mur extends AbstractObstacle{
         public TypeCase whoIam(){
             return (TypeCase.mur);
         }
+        
+        public String toString(){
+            return "M";
+        }
 }

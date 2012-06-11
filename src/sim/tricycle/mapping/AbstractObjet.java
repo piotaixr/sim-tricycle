@@ -31,4 +31,8 @@ public abstract class AbstractObjet implements PossedeCaseInterface{
         this.pos=nouv;
         pos.setItem(this);
     }
+    
+            public String toString(){
+            return "O";
+        }
 }

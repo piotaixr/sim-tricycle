@@ -17,4 +17,9 @@ public class Bonus extends AbstractObjet {
     public TypeCase whoIam() {
         return (TypeCase.bonus);
     }
+
+    public String toString() {
+        return "M"
+                + "*";
+    }
 }

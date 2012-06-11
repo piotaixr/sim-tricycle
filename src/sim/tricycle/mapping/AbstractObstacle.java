@@ -23,4 +23,8 @@ public class AbstractObstacle implements PossedeCaseInterface {
     public TypeCase whoIam() {
         return (TypeCase.obstacle);
     }
+
+    public String toString() {
+        return "X";
+    }
 }
