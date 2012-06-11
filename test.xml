@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding='ISO-8859-1' standalone='yes' ?>
+<robot>
+<etat id="normal">
+<transition>
+<condition nom="piece_trouvee">
+<etat id="deplacement_norm"/>
+</condition>
+</transition>
+<transition>
+<condition nom="true">
+<action nom="attente">
+<para> tempos </para>
+</action>
+<etat id="normal"/>
+</condition>
+</transition>
+</etat>
+<etat id="deplacement_norm">
+<transition>
+<condition nom="case==piece">
+<action nom="ramasser">
+<para> tempos </para>
+</action>
+<etat id="porteur"/>
+</condition>
+</transition>
+<transition>
+<condition nom="true">
+<action nom="aller">
+<para> piece </para>
+<para> tempos </para>
+</action>
+<etat id="normal"/>
+</condition>
+</transition>
+</etat>
+<etat id="porteur">
+<transition>
+<etat id="deplacement_port"/>
+</transition>
+</etat>
+<etat id="deplacement_port">
+<transition>
+<condition nom="case==base">
+<action nom="deposer">
+<para> tempos </para>
+</action>
+<etat id="normal"/>
+</condition>
+</transition>
+<transition>
+<condition nom="true">
+<action nom="aller">
+<para> base </para>
+<para> tempos </para>
+</action>
+<etat id="deplacement_port"/>
+</condition>
+</transition>
+</etat>
+</robot>
