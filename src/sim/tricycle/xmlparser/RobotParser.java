@@ -16,8 +16,10 @@ import sim.tricycle.robot.Transition;
 import sim.tricycle.robot.action.Action;
 import sim.tricycle.robot.action.ActionInterface;
 import sim.tricycle.robot.condition.ConditionInterface;
+import sim.tricycle.robot.condition.ParameterCreator;
 import sim.tricycle.robot.condition.factory.ConditionFactoryInterface;
 import sim.tricycle.utils.params.ParamConverterProviderInterface;
+import sim.tricycle.utils.params.Parameter;
 
 /**
  * @todo implementation non finie. Il doit rester des fonctions a ajouter
@@ -112,12 +114,14 @@ public class RobotParser {
 
     private ConditionInterface creerCondition(Element conditionTransitionElement) {
         String conditionNom = conditionTransitionElement.getAttributeValue("nom").trim();
-        return condifionFactory.create(conditionNom, conditionTransitionElement.getChildren("parametre"));
+        List<Parameter> parametersList = new ParameterCreator().toParameterList(conditionTransitionElement.getChildren("parametre"));
+        
+        return condifionFactory.create(conditionNom, parametersList);
     }
 
-    private ActionInterface creerAction(Element actionelem) {
+    private ActionInterface creerAction(Element actionElement) {
         ActionInterface action = null;
-        
+        List<Parameter> parametersList = new ParameterCreator().toParameterList(actionElement.getChildren("parametre"));
         
         return action;
     }

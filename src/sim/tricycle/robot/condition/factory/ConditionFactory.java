@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom2.Element;
 import sim.tricycle.robot.condition.ConditionInterface;
+import sim.tricycle.robot.condition.ParameterCreator;
 import sim.tricycle.utils.params.ParamConverterProviderInterface;
 import sim.tricycle.utils.params.Parameter;
 
@@ -29,9 +30,8 @@ public class ConditionFactory implements ConditionFactoryInterface {
 
     
     @Override
-    public ConditionInterface create(String nom, List<Element> parametersElements) {
+    public ConditionInterface create(String nom, List<Parameter> parameters) {
         ConditionInterface returnValue = null;
-        List<Parameter> parameters = toParameterList(parametersElements);
         try {
             if (!conditions.containsKey(nom)) {
                 throw new RuntimeException("La condition de nom " + nom + " n'existe pas ou n'est pas enregistrée auprès du système.");
@@ -75,23 +75,6 @@ public class ConditionFactory implements ConditionFactoryInterface {
         }
 
         conditions.put(condition.getName(), condition);
-    }
-
-    private List<Parameter> toParameterList(List<Element> parametersElements) {
-        List<Parameter> params = new ArrayList<Parameter>(parametersElements.size());
-        Iterator<Element> it = parametersElements.iterator();
-        while (it.hasNext()) {
-            Element elem = it.next();
-            String type = elem.getAttributeValue("type");
-            if (type == null) {
-                type = "string";
-            }
-
-            String value = elem.getTextNormalize();
-            params.add(new Parameter(type, value));
-        }
-
-        return params;
     }
 
     private Class[] toRequiredTypes(List<Parameter> parameters) {
