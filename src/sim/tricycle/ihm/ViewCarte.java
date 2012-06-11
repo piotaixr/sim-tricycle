@@ -90,8 +90,8 @@ public class ViewCarte extends javax.swing.JPanel {
     private void paintCase(Graphics2D g, Case c, int width) {
         // System.out.println("Paint case " +width + "/" + c.getX() + " " + c.getY());
 
-        int x = c.getX() * width;
-        int y = c.getY() * width;
+        int y = c.getX() * width;
+        int x = c.getY() * width;
 
         if (c.whoIam() == TypeCase.mur) {                             //MUR
             g.drawImage(imgMur, x, y, width, width, this);
