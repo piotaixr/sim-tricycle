@@ -16,7 +16,8 @@ import sim.tricycle.mapping.TestMap;
 public class FrameGame1 extends javax.swing.JFrame {
 
     private ViewCarte vc;
-    
+    private ViewMiniCarte vmc;
+
     /**
      * Creates new form MorganTestAppli
      */
@@ -25,38 +26,31 @@ public class FrameGame1 extends javax.swing.JFrame {
 
         //Creer et utilise cette carte car plus grande
         //Carte c = new Carte(25, 25);
-        
+
         Toolkit tk = Toolkit.getDefaultToolkit();
-        this.setSize(tk.getScreenSize().width,tk.getScreenSize().height);
-        
+        this.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
+
         TestMap test2 = new TestMap();
         test2.startTest();
-        //Carte c = test2.getCarte();
-        Carte c = new Carte(50, 50);
-        
+        Carte c = test2.getCarte();
+        //Carte c = new Carte(50, 50);
+
         vc = new ViewCarte(c);
+        vmc = new ViewMiniCarte(c);
         
-                ViewCarte vx = new ViewCarte(c);
-                panMiniMap.setLayout(new BorderLayout());
-                vx.setVisible(true);
+        panMiniMap.setLayout(new BorderLayout());
+        vmc.setVisible(true);
         //jpanMap.setSize(vc.getWidth(), vc.getHeight());
         //panMap.add(vc);
         //panMap = vc;
         //panMap.setSize(vc.getWidth(), vc.getHeight());
 
         //panMap.setSize(c.getLargeur()*vc.getWidth(), c.getHauteur()*vc.getHeight());
-        //panMap.setSize(500,500);
-        //jspanMap.revalidate();
+  
         jspanMap.setViewportView(vc);
-        //jspanMap.setAlignmentX(CENTER_ALIGNMENT);
-           //     jspanMap.setAlignmentY(CENTER_ALIGNMENT);
-         //jspanMap.getLocationOnScreen();
-       //  jspanMap.setLocation(300,300);
-      //   jspanMap.setLocation(1000, 1000);
-          jspanMap.getViewport().setLocation(10000, 10000);
-        panMiniMap.add(vx);
-                
-              
+        panMiniMap.add(vmc);
+
+
         //jspanMap.setPreferredSize(vc.getSize());
 
         System.out.println(" largeur scroll pane :" + jspanMap.getWidth() + " hauteur : " + jspanMap.getHeight());
@@ -313,7 +307,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableGlobale.setLayout(panActionAvailableGlobaleLayout);
         panActionAvailableGlobaleLayout.setHorizontalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 205, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
         );
         panActionAvailableGlobaleLayout.setVerticalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,7 +320,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableTeam1.setLayout(panActionAvailableTeam1Layout);
         panActionAvailableTeam1Layout.setHorizontalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 205, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
         );
         panActionAvailableTeam1Layout.setVerticalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,7 +333,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableTeam2.setLayout(panActionAvailableTeam2Layout);
         panActionAvailableTeam2Layout.setHorizontalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 205, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
         );
         panActionAvailableTeam2Layout.setVerticalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -399,18 +393,17 @@ public class FrameGame1 extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        panMiniMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         panMiniMap.setPreferredSize(new java.awt.Dimension(153, 167));
 
         javax.swing.GroupLayout panMiniMapLayout = new javax.swing.GroupLayout(panMiniMap);
         panMiniMap.setLayout(panMiniMapLayout);
         panMiniMapLayout.setHorizontalGroup(
             panMiniMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 165, Short.MAX_VALUE)
+            .addGap(0, 167, Short.MAX_VALUE)
         );
         panMiniMapLayout.setVerticalGroup(
             panMiniMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 174, Short.MAX_VALUE)
+            .addGap(0, 176, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -437,11 +430,6 @@ public class FrameGame1 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jspanMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panActionAvailable))
-                        .addGap(0, 11, 11))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(panSelectTeamMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
                         .addComponent(panZoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -452,7 +440,12 @@ public class FrameGame1 extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jspanMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(panActionAvailable))
-                        .addGap(0, 11, 11))))
+                        .addGap(0, 11, 11))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panSelectTeamMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(panZoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         headband.getAccessibleContext().setAccessibleName("headband");
@@ -499,7 +492,7 @@ public class FrameGame1 extends javax.swing.JFrame {
 
     private void jspanMapMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jspanMapMouseWheelMoved
         // TODO add your handling code here:
-        sldZoom.setValue(sldZoom.getValue()-evt.getWheelRotation()*evt.getScrollAmount());
+        sldZoom.setValue(sldZoom.getValue() - evt.getWheelRotation() * evt.getScrollAmount());
     }//GEN-LAST:event_jspanMapMouseWheelMoved
 
     private void buttonPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPauseActionPerformed

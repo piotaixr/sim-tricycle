@@ -34,11 +34,11 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         initComponents();
         this.carte = carte;
         this.tailleCase = this.tailleCaseBase;
-        //this.setBackground(Color.red);
+      //  this.setBackground(Color.darkGray);
 
-//        tailleOpti = Math.max((int)this.getParent().getWidth()/carte.getLargeur(),(int)this.getParent().getHeight()/carte.getHauteur());
-//        tailleCase = tailleOpti;
-        //this.setPreferredSize(this.getSize());
+     //   tailleOpti = Math.max((int)this.getParent().getWidth()/carte.getLargeur(),(int)this.getParent().getHeight()/carte.getHauteur());
+     //   tailleCase = tailleOpti;
+      //  this.setPreferredSize(this.getSize());
 
         try {
 
@@ -60,16 +60,16 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         super.paint(graphic);
         Graphics2D g = (Graphics2D) graphic;
 
-        // tailleOpti = Math.min(this.getWidth()/carte.getLargeur(),this.getHeight()/carte.getHauteur());
-        //tailleCase = tailleOpti;
-        Dimension d = new Dimension(carte.getLargeur() * tailleCase, carte.getHauteur() * tailleCase);
+         tailleOpti = Math.min(this.getWidth()/carte.getLargeur(),this.getHeight()/carte.getHauteur());
+        tailleCase = tailleOpti;
+      //  Dimension d = new Dimension(carte.getLargeur() * tailleCase, carte.getHauteur() * tailleCase);
 
         //this.setPreferredSize(this.getSize());
-        this.setPreferredSize(d);
+     //   this.setPreferredSize(d);
 
-//        int maxWidth = this.getWidth() / carte.getLargeur();
-//        int maxHeight = this.getHeight() / carte.getHauteur();
-//        int maxSize = Math.min(maxHeight, maxWidth);
+       int maxWidth = this.getWidth() / carte.getLargeur();
+       int maxHeight = this.getHeight() / carte.getHauteur();
+        int maxSize = Math.min(maxHeight, maxWidth);
 
         System.out.println("widht " + this.getWidth() + " nbcase : " + carte.getLargeur()
                 + " height " + this.getHeight() + " nbcase  " + carte.getHauteur());
@@ -80,8 +80,8 @@ public class ViewMiniCarte extends javax.swing.JPanel {
 
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
-                //paintCase(g, carte.getCase(i, j), maxSize);
-                paintCase(g, carte.getCase(i, j), tailleCase);
+                paintCase(g, carte.getCase(i, j), tailleOpti);
+               // paintCase(g, carte.getCase(i, j), tailleCase);
             }
         }
     }
@@ -94,30 +94,23 @@ public class ViewMiniCarte extends javax.swing.JPanel {
 
         if (c.whoIam() == TypeCase.mur) {                             //MUR
             g.drawImage(imgMur, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.vide) {                     //VIDE
             g.drawImage(imgVide, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.piece) {                    //PIECE
             g.drawImage(imgPiece, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.bonus) {                    //BONUS
             g.drawImage(imgBonus, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.robot) {                    //ROBOT
             g.drawImage(imgRobot, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.boule) {                    //BOULE
             g.drawImage(imgBoule, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
         } else {
             g.drawImage(imgVide, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
         }
     }
 
