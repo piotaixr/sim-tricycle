@@ -17,4 +17,9 @@ public interface PossedeCaseInterface {
      */
     public Case getPosition();
     
+    /* Indique quel est le type de la case.
+     * @return le type de la case
+     */
+    public TypeCase whoIam();
+    
 }

@@ -14,5 +14,10 @@ public class Piece extends AbstractObjet {
         this.pos = pos;
         pos.setItem(this);
     }
+
+    @Override
+    public TypeCase whoIam() {
+            return (TypeCase.piece);
+        }
+    }
     
-}

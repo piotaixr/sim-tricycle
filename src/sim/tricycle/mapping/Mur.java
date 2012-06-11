@@ -14,4 +14,7 @@ public class Mur extends AbstractObstacle{
             pos.setObstacle(this);
         }
 
+        public TypeCase whoIam(){
+            return (TypeCase.mur);
+        }
 }
