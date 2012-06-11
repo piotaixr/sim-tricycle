@@ -45,7 +45,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         //panMap.setSize(500,500);
         //jspanMap.revalidate();
         jspanMap.setViewportView(vc);
-
+        
         //jspanMap.setPreferredSize(vc.getSize());
 
         System.out.println(" largeur scroll pane :" + jspanMap.getWidth() + " hauteur : " + jspanMap.getHeight());
@@ -301,7 +301,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableGlobale.setLayout(panActionAvailableGlobaleLayout);
         panActionAvailableGlobaleLayout.setHorizontalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGap(0, 205, Short.MAX_VALUE)
         );
         panActionAvailableGlobaleLayout.setVerticalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,7 +314,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableTeam1.setLayout(panActionAvailableTeam1Layout);
         panActionAvailableTeam1Layout.setHorizontalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGap(0, 205, Short.MAX_VALUE)
         );
         panActionAvailableTeam1Layout.setVerticalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,7 +327,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableTeam2.setLayout(panActionAvailableTeam2Layout);
         panActionAvailableTeam2Layout.setHorizontalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGap(0, 205, Short.MAX_VALUE)
         );
         panActionAvailableTeam2Layout.setVerticalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -405,15 +405,15 @@ public class FrameGame1 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(panSelectTeamMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(panZoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jspanMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(panActionAvailable))
-                        .addGap(0, 11, 11))))
+                        .addGap(0, 11, 11))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panSelectTeamMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(panZoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         headband.getAccessibleContext().setAccessibleName("headband");

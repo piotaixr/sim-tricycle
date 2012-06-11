@@ -127,6 +127,10 @@ public class ViewCarte extends javax.swing.JPanel {
         tailleCase = tailleCaseBase * txZoom / 100;
         this.repaint();
     }
+    
+    public void moveMap(int x, int y){
+        this.setLocation(x, y);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -178,6 +182,7 @@ public class ViewCarte extends javax.swing.JPanel {
         py = evt.getLocationOnScreen().y - this.getY();
 
         System.out.println("click position : " + px + " " + py);
+        System.out.println("POSITION dans le composant : X " + this.getMousePosition().x + " Y " + this.getMousePosition().y);
     }//GEN-LAST:event_formMousePressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
