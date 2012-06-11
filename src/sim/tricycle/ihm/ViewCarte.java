@@ -25,7 +25,8 @@ public class ViewCarte extends javax.swing.JPanel {
     //private int decalageX;    //pour plus tard essayer de centrer la carte dans le JScrollPane
     //private int decalageY;
     private int tailleOpti;
-    private Image imgMur,imgVide;
+    private Image imgMur, imgVide;
+    private int px, py;         //Entiers permettant de calculer les differences de positions lors du dragging de la map
 
     /**
      * Creates new form ViewCarte
@@ -96,9 +97,9 @@ public class ViewCarte extends javax.swing.JPanel {
             g.drawRect(x, y, width, width);
         }
     }
-    
-    public void setTaille(int txZoom){
-        tailleCase = tailleCaseBase * txZoom/100;
+
+    public void setTaille(int txZoom) {
+        tailleCase = tailleCaseBase * txZoom / 100;
         this.repaint();
     }
 
@@ -111,6 +112,17 @@ public class ViewCarte extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                formMouseDragged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -122,6 +134,26 @@ public class ViewCarte extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
+        // TODO add your handling code here:
+        System.out.println("dragged");
+        //final Component t = evt.getComponent();
+        //evt.translatePoint(getLocation().x + t.getLocation().x - px, getLocation().y + t.getLocation().y - py);
+        this.setLocation(evt.getLocationOnScreen().x - px, evt.getLocationOnScreen().y - py);
+        px = evt.getLocationOnScreen().x - this.getX();
+        py = evt.getLocationOnScreen().y - this.getY();
+        this.getParent().validate(); //A mettre en commentaire si on veut bouger la map comme on veut mais avec les pb de dessin...
+    }//GEN-LAST:event_formMouseDragged
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        // TODO add your handling code here:
+        //evt.translatePoint(evt.getComponent().getLocation().x, evt.getComponent().getLocation().y);
+        px = evt.getLocationOnScreen().x - this.getX();
+        py = evt.getLocationOnScreen().y - this.getY();
+
+        System.out.println("click position : " + px + " " + py);
+    }//GEN-LAST:event_formMousePressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

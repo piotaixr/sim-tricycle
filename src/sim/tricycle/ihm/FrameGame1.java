@@ -291,7 +291,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableGlobale.setLayout(panActionAvailableGlobaleLayout);
         panActionAvailableGlobaleLayout.setHorizontalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGap(0, 205, Short.MAX_VALUE)
         );
         panActionAvailableGlobaleLayout.setVerticalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,7 +304,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableTeam1.setLayout(panActionAvailableTeam1Layout);
         panActionAvailableTeam1Layout.setHorizontalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGap(0, 205, Short.MAX_VALUE)
         );
         panActionAvailableTeam1Layout.setVerticalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,7 +317,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableTeam2.setLayout(panActionAvailableTeam2Layout);
         panActionAvailableTeam2Layout.setHorizontalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGap(0, 205, Short.MAX_VALUE)
         );
         panActionAvailableTeam2Layout.setVerticalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,6 +329,11 @@ public class FrameGame1 extends javax.swing.JFrame {
         jspanMap.setBackground(new java.awt.Color(255, 102, 102));
         jspanMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jspanMap.setMaximumSize(new java.awt.Dimension(1000, 1000));
+        jspanMap.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jspanMapMouseWheelMoved(evt);
+            }
+        });
 
         panZoom.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -442,6 +447,11 @@ public class FrameGame1 extends javax.swing.JFrame {
         vc.setTaille(sldZoom.getValue());
         jspanMap.revalidate();
     }//GEN-LAST:event_sldZoomStateChanged
+
+    private void jspanMapMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jspanMapMouseWheelMoved
+        // TODO add your handling code here:
+        sldZoom.setValue(sldZoom.getValue()-evt.getWheelRotation()*evt.getScrollAmount());
+    }//GEN-LAST:event_jspanMapMouseWheelMoved
 
     /**
      * @param args the command line arguments
