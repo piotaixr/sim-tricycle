@@ -20,7 +20,7 @@ public class AllerA extends Action{
     private Point p;
     
     public AllerA(Point p){
-        super();
+       super();
        this.p=p;   
     }
     
@@ -28,20 +28,28 @@ public class AllerA extends Action{
     public void executer(Robot bot){
         TrouveChemin tc = new TrouveChemin(this.p);
         tc.executer(bot);
+        System.out.println("TailleChemin :"+tc.getChemin().size());
         creerChemin(tc.getChemin(),bot);
     }
     
-    private ArrayDeque<ActionInterface> creerChemin(LinkedList<Noeud> cheminTrouve,Robot bot){
+    private void creerChemin(LinkedList<Noeud> cheminTrouve,Robot bot){
         ArrayDeque<ActionInterface> chemin=new ArrayDeque<ActionInterface>();
-        Sens directCourante=bot.getDirection();
-        Point posCourante=bot.getPosition();
+        Sens directCourante;
+        Point posCourante=cheminTrouve.getFirst().getPoint();
         for(Noeud n:cheminTrouve){
+           
+            
             directCourante= trouveDirection(posCourante,n.getPoint());
+            System.out.println("sens:"+directCourante);
+            
+             posCourante=n.getPoint();
+            System.out.println("case:"+posCourante.getX()+" "+posCourante.getY());
+             
             chemin.addFirst(new Tourner(directCourante));
             chemin.addFirst(new Avancer());
-            posCourante=n.getPoint();
+            
         }
-        return chemin;
+        bot.getActions().addAll(chemin);
     }
     
     private Sens trouveDirection(Point p1,Point p2){
@@ -49,16 +57,16 @@ public class AllerA extends Action{
         Sens newSens=Sens.NORD;
         
         if(p1.getX()<p2.getX()){
-            newSens= Sens.EST;
+            newSens= Sens.OUEST;
         }else{
             if(p1.getY()<p2.getY()){
-               newSens= Sens.SUD;
+               newSens= Sens.NORD;
             }else{
                 if(p2.getX()<p1.getX()){
-                  newSens= Sens.OUEST;
+                  newSens= Sens.EST;
                 }else{
                     if(p2.getY()<p1.getY()){
-                        newSens= Sens.NORD;
+                        newSens= Sens.SUD;
                     }
                 }
             }
