@@ -47,69 +47,145 @@ let rec detect_etat stream nom = match stream with parser
   |[<''='>]->nom
   |[< >]->nom;;
 
-let rec parseur pile sortie stream detection nom= match stream with parser 
-  |[<'' ';f>]->(parseur pile sortie f detection nom);
-  |[<''\n';f>]->(parseur pile sortie f detection nom);
-  |[<''\t';f>]->(parseur pile sortie f detection nom);
+let rec parseur pile sortie stream detection nom piece= match stream with parser 
+  |[<'' ';f>]->(parseur pile sortie f detection nom piece);
+  |[<''-';f>]->(parseur pile sortie f detection nom piece);
+  |[<''\n';f>]->(parseur pile sortie f detection nom piece);
+  |[<''\t';f>]->(parseur pile sortie f detection nom piece);
+  |[<''<';f>]-> let p= (empiler "affectation" pile) in (parseur p sortie f detection "" nom)
   |[<'';';f>]->(let name = (sommet_pile pile) 
 	       in match name with 
 		 |"etat"-> ecriture_aux sortie (nom^"\""^"/>");
 		  ( ecriture_aux_char sortie '\n');
-		  let p=(depiler pile) in (parseur p sortie f detection "")
+		  let p=(depiler pile) in (parseur p sortie f detection "" piece)
 		 |word->(ecriture_aux sortie ("<"^"/"^word^">"));
 		   (ecriture_aux_char sortie '\n');
-		   let p=(depiler pile) in (parseur p sortie f detection""))
+		   let p=(depiler pile) in (parseur p sortie f detection "" piece))
 				  
   
   |[<'',';f>]-> (let name =(sommet_pile pile)
 		in match name with
-		  |"action"-> ecriture_aux sortie ("<para>"^" "^nom^" "^"</para>");(ecriture_aux_char sortie '\n');(parseur pile sortie f detection "")
-		  |post->( parseur pile sortie f detection ""))
+		  |"condition_avec_para"-> if (piece<>"parametre2")
+		    then (ecriture_aux sortie (">");
+		    ecriture_aux_char sortie '\n';
+		    ecriture_aux sortie ("<parametre>"^" "^nom^" "^"</parametre>");
+		    ecriture_aux_char sortie '\n';
+		    (parseur pile sortie f detection "" "parametre2"))
+
+		 else (ecriture_aux sortie ("<parametre>"^" "^nom^" "^"</parametre>");
+		    ecriture_aux_char sortie '\n';
+		     (parseur pile sortie f detection "" "parametre2"))
+
+		  |"action"-> ecriture_aux sortie ("<parametre>"^" "^nom^" "^"</parametre>");
+		    (ecriture_aux_char sortie '\n');
+		    (parseur pile sortie f detection "" piece)
+		  |"etat"-> ecriture_aux sortie ("<tag nom=\""^nom^"\"/>");
+		    (ecriture_aux_char sortie '\n');
+		    (parseur pile sortie f detection "" piece)
+		  |"type"->(ecriture_aux sortie (nom^"</parametre>");
+			    ( ecriture_aux_char sortie '\n');
+			    let p=(depiler pile) in (parseur p sortie f detection"" piece))
+		  |post->( parseur pile sortie f detection "" piece))
 
   |[<''=';f>]->( let name = nom
 		in match name with 
-		  |"etat"-> ecriture_aux sortie ("<etat id="^"\""); let p= (empiler "etat" pile) in (parseur p sortie f detection "")
-		  |mot ->parseur pile sortie f detection (nom^(char_to_string '=')))
+		  |"etat"-> ecriture_aux sortie ("<etat id="^"\""); let p= (empiler "etat" pile) in (parseur p sortie f detection "" piece)
+		  |mot ->parseur pile sortie f detection (nom^(char_to_string '=')) piece)
+  |[<'':';f>]->( ecriture_aux sortie ("<parametre type=\""^nom^"\">");
+    let p= (empiler "type" pile) in (parseur p sortie f detection "" piece))
 
-  |[<''(';f>]-> (let name = nom 
-		 in match name with
-		   |"si"-> ecriture_aux sortie ("<condition nom=");
-		     let p= (empiler "condition" pile) in (parseur p sortie f detection "")
-		   |post-> ecriture_aux sortie ("<action nom="^"\""^post^"\""^">");(ecriture_aux_char sortie '\n'); let p= (empiler "action" pile) in (parseur p sortie f detection ""))
+  |[<''(';f>]-> (let word=(sommet_pile pile)
+		in match word with 
 
+		  |"affectation"-> ecriture_aux sortie ("<action nom=\""^nom^"\" dest=\""^piece^"\">");
+		    (ecriture_aux_char sortie '\n');  
+		    let p=(depiler pile) in (parseur (empiler "action" p) sortie f detection"" piece)
+
+
+		  |autre-> (let name = nom 
+			   in match name with
+			     |"si"-> ecriture_aux sortie ("<condition nom=");
+			       let p= (empiler "condition" pile) in (parseur p sortie f detection "" "si")
+			     |post-> if (piece="si")
+			       then ((ecriture_aux sortie ("\""^post^"\""));
+				     let p = (empiler "condition_avec_para" pile) 
+				     in (parseur p sortie f detection "" piece))
+
+			   else ( ecriture_aux sortie ("<action nom="^"\""^post^"\""^">");
+				   (ecriture_aux_char sortie '\n'); 
+				   let p= (empiler "action" pile) in (parseur p sortie f detection "" piece))))
+		
    |[<'')';f>]->(let name = (sommet_pile pile)
 		in match name with 
-		  |"condition"-> ecriture_aux sortie ("\""^nom^"\""^">");
-		    (ecriture_aux_char sortie '\n');
-		    (parseur pile sortie f detection "")
-		  |"action"-> ecriture_aux sortie ("<para>"^" "^nom^" "^"</para>");
-		    (ecriture_aux_char sortie '\n');
-		    (parseur pile sortie f detection "")
-		  |post->parseur pile sortie f detection "")
+		  |"condition_avec_para"-> if (nom="")
+		    then ((ecriture_aux sortie ("/>")); 
+			  (ecriture_aux_char sortie '\n');
+		    let p= (depiler pile) in(parseur p sortie f detection "" "sans_parametre"))
+		    else ((ecriture_aux sortie ("<parametre>"^" "^nom^" "^"</parametre>"));
+			 ( ecriture_aux_char sortie '\n');
+			  (let p = (depiler pile) in (parseur p sortie f detection "" "parametre")))
 
-  |[<''a'..'z'|'A'..'Z'|'_'  as n; f>] -> parseur pile sortie f detection (nom^(char_to_string n))
+		  |"condition"->(let word = piece 
+				 in match word with 
+				   |"sans_parametre"-> parseur pile sortie f detection "" ""
+				   |"parametre"-> ecriture_aux sortie ("</condition>");
+				     ecriture_aux_char sortie '\n';
+				     (parseur pile sortie f detection "" "")
+				     
+				   |autre-> (ecriture_aux sortie ("\""^nom^"\""^"/>");
+					     (ecriture_aux_char sortie '\n');
+					     (parseur pile sortie f detection "" piece)))
 
-  |[<''}';f>]->let name = (sommet_pile pile)
-	     in (ecriture_aux sortie ("<"^"/"^name^">"));
-	       (ecriture_aux_char sortie '\n');
-	     let p=(depiler pile) in (parseur p sortie f detection "")
+
+
+		  |"action"-> if (nom="" )
+		    then (parseur pile sortie f detection "" piece)
+		    else (ecriture_aux sortie ("<parametre>"^" "^nom^" "^"</parametre>");
+		    (ecriture_aux_char sortie '\n');
+		    (parseur pile sortie f detection "" piece))
+		  |"type"->(ecriture_aux sortie (nom^"</parametre>");
+			    ( ecriture_aux_char sortie '\n');
+			    let p=(depiler pile) in (parseur p sortie f detection"" piece))
+		  |post->parseur pile sortie f detection "" piece)
+
+  |[<''[';f>]-> (let name = (sommet_pile pile)
+	       in match name with 
+		 |"etat"->(ecriture_aux sortie (nom^"\""^">"));
+		   (ecriture_aux_char sortie '\n');
+		   (parseur pile sortie f detection "" piece)
+		 |word-> parseur pile sortie f detection "" piece)
+
+   |[<'']';f>]->ecriture_aux sortie ("<tag nom=\""^nom^"\"/>");
+		    (ecriture_aux_char sortie '\n');
+		    (parseur pile sortie f detection "" piece)
+			      
+
+  |[<''1'..'9'|'a'..'z'|'A'..'Z'|'_'  as n; f>] -> parseur pile sortie f detection (nom^(char_to_string n)) piece
+
+  |[<''}';f>]->(let name = (sommet_pile pile) 
+	       in match name with 
+		 |"condition"-> let p=(depiler pile) in (parseur p sortie f detection "" piece)
+		 |word-> ecriture_aux sortie ("<"^"/"^word^">");
+		   (ecriture_aux_char sortie '\n');
+			  let p=(depiler pile) in (parseur p sortie f detection "" piece))
+
 				  
   |[<''{';f>]->  (let name = nom 
 		  in match name with
-		    |"sinon"->ecriture_aux sortie ("<condition nom="^"\""^"true"^"\""^">");
+		    |"sinon"->ecriture_aux sortie ("<condition nom="^"\""^"true"^"\""^"/>");
 		      (ecriture_aux_char sortie '\n');
-		      let p= (empiler "condition" pile) in (parseur p sortie f detection"")
+		      let p= (empiler "condition" pile) in (parseur p sortie f detection "" "{")
 
-		    |""->parseur pile sortie f detection ""
+		    |""->parseur pile sortie f detection "" "{"
 
 		    |post-> if ((detect_etat detection "")="etat")
 		      then (ecriture_aux sortie (post^"\""^">");
 		      (ecriture_aux_char sortie '\n');
-		      (parseur pile sortie f detection""))
+		      (parseur pile sortie f detection"" "{"))
 
 		      else (ecriture_aux sortie ("<"^post^">");
 			    (ecriture_aux_char sortie '\n');
-			    let p= (empiler post pile) in (parseur p sortie f detection "")))
+			    let p= (empiler post pile) in (parseur p sortie f detection "" "{")))
 
    |[< >]->pile;;
 
@@ -124,7 +200,7 @@ let analyse () =
 	    let lect = (lecture_aux entree)
 	       in  let rec boucle pile lect = match lect with
 		 |"fin"->()
-		 |mot->let p=(parseur pile sortie(transf2 mot) (transf2 mot) "")
+		 |mot->let p=(parseur pile sortie(transf2 mot) (transf2 mot) "" "")
 			in (boucle p (lecture_aux entree))
 		  in boucle Pile_vide lect);
      close_out sortie;
@@ -135,27 +211,20 @@ analyse();;
 (*__________________________________________________________________________*)
 
 (* test pour transformation de fonction *)
-
 (*
-let entree = open_in "automate.txt";;
-let sortie = open_out "test";;
+
+let entree = open_in "pile.txt";;
+let sortie = open_out "test.txt";;
 lecture_aux entree;;
 let transf entree= Stream.of_string(input_line entree);;
-parseur sortie (transf fichier) "";;
 let ecriture_aux sortie  mot = output sortie mot 0 (String.length mot);;
 ecriture_aux sortie "blabla";;
 
-let accolade pile sortie f nom = match nom with
-  |"sinon"->ecriture_aux sortie ("<condition nom="^"\""^"true"^"\""^">");
-    (ecriture_aux_char sortie '\n');
-    let p= (empiler "condition" pile) in (parseur p sortie f "")
 
-  |""->parseur pile sortie f ""
-
-  |post-> ecriture_aux sortie ("<"^post^">");
-    (ecriture_aux_char sortie '\n');
-    let p= (empiler post pile) in (parseur p sortie f "");;
-
+let ind sortie stream mot = match stream with parser
+  |[<''\t'>]-> (ecriture_aux_char sortie '\t');
+  |[<''a'..'z'|'A'..'Z'|'_'|'{'|'}'|'('|')'  as n; f>]->( ecriture_aux_char sortie n)
+  |[< >]-> ();;
 
 close_out sortie;;
 close_in entree;;
