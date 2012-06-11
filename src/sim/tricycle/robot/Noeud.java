@@ -12,11 +12,19 @@ public class Noeud implements Comparable<Noeud> {
 
     private int poids;
     private Point p;
+    private Noeud parent;
 
     public Noeud(Point p) {
         this.p = p;
         this.poids = 0;
     }
+    
+    public Noeud(Point p,Noeud parent) {
+        this.p = p;
+        this.poids = 0;
+        this.parent=parent;
+    }
+
 
     public void determinePoids(Point pDest) {
 
@@ -39,6 +47,14 @@ public class Noeud implements Comparable<Noeud> {
         this.p = newPoint;
     }
 
+    public Noeud getParent(){
+        return this.parent;
+    }
+    
+    public void setParent(Noeud newParent){
+        this.parent=newParent;
+    }
+    
     public int compareTo(Noeud o) {
         Noeud n = (Noeud) o;
         if (n.getPoids() > this.poids) {

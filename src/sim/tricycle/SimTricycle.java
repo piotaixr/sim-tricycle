@@ -4,8 +4,13 @@
  */
 package sim.tricycle;
 
-import sim.tricycle.Ordonnanceur.TestOrdonnanceur;
+import java.util.LinkedList;
+import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.TestMap;
+import sim.tricycle.robot.Collecteur;
+import sim.tricycle.robot.Noeud;
+import sim.tricycle.robot.Point;
+import sim.tricycle.robot.action.TrouveChemin;
 
 /**
  *
@@ -17,11 +22,22 @@ public class SimTricycle {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        
-       // TestOrdonnanceur test = new TestOrdonnanceur();
-      //  test.goTest();
-        TestMap test2 = new TestMap();
-        test2.startTest();
-    }
+      //   System.out.println("Coucou");
+ Carte c = new Carte(4,4);
+ sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs",c);
+ sim.tricycle.robot.Robot bot ;
+ bot = new Collecteur(t);
+ bot.setPosition(new Point(2,2));
+ Point p= new Point(0,0);
+ TrouveChemin TrCh = new TrouveChemin(p);
+ LinkedList<Noeud> chemin= new LinkedList<Noeud>();
+ TrCh.executer(bot);
+ TrouveChemin tc = (TrouveChemin)TrCh;
+ chemin = tc.getChemin();
+ 
+  for(int i=0;i<chemin.size();i++){
+     System.out.println("Chemin final case N°"+i+" :"+chemin.get(i).getPoint().getX()+" "+chemin.get(i).getPoint().getY());
+  }
+ }
 }
+

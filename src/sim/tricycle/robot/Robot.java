@@ -3,12 +3,12 @@
 package sim.tricycle.robot;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
-import sim.tricycle.robot.action.Action;
+import sim.tricycle.mapping.Carte;
 import sim.tricycle.robot.action.ActionInterface;
+import sim.tricycle.team.Team;
 
 /**
  *
@@ -20,24 +20,30 @@ public abstract class Robot implements OrdonnancableInterface {
     protected Sens direction;
     protected int portee;
     protected ArrayDeque<ActionInterface> actions = new ArrayDeque();
-    /**
-     * @deprecated
-     */
-    protected ArrayList<EventType> ordreTest = new ArrayList();
     protected Etat etatCourant;
     protected Etat etatDestination;
     protected Automate automate;
-
+    protected Team equipe;
+    protected Carte mapTeam;
+    
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
      *
      * @param automate
      */
-    public Robot(Automate automate) {
+    public Robot(Automate automate,Team equipe) {
         this.automate = automate;
+        this.equipe=equipe;
+        this.mapTeam=equipe.getMap();
 
     }
 
+    public Robot(Team equipe) {
+        this.automate = null;
+        this.equipe=equipe;
+        this.mapTeam=equipe.getMap();
+    }
+    
     public Point getPosition() {
         return this.position;
     }
@@ -78,66 +84,16 @@ public abstract class Robot implements OrdonnancableInterface {
         this.etatCourant = newEtat;
     }
 
-    /**
-     * @deprecated
-     */
-    public ArrayList<EventType> getOrdreTest() {
-        return ordreTest;
+    
+    public Team getTeam(){
+        return this.equipe;
     }
-
-    /**
-     * @deprecated
-     */
-    public void setOrdreTest(ArrayList<EventType> ordreTest) {
-        this.ordreTest = ordreTest;
+    
+    public Carte getMapTeam(){
+        return this.mapTeam;
     }
+    
 
-    /**
-     * @deprecated
-     */
-    public Evenement scan() {
-
-        int i = 0;
-        boolean eventFound = false;
-        Evenement evt = new Evenement();
-
-        while (i < this.ordreTest.size() && !eventFound) {
-
-            switch (this.ordreTest.get(i)) {
-                case BALLE:
-
-                    break;
-
-                case ENNEMI:
-                    break;
-            }
-        }
-        return evt;
-    }
-
-    /**
-     * @deprecated
-     */
-    public void depilerActionCourante() {
-        ActionInterface a = actions.pollFirst();
-        if (a != null) {
-            a.executer(this);
-        }
-    }
-
-    /**
-     * @deprecated
-     */
-    public void changerEtat(Evenement evt) {
-    }
-
-    /**
-     * @deprecated
-     */
-    public void agir() {
-        changerEtat(scan());
-        depilerActionCourante();
-    }
 
     @Override
     /**
