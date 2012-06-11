@@ -13,6 +13,7 @@ import sim.tricycle.robot.Robot;
 public class ArreterTout {
     
     public ArreterTout(Robot bot){
+        super();
         bot.setActions(null);
     }
     

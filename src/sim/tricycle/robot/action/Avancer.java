@@ -16,11 +16,15 @@ public class Avancer extends Action {
     private int nbCases;
 
     public Avancer() {
+        super();
         nbCases = 1;
+        this.setPoids(1);
     }
     
     public Avancer(int nbCases) {
+        super();
         this.nbCases = nbCases;
+        this.setPoids(1);
     }
     
     @Override

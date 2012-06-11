@@ -17,10 +17,11 @@ import sim.tricycle.robot.Robot;
  */
 public class TrouveChemin extends Action {
 
-    Point pDest;
-    LinkedList<Noeud> chemin;
+    private Point pDest;
+    private LinkedList<Noeud> chemin;
 
     public TrouveChemin(Point pDest) {
+        super();
         this.pDest = pDest;
         this.chemin = new LinkedList<Noeud>();
     }

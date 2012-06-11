@@ -16,10 +16,12 @@ public class Tourner extends Action {
     private Sens direction;
 
     public Tourner() {
+        super();
         direction = Sens.NORD;
     }
 
     public Tourner(Sens dir) {
+        super();
         this.direction = dir;
     }
 
