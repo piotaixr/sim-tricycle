@@ -130,4 +130,31 @@ public class Case {
 
         return " . ";
     }
+     /* Indique quel est le type de la case.
+     * @return le type de la case
+     */   
+    public TypeCase whoIam(){
+        if (this.hasItem()){
+            return this.myItem().whoIam();
+        }
+        if (this.hasObstacle()){
+            return this.myObstacle().whoIam();
+        }
+        
+        return TypeCase.vide;
+    }
+    
+    /* Renvoi l'objet associé.
+     * @return l'objet.
+     */
+    public AbstractObjet myItem(){
+        return this.objet;
+    }
+    
+        /* Renvoi l'obstacle associé.
+     * @return l'obstacle.
+     */
+    public AbstractObstacle myObstacle(){
+        return this.obstacle;
+    }
 }
