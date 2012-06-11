@@ -22,7 +22,7 @@ public class ViewCarte extends javax.swing.JPanel {
 
     private CarteInterface carte;
     private int tailleCase;
-    private int tailleCaseBase = 100;
+    private int tailleCaseBase = 50;
     //private int decalageX;    //pour plus tard essayer de centrer la carte dans le JScrollPane
     //private int decalageY;
     private int tailleOpti;
@@ -38,7 +38,8 @@ public class ViewCarte extends javax.swing.JPanel {
         this.tailleCase = this.tailleCaseBase;
         //this.setBackground(Color.red);
 
-        //tailleOpti = Math.max(this.getWidth()/carte.getLargeur(),this.getHeight()/carte.getHauteur());
+//        tailleOpti = Math.max((int)this.getParent().getWidth()/carte.getLargeur(),(int)this.getParent().getHeight()/carte.getHauteur());
+//        tailleCase = tailleOpti;
         //this.setPreferredSize(this.getSize());
 
         try {
