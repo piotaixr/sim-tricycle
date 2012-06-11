@@ -40,4 +40,9 @@ public class TrouveChemin extends Action {
 
 
     }
+
+    @Override
+    public String getId() {
+        return "trouvechemin";
+    }
 }

@@ -69,4 +69,9 @@ public class Avancer extends Action {
         }
         bot.setPosition(p);
     }
+
+    @Override
+    public String getId() {
+        return "avancer";
+    }
 }

@@ -11,7 +11,7 @@ import sim.tricycle.robot.Sens;
  *
  * @author Adri
  */
-public class Tourner {
+public class Tourner extends Action {
 
     private Sens direction;
 
@@ -34,5 +34,10 @@ public class Tourner {
 
     public Sens setDirection() {
         return this.direction;
+    }
+
+    @Override
+    public String getId() {
+        return "tourner";
     }
 }
