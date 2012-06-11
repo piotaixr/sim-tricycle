@@ -10,6 +10,7 @@ import sim.tricycle.robot.condition.factory.ConditionFactoryInterface;
 import sim.tricycle.utils.params.IntegerConverter;
 import sim.tricycle.utils.params.ParamConverterProvider;
 import sim.tricycle.utils.params.ParamConverterProviderInterface;
+import sim.tricycle.utils.params.StringConverter;
 import sim.tricycle.xmlparser.RobotParser;
 
 /**
@@ -43,6 +44,7 @@ public class ObjectBuilder {
         if (paramConverterProvider == null) {
             paramConverterProvider = new ParamConverterProvider();
             paramConverterProvider.register(new IntegerConverter());
+            paramConverterProvider.register(new StringConverter());
         }
 
         return paramConverterProvider;
