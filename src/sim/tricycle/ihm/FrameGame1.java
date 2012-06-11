@@ -99,15 +99,20 @@ public class FrameGame1 extends javax.swing.JFrame {
 
         headband.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        buttonPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/pause.gif"))); // NOI18N
+        buttonPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/pause.gif"))); // NOI18N
         buttonPause.setText("Pause");
         buttonPause.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 buttonPauseMousePressed(evt);
             }
         });
+        buttonPause.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPauseActionPerformed(evt);
+            }
+        });
 
-        buttonPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/arrow-right-play.gif"))); // NOI18N
+        buttonPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/arrow-right-play.gif"))); // NOI18N
         buttonPlay.setText("Play");
         buttonPlay.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -115,10 +120,10 @@ public class FrameGame1 extends javax.swing.JFrame {
             }
         });
 
-        buttonStepPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/arrow-right.gif"))); // NOI18N
+        buttonStepPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/arrow-right.gif"))); // NOI18N
         buttonStepPlay.setText("Step");
 
-        buttonSpeedUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/arrow-fast-forward.gif"))); // NOI18N
+        buttonSpeedUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/arrow-fast-forward.gif"))); // NOI18N
         buttonSpeedUp.setText("Speed up");
 
         scorePanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -183,7 +188,7 @@ public class FrameGame1 extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        buttonExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/eject.gif"))); // NOI18N
+        buttonExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/eject.gif"))); // NOI18N
         buttonExit.setText("Exit");
         buttonExit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -206,7 +211,7 @@ public class FrameGame1 extends javax.swing.JFrame {
                 .addComponent(buttonSpeedUp)
                 .addGap(87, 87, 87)
                 .addComponent(scorePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
                 .addComponent(buttonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -296,7 +301,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableGlobale.setLayout(panActionAvailableGlobaleLayout);
         panActionAvailableGlobaleLayout.setHorizontalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 205, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
         );
         panActionAvailableGlobaleLayout.setVerticalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,7 +314,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableTeam1.setLayout(panActionAvailableTeam1Layout);
         panActionAvailableTeam1Layout.setHorizontalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 205, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
         );
         panActionAvailableTeam1Layout.setVerticalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,7 +327,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableTeam2.setLayout(panActionAvailableTeam2Layout);
         panActionAvailableTeam2Layout.setHorizontalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 205, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
         );
         panActionAvailableTeam2Layout.setVerticalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -457,6 +462,10 @@ public class FrameGame1 extends javax.swing.JFrame {
         // TODO add your handling code here:
         sldZoom.setValue(sldZoom.getValue()-evt.getWheelRotation()*evt.getScrollAmount());
     }//GEN-LAST:event_jspanMapMouseWheelMoved
+
+    private void buttonPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPauseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonPauseActionPerformed
 
     /**
      * @param args the command line arguments

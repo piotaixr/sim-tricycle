@@ -90,7 +90,7 @@
                   <Component id="buttonSpeedUp" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
                   <Component id="scorePanel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="242" max="32767" attributes="0"/>
+                  <EmptySpace pref="162" max="32767" attributes="0"/>
                   <Component id="buttonExit" min="-2" pref="122" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               </Group>
@@ -120,18 +120,19 @@
         <Component class="javax.swing.JButton" name="buttonPause">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/sim/tricycle/ihm/pause.gif"/>
+              <Image iconType="3" name="/sim/tricycle/ihm/images/pause.gif"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Pause"/>
           </Properties>
           <Events>
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonPauseMousePressed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonPauseActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="buttonPlay">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/sim/tricycle/ihm/arrow-right-play.gif"/>
+              <Image iconType="3" name="/sim/tricycle/ihm/images/arrow-right-play.gif"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Play"/>
           </Properties>
@@ -142,7 +143,7 @@
         <Component class="javax.swing.JButton" name="buttonStepPlay">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/sim/tricycle/ihm/arrow-right.gif"/>
+              <Image iconType="3" name="/sim/tricycle/ihm/images/arrow-right.gif"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Step"/>
           </Properties>
@@ -150,7 +151,7 @@
         <Component class="javax.swing.JButton" name="buttonSpeedUp">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/sim/tricycle/ihm/arrow-fast-forward.gif"/>
+              <Image iconType="3" name="/sim/tricycle/ihm/images/arrow-fast-forward.gif"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Speed up"/>
           </Properties>
@@ -265,7 +266,7 @@
         <Component class="javax.swing.JButton" name="buttonExit">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/sim/tricycle/ihm/eject.gif"/>
+              <Image iconType="3" name="/sim/tricycle/ihm/images/eject.gif"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Exit"/>
           </Properties>
@@ -382,7 +383,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="205" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="208" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -404,7 +405,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="205" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="208" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -426,7 +427,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="205" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="208" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">

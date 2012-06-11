@@ -45,12 +45,12 @@ public class ViewCarte extends javax.swing.JPanel {
         try {
 
             // Initialisation des images:
-            imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/mur.jpg"));
-            imgVide = ImageIO.read(new File("./src/sim/tricycle/ihm/vide.jpg"));
-            imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/robot.jpg"));
-            imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/bonus.jpg"));
-            imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/boule.jpg"));
-            imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/piece.jpg"));
+            imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/images/mur.jpg"));
+            imgVide = ImageIO.read(new File("./src/sim/tricycle/ihm/images/vide.jpg"));
+            imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robot.jpg"));
+            imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/bonus.jpg"));
+            imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/boule.jpg"));
+            imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/images/piece.jpg"));
 
         } catch (IOException ex) {
             Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
