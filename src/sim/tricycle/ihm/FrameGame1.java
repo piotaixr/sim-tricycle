@@ -4,9 +4,7 @@
  */
 package sim.tricycle.ihm;
 
-import java.awt.GridBagLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import java.awt.Color;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.CarteInterface;
 import sim.tricycle.mapping.TestMap;
@@ -15,24 +13,41 @@ import sim.tricycle.mapping.TestMap;
  *
  * @author Morgan BIDOIS <morganbidois@gmail.com>
  */
-public class FrameGame extends javax.swing.JFrame {
+public class FrameGame1 extends javax.swing.JFrame {
 
+    private ViewCarte vc;
+    
     /**
      * Creates new form MorganTestAppli
      */
-    public FrameGame(CarteInterface carte) {
+    public FrameGame1(CarteInterface carte) {
         initComponents();
-        
-        // sortie si clic croix:
-         setDefaultCloseOperation(this.EXIT_ON_CLOSE); 
-        // setDefaultCloseOperation(this.buttonExit);
-                     this.setLocationRelativeTo(null);
+
         //Creer et utilise cette carte car plus grande
-        Carte c = new Carte(50, 50);
-setResizable(true); 
-       final ViewCarte vc = new ViewCarte(c);
-        jspanMap .setViewportView(vc);	
-	jspanMap.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        //Carte c = new Carte(25, 25);
+        
+        TestMap test2 = new TestMap();
+        test2.startTest();
+        Carte c = test2.getCarte();
+
+        vc = new ViewCarte(c);
+        //jpanMap.setSize(vc.getWidth(), vc.getHeight());
+        //panMap.add(vc);
+        //panMap = vc;
+        //panMap.setSize(vc.getWidth(), vc.getHeight());
+
+        //panMap.setSize(c.getLargeur()*vc.getWidth(), c.getHauteur()*vc.getHeight());
+        //panMap.setSize(500,500);
+        //jspanMap.revalidate();
+        jspanMap.setViewportView(vc);
+
+        //jspanMap.setPreferredSize(vc.getSize());
+
+        System.out.println(" largeur scroll pane :" + jspanMap.getWidth() + " hauteur : " + jspanMap.getHeight());
+        System.out.println(" largeur pane Map :" + vc.getWidth() + " hauteur : " + vc.getHeight());
+
+
+
 
     }
 
@@ -60,20 +75,22 @@ setResizable(true);
         txtScoreBallTeam2 = new javax.swing.JLabel();
         txtScoreGoldTeam2 = new javax.swing.JLabel();
         buttonExit = new javax.swing.JButton();
-        jspanMap = new javax.swing.JScrollPane();
         panSelectTeamMap = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        lblMap = new javax.swing.JLabel();
         buttonTteam2 = new javax.swing.JButton();
-        buttonGlobalMap = new javax.swing.JButton();
         buttonMapTeam1 = new javax.swing.JButton();
+        buttonGlobalMap = new javax.swing.JButton();
         panActionAvailable = new javax.swing.JTabbedPane();
         panActionAvailableGlobale = new javax.swing.JPanel();
         panActionAvailableTeam1 = new javax.swing.JPanel();
         panActionAvailableTeam2 = new javax.swing.JPanel();
+        jspanMap = new javax.swing.JScrollPane();
+        panZoom = new javax.swing.JPanel();
+        sldZoom = new javax.swing.JSlider();
+        lblZoom = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AppliFrame");
-        setPreferredSize(new java.awt.Dimension(1025, 767));
 
         headband.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -184,7 +201,7 @@ setResizable(true);
                 .addComponent(buttonSpeedUp)
                 .addGap(87, 87, 87)
                 .addComponent(scorePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
                 .addComponent(buttonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -204,25 +221,16 @@ setResizable(true);
                 .addComponent(scorePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jspanMap.setMinimumSize(new java.awt.Dimension(300, 300));
-
         panSelectTeamMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Maps");
+        lblMap.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblMap.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMap.setText("Maps");
 
         buttonTteam2.setText("Team 2");
         buttonTteam2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 buttonTteam2MousePressed(evt);
-            }
-        });
-
-        buttonGlobalMap.setText("Global");
-        buttonGlobalMap.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                buttonGlobalMapMousePressed(evt);
             }
         });
 
@@ -238,6 +246,13 @@ setResizable(true);
             }
         });
 
+        buttonGlobalMap.setText("Global");
+        buttonGlobalMap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                buttonGlobalMapMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panSelectTeamMapLayout = new javax.swing.GroupLayout(panSelectTeamMap);
         panSelectTeamMap.setLayout(panSelectTeamMapLayout);
         panSelectTeamMapLayout.setHorizontalGroup(
@@ -245,28 +260,30 @@ setResizable(true);
             .addGroup(panSelectTeamMapLayout.createSequentialGroup()
                 .addGroup(panSelectTeamMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panSelectTeamMapLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 25, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(buttonGlobalMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panSelectTeamMapLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(panSelectTeamMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(buttonGlobalMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buttonTteam2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buttonMapTeam1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(buttonMapTeam1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonTteam2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(panSelectTeamMapLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(lblMap, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panSelectTeamMapLayout.setVerticalGroup(
             panSelectTeamMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panSelectTeamMapLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(buttonMapTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblMap, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addComponent(buttonGlobalMap, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonTteam2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonGlobalMap, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonMapTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
 
@@ -274,11 +291,11 @@ setResizable(true);
         panActionAvailableGlobale.setLayout(panActionAvailableGlobaleLayout);
         panActionAvailableGlobaleLayout.setHorizontalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 132, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
         );
         panActionAvailableGlobaleLayout.setVerticalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
+            .addGap(0, 565, Short.MAX_VALUE)
         );
 
         panActionAvailable.addTab("Global", panActionAvailableGlobale);
@@ -287,11 +304,11 @@ setResizable(true);
         panActionAvailableTeam1.setLayout(panActionAvailableTeam1Layout);
         panActionAvailableTeam1Layout.setHorizontalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 132, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
         );
         panActionAvailableTeam1Layout.setVerticalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
+            .addGap(0, 565, Short.MAX_VALUE)
         );
 
         panActionAvailable.addTab("Team 1", panActionAvailableTeam1);
@@ -300,27 +317,70 @@ setResizable(true);
         panActionAvailableTeam2.setLayout(panActionAvailableTeam2Layout);
         panActionAvailableTeam2Layout.setHorizontalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 132, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
         );
         panActionAvailableTeam2Layout.setVerticalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
+            .addGap(0, 565, Short.MAX_VALUE)
         );
 
         panActionAvailable.addTab("Team 2", panActionAvailableTeam2);
+
+        jspanMap.setBackground(new java.awt.Color(255, 102, 102));
+        jspanMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jspanMap.setMaximumSize(new java.awt.Dimension(1000, 1000));
+
+        panZoom.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        sldZoom.setMaximum(200);
+        sldZoom.setMinimum(1);
+        sldZoom.setValue(100);
+        sldZoom.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sldZoomStateChanged(evt);
+            }
+        });
+
+        lblZoom.setText("Zoom");
+
+        javax.swing.GroupLayout panZoomLayout = new javax.swing.GroupLayout(panZoom);
+        panZoom.setLayout(panZoomLayout);
+        panZoomLayout.setHorizontalGroup(
+            panZoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panZoomLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panZoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panZoomLayout.createSequentialGroup()
+                        .addComponent(sldZoom, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panZoomLayout.createSequentialGroup()
+                        .addComponent(lblZoom)
+                        .addGap(69, 69, 69))))
+        );
+        panZoomLayout.setVerticalGroup(
+            panZoomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panZoomLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblZoom)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(sldZoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(headband, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panActionAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panActionAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jspanMap, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(panSelectTeamMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jspanMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panZoom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panSelectTeamMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -331,12 +391,14 @@ setResizable(true);
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panSelectTeamMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(panZoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 21, Short.MAX_VALUE)
-                        .addComponent(panActionAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jspanMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 11, 11))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jspanMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panActionAvailable))
+                        .addGap(0, 11, 11))))
         );
 
         headband.getAccessibleContext().setAccessibleName("headband");
@@ -353,11 +415,9 @@ setResizable(true);
     }//GEN-LAST:event_buttonExitMousePressed
 
     private void buttonPauseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonPauseMousePressed
-       
     }//GEN-LAST:event_buttonPauseMousePressed
 
     private void buttonPlayMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonPlayMousePressed
-
     }//GEN-LAST:event_buttonPlayMousePressed
 
     private void ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActionPerformed
@@ -365,16 +425,23 @@ setResizable(true);
     }//GEN-LAST:event_ActionPerformed
 
     private void buttonMapTeam1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMapTeam1MousePressed
-            panActionAvailable.setSelectedComponent(panActionAvailableTeam1);                 
+        panActionAvailable.setSelectedComponent(panActionAvailableTeam1);
     }//GEN-LAST:event_buttonMapTeam1MousePressed
 
     private void buttonTteam2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonTteam2MousePressed
-            panActionAvailable.setSelectedComponent(panActionAvailableTeam2);
+        panActionAvailable.setSelectedComponent(panActionAvailableTeam2);
     }//GEN-LAST:event_buttonTteam2MousePressed
 
     private void buttonGlobalMapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGlobalMapMousePressed
-            panActionAvailable.setSelectedComponent(panActionAvailableGlobale);
+        panActionAvailable.setSelectedComponent(panActionAvailableGlobale);
     }//GEN-LAST:event_buttonGlobalMapMousePressed
+
+    private void sldZoomStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sldZoomStateChanged
+        // TODO add your handling code here:
+        System.out.println("value changed");
+        vc.setTaille(sldZoom.getValue());
+        jspanMap.revalidate();
+    }//GEN-LAST:event_sldZoomStateChanged
 
     /**
      * @param args the command line arguments
@@ -397,13 +464,13 @@ setResizable(true);
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameGame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameGame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameGame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameGame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -416,7 +483,7 @@ setResizable(true);
                 TestMap test2 = new TestMap();
                 test2.startTest();
                 Carte e = test2.getCarte();
-                new FrameGame(e).setVisible(true);
+                new FrameGame1(e).setVisible(true);
 
 
             }
@@ -436,14 +503,17 @@ setResizable(true);
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jspanMap;
+    private javax.swing.JLabel lblMap;
+    private javax.swing.JLabel lblZoom;
     private javax.swing.JTabbedPane panActionAvailable;
     private javax.swing.JPanel panActionAvailableGlobale;
     private javax.swing.JPanel panActionAvailableTeam1;
     private javax.swing.JPanel panActionAvailableTeam2;
     private javax.swing.JPanel panSelectTeamMap;
+    private javax.swing.JPanel panZoom;
     private javax.swing.JPanel scorePanel;
+    private javax.swing.JSlider sldZoom;
     private javax.swing.JLabel txtScoreBallTeam2;
     private javax.swing.JLabel txtScoreGoldTeam1;
     private javax.swing.JLabel txtScoreGoldTeam2;

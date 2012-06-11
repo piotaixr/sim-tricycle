@@ -1,11 +1,15 @@
 /*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 package sim.tricycle.ihm;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import sim.tricycle.mapping.CarteInterface;
 import sim.tricycle.mapping.Case;
 
@@ -16,37 +20,86 @@ import sim.tricycle.mapping.Case;
 public class ViewCarte extends javax.swing.JPanel {
 
     private CarteInterface carte;
+    private int tailleCase;
+    private int tailleCaseBase = 100;
+    //private int decalageX;    //pour plus tard essayer de centrer la carte dans le JScrollPane
+    //private int decalageY;
+    private int tailleOpti;
+    private Image imgMur,imgVide;
 
     /**
      * Creates new form ViewCarte
      */
     public ViewCarte(CarteInterface carte) {
         initComponents();
-        //this.setBorder(new LineBorder(Color.BLACK));
         this.carte = carte;
+        this.tailleCase = this.tailleCaseBase;
+        //this.setBackground(Color.red);
+
+        //tailleOpti = Math.max(this.getWidth()/carte.getLargeur(),this.getHeight()/carte.getHauteur());
+        //this.setPreferredSize(this.getSize());
+
+        try {
+            //imgMur = ImageIO.read(new File("sim-tricycle\\src\\sim\\tricycle\\ihm\\mur.jpg"));
+            imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/mur.jpg"));
+            imgVide = ImageIO.read(new File("./src/sim/tricycle/ihm/vide.jpg"));
+
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void paint(Graphics graphic) {
         super.paint(graphic);
-        Graphics2D g = (Graphics2D) graphic;        
-        
-        int maxWidth = this.getWidth() / carte.getLargeur();
-        int maxHeight = this.getHeight() / carte.getHauteur();
-        int maxSize = Math.min(maxHeight, maxWidth);
-        
+        Graphics2D g = (Graphics2D) graphic;
+
+        // tailleOpti = Math.min(this.getWidth()/carte.getLargeur(),this.getHeight()/carte.getHauteur());
+        //tailleCase = tailleOpti;
+        Dimension d = new Dimension(carte.getLargeur() * tailleCase, carte.getHauteur() * tailleCase);
+
+        //this.setPreferredSize(this.getSize());
+        this.setPreferredSize(d);
+
+//        int maxWidth = this.getWidth() / carte.getLargeur();
+//        int maxHeight = this.getHeight() / carte.getHauteur();
+//        int maxSize = Math.min(maxHeight, maxWidth);
+
+        System.out.println("widht " + this.getWidth() + " nbcase : " + carte.getLargeur()
+                + " height " + this.getHeight() + " nbcase  " + carte.getHauteur());
+        System.out.println("PreferedSize :" + this.getPreferredSize());
+        System.out.println("Size :" + this.getSize());
+
+        //maxSize = 50;
+
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
-                paintCase(g, carte.getCase(i, j), 20);
+                //paintCase(g, carte.getCase(i, j), maxSize);
+                paintCase(g, carte.getCase(i, j), tailleCase);
             }
         }
     }
 
     private void paintCase(Graphics2D g, Case c, int width) {
-        System.out.println("Paint case " +width + "/" + c.getX() + " " + c.getY());
+        // System.out.println("Paint case " +width + "/" + c.getX() + " " + c.getY());
+
         int x = c.getX() * width;
         int y = c.getY() * width;
-        g.drawRect(x, y, width, width);
+        if (" O ".equals(c.toString())) {
+            g.drawRect(x, y, width, width);
+            g.drawImage(imgMur, x, y, width, width, this);
+        } else if (" X ".equals(c.toString())) {
+            g.drawImage(imgMur, x, y, width, width, this);
+            g.drawRect(x, y, width, width);
+        } else {
+            g.drawImage(imgVide, x, y, width, width, this);
+            g.drawRect(x, y, width, width);
+        }
+    }
+    
+    public void setTaille(int txZoom){
+        tailleCase = tailleCaseBase * txZoom/100;
+        this.repaint();
     }
 
     /**
@@ -57,8 +110,6 @@ public class ViewCarte extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
