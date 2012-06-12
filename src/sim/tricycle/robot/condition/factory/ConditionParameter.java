@@ -3,15 +3,13 @@
  * and open the template in the editor.
  */
 
-package sim.tricycle;
-
-import sim.tricycle.mapping.Carte;
+package sim.tricycle.robot.condition.factory;
 
 /**
  *
  * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
  */
-public class Jeu {
-private Carte carte;
-
+public class ConditionParameter {
+    private String type;
+    private String value;
 }

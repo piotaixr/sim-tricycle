@@ -19,31 +19,31 @@ public class Point {
     }
     
     public Point(Point p){
-        this.x=p.GetX();
-        this.y=p.GetY();
+        this.x=p.getX();
+        this.y=p.getY();
     }
     
-    public void SetX(int newX){
+    public void setX(int newX){
         this.x=newX;
     }
     
         
-    public void SetY(int newY){
+    public void setY(int newY){
         this.y=newY;
     }
     
         
-    public int GetX(){
+    public int getX(){
         return this.x;
     }
     
-    public int GetY(){
+    public int getY(){
         return this.y;
     }
     
-    public int DistanceDepuis(Point p){
+    public int distanceDepuis(Point p){
         
-        return Math.abs(p.GetX()-this.GetX())+Math.abs(p.GetY()-this.GetY());
+        return Math.abs(p.getX()-this.getX())+Math.abs(p.getY()-this.getY());
     }
     
 }

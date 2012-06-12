@@ -83,17 +83,19 @@ public class Carte implements CarteInterface {
     public void casesVoisines(Carte source, Case pos, HashSet<Case> liste) {
 
         // Si case en bordure verticale droite:
-        if (this.tailleX > pos.getX()) {
+        if ((this.tailleX-2) > pos.getX()) {
             Case droite = source.getCase(pos.getX() + 1, pos.getY());
             if (!(liste.contains(droite))) {
                 liste.add(droite);
+                 //System.out.println("Droite");
             }
         }
         // Si case en bordure verticale gauche:
         if (pos.getX() > 0) {
             Case gauche = source.getCase(pos.getX() - 1, pos.getY());
-            if (liste.contains(gauche)) {
+            if (!liste.contains(gauche)) {
                 liste.add(gauche);
+               // System.out.println("Gauche");
             }
         }
         // Si case en bordure horizontale gauche:
@@ -101,13 +103,15 @@ public class Carte implements CarteInterface {
             Case haut = source.getCase(pos.getX(), pos.getY() - 1);
             if (!liste.contains(haut)) {
                 liste.add(haut);
+              //  System.out.println("Haut");
             }
         }
         // Si case en bordure horizontale droite:
-        if (this.tailleY > pos.getY()) {
+        if ((this.tailleY-2) > pos.getY()) {
             Case bas = source.getCase(pos.getX(), pos.getY() + 1);
             if (!liste.contains(bas)) {
                 liste.add(bas);
+             //   System.out.println("Bas");
             }
         }
     }

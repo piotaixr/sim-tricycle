@@ -8,46 +8,61 @@ package sim.tricycle.robot;
  *
  * @author Adri
  */
-public class Noeud implements Comparable{
-    
-    
+public class Noeud implements Comparable<Noeud> {
+
     private int poids;
     private Point p;
-    
-    public Noeud(Point p){
-        this.p=p;
-        this.poids=0;
-    }
-       
-    public void DeterminePoids(Point pDest){
-      
-      this.poids=this.p.DistanceDepuis(pDest);
+    private Noeud parent;
+
+    public Noeud(Point p) {
+        this.p = p;
+        this.poids = 0;
     }
     
-    public int GetPoids(){
+    public Noeud(Point p,Noeud parent) {
+        this.p = p;
+        this.poids = 0;
+        this.parent=parent;
+    }
+
+
+    public void determinePoids(Point pDest) {
+
+        this.poids = this.p.distanceDepuis(pDest);
+    }
+
+    public int getPoids() {
         return poids;
     }
-    
-    public void SetPoids(int newPoids){
-        this.poids=newPoids;
+
+    public void setPoids(int newPoids) {
+        this.poids = newPoids;
     }
-    
-    public Point GetPoint(){
+
+    public Point getPoint() {
         return p;
     }
-    
-    public void SetPoint(Point newPoint){
-        this.p=newPoint;
+
+    public void setPoint(Point newPoint) {
+        this.p = newPoint;
+    }
+
+    public Noeud getParent(){
+        return this.parent;
     }
     
-    public int compareTo(Object o){
-        Noeud n=(Noeud)o;
-        if(n.GetPoids()>this.poids){
+    public void setParent(Noeud newParent){
+        this.parent=newParent;
+    }
+    
+    public int compareTo(Noeud o) {
+        Noeud n = (Noeud) o;
+        if (n.getPoids() > this.poids) {
             return 1;
-        }else{
-            if(n.GetPoids()<this.poids){
+        } else {
+            if (n.getPoids() < this.poids) {
                 return -1;
-            }else{
+            } else {
                 return 0;
             }
         }
