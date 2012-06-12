@@ -26,7 +26,7 @@ public class Avancer extends Action {
     @Override
     public void executer(Robot bot) {
 
-        Point p = new Point(bot.getPosition());
+        Point p = new Point(bot.getCoordonnees());
 
         for (int i = 0; i < nbCases; i++) {
             switch (bot.getDirection()) {
@@ -67,7 +67,7 @@ public class Avancer extends Action {
                     break;
             }
         }
-        bot.setPosition(p);
+        bot.setCoordonnees(p);
     }
 
     @Override
