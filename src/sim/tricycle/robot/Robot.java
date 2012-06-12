@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
 import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.robot.action.ActionInterface;
 import sim.tricycle.team.Team;
@@ -50,6 +51,11 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     }    
     
     public Robot(Carte mapObjective) {
+        this.mapObjective = mapObjective;
+    }
+    
+    public Robot(Team t,Carte mapObjective) {
+        this.equipe=t;
         this.mapObjective = mapObjective;
     }
     
@@ -107,15 +113,18 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         return this.mapTeam;
     }
 
-    private void collerRobotSurMap(){
+    public void collerRobotSurMap(){
         this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
     }
     
-    private void decollerRobotDeMap(){
+    public void decollerRobotDeMap(){
         this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(null);
     }
     
     @Override
+    public TypeCase whoIam() {
+        return (TypeCase.robot);
+    }
     /**
      * Fonction appelée a chaque tick d'horloge
      *
