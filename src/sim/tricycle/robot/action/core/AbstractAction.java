@@ -5,7 +5,7 @@
 package sim.tricycle.robot.action.core;
 
 import sim.tricycle.robot.Robot;
-import sim.tricycle.robot.reference.Variable;
+import sim.tricycle.utils.params.types.Variable;
 
 /**
  *

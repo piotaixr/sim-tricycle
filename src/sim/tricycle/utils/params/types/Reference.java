@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sim.tricycle.robot.reference;
+package sim.tricycle.utils.params.types;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
