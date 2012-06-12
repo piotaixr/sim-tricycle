@@ -24,20 +24,18 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     private int decalageX, decalageY;    //pour centrer la carte dans le JScrollPane.
     private int tailleOpti;
     private Image imgMap;
-    private int px, py; //pour faire la difference lors du drag
+    private int px, py, tLmini, tHmini; //pour faire la difference lors du drag
+    private ViewCarte vuc;
 
     /**
-     * Creates new form ViewCarte
+     * Crée minicarte
      */
-    public ViewMiniCarte(CarteInterface carte) {
+    public ViewMiniCarte(CarteInterface carte, ViewCarte vc) {
         initComponents();
         this.carte = carte;
         this.tailleCase = this.tailleCaseBase;
         //  this.setBackground(Color.darkGray);
-
-        //   tailleOpti = Math.max((int)this.getParent().getWidth()/carte.getLargeur(),(int)this.getParent().getHeight()/carte.getHauteur());
-        //   tailleCase = tailleOpti;
-        //  this.setPreferredSize(this.getSize());
+        vuc = vc;
 
         try {
             // Initialisation des images:
@@ -71,15 +69,16 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         System.out.println("Size :" + this.getSize());
 
         //Centrage de la map
-
         if (carte.getLargeur() * tailleOpti < this.getParent().getWidth()) {
             decalageX = (this.getParent().getWidth() - carte.getLargeur() * tailleOpti) / 2;
         }
         if (carte.getHauteur() * tailleOpti < this.getParent().getHeight()) {
             decalageY = (this.getParent().getHeight() - carte.getHauteur() * tailleOpti) / 2;
         }
+        tLmini = tailleOpti * carte.getLargeur();
+        tHmini = tailleOpti * carte.getHauteur();
         //afficher image de fond.
-        g.drawImage(imgMap, 0, 0, this.getWidth(), this.getHeight(), this);
+        g.drawImage(imgMap, 0, 0, tLmini, tHmini, this);
         //On dessine les cases.
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
@@ -122,10 +121,6 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         this.repaint();
     }
 
-    public void moveMap(int x, int y) {
-        this.setLocation(x, y);
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,6 +157,17 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         px = evt.getLocationOnScreen().x - this.getX();
         py = evt.getLocationOnScreen().y - this.getY();
 
+        
+       
+        int diff = vuc.getHeight() / this.getHeight();
+        int tX = this.getMousePosition().x * diff * (-1);
+        int tY = this.getMousePosition().y * diff * (-1);
+        tX = tX + tLmini / 2;
+        tY = tY + tHmini / 2;
+        vuc.moveMap(tX, tY);
+
+
+
         System.out.println("click position : " + px + " " + py);
         System.out.println("POSITION dans le composant : X " + this.getMousePosition().x + " Y " + this.getMousePosition().y);
     }//GEN-LAST:event_formMousePressed
@@ -169,7 +175,6 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_formMouseClicked
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
