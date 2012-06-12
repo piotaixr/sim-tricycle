@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package sim.tricycle.robot;
 
 /**
@@ -9,41 +5,38 @@ package sim.tricycle.robot;
  * @author Adri
  */
 public class Point {
-    
+
     private int x;
     private int y;
-    
-    public Point(int x,int y){
-        this.x=x;
-        this.y=y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
-    
-    public Point(Point p){
-        this.x=p.GetX();
-        this.y=p.GetY();
+
+    public Point(Point p) {
+        this.x = p.getX();
+        this.y = p.getY();
     }
-    
-    public void SetX(int newX){
-        this.x=newX;
+
+    public void setX(int newX) {
+        this.x = newX;
     }
-    
-        
-    public void SetY(int newY){
-        this.y=newY;
+
+    public void setY(int newY) {
+        this.y = newY;
     }
-    
-        
-    public int GetX(){
+
+    public int getX() {
         return this.x;
     }
-    
-    public int GetY(){
+
+    public int getY() {
         return this.y;
     }
-    
-    public int DistanceDepuis(Point p){
-        
-        return Math.abs(p.GetX()-this.GetX())+Math.abs(p.GetY()-this.GetY());
+
+    public int distanceDepuis(Point p) {
+
+        return Math.abs(p.getX() - this.getX()) + Math.abs(p.getY() - this.getY());
     }
-    
 }

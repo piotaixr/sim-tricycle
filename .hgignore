@@ -1,1 +1,8 @@
+build
+dist
 nbproject/private
+\.orig$
+\.orig\..*$
+\.chg\..*$
+\.rej$
+\.conflict\~$

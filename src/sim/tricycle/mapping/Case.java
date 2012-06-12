@@ -1,5 +1,3 @@
-/*
- */
 package sim.tricycle.mapping;
 
 import sim.tricycle.mapping.mapException.CaseMultipleObjetException;
@@ -125,6 +123,7 @@ public class Case {
         this.obstacle = nouv.obstacle;
     }
 
+    @Override
     public String toString() {
         if (this.hasItem() && this.hasObstacle()) {
             return " ";

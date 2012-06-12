@@ -12,6 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.TestMap;
+import sim.tricycle.utils.ObjectBuilder;
 import sim.tricycle.xmlparser.RobotParser;
 
 /**
@@ -20,7 +21,7 @@ import sim.tricycle.xmlparser.RobotParser;
  * @author nell
  */
 public class Application extends javax.swing.JFrame {
-
+    private ObjectBuilder builder = new ObjectBuilder();
     /**
      * Creates new form Application
      */
@@ -105,6 +106,20 @@ public class Application extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser chooser = new JFileChooser(".");
+        // Note: source for ExampleFileFilter can be found in FileChooserDemo,
+        // under the demo/jfc directory in the Java 2 SDK, Standard Edition.
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File f = chooser.getSelectedFile();
+
+            RobotParser parser = builder.getRobotParser();
+
+            parser.parse(f);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -1,5 +1,3 @@
-/*
- */
 package sim.tricycle.mapping;
 
 /**
@@ -24,6 +22,7 @@ public class AbstractObstacle implements PossedeCaseInterface {
         return (TypeCase.obstacle);
     }
 
+    @Override
     public String toString() {
         return "X";
     }

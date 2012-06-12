@@ -18,6 +18,7 @@ public class Bonus extends AbstractObjet {
         return (TypeCase.bonus);
     }
 
+    @Override
     public String toString() {
         return "M"
                 + "*";
