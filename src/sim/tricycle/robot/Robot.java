@@ -42,6 +42,13 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         this.mapObjective = mapObjective;
     }
     
+    public Robot(Automate automate, Team equipe, Carte mapObjective) {
+        this.automate = automate;
+        this.mapObjective = mapObjective;
+        this.equipe = equipe;
+        this.mapTeam = equipe.getMap();
+    }    
+    
     public Robot(Carte mapObjective) {
         this.mapObjective = mapObjective;
     }

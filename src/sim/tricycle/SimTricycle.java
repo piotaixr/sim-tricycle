@@ -4,6 +4,7 @@
  */
 package sim.tricycle;
 
+import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.robot.Collecteur;
 import sim.tricycle.robot.Point;
@@ -35,15 +36,21 @@ public class SimTricycle {
 //  for(int i=0;i<chemin.size();i++){
 //     System.out.println("Chemin final case N°"+i+" :"+chemin.get(i).getPoint().getX()+" "+chemin.get(i).getPoint().getY());
 //  }
-  
- AllerA go = new AllerA(p);
-  go.executer(bot);
+//  
+// AllerA go = new AllerA(p);
+//  go.executer(bot);
 //  System.out.println("Lol?"+bot.getActions().size());
 //  
 //  for(ActionInterface a:bot.getActions()){
 //      System.out.println("Action :"+a.getId());
 //      
 //  }
+  
+ 
+ Ordonnanceur ordo = new Ordonnanceur();
+ 
+ ordo.add(bot);
+  
  }
 }
 
