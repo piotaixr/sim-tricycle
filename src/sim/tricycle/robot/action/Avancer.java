@@ -32,19 +32,19 @@ public class Avancer extends AbstractAction {
         for (int i = 0; i < nbCases; i++) {
             switch (bot.getDirection()) {
                 case NORD:
-                    p.setX(p.getX() + 1);
+                    p.setX(p.getX() - 1);
                     break;
 
                 case EST:
-                    p.setX(p.getY() + 1);
+                    p.setY(p.getY() + 1);
                     break;
 
                 case OUEST:
-                    p.setX(p.getY() - 1);
+                    p.setY(p.getY() - 1);
                     break;
 
                 case SUD:
-                    p.setX(p.getX() - 1);
+                    p.setX(p.getX() + 1);
                     break;
 
                 case SUD_EST:
