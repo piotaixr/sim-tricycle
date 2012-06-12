@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.List;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
+import sim.tricycle.mapping.AbstractObstacle;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.robot.action.ActionInterface;
 import sim.tricycle.team.Team;
@@ -12,9 +13,9 @@ import sim.tricycle.team.Team;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public abstract class Robot implements OrdonnancableInterface {
+public abstract class Robot extends AbstractObstacle implements OrdonnancableInterface {
 
-    protected Point position;
+    protected Point coordonnees;
     protected Sens direction;
     protected int portee;
     protected ArrayDeque<ActionInterface> actions = new ArrayDeque();
@@ -23,7 +24,7 @@ public abstract class Robot implements OrdonnancableInterface {
     protected Automate automate;
     protected Team equipe;
     protected Carte mapTeam;
-
+    protected Carte mapObjective;
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
      *
@@ -36,18 +37,27 @@ public abstract class Robot implements OrdonnancableInterface {
 
     }
 
+    public Robot(Automate automate, Carte mapObjective) {
+        this.automate = automate;
+        this.mapObjective = mapObjective;
+    }
+    
+    public Robot(Carte mapObjective) {
+        this.mapObjective = mapObjective;
+    }
+    
     public Robot(Team equipe) {
         this.automate = null;
         this.equipe = equipe;
         this.mapTeam = equipe.getMap();
     }
 
-    public Point getPosition() {
-        return this.position;
+    public Point getCoordonnees() {
+        return this.coordonnees;
     }
 
-    public void setPosition(Point newP) {
-        this.position = newP;
+    public void setCoordonnees(Point newP) {
+        this.coordonnees = newP;
     }
 
     public Sens getDirection() {

@@ -24,7 +24,7 @@ public class SimTricycle {
  sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs",c,new Point(0,0));
  sim.tricycle.robot.Robot bot ;
  bot = new Collecteur(t);
- bot.setPosition(new Point(0,0));
+ bot.setCoordonnees(new Point(0,0));
  Point p= new Point(2,2);
  //TrouveChemin TrCh = new TrouveChemin(p);
  //LinkedList<Noeud> chemin= new LinkedList<Noeud>();
