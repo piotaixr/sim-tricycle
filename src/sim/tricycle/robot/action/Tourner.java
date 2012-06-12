@@ -2,12 +2,13 @@ package sim.tricycle.robot.action;
 
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.Sens;
+import sim.tricycle.robot.action.core.AbstractAction;
 
 /**
  *
  * @author Adri
  */
-public class Tourner extends Action {
+public class Tourner extends AbstractAction {
 
     private Sens direction;
 
@@ -22,9 +23,10 @@ public class Tourner extends Action {
     }
 
     @Override
-    public void executer(Robot bot) {
+    protected Object doExecute(Robot bot) {
 
         bot.setDirection(this.direction);
+        return null;
     }
 
     public void setDirection(Sens newDir) {

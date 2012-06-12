@@ -2,12 +2,13 @@ package sim.tricycle.robot.action;
 
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
+import sim.tricycle.robot.action.core.AbstractAction;
 
 /**
  *
  * @author Adri
  */
-public class Avancer extends Action {
+public class Avancer extends AbstractAction {
 
     private int nbCases;
 
@@ -24,7 +25,7 @@ public class Avancer extends Action {
     }
 
     @Override
-    public void executer(Robot bot) {
+    protected Object doExecute(Robot bot) {
 
         Point p = new Point(bot.getCoordonnees());
 
@@ -68,6 +69,7 @@ public class Avancer extends Action {
             }
         }
         bot.setCoordonnees(p);
+        return null;
     }
 
     @Override

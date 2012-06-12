@@ -1,8 +1,7 @@
-package sim.tricycle.robot.condition.factory;
+package sim.tricycle.robot.condition.core;
 
 import java.util.Collection;
 import java.util.List;
-import sim.tricycle.robot.condition.ConditionInterface;
 import sim.tricycle.utils.FactoryInterface;
 import sim.tricycle.utils.params.Parameter;
 

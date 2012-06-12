@@ -9,25 +9,30 @@ import org.jdom2.input.SAXBuilder;
 import sim.tricycle.robot.Automate;
 import sim.tricycle.robot.Etat;
 import sim.tricycle.robot.Transition;
-import sim.tricycle.robot.action.ActionInterface;
-import sim.tricycle.robot.condition.ConditionInterface;
-import sim.tricycle.robot.condition.ParameterCreator;
-import sim.tricycle.robot.condition.factory.ConditionFactoryInterface;
+import sim.tricycle.robot.action.core.ActionFactoryInterface;
+import sim.tricycle.robot.action.core.ActionInterface;
+import sim.tricycle.robot.condition.core.ConditionInterface;
+import sim.tricycle.utils.ParameterCreator;
+import sim.tricycle.robot.condition.core.ConditionFactoryInterface;
 import sim.tricycle.utils.params.ParamConverterProviderInterface;
 import sim.tricycle.utils.params.Parameter;
 
 /**
  * @todo implementation non finie. Il doit rester des fonctions a ajouter
+ *
  * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
  */
 public class RobotParser {
 
     private ConditionFactoryInterface condifionFactory;
     private ParamConverterProviderInterface paramConverterProvider;
+    private ActionFactoryInterface actionFactory;
+    private ParameterCreator parameterCreator = new ParameterCreator();
 
-    public RobotParser(ConditionFactoryInterface condifionFactory, ParamConverterProviderInterface paramConverterProvider) {
+    public RobotParser(ConditionFactoryInterface condifionFactory, ParamConverterProviderInterface paramConverterProvider, ActionFactoryInterface actionFactory) {
         this.condifionFactory = condifionFactory;
         this.paramConverterProvider = paramConverterProvider;
+        this.actionFactory = actionFactory;
     }
 
     public Automate parse(File f) {
@@ -56,6 +61,7 @@ public class RobotParser {
             String id = elementEtat.getAttributeValue("id");
             Etat e = automate.getEtat(id);
             addTransitions(e, elementEtat, automate);
+            addTags(e, elementEtat, automate);
         }
 
     }
@@ -88,16 +94,18 @@ public class RobotParser {
 
             Transition t = new Transition(e, etatDestination, condition);
             ajouterActions(t, elemTransition, automate);
-            
+
             e.addTransition(t);
         }
     }
-/**
- * @todo Finir l'implementation de cette fonction
- * @param t
- * @param elemTransition
- * @param automate 
- */
+
+    /**
+     * @todo Finir l'implementation de cette fonction
+     *
+     * @param t
+     * @param elemTransition
+     * @param automate
+     */
     private void ajouterActions(Transition t, Element elemTransition, Automate automate) {
         List<Element> actions = elemTransition.getChildren("action");
         Iterator<Element> it = actions.iterator();
@@ -110,17 +118,29 @@ public class RobotParser {
 
     private ConditionInterface creerCondition(Element conditionTransitionElement) {
         String conditionNom = conditionTransitionElement.getAttributeValue("nom").trim();
-        List<Parameter> parametersList = new ParameterCreator().toParameterList(conditionTransitionElement.getChildren("parametre"));
-        
+        List<Parameter> parametersList = parameterCreator.toParameterList(conditionTransitionElement.getChildren("parametre"));
+
         return condifionFactory.create(conditionNom, parametersList);
     }
 
     private ActionInterface creerAction(Element actionElement) {
-        ActionInterface action = null;
-        List<Parameter> parametersList = new ParameterCreator().toParameterList(actionElement.getChildren("parametre"));
-        
-        
-        
-        return action;
+        String actionNom = actionElement.getAttributeValue("nom").trim();
+        List<Parameter> parametersList = parameterCreator.toParameterList(actionElement.getChildren("parametre"));
+        String variableDest = actionElement.getAttributeValue("dest").trim();
+
+        return actionFactory.create(actionNom, parametersList, variableDest);
+    }
+
+    private void addTags(Etat e, Element elementEtat, Automate automate) {
+        List<Element> tags = elementEtat.getChildren("tag");
+        Iterator<Element> it = tags.iterator();
+        while (it.hasNext()) {
+            Element tagElement = it.next();
+            String nomTag = tagElement.getAttributeValue("nom").trim();
+            if (nomTag.equals("")) {
+                continue; // TODO: afficher un warning
+            }
+            e.addTag(nomTag);
+        }
     }
 }

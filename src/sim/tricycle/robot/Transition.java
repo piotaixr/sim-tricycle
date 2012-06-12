@@ -2,8 +2,8 @@ package sim.tricycle.robot;
 
 import java.util.ArrayList;
 import java.util.List;
-import sim.tricycle.robot.action.ActionInterface;
-import sim.tricycle.robot.condition.ConditionInterface;
+import sim.tricycle.robot.action.core.ActionInterface;
+import sim.tricycle.robot.condition.core.ConditionInterface;
 
 /**
  *

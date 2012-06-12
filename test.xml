@@ -1,86 +1,86 @@
 <?xml version="1.0" encoding='ISO-8859-1' standalone='yes' ?>
 <robot>
-<etat id="normal">
-<tag nom="tag1"/>
-<condition nom="piece_trouvee"/>
-<action nom="piece_plus_proche" dest="piece">
-</action>
-<action nom="marquer">
-<parametre> piece </parametre>
-</action>
-<etat id="deplacement_norm"/>
-<condition nom="true"/>
-<action nom="attente">
-</action>
-<etat id="normal"/>
-</etat>
-<etat id="deplacement_norm">
-<tag nom="tag1"/>
-<transition>
-<condition nom="contains">
-<parametre> caseCourante </parametre>
-<parametre> pieceRecherchee </parametre>
-</condition>
-<action nom="ramasser">
-</action>
-<etat id="porteur"/>
-</transition>
-<transition>
-<condition nom="true"/>
-<action nom="aller">
-<parametre type="var">piece</parametre>
-</action>
-<etat id="normal"/>
-</transition>
-</etat>
-<etat id="porteur">
-<tag nom="tag2"/>
-<transition>
-<etat id="deplacement_port"/>
-</transition>
-</etat>
-<etat id="deplacement_port">
-<tag nom="tag2"/>
-<transition>
-<condition nom="case==base"/>
-<action nom="deposer">
-</action>
-<etat id="normal"/>
-</transition>
-<transition>
-<condition nom="true"/>
-<action nom="aller">
-<parametre type="var">base</parametre>
-</action>
-<etat id="deplacement_port"/>
-</transition>
-</etat>
-<tag1>
-<action nom="avancer">
-<parametre> 1 </parametre>
-</action>
-<action nom="reculer">
-<parametre> 1 </parametre>
-</action>
-<action nom="tourner_droite">
-<parametre> 1 </parametre>
-</action>
-<action nom="tourner_gauche">
-<parametre> 1 </parametre>
-</action>
-</tag1>
-<tag2>
-<action nom="avancer">
-<parametre> 2 </parametre>
-</action>
-<action nom="reculer">
-<parametre> 2 </parametre>
-</action>
-<action nom="tourner_droite">
-<parametre> 1 </parametre>
-</action>
-<action nom="tourner_gauche">
-<parametre> 1 </parametre>
-</action>
-</tag2>
+    <etat id="normal">
+        <tag nom="tag1"/>
+        <condition nom="piece_trouvee"/>
+        <action nom="piece_plus_proche" dest="piece">
+        </action>
+        <action nom="marquer">
+            <parametre> piece </parametre>
+        </action>
+        <etat id="deplacement_norm"/>
+        <condition nom="true"/>
+        <action nom="attente">
+        </action>
+        <etat id="normal"/>
+    </etat>
+    <etat id="deplacement_norm">
+        <tag nom="tag1"/>
+        <transition>
+            <condition nom="contains">
+                <parametre> caseCourante </parametre>
+                <parametre> pieceRecherchee </parametre>
+            </condition>
+            <action nom="ramasser">
+            </action>
+            <etat id="porteur"/>
+        </transition>
+        <transition>
+            <condition nom="true"/>
+            <action nom="aller">
+                <parametre type="var">piece</parametre>
+            </action>
+            <etat id="normal"/>
+        </transition>
+    </etat>
+    <etat id="porteur">
+        <tag nom="tag2"/>
+        <transition>
+            <etat id="deplacement_port"/>
+        </transition>
+    </etat>
+    <etat id="deplacement_port">
+        <tag nom="tag2"/>
+        <transition>
+            <condition nom="case==base"/>
+            <action nom="deposer">
+            </action>
+            <etat id="normal"/>
+        </transition>
+        <transition>
+            <condition nom="true"/>
+            <action nom="aller">
+                <parametre type="var">base</parametre>
+            </action>
+            <etat id="deplacement_port"/>
+        </transition>
+    </etat>
+    <tag1>
+        <action nom="avancer">
+            <parametre> 1 </parametre>
+        </action>
+        <action nom="reculer">
+            <parametre> 1 </parametre>
+        </action>
+        <action nom="tourner_droite">
+            <parametre> 1 </parametre>
+        </action>
+        <action nom="tourner_gauche">
+            <parametre> 1 </parametre>
+        </action>
+    </tag1>
+    <tag2>
+        <action nom="avancer">
+            <parametre> 2 </parametre>
+        </action>
+        <action nom="reculer">
+            <parametre> 2 </parametre>
+        </action>
+        <action nom="tourner_droite">
+            <parametre> 1 </parametre>
+        </action>
+        <action nom="tourner_gauche">
+            <parametre> 1 </parametre>
+        </action>
+    </tag2>
 </robot>

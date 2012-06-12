@@ -6,12 +6,13 @@ import sim.tricycle.mapping.Case;
 import sim.tricycle.robot.Noeud;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
+import sim.tricycle.robot.action.core.AbstractAction;
 
 /**
  *
  * @author Adri
  */
-public class TrouveChemin extends Action {
+public class TrouveChemin extends AbstractAction {
 
     private Point pDest;
     private LinkedList<Noeud> chemin;
@@ -27,9 +28,10 @@ public class TrouveChemin extends Action {
     }
 
     @Override
-    public void executer(Robot bot) {
+    protected Object doExecute(Robot bot) {
         this.chemin = plusCourtChemin(new Point(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()), bot);
         //  System.out.print("Coucou");
+        return null;
     }
 
     private void insereEnOrdre(Noeud n, LinkedList<Noeud> listeNoeuds) {
@@ -66,7 +68,7 @@ public class TrouveChemin extends Action {
             //  System.out.println("Y :"+courant.getPoint().getY());
             //System.out.println("Bot :"+bot.getPosition().getX());
 
-            bot.getMapTeam().casesVoisines(bot.getMapTeam(), new Case(courant.getPoint().getX(), courant.getPoint().getY()), listeVoisins);
+            bot.getMapObjective().casesVoisines(bot.getMapObjective(), new Case(courant.getPoint().getX(), courant.getPoint().getY()), listeVoisins);
             //        System.out.println("nbVoisins :"+listeVoisins.size());
             for (Case c : listeVoisins) {
                 if (!c.hasObstacle()) {

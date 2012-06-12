@@ -1,13 +1,11 @@
 package sim.tricycle.robot;
 
 import java.util.ArrayDeque;
-import java.util.Iterator;
-import java.util.List;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
-import sim.tricycle.robot.action.ActionInterface;
+import sim.tricycle.robot.action.core.ActionInterface;
 import sim.tricycle.team.Team;
 
 /**
@@ -26,6 +24,8 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     protected Team equipe;
     protected Carte mapTeam;
     protected Carte mapObjective;
+
+
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
      *
@@ -112,9 +112,15 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     public Carte getMapTeam() {
         return this.mapTeam;
     }
+    
+    public Carte getMapObjective() {
+        return mapObjective;
+    }
 
     public void collerRobotSurMap(){
-        this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
+        if(!this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()){
+           this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
+        }
     }
     
     public void decollerRobotDeMap(){
@@ -131,27 +137,33 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
      * @todo coder cette fonction
      */
     public void executeAction() {
-        decollerRobotDeMap();
-        if (actions.isEmpty()) {
-            // liste actions vide, on change d'état
-            etatCourant = etatDestination;
-            // parcours des transitions
-            List<Transition> transitions = etatCourant.getTransitions();
-            Iterator<Transition> it = transitions.iterator();
-            while (it.hasNext()) {
-                Transition t = it.next();
-                // si condition non valide, on passe à la suivante
-                if (!t.getCondition().test()) {
-                    continue;
-                }
-                //ajout des actions
-                List<ActionInterface> newActions = t.getActions();
-                actions.addAll(newActions);
-                //on donne l'etat de destination
-                etatDestination = t.getEtatDestination();
-                break;
-            }
-        }
+       // decollerRobotDeMap();
+//        if (actions.isEmpty()) {
+//            // liste actions vide, on change d'état
+//            etatCourant = etatDestination;
+//            // parcours des transitions
+//            List<Transition> transitions = etatCourant.getTransitions();
+//            Iterator<Transition> it = transitions.iterator();
+//            while (it.hasNext()) {
+//                Transition t = it.next();
+//                // si condition non valide, on passe à la suivante
+//                if (!t.getCondition().test()) {
+//                    continue;
+//                }
+//                //ajout des actions
+//                List<ActionInterface> newActions = t.getActions();
+//                actions.addAll(newActions);
+//                //on donne l'etat de destination
+//                etatDestination = t.getEtatDestination();
+//                break;
+//            }
+//        }
+        if(!actions.isEmpty()){
+        actions.getFirst().executer(this);
+        System.out.println("Action :"+actions.getFirst().getId());
+        actions.removeFirst();
         collerRobotSurMap();
+        }
+
     }
 }
