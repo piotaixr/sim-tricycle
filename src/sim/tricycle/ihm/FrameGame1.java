@@ -17,7 +17,7 @@ public class FrameGame1 extends javax.swing.JFrame {
 
     private ViewCarte vc;
     private ViewMiniCarte vmc;
-    private int time=42;
+    private int time=0;
 
     /**
      * Creates new form MorganTestAppli
@@ -57,9 +57,6 @@ public class FrameGame1 extends javax.swing.JFrame {
         System.out.println(" largeur scroll pane :" + jspanMap.getWidth() + " hauteur : " + jspanMap.getHeight());
         System.out.println(" largeur pane Map :" + vc.getWidth() + " hauteur : " + vc.getHeight());
 
-
-
-
     }
     
     public void incrementeTime(){
@@ -84,8 +81,6 @@ public class FrameGame1 extends javax.swing.JFrame {
         scorePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         txtscoreBallTeam1 = new javax.swing.JLabel();
         txtScoreGoldTeam1 = new javax.swing.JLabel();
         txtScoreBallTeam2 = new javax.swing.JLabel();
@@ -111,9 +106,13 @@ public class FrameGame1 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AppliFrame");
+        setBackground(new java.awt.Color(102, 102, 102));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        headband.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        headband.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        headband.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        buttonPause.setBackground(new java.awt.Color(204, 204, 255));
         buttonPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/pause.gif"))); // NOI18N
         buttonPause.setText("Pause");
         buttonPause.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -127,6 +126,7 @@ public class FrameGame1 extends javax.swing.JFrame {
             }
         });
 
+        buttonPlay.setBackground(new java.awt.Color(204, 204, 255));
         buttonPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/arrow-right-play.gif"))); // NOI18N
         buttonPlay.setText("Play");
         buttonPlay.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -135,21 +135,19 @@ public class FrameGame1 extends javax.swing.JFrame {
             }
         });
 
+        buttonStepPlay.setBackground(new java.awt.Color(204, 204, 255));
         buttonStepPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/arrow-right.gif"))); // NOI18N
         buttonStepPlay.setText("Step");
 
+        buttonSpeedUp.setBackground(new java.awt.Color(204, 204, 255));
         buttonSpeedUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/arrow-fast-forward.gif"))); // NOI18N
         buttonSpeedUp.setText("Speed up");
 
-        scorePanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        scorePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setText("Balls :");
+        jLabel1.setText("Balls ");
 
-        jLabel2.setText("Gold :");
-
-        jLabel3.setText("VS");
-
-        jLabel4.setText("VS");
+        jLabel2.setText("Gold ");
 
         txtscoreBallTeam1.setText("scoreBallTeam1");
 
@@ -164,21 +162,15 @@ public class FrameGame1 extends javax.swing.JFrame {
         scorePanelLayout.setHorizontalGroup(
             scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(scorePanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, scorePanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtscoreBallTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, scorePanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtScoreGoldTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(txtscoreBallTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtScoreGoldTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
-                .addGap(10, 10, 10)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(8, 8, 8)
                 .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(scorePanelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -191,18 +183,17 @@ public class FrameGame1 extends javax.swing.JFrame {
             .addGroup(scorePanelLayout.createSequentialGroup()
                 .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel3)
                     .addComponent(txtscoreBallTeam1)
                     .addComponent(txtScoreBallTeam2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4)
                     .addComponent(txtScoreGoldTeam1)
-                    .addComponent(txtScoreGoldTeam2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtScoreGoldTeam2)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
+        buttonExit.setBackground(new java.awt.Color(204, 204, 255));
         buttonExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/eject.gif"))); // NOI18N
         buttonExit.setText("Exit");
         buttonExit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -210,10 +201,15 @@ public class FrameGame1 extends javax.swing.JFrame {
                 buttonExitMousePressed(evt);
             }
         });
+        buttonExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonExitActionPerformed(evt);
+            }
+        });
 
         lblUnitTime.setText("Unités de temps :");
 
-        lblTime.setText("jLabel5");
+        lblTime.setText("0");
 
         javax.swing.GroupLayout headbandLayout = new javax.swing.GroupLayout(headband);
         headband.setLayout(headbandLayout);
@@ -231,12 +227,12 @@ public class FrameGame1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scorePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scorePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblUnitTime)
                 .addGap(18, 18, 18)
                 .addComponent(lblTime)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(buttonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -335,7 +331,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableGlobale.setLayout(panActionAvailableGlobaleLayout);
         panActionAvailableGlobaleLayout.setHorizontalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 205, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
         );
         panActionAvailableGlobaleLayout.setVerticalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,7 +344,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableTeam1.setLayout(panActionAvailableTeam1Layout);
         panActionAvailableTeam1Layout.setHorizontalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 205, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
         );
         panActionAvailableTeam1Layout.setVerticalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,7 +357,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableTeam2.setLayout(panActionAvailableTeam2Layout);
         panActionAvailableTeam2Layout.setHorizontalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 205, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
         );
         panActionAvailableTeam2Layout.setVerticalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,8 +382,8 @@ public class FrameGame1 extends javax.swing.JFrame {
 
         panZoom.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        sldZoom.setMaximum(200);
-        sldZoom.setMinimum(1);
+        sldZoom.setMaximum(220);
+        sldZoom.setMinimum(30);
         sldZoom.setValue(100);
         sldZoom.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -427,7 +423,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panMiniMap.setLayout(panMiniMapLayout);
         panMiniMapLayout.setHorizontalGroup(
             panMiniMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 167, Short.MAX_VALUE)
+            .addGap(0, 157, Short.MAX_VALUE)
         );
         panMiniMapLayout.setVerticalGroup(
             panMiniMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -445,10 +441,11 @@ public class FrameGame1 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jspanMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panZoom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panSelectTeamMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panMiniMap, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(panZoom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panSelectTeamMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panMiniMap, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -458,13 +455,6 @@ public class FrameGame1 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(panSelectTeamMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(panZoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(panMiniMap, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jspanMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(panActionAvailable))
@@ -473,6 +463,8 @@ public class FrameGame1 extends javax.swing.JFrame {
                         .addComponent(panSelectTeamMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
                         .addComponent(panZoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(panMiniMap, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
 
@@ -485,8 +477,7 @@ public class FrameGame1 extends javax.swing.JFrame {
 
     private void buttonExitMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonExitMousePressed
         // TODO add your handling code here:
-        txtScoreGoldTeam1.setText("4");
-        txtScoreGoldTeam2.setText("2");
+        this.dispose();
     }//GEN-LAST:event_buttonExitMousePressed
 
     private void buttonPauseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonPauseMousePressed
@@ -531,6 +522,10 @@ public class FrameGame1 extends javax.swing.JFrame {
     private void jspanMapFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jspanMapFocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_jspanMapFocusGained
+
+    private void buttonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -591,8 +586,6 @@ public class FrameGame1 extends javax.swing.JFrame {
     private javax.swing.JPanel headband;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jspanMap;
     private javax.swing.JLabel lblMap;
     private javax.swing.JLabel lblTime;
