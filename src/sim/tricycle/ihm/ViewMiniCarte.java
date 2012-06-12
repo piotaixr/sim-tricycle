@@ -21,9 +21,9 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     private CarteInterface carte;
     private int tailleCase;
     private int tailleCaseBase = 50;
-    private int decalageX,decalageY;    //pour plus tard essayer de centrer la carte dans le JScrollPane
+    private int decalageX, decalageY;    //pour centrer la carte dans le JScrollPane.
     private int tailleOpti;
-    private Image imgPiece, imgMur, imgVide, imgRobot, imgBonus, imgBoule;
+    private Image imgMap;
     private int px, py; //pour faire la difference lors du drag
 
     /**
@@ -40,14 +40,9 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         //  this.setPreferredSize(this.getSize());
 
         try {
-
             // Initialisation des images:
-            imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/images/mur.jpg"));
-            imgVide = ImageIO.read(new File("./src/sim/tricycle/ihm/images/vide.jpg"));
-            imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robot.jpg"));
-            imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/bonus.jpg"));
-            imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/boule.jpg"));
-            imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/images/piece.jpg"));
+            imgMap = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robot.jpg"));
+
 
         } catch (IOException ex) {
             Logger.getLogger(ViewMiniCarte.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,20 +70,20 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         System.out.println("PreferedSize :" + this.getPreferredSize());
         System.out.println("Size :" + this.getSize());
 
-        /*
-         * Centrage de la map
-         */
+        //Centrage de la map
+
         if (carte.getLargeur() * tailleOpti < this.getParent().getWidth()) {
             decalageX = (this.getParent().getWidth() - carte.getLargeur() * tailleOpti) / 2;
         }
         if (carte.getHauteur() * tailleOpti < this.getParent().getHeight()) {
             decalageY = (this.getParent().getHeight() - carte.getHauteur() * tailleOpti) / 2;
         }
-
+        //afficher image de fond.
+        g.drawImage(imgMap, 0, 0, this.getWidth(), this.getHeight(), this);
+        //On dessine les cases.
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
                 paintCase(g, carte.getCase(i, j), tailleOpti);
-                // paintCase(g, carte.getCase(i, j), tailleCase);
             }
         }
     }
@@ -100,24 +95,25 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         int x = (c.getY() * width) + decalageX;
 
         if (c.whoIam() == TypeCase.mur) {                             //MUR
-            g.drawImage(imgMur, x, y, width, width, this);
+            g.setColor(Color.DARK_GRAY);
+            g.fillRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.vide) {                     //VIDE
-            g.drawImage(imgVide, x, y, width, width, this);
-
         } else if (c.whoIam() == TypeCase.piece) {                    //PIECE
-            g.drawImage(imgPiece, x, y, width, width, this);
+            g.setColor(Color.yellow);
+            g.fillOval(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.bonus) {                    //BONUS
-            g.drawImage(imgBonus, x, y, width, width, this);
+            g.setColor(Color.WHITE);
+            g.fillRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.robot) {                    //ROBOT
-            g.drawImage(imgRobot, x, y, width, width, this);
+            g.setColor(Color.PINK);
+            g.fillRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.boule) {                    //BOULE
-            g.drawImage(imgBoule, x, y, width, width, this);
-        } else {
-            g.drawImage(imgVide, x, y, width, width, this);
+            g.setColor(Color.RED);
+            g.fillOval(x, y, width, width);
         }
     }
 
@@ -140,13 +136,11 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     private void initComponents() {
 
         addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 formMousePressed(evt);
-            }
-        });
-        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                formMouseDragged(evt);
             }
         });
 
@@ -162,17 +156,6 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
-        // TODO add your handling code here:
-        System.out.println("dragged");
-        //final Component t = evt.getComponent();
-        //evt.translatePoint(getLocation().x + t.getLocation().x - px, getLocation().y + t.getLocation().y - py);
-        this.setLocation(evt.getLocationOnScreen().x - px, evt.getLocationOnScreen().y - py);
-        px = evt.getLocationOnScreen().x - this.getX();
-        py = evt.getLocationOnScreen().y - this.getY();
-        this.getParent().validate(); //A mettre en commentaire si on veut bouger la map comme on veut mais avec les pb de dessin...
-    }//GEN-LAST:event_formMouseDragged
-
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // TODO add your handling code here:
         //evt.translatePoint(evt.getComponent().getLocation().x, evt.getComponent().getLocation().y);
@@ -182,6 +165,11 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         System.out.println("click position : " + px + " " + py);
         System.out.println("POSITION dans le composant : X " + this.getMousePosition().x + " Y " + this.getMousePosition().y);
     }//GEN-LAST:event_formMousePressed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
