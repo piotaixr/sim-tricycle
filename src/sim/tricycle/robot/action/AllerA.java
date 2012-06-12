@@ -2,6 +2,8 @@ package sim.tricycle.robot.action;
 
 import java.util.ArrayDeque;
 import java.util.LinkedList;
+import sim.tricycle.mapping.Case;
+import sim.tricycle.mapping.PossedeCaseInterface;
 import sim.tricycle.robot.Noeud;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
@@ -18,6 +20,14 @@ public class AllerA extends Action {
     public AllerA(Point p) {
         super();
         this.p = p;
+    }
+
+    public AllerA(Case c) {
+        this(new Point(c.getX(), c.getY()));
+    }
+
+    public AllerA(PossedeCaseInterface pc) {
+        this(pc.getPosition());
     }
 
     @Override
