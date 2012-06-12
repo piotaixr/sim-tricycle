@@ -1,44 +1,55 @@
 /*fichier automate*/
 robot{
 
-	etat=normal{
-            transition{
-		si(piece_trouvee){etat=deplacement_norm;}
-            }
-            transition{
-		sinon{attente(tempos);
+	etat=normal[tag1]{
+		si(piece_trouvee()){ piece<-piece_plus_proche();
+                                    marquer(piece);
+                                    etat=deplacement_norm;}
+		sinon{attente();
 		       etat=normal;
 		}
             }
-	}
-	etat=deplacement_norm{
+	
+	etat=deplacement_norm[tag1]{
             transition{
-		si(case==piece){ ramasser(tempos);
+		si(contains(caseCourante,pieceRecherchee)){ ramasser();
 				     etat=porteur;
                 }
             }
             transition{
-		sinon{aller(piece,tempos);
+		sinon{aller(var : piece);
 		      etat=normal;
 		}
             }
 	}
-	etat=porteur{
+	etat=porteur[tag2]{
             transition{
 		etat=deplacement_port;
             }
 	}
-	etat=deplacement_port{
+	etat=deplacement_port[tag2]{
             transition{
-		si(case==base){deposer(tempos);
+		si(case==base){deposer();
 				   etat=normal;
 			     }
             }
             transition{
-		sinon{aller(base,tempos);
+		sinon{aller(var :base);
 		      etat=deplacement_port;
 		}
             }
 	}
+        tag1{
+            avancer(1);
+            reculer(1);
+            tourner_droite(1);
+            tourner_gauche(1);
+        }
+        tag2{
+            avancer(2);
+            reculer(2);
+            tourner_droite(1);
+            tourner_gauche(1);
+        }
 }
 fin
