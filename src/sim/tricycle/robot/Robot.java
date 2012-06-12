@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
 import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.robot.action.ActionInterface;
 import sim.tricycle.team.Team;
@@ -42,7 +43,19 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         this.mapObjective = mapObjective;
     }
     
+    public Robot(Automate automate, Team equipe, Carte mapObjective) {
+        this.automate = automate;
+        this.mapObjective = mapObjective;
+        this.equipe = equipe;
+        this.mapTeam = equipe.getMap();
+    }    
+    
     public Robot(Carte mapObjective) {
+        this.mapObjective = mapObjective;
+    }
+    
+    public Robot(Team t,Carte mapObjective) {
+        this.equipe=t;
         this.mapObjective = mapObjective;
     }
     
@@ -100,13 +113,25 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         return this.mapTeam;
     }
 
+    public void collerRobotSurMap(){
+        this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
+    }
+    
+    public void decollerRobotDeMap(){
+        this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(null);
+    }
+    
     @Override
+    public TypeCase whoIam() {
+        return (TypeCase.robot);
+    }
     /**
      * Fonction appelée a chaque tick d'horloge
      *
      * @todo coder cette fonction
      */
     public void executeAction() {
+        decollerRobotDeMap();
         if (actions.isEmpty()) {
             // liste actions vide, on change d'état
             etatCourant = etatDestination;
@@ -127,5 +152,6 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
                 break;
             }
         }
+        collerRobotSurMap();
     }
 }

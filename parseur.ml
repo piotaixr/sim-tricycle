@@ -190,9 +190,9 @@ let rec parseur pile sortie stream detection nom piece= match stream with parser
    |[< >]->pile;;
 
 
-let analyse () = 
-  let entree = open_in "automate.txt"
-  in let sortie = open_out "test.xml" 
+let analyse ent sort = 
+  let entree = open_in (ent^".txt")
+  in let sortie = open_out (sort^".xml" )
 	in if ((lecture_aux entree)<>"/*fichier automate*/")
 	  then (failwith "erreur de fichier")
 	  else (ecriture_aux sortie ("<?xml version="^"\""^"1.0"^"\""^" encoding='ISO-8859-1' standalone='yes' ?>");
@@ -206,28 +206,7 @@ let analyse () =
      close_out sortie;
      close_in entree;;
 
-analyse();;
-
-(*__________________________________________________________________________*)
-
-(* test pour transformation de fonction *)
-(*
-
-let entree = open_in "pile.txt";;
-let sortie = open_out "test.txt";;
-lecture_aux entree;;
-let transf entree= Stream.of_string(input_line entree);;
-let ecriture_aux sortie  mot = output sortie mot 0 (String.length mot);;
-ecriture_aux sortie "blabla";;
+analyse "automate" "test";;
 
 
-let ind sortie stream mot = match stream with parser
-  |[<''\t'>]-> (ecriture_aux_char sortie '\t');
-  |[<''a'..'z'|'A'..'Z'|'_'|'{'|'}'|'('|')'  as n; f>]->( ecriture_aux_char sortie n)
-  |[< >]-> ();;
-
-close_out sortie;;
-close_in entree;;
-*)
-(*______________________________________________________________________*)
 
