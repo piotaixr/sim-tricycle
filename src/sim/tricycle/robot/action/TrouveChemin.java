@@ -29,7 +29,7 @@ public class TrouveChemin extends AbstractAction {
 
     @Override
     protected Object doExecute(Robot bot) {
-        this.chemin = plusCourtChemin(new Point(bot.getPosition().getX(), bot.getPosition().getY()), bot);
+        this.chemin = plusCourtChemin(new Point(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()), bot);
         //  System.out.print("Coucou");
         return null;
     }

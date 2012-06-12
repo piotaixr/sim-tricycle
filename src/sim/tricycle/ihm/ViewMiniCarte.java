@@ -21,23 +21,20 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     private CarteInterface carte;
     private int tailleCase;
     private int tailleCaseBase = 50;
-    private int decalageX, decalageY;    //pour centrer la carte dans le JScrollPane.
     private int tailleOpti;
     private Image imgMap;
-    private int px, py; //pour faire la difference lors du drag
+    private int px, py, tLmini, tHmini; //pour faire la difference lors du drag
+    private ViewCarte vuc;
 
     /**
-     * Creates new form ViewCarte
+     * Crée minicarte
      */
-    public ViewMiniCarte(CarteInterface carte) {
+    public ViewMiniCarte(CarteInterface carte, ViewCarte vc) {
         initComponents();
         this.carte = carte;
         this.tailleCase = this.tailleCaseBase;
         //  this.setBackground(Color.darkGray);
-
-        //   tailleOpti = Math.max((int)this.getParent().getWidth()/carte.getLargeur(),(int)this.getParent().getHeight()/carte.getHauteur());
-        //   tailleCase = tailleOpti;
-        //  this.setPreferredSize(this.getSize());
+        vuc = vc;
 
         try {
             // Initialisation des images:
@@ -70,16 +67,11 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         System.out.println("PreferedSize :" + this.getPreferredSize());
         System.out.println("Size :" + this.getSize());
 
-        //Centrage de la map
 
-        if (carte.getLargeur() * tailleOpti < this.getParent().getWidth()) {
-            decalageX = (this.getParent().getWidth() - carte.getLargeur() * tailleOpti) / 2;
-        }
-        if (carte.getHauteur() * tailleOpti < this.getParent().getHeight()) {
-            decalageY = (this.getParent().getHeight() - carte.getHauteur() * tailleOpti) / 2;
-        }
+        tLmini = tailleOpti * carte.getLargeur();
+        tHmini = tailleOpti * carte.getHauteur();
         //afficher image de fond.
-        g.drawImage(imgMap, 0, 0, this.getWidth(), this.getHeight(), this);
+        g.drawImage(imgMap, 0, 0, tLmini, tHmini, this);
         //On dessine les cases.
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
@@ -91,8 +83,8 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     private void paintCase(Graphics2D g, Case c, int width) {
         // System.out.println("Paint case " +width + "/" + c.getX() + " " + c.getY());
 
-        int y = (c.getX() * width) + decalageY;
-        int x = (c.getY() * width) + decalageX;
+        int y = (c.getX() * width);
+        int x = (c.getY() * width);
 
         if (c.whoIam() == TypeCase.mur) {                             //MUR
             g.setColor(Color.DARK_GRAY);
@@ -120,10 +112,6 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     public void setTaille(int txZoom) {
         tailleCase = tailleCaseBase * txZoom / 100;
         this.repaint();
-    }
-
-    public void moveMap(int x, int y) {
-        this.setLocation(x, y);
     }
 
     /**
@@ -157,10 +145,22 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        // TODO add your handling code here:
-        //evt.translatePoint(evt.getComponent().getLocation().x, evt.getComponent().getLocation().y);
+        // Si clic sur la miniMap:
         px = evt.getLocationOnScreen().x - this.getX();
         py = evt.getLocationOnScreen().y - this.getY();
+
+        //Si carte suffisament grande (plus grande que le conteneur jScroll).
+        if (vuc.getHeight() > vuc.getParent().getHeight()) {
+
+            //coeficient de différence entre la vraie carte et la mini.
+            int diff = vuc.getHeight() / this.getHeight();  
+            //On recupère la position
+            int tX = this.getMousePosition().x * diff * (-1);
+            int tY = this.getMousePosition().y * diff * (-1);
+            tX = tX + tLmini / 2; //On centre les nouvelles cordonnées.
+            tY = tY + tHmini / 2;
+            vuc.moveMap(tX, tY);  //On déplace la carte.
+        }
 
         System.out.println("click position : " + px + " " + py);
         System.out.println("POSITION dans le composant : X " + this.getMousePosition().x + " Y " + this.getMousePosition().y);
@@ -169,7 +169,6 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_formMouseClicked
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
 import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.TypeCase;
+import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.robot.action.core.ActionInterface;
 import sim.tricycle.team.Team;
 
@@ -12,9 +14,9 @@ import sim.tricycle.team.Team;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public abstract class Robot implements OrdonnancableInterface {
+public abstract class Robot extends AbstractObstacle implements OrdonnancableInterface {
 
-    protected Point position;
+    protected Point coordonnees;
     protected Sens direction;
     protected int portee;
     protected ArrayDeque<ActionInterface> actions = new ArrayDeque();
@@ -23,7 +25,7 @@ public abstract class Robot implements OrdonnancableInterface {
     protected Automate automate;
     protected Team equipe;
     protected Carte mapTeam;
-
+    protected Carte mapObjective;
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
      *
@@ -36,18 +38,39 @@ public abstract class Robot implements OrdonnancableInterface {
 
     }
 
+    public Robot(Automate automate, Carte mapObjective) {
+        this.automate = automate;
+        this.mapObjective = mapObjective;
+    }
+    
+    public Robot(Automate automate, Team equipe, Carte mapObjective) {
+        this.automate = automate;
+        this.mapObjective = mapObjective;
+        this.equipe = equipe;
+        this.mapTeam = equipe.getMap();
+    }    
+    
+    public Robot(Carte mapObjective) {
+        this.mapObjective = mapObjective;
+    }
+    
+    public Robot(Team t,Carte mapObjective) {
+        this.equipe=t;
+        this.mapObjective = mapObjective;
+    }
+    
     public Robot(Team equipe) {
         this.automate = null;
         this.equipe = equipe;
         this.mapTeam = equipe.getMap();
     }
 
-    public Point getPosition() {
-        return this.position;
+    public Point getCoordonnees() {
+        return this.coordonnees;
     }
 
-    public void setPosition(Point newP) {
-        this.position = newP;
+    public void setCoordonnees(Point newP) {
+        this.coordonnees = newP;
     }
 
     public Sens getDirection() {
@@ -90,13 +113,25 @@ public abstract class Robot implements OrdonnancableInterface {
         return this.mapTeam;
     }
 
+    public void collerRobotSurMap(){
+        this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
+    }
+    
+    public void decollerRobotDeMap(){
+        this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(null);
+    }
+    
     @Override
+    public TypeCase whoIam() {
+        return (TypeCase.robot);
+    }
     /**
      * Fonction appelée a chaque tick d'horloge
      *
      * @todo coder cette fonction
      */
     public void executeAction() {
+        decollerRobotDeMap();
         if (actions.isEmpty()) {
             // liste actions vide, on change d'état
             etatCourant = etatDestination;
@@ -117,5 +152,6 @@ public abstract class Robot implements OrdonnancableInterface {
                 break;
             }
         }
+        collerRobotSurMap();
     }
 }

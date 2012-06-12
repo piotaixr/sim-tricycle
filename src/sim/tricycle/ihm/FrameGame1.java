@@ -37,7 +37,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         //Carte c = new Carte(50, 50);
 
         vc = new ViewCarte(c);
-        vmc = new ViewMiniCarte(c);
+        vmc = new ViewMiniCarte(c,vc);
         
         panMiniMap.setLayout(new BorderLayout());
         vmc.setVisible(true);
@@ -535,7 +535,7 @@ public class FrameGame1 extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main2(String args[]) {
         /*
          * Set the Nimbus look and feel
          */
