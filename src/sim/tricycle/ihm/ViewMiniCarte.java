@@ -81,8 +81,7 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     }
 
     private void paintCase(Graphics2D g, Case c, int width) {
-        // System.out.println("Paint case " +width + "/" + c.getX() + " " + c.getY());
-
+        //coordonées de la case
         int y = (c.getX() * width);
         int x = (c.getY() * width);
 
@@ -91,13 +90,14 @@ public class ViewMiniCarte extends javax.swing.JPanel {
             g.fillRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.vide) {                     //VIDE
+            
         } else if (c.whoIam() == TypeCase.piece) {                    //PIECE
             g.setColor(Color.yellow);
             g.fillOval(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.bonus) {                    //BONUS
             g.setColor(Color.WHITE);
-            g.fillRect(x, y, width, width);
+            g.fillOval(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.robot) {                    //ROBOT
             g.setColor(Color.PINK);
@@ -107,11 +107,6 @@ public class ViewMiniCarte extends javax.swing.JPanel {
             g.setColor(Color.RED);
             g.fillOval(x, y, width, width);
         }
-    }
-
-    public void setTaille(int txZoom) {
-        tailleCase = tailleCaseBase * txZoom / 100;
-        this.repaint();
     }
 
     /**
