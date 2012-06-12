@@ -1,4 +1,4 @@
-package sim.tricycle.robot.reference;
+package sim.tricycle.utils.params.types;
 
 /**
  *
