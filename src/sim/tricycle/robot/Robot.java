@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
 import sim.tricycle.mapping.Carte;
-import sim.tricycle.robot.action.ActionInterface;
+import sim.tricycle.robot.action.core.ActionInterface;
 import sim.tricycle.team.Team;
 
 /**

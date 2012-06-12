@@ -1,5 +1,6 @@
 package sim.tricycle.robot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +11,7 @@ public class Etat {
 
     private String id;
     private List<Transition> transitions;
+    private List<String> tags = new ArrayList<String>();
 
     public Etat(String id) {
         this.id = id;
@@ -34,5 +36,13 @@ public class Etat {
 
     public void addTransition(Transition t) {
         transitions.add(t);
+    }
+
+    public void addTag(String nomTag) {
+        tags.add(nomTag);
+    }
+
+    public List<String> getTags() {
+        return tags;
     }
 }

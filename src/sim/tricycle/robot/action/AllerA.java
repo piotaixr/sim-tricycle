@@ -8,12 +8,14 @@ import sim.tricycle.robot.Noeud;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.Sens;
+import sim.tricycle.robot.action.core.AbstractAction;
+import sim.tricycle.robot.action.core.ActionInterface;
 
 /**
  *
  * @author Adri
  */
-public class AllerA extends Action {
+public class AllerA extends AbstractAction {
 
     private Point p;
 
@@ -31,11 +33,13 @@ public class AllerA extends Action {
     }
 
     @Override
-    public void executer(Robot bot) {
+    protected Object doExecute(Robot bot) {
         TrouveChemin tc = new TrouveChemin(this.p);
         tc.executer(bot);
         System.out.println("TailleChemin :" + tc.getChemin().size());
         creerChemin(tc.getChemin(), bot);
+        
+        return null;
     }
 
     private void creerChemin(LinkedList<Noeud> cheminTrouve, Robot bot) {

@@ -90,4 +90,8 @@ public abstract class AbstractFactory<K, V extends IdentifiableInterface<? exten
 
         return arrayParams;
     }
+
+    protected RuntimeException traiteException(Exception e) {
+        return new RuntimeException("Erreur lord de l'instanciation de l'objet", e);
+    }
 }

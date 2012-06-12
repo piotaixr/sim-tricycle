@@ -1,4 +1,4 @@
-package sim.tricycle.robot.condition;
+package sim.tricycle.robot.condition.core;
 
 import sim.tricycle.utils.IdentifiableInterface;
 

@@ -6,12 +6,13 @@ import sim.tricycle.mapping.Case;
 import sim.tricycle.robot.Noeud;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
+import sim.tricycle.robot.action.core.AbstractAction;
 
 /**
  *
  * @author Adri
  */
-public class TrouveChemin extends Action {
+public class TrouveChemin extends AbstractAction {
 
     private Point pDest;
     private LinkedList<Noeud> chemin;
@@ -27,9 +28,10 @@ public class TrouveChemin extends Action {
     }
 
     @Override
-    public void executer(Robot bot) {
+    protected Object doExecute(Robot bot) {
         this.chemin = plusCourtChemin(new Point(bot.getPosition().getX(), bot.getPosition().getY()), bot);
         //  System.out.print("Coucou");
+        return null;
     }
 
     private void insereEnOrdre(Noeud n, LinkedList<Noeud> listeNoeuds) {
