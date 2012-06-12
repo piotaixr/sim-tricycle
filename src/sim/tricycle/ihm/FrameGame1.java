@@ -17,6 +17,7 @@ public class FrameGame1 extends javax.swing.JFrame {
 
     private ViewCarte vc;
     private ViewMiniCarte vmc;
+    private int time=42;
 
     /**
      * Creates new form MorganTestAppli
@@ -60,6 +61,11 @@ public class FrameGame1 extends javax.swing.JFrame {
 
 
     }
+    
+    public void incrementeTime(){
+        time++;
+        lblTime.setText(String.valueOf(time));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -85,6 +91,9 @@ public class FrameGame1 extends javax.swing.JFrame {
         txtScoreBallTeam2 = new javax.swing.JLabel();
         txtScoreGoldTeam2 = new javax.swing.JLabel();
         buttonExit = new javax.swing.JButton();
+        lblUnitTime = new javax.swing.JLabel();
+        lblTime = new javax.swing.JLabel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(80, 0), new java.awt.Dimension(80, 0), new java.awt.Dimension(80, 32767));
         panSelectTeamMap = new javax.swing.JPanel();
         lblMap = new javax.swing.JLabel();
         buttonTteam2 = new javax.swing.JButton();
@@ -202,6 +211,10 @@ public class FrameGame1 extends javax.swing.JFrame {
             }
         });
 
+        lblUnitTime.setText("Unités de temps :");
+
+        lblTime.setText("jLabel5");
+
         javax.swing.GroupLayout headbandLayout = new javax.swing.GroupLayout(headband);
         headband.setLayout(headbandLayout);
         headbandLayout.setHorizontalGroup(
@@ -215,26 +228,41 @@ public class FrameGame1 extends javax.swing.JFrame {
                 .addComponent(buttonStepPlay)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonSpeedUp)
-                .addGap(89, 89, 89)
-                .addComponent(scorePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scorePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblUnitTime)
+                .addGap(18, 18, 18)
+                .addComponent(lblTime)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
         headbandLayout.setVerticalGroup(
             headbandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(headbandLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(headbandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonStepPlay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonPlay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonPause, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonSpeedUp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headbandLayout.createSequentialGroup()
                 .addGap(0, 2, Short.MAX_VALUE)
                 .addComponent(scorePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(headbandLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(headbandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(headbandLayout.createSequentialGroup()
+                        .addGroup(headbandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(buttonStepPlay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonPlay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonPause, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonSpeedUp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(headbandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(buttonExit)
+                                .addComponent(lblUnitTime)
+                                .addComponent(lblTime)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headbandLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))))
         );
 
         panSelectTeamMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -307,7 +335,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableGlobale.setLayout(panActionAvailableGlobaleLayout);
         panActionAvailableGlobaleLayout.setHorizontalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGap(0, 205, Short.MAX_VALUE)
         );
         panActionAvailableGlobaleLayout.setVerticalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,7 +348,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableTeam1.setLayout(panActionAvailableTeam1Layout);
         panActionAvailableTeam1Layout.setHorizontalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGap(0, 205, Short.MAX_VALUE)
         );
         panActionAvailableTeam1Layout.setVerticalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,7 +361,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         panActionAvailableTeam2.setLayout(panActionAvailableTeam2Layout);
         panActionAvailableTeam2Layout.setHorizontalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGap(0, 205, Short.MAX_VALUE)
         );
         panActionAvailableTeam2Layout.setVerticalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -462,6 +490,7 @@ public class FrameGame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonExitMousePressed
 
     private void buttonPauseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonPauseMousePressed
+        incrementeTime();
     }//GEN-LAST:event_buttonPauseMousePressed
 
     private void buttonPlayMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonPlayMousePressed
@@ -558,6 +587,7 @@ public class FrameGame1 extends javax.swing.JFrame {
     private javax.swing.JButton buttonSpeedUp;
     private javax.swing.JButton buttonStepPlay;
     private javax.swing.JButton buttonTteam2;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JPanel headband;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -565,6 +595,8 @@ public class FrameGame1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jspanMap;
     private javax.swing.JLabel lblMap;
+    private javax.swing.JLabel lblTime;
+    private javax.swing.JLabel lblUnitTime;
     private javax.swing.JLabel lblZoom;
     private javax.swing.JTabbedPane panActionAvailable;
     private javax.swing.JPanel panActionAvailableGlobale;
