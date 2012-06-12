@@ -4,8 +4,8 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.List;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
-import sim.tricycle.mapping.AbstractObstacle;
 import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.robot.action.ActionInterface;
 import sim.tricycle.team.Team;
 
