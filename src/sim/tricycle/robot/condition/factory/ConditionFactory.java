@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package sim.tricycle.robot.condition.factory;
 
 import java.lang.reflect.InvocationTargetException;
@@ -52,5 +48,4 @@ public class ConditionFactory extends AbstractFactory<String, ConditionInterface
 
         return returnValue;
     }
-
 }

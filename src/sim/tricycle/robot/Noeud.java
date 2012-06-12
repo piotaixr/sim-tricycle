@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package sim.tricycle.robot;
 
 /**
@@ -18,13 +14,12 @@ public class Noeud implements Comparable<Noeud> {
         this.p = p;
         this.poids = 0;
     }
-    
-    public Noeud(Point p,Noeud parent) {
+
+    public Noeud(Point p, Noeud parent) {
         this.p = p;
         this.poids = 0;
-        this.parent=parent;
+        this.parent = parent;
     }
-
 
     public void determinePoids(Point pDest) {
 
@@ -47,14 +42,15 @@ public class Noeud implements Comparable<Noeud> {
         this.p = newPoint;
     }
 
-    public Noeud getParent(){
+    public Noeud getParent() {
         return this.parent;
     }
-    
-    public void setParent(Noeud newParent){
-        this.parent=newParent;
+
+    public void setParent(Noeud newParent) {
+        this.parent = newParent;
     }
-    
+
+    @Override
     public int compareTo(Noeud o) {
         Noeud n = (Noeud) o;
         if (n.getPoids() > this.poids) {

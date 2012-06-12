@@ -1,5 +1,3 @@
-/*
- */
 package sim.tricycle.mapping;
 
 import sim.tricycle.mapping.mapException.CaseMultipleObjetException;
@@ -17,11 +15,11 @@ public class Piece extends AbstractObjet {
 
     @Override
     public TypeCase whoIam() {
-            return (TypeCase.piece);
-        }
-    
-            public String toString(){
-            return "P";
-        }
+        return (TypeCase.piece);
     }
-    
+
+    @Override
+    public String toString() {
+        return "P";
+    }
+}

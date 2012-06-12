@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package sim.tricycle.robot.action;
 
 import sim.tricycle.robot.Robot;
@@ -25,6 +21,7 @@ public class Tourner extends Action {
         this.direction = dir;
     }
 
+    @Override
     public void executer(Robot bot) {
 
         bot.setDirection(this.direction);

@@ -1,5 +1,3 @@
-/*
- */
 package sim.tricycle.mapping;
 
 /**
@@ -20,8 +18,9 @@ public class Boule extends AbstractObjet {
     public TypeCase whoIam() {
         return (TypeCase.boule);
     }
-    
-            public String toString(){
-            return "B";
-        }
+
+    @Override
+    public String toString() {
+        return "B";
+    }
 }

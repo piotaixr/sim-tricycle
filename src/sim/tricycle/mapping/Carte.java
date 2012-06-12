@@ -1,5 +1,3 @@
-/*
- */
 package sim.tricycle.mapping;
 
 import java.util.HashSet;

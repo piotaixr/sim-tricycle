@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package sim.tricycle.robot.condition;
 
 /**
@@ -16,10 +11,8 @@ public class ConditionTrue extends AbstractCondition {
         return true;
     }
 
-
     @Override
     public String getId() {
         return "true";
     }
-
 }

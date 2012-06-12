@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package sim.tricycle.robot.action;
 
 import sim.tricycle.robot.Point;
@@ -20,13 +16,13 @@ public class Avancer extends Action {
         nbCases = 1;
         this.setPoids(1);
     }
-    
+
     public Avancer(int nbCases) {
         super();
         this.nbCases = nbCases;
         this.setPoids(1);
     }
-    
+
     @Override
     public void executer(Robot bot) {
 

@@ -4,16 +4,10 @@
  */
 package sim.tricycle;
 
-import java.util.LinkedList;
 import sim.tricycle.mapping.Carte;
-import sim.tricycle.mapping.TestMap;
 import sim.tricycle.robot.Collecteur;
-import sim.tricycle.robot.Noeud;
 import sim.tricycle.robot.Point;
-import sim.tricycle.robot.action.Action;
-import sim.tricycle.robot.action.ActionInterface;
 import sim.tricycle.robot.action.AllerA;
-import sim.tricycle.robot.action.TrouveChemin;
 
 /**
  *

@@ -1,5 +1,3 @@
-/*
- */
 package sim.tricycle.robot;
 
 import java.util.ArrayDeque;
@@ -25,25 +23,25 @@ public abstract class Robot implements OrdonnancableInterface {
     protected Automate automate;
     protected Team equipe;
     protected Carte mapTeam;
-    
+
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
      *
      * @param automate
      */
-    public Robot(Automate automate,Team equipe) {
+    public Robot(Automate automate, Team equipe) {
         this.automate = automate;
-        this.equipe=equipe;
-        this.mapTeam=equipe.getMap();
+        this.equipe = equipe;
+        this.mapTeam = equipe.getMap();
 
     }
 
     public Robot(Team equipe) {
         this.automate = null;
-        this.equipe=equipe;
-        this.mapTeam=equipe.getMap();
+        this.equipe = equipe;
+        this.mapTeam = equipe.getMap();
     }
-    
+
     public Point getPosition() {
         return this.position;
     }
@@ -84,12 +82,11 @@ public abstract class Robot implements OrdonnancableInterface {
         this.etatCourant = newEtat;
     }
 
-    
-    public Team getTeam(){
+    public Team getTeam() {
         return this.equipe;
     }
-    
-    public Carte getMapTeam(){
+
+    public Carte getMapTeam() {
         return this.mapTeam;
     }
 
