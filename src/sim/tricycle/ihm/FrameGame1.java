@@ -36,8 +36,8 @@ public class FrameGame1 extends javax.swing.JFrame {
         Carte c = test2.getCarte();
         //Carte c = new Carte(50, 50);
 
-        vc = new ViewCarte(c);
-        vmc = new ViewMiniCarte(c);
+        vc = new ViewCarte(carte);
+        vmc = new ViewMiniCarte(carte,vc);
         
         panMiniMap.setLayout(new BorderLayout());
         vmc.setVisible(true);
