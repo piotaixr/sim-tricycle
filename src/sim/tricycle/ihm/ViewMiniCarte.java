@@ -68,13 +68,7 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         System.out.println("PreferedSize :" + this.getPreferredSize());
         System.out.println("Size :" + this.getSize());
 
-        //Centrage de la map
-        if (carte.getLargeur() * tailleOpti < this.getParent().getWidth()) {
-            decalageX = (this.getParent().getWidth() - carte.getLargeur() * tailleOpti) / 2;
-        }
-        if (carte.getHauteur() * tailleOpti < this.getParent().getHeight()) {
-            decalageY = (this.getParent().getHeight() - carte.getHauteur() * tailleOpti) / 2;
-        }
+       
         tLmini = tailleOpti * carte.getLargeur();
         tHmini = tailleOpti * carte.getHauteur();
         //afficher image de fond.
@@ -90,8 +84,8 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     private void paintCase(Graphics2D g, Case c, int width) {
         // System.out.println("Paint case " +width + "/" + c.getX() + " " + c.getY());
 
-        int y = (c.getX() * width) + decalageY;
-        int x = (c.getY() * width) + decalageX;
+        int y = (c.getX() * width) ;//+ decalageY;
+        int x = (c.getY() * width) ;//+ decalageX;
 
         if (c.whoIam() == TypeCase.mur) {                             //MUR
             g.setColor(Color.DARK_GRAY);
@@ -157,7 +151,7 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         px = evt.getLocationOnScreen().x - this.getX();
         py = evt.getLocationOnScreen().y - this.getY();
 
-        
+        if (vuc.getHeight() > vuc.getParent().getHeight()){
        
         int diff = vuc.getHeight() / this.getHeight();
         int tX = this.getMousePosition().x * diff * (-1);
@@ -165,7 +159,7 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         tX = tX + tLmini / 2;
         tY = tY + tHmini / 2;
         vuc.moveMap(tX, tY);
-
+        }
 
 
         System.out.println("click position : " + px + " " + py);
