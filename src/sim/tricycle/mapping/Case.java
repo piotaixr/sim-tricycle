@@ -1,5 +1,11 @@
 package sim.tricycle.mapping;
 
+import sim.tricycle.mapping.elementCase.AbstractObstacle;
+import sim.tricycle.mapping.elementCase.AbstractObjet;
+import sim.tricycle.mapping.elementCase.Piece;
+import sim.tricycle.mapping.elementCase.Boule;
+import sim.tricycle.mapping.elementCase.Mur;
+import sim.tricycle.mapping.elementCase.Bonus;
 import sim.tricycle.mapping.mapException.CaseMultipleObjetException;
 import sim.tricycle.mapping.mapException.CaseMultipleObstacleException;
 

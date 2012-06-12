@@ -1,4 +1,8 @@
-package sim.tricycle.mapping;
+package sim.tricycle.mapping.elementCase;
+
+import sim.tricycle.mapping.Case;
+import sim.tricycle.mapping.PossedeCaseInterface;
+import sim.tricycle.mapping.TypeCase;
 
 /**
  *
