@@ -12,6 +12,8 @@ import sim.tricycle.robot.Collecteur;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Sens;
 import sim.tricycle.robot.action.AllerA;
+import sim.tricycle.robot.action.Avancer;
+import sim.tricycle.robot.action.Tourner;
 
 /**
  *
@@ -28,7 +30,7 @@ public class SimTricycle {
         sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0));
         sim.tricycle.robot.Robot bot;
         bot = new Collecteur(t, c);
-        bot.setCoordonnees(new Point(1, 1));
+        bot.setCoordonnees(new Point(0, 0));
         bot.setDirection(Sens.NORD);
         bot.collerRobotSurMap();
 
@@ -52,8 +54,10 @@ public class SimTricycle {
 //      System.out.println("Action :"+a.getId());
 //      
 //  }
-
-
+//bot.getActions().addFirst(new Avancer());
+//bot.getActions().addFirst(new Avancer());
+//bot.getActions().addFirst(new Tourner(Sens.EST));
+//bot.getActions().addFirst(new Avancer());
         Ordonnanceur ordo = new Ordonnanceur();
 
         ordo.add(bot);
@@ -73,18 +77,36 @@ public class SimTricycle {
         ordo.nextManual();
         ordo.nextManual();
         System.out.println("PosiBot :"+bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
+        System.out.println("SensBot :"+bot.getDirection());
         ordo.nextManual();
         ordo.nextManual();
         System.out.println("PosiBot :"+bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
+        System.out.println("SensBot :"+bot.getDirection());
         ordo.nextManual();
         ordo.nextManual();
         System.out.println("PosiBot :"+bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
+         System.out.println("SensBot :"+bot.getDirection());
+
         ordo.nextManual();
         ordo.nextManual();
         System.out.println("PosiBot :"+bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
+          System.out.println("SensBot :"+bot.getDirection());
+
         ordo.nextManual();
         ordo.nextManual();
         System.out.println("PosiBot :"+bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
+                System.out.println("SensBot :"+bot.getDirection());
+
+        ordo.nextManual();
+        ordo.nextManual();
+        System.out.println("PosiBot :"+bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
+                System.out.println("SensBot :"+bot.getDirection());
+
+        ordo.nextManual();
+        ordo.nextManual();
+        System.out.println("PosiBot :"+bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
+                System.out.println("SensBot :"+bot.getDirection());
+
         ordo.nextManual();
         ordo.nextManual();
         ordo.stop();
@@ -92,6 +114,8 @@ public class SimTricycle {
         
         tm.afficherCarte(c);
         System.out.println("PosiBot :"+bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
+        System.out.println("SensBot :"+bot.getDirection());
+
        // System.out.println("Reste :"+bot.getActions().getFirst().getId());
     }
 }

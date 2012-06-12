@@ -1,4 +1,6 @@
-package sim.tricycle.utils.params;
+package sim.tricycle.utils.params.converter;
+
+import sim.tricycle.utils.params.ParamConverterInterface;
 
 /**
  *

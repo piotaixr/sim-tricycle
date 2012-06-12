@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package sim.tricycle.robot.reference;
+package sim.tricycle.utils.params.types;
 
 /**
  *

@@ -28,6 +28,10 @@ public class Tourner extends AbstractAction {
         bot.setDirection(this.direction);
         return null;
     }
+    
+    public void executer(Robot bot){
+        bot.setDirection(this.direction);
+    }
 
     public void setDirection(Sens newDir) {
         this.direction = newDir;

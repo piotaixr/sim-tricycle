@@ -5,10 +5,10 @@ import sim.tricycle.robot.action.core.ActionFactoryInterface;
 import sim.tricycle.robot.condition.ConditionTrue;
 import sim.tricycle.robot.condition.core.ConditionFactory;
 import sim.tricycle.robot.condition.core.ConditionFactoryInterface;
-import sim.tricycle.utils.params.IntegerConverter;
+import sim.tricycle.utils.params.converter.IntegerConverter;
 import sim.tricycle.utils.params.ParamConverterProvider;
 import sim.tricycle.utils.params.ParamConverterProviderInterface;
-import sim.tricycle.utils.params.StringConverter;
+import sim.tricycle.utils.params.converter.StringConverter;
 import sim.tricycle.xmlparser.RobotParser;
 
 /**
