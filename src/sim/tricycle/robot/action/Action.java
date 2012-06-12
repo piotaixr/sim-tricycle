@@ -10,10 +10,14 @@ package sim.tricycle.robot.action;
  */
 public abstract class Action implements ActionInterface {
 
-    private int poids;
+    private int poids = 1;
 
-    public Action() {
-        poids = 0;
+    public Action(int poids){
+        this.poids = poids;
+    }
+    
+    public Action(){
+        this(1);
     }
 
     public void setPoids(int newPoids) {
