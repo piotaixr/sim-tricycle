@@ -100,6 +100,14 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         return this.mapTeam;
     }
 
+    private void collerRobotSurMap(){
+        this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
+    }
+    
+    private void decollerRobotDeMap(){
+        this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(null);
+    }
+    
     @Override
     /**
      * Fonction appelée a chaque tick d'horloge
@@ -107,6 +115,7 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
      * @todo coder cette fonction
      */
     public void executeAction() {
+        decollerRobotDeMap();
         if (actions.isEmpty()) {
             // liste actions vide, on change d'état
             etatCourant = etatDestination;
@@ -127,5 +136,6 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
                 break;
             }
         }
+        collerRobotSurMap();
     }
 }
