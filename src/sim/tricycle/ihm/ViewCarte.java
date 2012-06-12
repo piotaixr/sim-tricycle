@@ -23,8 +23,7 @@ public class ViewCarte extends javax.swing.JPanel {
     private CarteInterface carte;
     private int tailleCase;
     private int tailleCaseBase = 50;
-    //private int decalageX;    //pour plus tard essayer de centrer la carte dans le JScrollPane
-    //private int decalageY;
+    private int decalageX,decalageY;    //pour plus tard essayer de centrer la carte dans le JScrollPane
     private int tailleOpti;
     private Image imgPiece, imgMur, imgVide, imgRobot, imgBonus, imgBoule;
     private int px, py; //pour faire la difference lors du drag
@@ -78,7 +77,19 @@ public class ViewCarte extends javax.swing.JPanel {
         System.out.println("PreferedSize :" + this.getPreferredSize());
         System.out.println("Size :" + this.getSize());
 
-        //maxSize = 50;
+        decalageX = 0;
+        decalageY = 0;
+        /*
+         * Centrage de la map
+         */
+        if (carte.getLargeur() * tailleCase < this.getParent().getWidth()) {
+            decalageX = (this.getParent().getWidth() - carte.getLargeur() * tailleCase) / 2;
+        }
+        if (carte.getHauteur() * tailleCase < this.getParent().getHeight()) {
+            decalageY = (this.getParent().getHeight() - carte.getHauteur() * tailleCase) / 2;
+        }
+        System.out.println("decX :" + this.decalageX + " decY: " + this.decalageY);
+        System.out.println("X parent :" + this.getParent().getWidth() + " Y parent: " + this.getParent().getHeight());
 
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
@@ -91,8 +102,8 @@ public class ViewCarte extends javax.swing.JPanel {
     private void paintCase(Graphics2D g, Case c, int width) {
         // System.out.println("Paint case " +width + "/" + c.getX() + " " + c.getY());
 
-        int y = c.getX() * width;
-        int x = c.getY() * width;
+        int y = (c.getX() * width) + decalageY;
+        int x = (c.getY() * width) + decalageX;
 
         if (c.whoIam() == TypeCase.mur) {                             //MUR
             g.drawImage(imgMur, x, y, width, width, this);
@@ -127,8 +138,8 @@ public class ViewCarte extends javax.swing.JPanel {
         tailleCase = tailleCaseBase * txZoom / 100;
         this.repaint();
     }
-    
-    public void moveMap(int x, int y){
+
+    public void moveMap(int x, int y) {
         this.setLocation(x, y);
     }
 
