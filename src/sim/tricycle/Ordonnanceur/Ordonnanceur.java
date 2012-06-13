@@ -26,7 +26,8 @@ public class Ordonnanceur implements OrdonnanceurInterface {
      */
     private ArrayList<OrdonnancableInterface> subscribersActionDone;
     private Timer timer;
-    private long period = 500;
+    private long period;
+    private long defaultperiod = 500;
     private boolean running = false; // Par défaut l'ordonnaceur est sur "pause"
     private Random randomGenerator = new Random();
     private FrameGame1 fg = null;
@@ -111,6 +112,7 @@ public class Ordonnanceur implements OrdonnanceurInterface {
             if (running) {
                 if (!subscribersActionToDo.isEmpty()) {
                     actionAndRemoveFromToDo();
+                    fg.incrementeTime();
                 } else /*
                  * Plus d'action à faire donc on transvase les actions dans le
                  * tableau des actions à faire de manière aléatoire
@@ -130,6 +132,7 @@ public class Ordonnanceur implements OrdonnanceurInterface {
         //new TaskAction().run();
         if (!subscribersActionToDo.isEmpty()) {
             actionAndRemoveFromToDo();
+            fg.incrementeTime();
         } else /*
          * Plus d'action à faire donc on transvase les actions dans le tableau
          * des actions à faire de manière aléatoire
@@ -137,11 +140,7 @@ public class Ordonnanceur implements OrdonnanceurInterface {
             intializeActionToDo();
         }
 
-
         fg.repaint();
-
-        System.out.println(
-                "Coucou");
     }
 
     @Override
@@ -193,5 +192,10 @@ public class Ordonnanceur implements OrdonnanceurInterface {
     @Override
     public long getTime() {
         return period;
+    }
+    
+    @Override
+    public long getDefaultPeriod(){
+        return defaultperiod;
     }
 }

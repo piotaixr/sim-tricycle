@@ -72,10 +72,10 @@ public class ViewCarte extends javax.swing.JPanel {
 //        int maxHeight = this.getHeight() / carte.getHauteur();
 //        int maxSize = Math.min(maxHeight, maxWidth);
 
-        System.out.println("widht " + this.getWidth() + " nbcase : " + carte.getLargeur()
-                + " height " + this.getHeight() + " nbcase  " + carte.getHauteur());
-        System.out.println("PreferedSize :" + this.getPreferredSize());
-        System.out.println("Size :" + this.getSize());
+//        System.out.println("widht " + this.getWidth() + " nbcase : " + carte.getLargeur()
+//                + " height " + this.getHeight() + " nbcase  " + carte.getHauteur());
+//        System.out.println("PreferedSize :" + this.getPreferredSize());
+//        System.out.println("Size :" + this.getSize());
 
         decalageX = 0;
         decalageY = 0;
@@ -88,12 +88,11 @@ public class ViewCarte extends javax.swing.JPanel {
         if (carte.getHauteur() * tailleCase < this.getParent().getHeight()) {
             decalageY = (this.getParent().getHeight() - carte.getHauteur() * tailleCase) / 2;
         }
-        System.out.println("decX :" + this.decalageX + " decY: " + this.decalageY);
-        System.out.println("X parent :" + this.getParent().getWidth() + " Y parent: " + this.getParent().getHeight());
+//        System.out.println("decX :" + this.decalageX + " decY: " + this.decalageY);
+//        System.out.println("X parent :" + this.getParent().getWidth() + " Y parent: " + this.getParent().getHeight());
 
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
-                //paintCase(g, carte.getCase(i, j), maxSize);
                 paintCase(g, carte.getCase(i, j), tailleCase, false);
             }
         }

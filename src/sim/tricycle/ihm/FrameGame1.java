@@ -27,8 +27,6 @@ public class FrameGame1 extends javax.swing.JFrame {
     public FrameGame1(CarteInterface carte) {
         initComponents();
 
-        //Creer et utilise cette carte car plus grande
-        //Carte c = new Carte(25, 25);
 
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
@@ -36,7 +34,6 @@ public class FrameGame1 extends javax.swing.JFrame {
         TestMap test2 = new TestMap();
         test2.startTest();
         Carte c = test2.getCarte();
-        //Carte c = new Carte(50, 50);
 
         vc = new ViewCarte(carte);
         vmc = new ViewMiniCarte(carte, vc);
@@ -124,11 +121,6 @@ public class FrameGame1 extends javax.swing.JFrame {
         buttonPause.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 buttonPauseMousePressed(evt);
-            }
-        });
-        buttonPause.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonPauseActionPerformed(evt);
             }
         });
 
@@ -280,7 +272,7 @@ public class FrameGame1 extends javax.swing.JFrame {
 
         panSelectTeamMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        lblMap.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblMap.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         lblMap.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMap.setText("Maps");
 
@@ -352,7 +344,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         );
         panActionAvailableGlobaleLayout.setVerticalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 565, Short.MAX_VALUE)
+            .addGap(0, 566, Short.MAX_VALUE)
         );
 
         panActionAvailable.addTab("Global", panActionAvailableGlobale);
@@ -365,7 +357,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         );
         panActionAvailableTeam1Layout.setVerticalGroup(
             panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 565, Short.MAX_VALUE)
+            .addGap(0, 566, Short.MAX_VALUE)
         );
 
         panActionAvailable.addTab("Team 1", panActionAvailableTeam1);
@@ -378,7 +370,7 @@ public class FrameGame1 extends javax.swing.JFrame {
         );
         panActionAvailableTeam2Layout.setVerticalGroup(
             panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 565, Short.MAX_VALUE)
+            .addGap(0, 566, Short.MAX_VALUE)
         );
 
         panActionAvailable.addTab("Team 2", panActionAvailableTeam2);
@@ -389,11 +381,6 @@ public class FrameGame1 extends javax.swing.JFrame {
         jspanMap.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
                 jspanMapMouseWheelMoved(evt);
-            }
-        });
-        jspanMap.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jspanMapFocusGained(evt);
             }
         });
 
@@ -408,6 +395,7 @@ public class FrameGame1 extends javax.swing.JFrame {
             }
         });
 
+        lblZoom.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         lblZoom.setText("Zoom");
 
         javax.swing.GroupLayout panZoomLayout = new javax.swing.GroupLayout(panZoom);
@@ -503,6 +491,7 @@ public class FrameGame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonPauseMousePressed
 
     private void buttonPlayMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonPlayMousePressed
+        oi.setTime(oi.getDefaultPeriod());
         oi.start();
     }//GEN-LAST:event_buttonPlayMousePressed
 
@@ -524,7 +513,7 @@ public class FrameGame1 extends javax.swing.JFrame {
 
     private void sldZoomStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sldZoomStateChanged
         // TODO add your handling code here:
-        System.out.println("value changed");
+        //System.out.println("value changed");
         vc.setTaille(sldZoom.getValue());
         jspanMap.revalidate();
     }//GEN-LAST:event_sldZoomStateChanged
@@ -533,14 +522,6 @@ public class FrameGame1 extends javax.swing.JFrame {
         // TODO add your handling code here:
         sldZoom.setValue(sldZoom.getValue() - evt.getWheelRotation() * evt.getScrollAmount());
     }//GEN-LAST:event_jspanMapMouseWheelMoved
-
-    private void buttonPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPauseActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buttonPauseActionPerformed
-
-    private void jspanMapFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jspanMapFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jspanMapFocusGained
 
     private void buttonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitActionPerformed
         // TODO add your handling code here:
@@ -553,7 +534,7 @@ public class FrameGame1 extends javax.swing.JFrame {
 
     private void buttonSpeedUpMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSpeedUpMousePressed
         // TODO add your handling code here:
-        //oi.setTime(ord.getTime() / 2);
+        oi.setTime(oi.getTime() / 2);
     }//GEN-LAST:event_buttonSpeedUpMousePressed
 
     /**

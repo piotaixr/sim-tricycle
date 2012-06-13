@@ -40,5 +40,9 @@ public interface OrdonnanceurInterface {
      * Choisi un timer pour l'ordonnanceur
      */
     public long getTime();
+    /*
+     * Retourne la periode par defaut
+     */
+    public long getDefaultPeriod();
     
 }

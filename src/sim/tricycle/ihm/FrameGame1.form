@@ -162,7 +162,6 @@
           </Properties>
           <Events>
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonPauseMousePressed"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonPauseActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="buttonPlay">
@@ -394,7 +393,7 @@
         <Component class="javax.swing.JLabel" name="lblMap">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="18" style="0"/>
+              <Font name="Ubuntu" size="18" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Maps"/>
@@ -451,7 +450,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="565" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="566" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -473,7 +472,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="565" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="566" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -495,7 +494,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="565" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="566" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -518,7 +517,6 @@
       </Properties>
       <Events>
         <EventHandler event="mouseWheelMoved" listener="java.awt.event.MouseWheelListener" parameters="java.awt.event.MouseWheelEvent" handler="jspanMapMouseWheelMoved"/>
-        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jspanMapFocusGained"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="FrameGame1_jpanMap"/>
@@ -578,6 +576,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblZoom">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ubuntu" size="18" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Zoom"/>
           </Properties>
         </Component>

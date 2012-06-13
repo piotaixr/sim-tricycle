@@ -62,10 +62,10 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         int maxHeight = this.getHeight() / carte.getHauteur();
         int maxSize = Math.min(maxHeight, maxWidth);
 
-        System.out.println("widht " + this.getWidth() + " nbcase : " + carte.getLargeur()
-                + " height " + this.getHeight() + " nbcase  " + carte.getHauteur());
-        System.out.println("PreferedSize :" + this.getPreferredSize());
-        System.out.println("Size :" + this.getSize());
+//        System.out.println("widht " + this.getWidth() + " nbcase : " + carte.getLargeur()
+//                + " height " + this.getHeight() + " nbcase  " + carte.getHauteur());
+//        System.out.println("PreferedSize :" + this.getPreferredSize());
+//        System.out.println("Size :" + this.getSize());
 
 
         tLmini = tailleOpti * carte.getLargeur();
