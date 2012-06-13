@@ -24,6 +24,6 @@ public class Boule extends AbstractObjet {
 
     @Override
     public String toString() {
-        return "B";
+        return " B ";
     }
 }

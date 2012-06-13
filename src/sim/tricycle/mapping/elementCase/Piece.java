@@ -22,6 +22,6 @@ public class Piece extends AbstractObjet {
 
     @Override
     public String toString() {
-        return "P";
+        return " P ";
     }
 }

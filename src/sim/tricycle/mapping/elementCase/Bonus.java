@@ -23,7 +23,6 @@ public class Bonus extends AbstractObjet {
 
     @Override
     public String toString() {
-        return "M"
-                + "*";
+        return " * ";
     }
 }

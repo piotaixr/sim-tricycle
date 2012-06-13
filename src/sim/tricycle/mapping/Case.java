@@ -149,7 +149,7 @@ public class Case {
             return this.myObstacle().toString();
         }
 
-        return ".";
+        return " . ";
     }
 
     /*
