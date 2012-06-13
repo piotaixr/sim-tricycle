@@ -186,10 +186,11 @@ public class FrameGame1 extends javax.swing.JFrame {
                     .addComponent(txtscoreBallTeam1)
                     .addComponent(txtScoreBallTeam2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtScoreGoldTeam1)
-                    .addComponent(txtScoreGoldTeam2)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtScoreGoldTeam1)
+                        .addComponent(txtScoreGoldTeam2)))
                 .addContainerGap())
         );
 
