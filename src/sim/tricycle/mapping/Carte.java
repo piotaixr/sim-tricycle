@@ -81,7 +81,7 @@ public class Carte implements CarteInterface {
     public void casesVoisines(Carte source, Case pos, HashSet<Case> liste) {
 
         // Si case en bordure verticale droite:
-        if ((this.tailleX-2) > pos.getX()) {
+        if ((this.tailleX-1) > pos.getX()) {
             Case droite = source.getCase(pos.getX() + 1, pos.getY());
             if (!(liste.contains(droite))) {
                 liste.add(droite);
@@ -105,7 +105,7 @@ public class Carte implements CarteInterface {
             }
         }
         // Si case en bordure horizontale droite:
-        if ((this.tailleY-2) > pos.getY()) {
+        if ((this.tailleY-1) > pos.getY()) {
             Case bas = source.getCase(pos.getX(), pos.getY() + 1);
             if (!liste.contains(bas)) {
                 liste.add(bas);
