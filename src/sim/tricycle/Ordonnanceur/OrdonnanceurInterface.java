@@ -21,6 +21,10 @@ public interface OrdonnanceurInterface {
      */
     public void add(OrdonnancableInterface oi);
     /*
+     * Permet d'avancer manuellement
+     */
+    public void nextManual();
+    /*
      * Lance l'ordonnanceur
      */
     public void start();

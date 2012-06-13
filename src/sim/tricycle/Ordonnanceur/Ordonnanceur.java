@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import sim.tricycle.ihm.FrameGame1;
 
 /**
  *
@@ -25,15 +26,17 @@ public class Ordonnanceur implements OrdonnanceurInterface {
      */
     private ArrayList<OrdonnancableInterface> subscribersActionDone;
     private Timer timer;
-    private long period = 500;
+    private long period;
     private boolean running = false; // Par défaut l'ordonnaceur est sur "pause"
     private Random randomGenerator = new Random();
+    private FrameGame1 fg = null;
 
     /*
      * Constructeur avec timer par défaut
      */
-    public Ordonnanceur() {
-        this(500);
+    public Ordonnanceur(FrameGame1 f) {
+        this(100);
+        fg = f;
     }
 
     /*
@@ -115,16 +118,32 @@ public class Ordonnanceur implements OrdonnanceurInterface {
                     intializeActionToDo();
                 }
             }
+            fg.repaint();
         }
     }
 
     /*
      * Fonction pour faire les actions les unes après les autres manuellement.
      */
-    public void nextManual(){
-        new TaskAction().run();
+    @Override
+    public void nextManual() {
+        //new TaskAction().run();
+        if (!subscribersActionToDo.isEmpty()) {
+            actionAndRemoveFromToDo();
+        } else /*
+         * Plus d'action à faire donc on transvase les actions dans le tableau
+         * des actions à faire de manière aléatoire
+         */ {
+            intializeActionToDo();
+        }
+
+
+        fg.repaint();
+
+        System.out.println(
+                "Coucou");
     }
-    
+
     @Override
     /*
      * Enlève définitivement l'objet entré en paramètre

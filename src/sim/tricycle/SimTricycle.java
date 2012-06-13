@@ -58,83 +58,87 @@ public class SimTricycle {
 //bot.getActions().addFirst(new Avancer());
 //bot.getActions().addFirst(new Tourner(Sens.EST));
 //bot.getActions().addFirst(new Avancer());
-        Ordonnanceur ordo = new Ordonnanceur();
 
-        ordo.add(bot);
+
+
         FrameGame1 fg = new FrameGame1(c);
+        Ordonnanceur ordo = new Ordonnanceur(fg);
+        ordo.add(bot);
+        fg.addOrdonnaceur(ordo);
+         
         fg.setVisible(true);
 
         TestMap tm = new TestMap();
         tm.afficherCarte(c);
 
-        ordo.start();
+//        ordo.start();
 //        ordo.stop();
 //        ordo.start();
 //        int i=0;
 //        while(!bot.getActions().isEmpty()){
 //           
 //        }
-        ordo.nextManual();
-        ordo.nextManual();
-        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
-        System.out.println("SensBot :" + bot.getDirection());
-        ordo.nextManual();
-        ordo.nextManual();
-        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
-        System.out.println("SensBot :" + bot.getDirection());
-        ordo.nextManual();
-        ordo.nextManual();
-        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
-        System.out.println("SensBot :" + bot.getDirection());
-
-        ordo.nextManual();
-        ordo.nextManual();
-        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
-        System.out.println("SensBot :" + bot.getDirection());
-
-        ordo.nextManual();
-        ordo.nextManual();
-        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
-        System.out.println("SensBot :" + bot.getDirection());
-
-        ordo.nextManual();
-        ordo.nextManual();
-        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
-        System.out.println("SensBot :" + bot.getDirection());
-
-        ordo.nextManual();
-        ordo.nextManual();
-        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
-        System.out.println("SensBot :" + bot.getDirection());
-
-        ordo.nextManual();
-        ordo.nextManual();
-        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
-        System.out.println("SensBot :" + bot.getDirection());
-
-        ordo.nextManual();
-        ordo.nextManual();
-        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
-        System.out.println("SensBot :" + bot.getDirection());
-
-        ordo.nextManual();
-        ordo.nextManual();
-        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
-        System.out.println("SensBot :" + bot.getDirection());
-
-        ordo.nextManual();
-        ordo.nextManual();
-        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
-        System.out.println("SensBot :" + bot.getDirection());
-
-        ordo.nextManual();
-        ordo.nextManual();
-        ordo.stop();
-
-
-        tm.afficherCarte(c);
-        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
-        System.out.println("SensBot :" + bot.getDirection());
+//        ordo.nextManual();
+//        ordo.nextManual();
+//        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
+//        System.out.println("SensBot :" + bot.getDirection());
+//        ordo.nextManual();
+//        ordo.nextManual();
+//        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
+//        System.out.println("SensBot :" + bot.getDirection());
+//        ordo.nextManual();
+//        ordo.nextManual();
+//        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
+//        System.out.println("SensBot :" + bot.getDirection());
+//
+//        ordo.nextManual();
+//        ordo.nextManual();
+//        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
+//        System.out.println("SensBot :" + bot.getDirection());
+//
+//        ordo.nextManual();
+//        ordo.nextManual();
+//        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
+//        System.out.println("SensBot :" + bot.getDirection());
+//
+//        ordo.nextManual();
+//        ordo.nextManual();
+//        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
+//        System.out.println("SensBot :" + bot.getDirection());
+//
+//        ordo.nextManual();
+//        ordo.nextManual();
+//        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
+//        System.out.println("SensBot :" + bot.getDirection());
+//
+//        ordo.nextManual();
+//        ordo.nextManual();
+//        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
+//        System.out.println("SensBot :" + bot.getDirection());
+//
+//        ordo.nextManual();
+//        ordo.nextManual();
+//        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
+//        System.out.println("SensBot :" + bot.getDirection());
+//
+//        ordo.nextManual();
+//        ordo.nextManual();
+//        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
+//        System.out.println("SensBot :" + bot.getDirection());
+//
+//        ordo.nextManual();
+//        ordo.nextManual();
+//        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
+//        System.out.println("SensBot :" + bot.getDirection());
+//
+//        ordo.nextManual();
+//        ordo.nextManual();
+//        ordo.stop();
+//
+//
+//        tm.afficherCarte(c);
+//        System.out.println("PosiBot :" + bot.getCoordonnees().getX() + " " + bot.getCoordonnees().getY());
+//        System.out.println("SensBot :" + bot.getDirection());
 
         // System.out.println("Reste :"+bot.getActions().getFirst().getId());
     }
