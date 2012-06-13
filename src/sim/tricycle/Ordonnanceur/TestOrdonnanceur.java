@@ -9,6 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sim.tricycle.ihm.FrameGame1;
 
 /**
  *
@@ -160,7 +161,8 @@ public class TestOrdonnanceur {
     }
 
     public void goTest() {
-        Ordonnanceur ordo = new Ordonnanceur();
+        FrameGame1 fg =null;
+        Ordonnanceur ordo = new Ordonnanceur(fg);
         BotTest bot01 = new BotTest("01 ~o~");
         BotTest bot02 = new BotTest("02 |o~");
         BotTest bot03 = new BotTest("03 ~o|");
