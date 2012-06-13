@@ -24,7 +24,7 @@ public abstract class AbstractObjet implements PossedeCaseInterface {
      */
 
     public void supprimerObjet() {
-        pos.setItem(null);
+        pos.suprObjet();
     }
 
     /*

@@ -35,11 +35,11 @@ public class TestMap {
 
     public void startTest() {
         this.carte = new Carte(matChar);
-        Carte ctest = new Carte(carte.getLargeur(), carte.getHauteur());
+      //  Carte ctest = new Carte(carte.getLargeur(), carte.getHauteur());
 
-        ctest.actualiserCarte(carte, 3, ctest.getCase(0, 0));
+       // ctest.actualiserCarte(carte, 3, ctest.getCase(0, 0));
         afficherCarte(carte);
-        afficherCarte(ctest);
+    //    afficherCarte(ctest);
     }
 
     public Carte getCarte() {

@@ -36,7 +36,7 @@ public class Ordonnanceur implements OrdonnanceurInterface {
      * Constructeur avec timer par défaut
      */
     public Ordonnanceur(FrameGame1 f) {
-        this(500);
+        this(100);
         fg = f;
     }
 

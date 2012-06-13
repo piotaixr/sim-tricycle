@@ -24,6 +24,6 @@ public class Mur extends AbstractObstacle {
 
     @Override
     public String toString() {
-        return "M";
+        return " # ";
     }
 }
