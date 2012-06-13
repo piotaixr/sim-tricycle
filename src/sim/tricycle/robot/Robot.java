@@ -125,7 +125,7 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     
     public void decollerRobotDeMap(){
         if(this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()){
-           this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).myObstacle().supprimerObstacle();
+           this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
         }
     }
     
@@ -160,7 +160,7 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
 //                break;
 //            }
 //        }
-      //  decollerRobotDeMap();
+        decollerRobotDeMap();
         if(!actions.isEmpty()){
         actions.getFirst().executer(this);
         System.out.println("Action :"+actions.getFirst().getId());

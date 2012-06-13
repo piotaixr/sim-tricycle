@@ -75,8 +75,9 @@ public class TrouveChemin extends AbstractAction {
                     n = new Noeud(new Point(c.getX(), c.getY()), courant);
                     n.setPoids(n.getPoint().distanceDepuis(pDest));
                     //  System.out.println(n.getPoids());
-                    //   System.out.println("Liste ouverte: "+n.getPoint().getX()+" "+n.getPoint().getY());
-                    if (!listeOuverte.contains(n)) {
+                       //System.out.println("Liste ouverte: "+n.getPoint().getX()+" "+n.getPoint().getY());
+                     //  System.out.println("Type Case: "+c.whoIam());
+                    if (!listeOuverte.contains(n) && !listeFermee.contains(n)) {
                         insereEnOrdre(n, listeOuverte);
                     }
                 }
@@ -94,7 +95,7 @@ public class TrouveChemin extends AbstractAction {
         //  cheminFinal.add(lastNode);
         while (lastNode != null) {
             cheminFinal.add(lastNode);
-            // System.out.println("Liste ouverte: "+lastNode.getPoint().getX()+" "+lastNode.getPoint().getY());
+            System.out.println("Chemin final: "+lastNode.getPoint().getX()+" "+lastNode.getPoint().getY());
             lastNode = lastNode.getParent();
         }
         //cheminFinal.add(lastNode);

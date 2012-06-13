@@ -63,4 +63,10 @@ public class Noeud implements Comparable<Noeud> {
             }
         }
     }
+    
+    
+    public boolean equals(Object o){
+        Noeud n1=(Noeud)o;
+        return n1.p.getX()==this.p.getX() && n1.p.getY()==this.p.getY();
+    }
 }

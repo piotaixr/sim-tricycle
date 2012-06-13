@@ -50,13 +50,13 @@ public class AllerA extends AbstractAction {
 
 
             directCourante = trouveDirection(posCourante, n.getPoint());
-            System.out.println("sens:" + directCourante);
+            //System.out.println("sens:" + directCourante);
 
             posCourante = n.getPoint();
-            System.out.println("case:" + posCourante.getX() + " " + posCourante.getY());
+          //  System.out.println("case:" + posCourante.getX() + " " + posCourante.getY());
 
-            chemin.addLast(new Tourner(directCourante));
-            chemin.addLast(new Avancer());
+            chemin.addFirst(new Tourner(directCourante));
+            chemin.addFirst(new Avancer());
 
         }
         chemin.removeFirst();

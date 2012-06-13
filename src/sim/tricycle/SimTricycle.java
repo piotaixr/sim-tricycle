@@ -38,7 +38,7 @@ public class SimTricycle {
         bot.collerRobotSurMap();
 
 
-        Point p = new Point(0, 0);
+        Point p = new Point(0,0);
         //TrouveChemin TrCh = new TrouveChemin(p);
         //LinkedList<Noeud> chemin= new LinkedList<Noeud>();
         //TrCh.executer(bot);
