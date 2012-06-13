@@ -1,0 +1,15 @@
+G->Robot"{"Etats"}"
+Etats->etat more_etat
+more_etat-> $|etat
+etat->"etat="nom"{" Transitions "}"
+Transitions->("transition{" Conditions "}")*
+Conditions->(condition_simple|condition_multiple)"{" Actions "}"
+condition_multiple->Non condition_simple|Booleens condition_multiple
+condition_simple-> "(" Actions ")"
+Actions->(Affectations|action "(" Parametres ");"
+Affectations-> Variable "<-" action "(" Parametres ");"
+Parametres-> $|nom|(nom ",")*
+nom-> (Lettre)+
+Lettre-> 'a'|..|'z'|'A'|..|'Z'|'1'|..|'9'|'_'|'.'
+Non->$|"!"
+Booleens->"!"|"&&"|"||"
