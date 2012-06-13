@@ -29,8 +29,11 @@ public class SimTricycle {
         Carte c = new Carte(4, 4);
         sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0));
         sim.tricycle.robot.Robot bot;
+        TestMap tm = new TestMap();
+        tm.startTest();
+        c=tm.getCarte();
         bot = new Collecteur(t, c);
-        bot.setCoordonnees(new Point(3, 3));
+        bot.setCoordonnees(new Point(10, 10));
         bot.setDirection(Sens.NORD);
         bot.collerRobotSurMap();
 
@@ -68,7 +71,7 @@ public class SimTricycle {
          
         fg.setVisible(true);
 
-        TestMap tm = new TestMap();
+        
         tm.afficherCarte(c);
 
 //        ordo.start();

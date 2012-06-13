@@ -160,7 +160,7 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
 //                break;
 //            }
 //        }
-        decollerRobotDeMap();
+      //  decollerRobotDeMap();
         if(!actions.isEmpty()){
         actions.getFirst().executer(this);
         System.out.println("Action :"+actions.getFirst().getId());
