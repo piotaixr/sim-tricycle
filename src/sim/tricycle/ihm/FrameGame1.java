@@ -486,7 +486,6 @@ public class FrameGame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonExitMousePressed
 
     private void buttonPauseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonPauseMousePressed
-        incrementeTime();
         oi.stop();
     }//GEN-LAST:event_buttonPauseMousePressed
 
