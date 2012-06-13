@@ -27,7 +27,7 @@ public class Ordonnanceur implements OrdonnanceurInterface {
     private ArrayList<OrdonnancableInterface> subscribersActionDone;
     private Timer timer;
     private long period;
-    private long defaultperiod = 500;
+    private long defaultperiod = 100;
     private boolean running = false; // Par défaut l'ordonnaceur est sur "pause"
     private Random randomGenerator = new Random();
     private FrameGame1 fg = null;
