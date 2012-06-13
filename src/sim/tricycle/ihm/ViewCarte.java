@@ -23,7 +23,7 @@ public class ViewCarte extends javax.swing.JPanel {
     private CarteInterface carte;
     private int tailleCase;
     private int tailleCaseBase = 50;
-    private int decalageX,decalageY;    //pour plus tard essayer de centrer la carte dans le JScrollPane
+    private int decalageX, decalageY;    //pour plus tard essayer de centrer la carte dans le JScrollPane
     private int tailleOpti;
     private Image imgPiece, imgMur, imgVide, imgRobot, imgBonus, imgBoule;
     private int px, py; //pour faire la difference lors du drag
@@ -46,10 +46,10 @@ public class ViewCarte extends javax.swing.JPanel {
             // Initialisation des images:
             imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/images/mur.jpg"));
             imgVide = ImageIO.read(new File("./src/sim/tricycle/ihm/images/vide.jpg"));
-            imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robot.jpg"));
-            imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/bonus.jpg"));
-            imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/boule.jpg"));
-            imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/images/piece.jpg"));
+            imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robot.png"));
+            imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/bonus.png"));
+            imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/boule.png"));
+            imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/images/piece.png"));
 
         } catch (IOException ex) {
             Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,43 +94,41 @@ public class ViewCarte extends javax.swing.JPanel {
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
                 //paintCase(g, carte.getCase(i, j), maxSize);
-                paintCase(g, carte.getCase(i, j), tailleCase);
+                paintCase(g, carte.getCase(i, j), tailleCase, false);
             }
         }
     }
 
-    private void paintCase(Graphics2D g, Case c, int width) {
+    private void paintCase(Graphics2D g, Case c, int width, boolean quadri) {
         // System.out.println("Paint case " +width + "/" + c.getX() + " " + c.getY());
 
         int y = (c.getX() * width) + decalageY;
         int x = (c.getY() * width) + decalageX;
+        
+        if (quadri) {
+            g.drawRect(x, y, width, width);
+        }
 
         if (c.whoIam() == TypeCase.mur) {                             //MUR
             g.drawImage(imgMur, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.vide) {                     //VIDE
             g.drawImage(imgVide, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.piece) {                    //PIECE
             g.drawImage(imgPiece, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.bonus) {                    //BONUS
             g.drawImage(imgBonus, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.robot) {                    //ROBOT
             g.drawImage(imgRobot, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
 
         } else if (c.whoIam() == TypeCase.boule) {                    //BOULE
             g.drawImage(imgBoule, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
         } else {
             g.drawImage(imgVide, x, y, width, width, this);
-            g.drawRect(x, y, width, width);
+
         }
     }
 
