@@ -4,6 +4,10 @@
  */
 package sim.tricycle.utils.params.types;
 
+import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
+import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
+import sim.tricycle.robot.Robot;
+
 /**
  *
  * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
@@ -11,16 +15,19 @@ package sim.tricycle.utils.params.types;
 public class Reference implements ReferenceInterface {
 
     private String selector;
-    private Environnement environnement;
+    private OrdonnanceurInterface ordonnanceur;
 
-    public Reference(String selector, Environnement environnement) {
+    public Reference(String selector, OrdonnanceurInterface ordonnanceur) {
         this.selector = selector;
-        this.environnement = environnement;
+        this.ordonnanceur = ordonnanceur;
 
     }
 
-    public Environnement getEnvironnement() {
-        return environnement;
+    public Environnement getEnvironnementRobotCourant() {
+        OrdonnancableInterface tache = ordonnanceur.getActiveTask();
+        if(tache instanceof Robot)
+            return ((Robot) tache).getEnvironnement();
+        else return null;
     }
 
     public String getSelector() {
@@ -31,7 +38,7 @@ public class Reference implements ReferenceInterface {
     @Override
     public Object getValue() {
         try {
-            return new BasicObjectAccessor(environnement).getValue(selector);
+            return new BasicObjectAccessor(getEnvironnementRobotCourant()).getValue(selector);
         } catch (Exception ex) {
             throw traiteException(ex);
         }

@@ -1,8 +1,9 @@
 package sim.tricycle.utils.params.types;
 
-import java.awt.Robot;
+
 import java.util.HashMap;
 import java.util.Map;
+import sim.tricycle.robot.Robot;
 import sim.tricycle.team.Team;
 
 /**

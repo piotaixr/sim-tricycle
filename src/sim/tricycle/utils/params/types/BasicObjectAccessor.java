@@ -22,7 +22,7 @@ public class BasicObjectAccessor extends VariableAccessor {
         Class c = variable.getClass();
         // test avec le champ et recherche d'un getter si le champ n'est pas accessible
         try {
-            Field f = c.getDeclaredField(attribute);
+            Field f = c.getField(attribute);
             if (f.isAccessible()) {
                 return f.get(variable);
             } else {
@@ -36,7 +36,7 @@ public class BasicObjectAccessor extends VariableAccessor {
         } catch (Exception ex) {
         }
         try {
-            Method m = c.getDeclaredMethod(attribute);
+            Method m = c.getMethod(attribute);
             return m.invoke(variable);
         } catch (Exception ex) {
             throw new RuntimeException("L'objet ne possède ni attribut " + attribute + " ni getter (get" + attribute + ", is" + attribute + ") ni methode " + attribute + " n'ayant pas de parametre", ex);
@@ -48,10 +48,10 @@ public class BasicObjectAccessor extends VariableAccessor {
     private Method getGetter(Class c, String attribute) {
         Method m = null;
         try {
-            m = c.getDeclaredMethod("get" + ucfirst(attribute));
+            m = c.getMethod("get" + ucfirst(attribute));
         } catch (NoSuchMethodException ex) {
             try {
-                m = c.getDeclaredMethod("is" + ucfirst(attribute));
+                m = c.getMethod("is" + ucfirst(attribute));
             } catch (NoSuchMethodException ex1) {
                 return null;
             } catch (SecurityException ex1) {
