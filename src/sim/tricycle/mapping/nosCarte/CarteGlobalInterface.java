@@ -13,7 +13,7 @@ public interface CarteGlobalInterface {
 
     public Carte getCarte();
 
-    public void afficherCarte(Carte map);
+    public void afficherCarte();
 
     public void setMat(String[][] mat);
 

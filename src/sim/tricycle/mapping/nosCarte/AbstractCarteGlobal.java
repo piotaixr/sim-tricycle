@@ -28,12 +28,12 @@ public abstract class AbstractCarteGlobal implements CarteGlobalInterface{
     }
 
     @Override
-    public void afficherCarte(Carte map) {
+    public void afficherCarte() {
         int i, j;
         System.out.println("");
-        for (i = 0; i < map.getLargeur(); i++) {
-            for (j = 0; j < map.getHauteur(); j++) {
-                System.out.print(map.getCase(i, j).toString());
+        for (i = 0; i < carte.getLargeur(); i++) {
+            for (j = 0; j < carte.getHauteur(); j++) {
+                System.out.print(carte.getCase(i, j).toString() + carte.getCase(i, j).getId());
             }
             System.out.print("\n");
         }
