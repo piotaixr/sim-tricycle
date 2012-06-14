@@ -2,6 +2,7 @@
  */
 package sim.tricycle.mapping.nosCarte;
 
+import java.awt.Image;
 import sim.tricycle.mapping.Carte;
 
 /**
@@ -14,7 +15,15 @@ public interface CarteGlobalInterface {
 
     public void afficherCarte(Carte map);
 
-    public void setMat (String[][] mat);
-    
-    public void startInit (String[][] mat);
+    public void setMat(String[][] mat);
+
+    public void startInit(String[][] mat);
+
+    public Image getImage();
+
+    public Image getVide();
+
+    public void setVide(String s);
+
+    public void setImage(String s);
 }
