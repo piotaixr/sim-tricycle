@@ -27,7 +27,9 @@ public class SeTeleporterA extends AbstractAction{
     
     
    protected Object doExecute(Robot bot){
+       bot.decollerRobotDeMap();
        bot.setCoordonnees(p);
+       bot.collerRobotSurMap();
        return null;
    }
   

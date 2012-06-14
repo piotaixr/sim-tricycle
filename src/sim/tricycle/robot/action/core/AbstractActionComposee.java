@@ -16,7 +16,7 @@ public abstract class AbstractActionComposee extends AbstractAction{
     
    
     
-    ArrayDeque<AbstractAction> suiteActions;
+    protected ArrayDeque<AbstractAction> suiteActions;
 
     
     public AbstractActionComposee(){

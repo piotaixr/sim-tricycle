@@ -174,7 +174,7 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
 //                break;
 //            }
 //        }      
-        decollerRobotDeMap();
+       
         if(!actions.isEmpty()){
           if(actions.getFirst().isComposee()){
               AbstractActionComposee a = (AbstractActionComposee)actions.pollFirst();
@@ -186,10 +186,12 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
               actions.pollFirst().executer(this);
           }
         }else{
-            actions.addAll(pileActions);
-            this.executeAction();
+            if(!pileActions.isEmpty()){
+                actions.addAll(pileActions);
+                pileActions.clear();
+                this.executeAction();
+            }
         }
-        collerRobotSurMap();
     }
 
     public Environnement getEnvironnement() {

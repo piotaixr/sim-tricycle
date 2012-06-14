@@ -28,7 +28,8 @@ public class Avancer extends AbstractAction {
     protected Object doExecute(Robot bot) {
 
         Point p = new Point(bot.getCoordonnees());
-
+        bot.decollerRobotDeMap();
+        
         for (int i = 0; i < nbCases; i++) {
             switch (bot.getDirection()) {
                 case NORD:
@@ -69,6 +70,7 @@ public class Avancer extends AbstractAction {
             }
         }
         bot.setCoordonnees(p);
+        bot.collerRobotSurMap();
         return null;
     }
 
