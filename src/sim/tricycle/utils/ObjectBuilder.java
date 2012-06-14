@@ -52,7 +52,8 @@ public class ObjectBuilder {
                     .register(new RamasserPiece())
                     .register(new Tourner())
                     .register(new AllerA())
-                    .register(new ArreterTout());        
+                    .register(new ArreterTout())
+                    .register(new SeTeleporterA());
         }
         
         return actionFactory;
