@@ -136,10 +136,25 @@ public class Carte implements CarteInterface {
             c = this.getCase(l, h);
         } while (c.hasItem() || c.hasObstacle());
         if (e.obstacleItem() == 1) {
-            c.setItem((AbstractObjet)e);
+            c.setItem((AbstractObjet) e);
         }
         if (e.obstacleItem() == 2) {
-            c.setObstacle((AbstractObstacle)e);
+            c.setObstacle((AbstractObstacle) e);
+        }
+    }
+
+    @Override
+    public void pop(PossedeCaseInterface e, int x, int y) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void pop(PossedeCaseInterface e, Case c) {
+        if (e.obstacleItem() == 1) {
+            c.setItem((AbstractObjet) e);
+        }
+        if (e.obstacleItem() == 2) {
+            c.setObstacle((AbstractObstacle) e);
         }
     }
 }

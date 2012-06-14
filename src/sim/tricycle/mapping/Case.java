@@ -15,27 +15,19 @@ import sim.tricycle.mapping.mapException.CaseMultipleObstacleException;
  *
  * Une case de la carte. Peut porter un objet ou être un obstacle.
  */
-public class Case {
+public class Case implements CaseInterface {
 
     private AbstractObstacle obstacle;
     private AbstractObjet objet;
     private int x;
     private int y;
-    private String idImg;
+    private String idImg="X";
 
     public Case(int cx, int cy) {
         this.x = cx;
         this.y = cy;
         obstacle = null;
         objet = null;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
     /*
@@ -76,9 +68,22 @@ public class Case {
                 obstacle = null;
                 objet = null;
         }
-        this.idImg=id;
+        this.idImg = id;
     }
-    public String getId (){
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+    
+/*
+ * Fournit l'identifiant précis de ce qu'il représente graphiquement.
+ * @return son id.
+ */
+    public String getId() {
         return idImg;
     }
 
@@ -97,18 +102,6 @@ public class Case {
     }
 
     /*
-     * setItem place un objet sur la case. @param l'objet à placer. @param
-     * l'objet à placer.
-     */
-    public void setItem(AbstractObjet ob) {
-        if (this.hasItem()) {
-            throw new CaseMultipleObjetException("Superpostion d'objets.");
-        } else {
-            this.objet = ob;
-        }
-    }
-
-    /*
      * Supression de l'objet.
      */
     public void suprObjet() {
@@ -121,15 +114,26 @@ public class Case {
     public void suprObstacle() {
         this.obstacle = null;
     }
-
+    /*
+     * setItem place un objet sur la case. @param l'objet à placer. @param
+     * l'objet à placer.
+     */
+    public void setItem(AbstractObjet ob) {
+        if (this.objet!=null) {
+      //      throw new CaseMultipleObjetException("Superpostion d'objets.");
+        } else {
+            this.objet = ob;
+        }
+    }
     /*
      * setItem place un objet sur la case. @param l'objet à placer.
      */
     public void setObstacle(AbstractObstacle obst) {
         if (this.hasObstacle()) {
-            throw new CaseMultipleObstacleException("Superpostion d'obstacles.");
+//            throw new CaseMultipleObstacleException("Superpostion d'obstacles.");
         } else {
             this.obstacle = obst;
+            this.idImg="X";
         }
     }
 
