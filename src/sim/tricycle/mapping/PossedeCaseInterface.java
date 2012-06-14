@@ -19,4 +19,7 @@ public interface PossedeCaseInterface {
     
     @Override
     public String toString ();
+    
+    /*renvoie 1 si c'est un objet et 2 si c'est un Obstacle*/
+    public int obstacleItem ();
 }

@@ -1,6 +1,8 @@
 package sim.tricycle.mapping;
 
 import java.util.HashSet;
+import sim.tricycle.mapping.elementCase.AbstractObjet;
+import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
 
 /**
@@ -62,8 +64,8 @@ public class Carte implements CarteInterface {
         // Capture de toute les cases dans le rayon souhaité.
         liste.add(source.getCase(pos.getX(), pos.getY()));
         while (rayon > 0) {
-          HashSet<Case>  newliste= (HashSet<Case>) liste.clone();
-          
+            HashSet<Case> newliste = (HashSet<Case>) liste.clone();
+
             for (Case x : newliste) {
                 casesVoisines(source, source.getCase(x.getX(), x.getY()), liste);
             }
@@ -81,11 +83,11 @@ public class Carte implements CarteInterface {
     public void casesVoisines(Carte source, Case pos, HashSet<Case> liste) {
 
         // Si case en bordure verticale droite:
-        if ((this.tailleX-1) > pos.getX()) {
+        if ((this.tailleX - 1) > pos.getX()) {
             Case droite = source.getCase(pos.getX() + 1, pos.getY());
             if (!(liste.contains(droite))) {
                 liste.add(droite);
-                 //System.out.println("Droite");
+                //System.out.println("Droite");
             }
         }
         // Si case en bordure verticale gauche:
@@ -93,7 +95,7 @@ public class Carte implements CarteInterface {
             Case gauche = source.getCase(pos.getX() - 1, pos.getY());
             if (!liste.contains(gauche)) {
                 liste.add(gauche);
-               // System.out.println("Gauche");
+                // System.out.println("Gauche");
             }
         }
         // Si case en bordure horizontale gauche:
@@ -101,15 +103,15 @@ public class Carte implements CarteInterface {
             Case haut = source.getCase(pos.getX(), pos.getY() - 1);
             if (!liste.contains(haut)) {
                 liste.add(haut);
-              //  System.out.println("Haut");
+                //  System.out.println("Haut");
             }
         }
         // Si case en bordure horizontale droite:
-        if ((this.tailleY-1) > pos.getY()) {
+        if ((this.tailleY - 1) > pos.getY()) {
             Case bas = source.getCase(pos.getX(), pos.getY() + 1);
             if (!liste.contains(bas)) {
                 liste.add(bas);
-             //   System.out.println("Bas");
+                //   System.out.println("Bas");
             }
         }
     }
@@ -122,5 +124,22 @@ public class Carte implements CarteInterface {
     @Override
     public int getLargeur() {
         return this.tailleX;
+    }
+
+    @Override
+    public void pop(PossedeCaseInterface e) {
+        int l, h;
+        Case c;
+        do {
+            l = (int) (Math.random() * this.getLargeur());
+            h = (int) (Math.random() * this.getHauteur());
+            c = this.getCase(l, h);
+        } while (c.hasItem() || c.hasObstacle());
+        if (e.obstacleItem() == 1) {
+            c.setItem((AbstractObjet)e);
+        }
+        if (e.obstacleItem() == 2) {
+            c.setObstacle((AbstractObstacle)e);
+        }
     }
 }
