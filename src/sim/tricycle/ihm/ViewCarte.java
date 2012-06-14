@@ -29,20 +29,32 @@ public class ViewCarte extends javax.swing.JPanel {
     private int px, py; //pour faire la difference lors du drag
 
     /**
-     * Creates new form ViewCarte
+     * Constructeur standard.
      */
     public ViewCarte(CarteInterface carte) {
         initComponents();
         this.carte = carte;
         this.tailleCase = this.tailleCaseBase;
-        //this.setBackground(Color.red);
+        // Initialisation des images:
+        initialiserImage();
+    }
 
-//        tailleOpti = Math.max((int)this.getParent().getWidth()/carte.getLargeur(),(int)this.getParent().getHeight()/carte.getHauteur());
-//        tailleCase = tailleOpti;
-        //this.setPreferredSize(this.getSize());
+    /**
+     * Constructeur de carte implémentées
+     */
+    public ViewCarte(CarteInterface carte, Image fond) {
+        initComponents();
+        this.carte = carte;
+        this.tailleCase = this.tailleCaseBase;
+        // Initialisation des images:
+        initialiserImage();
+    }
 
+    /*
+     * Initialise toutes les images néccéssaires.
+     */
+    public void initialiserImage() {
         try {
-
             // Initialisation des images:
             imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/images/mur.jpg"));
             imgVide = ImageIO.read(new File("./src/sim/tricycle/ihm/images/vide.jpg"));
@@ -61,21 +73,10 @@ public class ViewCarte extends javax.swing.JPanel {
         super.paint(graphic);
         Graphics2D g = (Graphics2D) graphic;
 
-        // tailleOpti = Math.min(this.getWidth()/carte.getLargeur(),this.getHeight()/carte.getHauteur());
-        //tailleCase = tailleOpti;
         Dimension d = new Dimension(carte.getLargeur() * tailleCase, carte.getHauteur() * tailleCase);
 
         //this.setPreferredSize(this.getSize());
         this.setPreferredSize(d);
-
-//        int maxWidth = this.getWidth() / carte.getLargeur();
-//        int maxHeight = this.getHeight() / carte.getHauteur();
-//        int maxSize = Math.min(maxHeight, maxWidth);
-
-//        System.out.println("widht " + this.getWidth() + " nbcase : " + carte.getLargeur()
-//                + " height " + this.getHeight() + " nbcase  " + carte.getHauteur());
-//        System.out.println("PreferedSize :" + this.getPreferredSize());
-//        System.out.println("Size :" + this.getSize());
 
         decalageX = 0;
         decalageY = 0;
@@ -88,9 +89,7 @@ public class ViewCarte extends javax.swing.JPanel {
         if (carte.getHauteur() * tailleCase < this.getParent().getHeight()) {
             decalageY = (this.getParent().getHeight() - carte.getHauteur() * tailleCase) / 2;
         }
-//        System.out.println("decX :" + this.decalageX + " decY: " + this.decalageY);
-//        System.out.println("X parent :" + this.getParent().getWidth() + " Y parent: " + this.getParent().getHeight());
-
+        //affichage de chaque case.
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
                 paintCase(g, carte.getCase(i, j), tailleCase, false);
@@ -99,17 +98,23 @@ public class ViewCarte extends javax.swing.JPanel {
     }
 
     private void paintCase(Graphics2D g, Case c, int width, boolean quadri) {
-        // System.out.println("Paint case " +width + "/" + c.getX() + " " + c.getY());
 
         int y = (c.getX() * width) + decalageY;
         int x = (c.getY() * width) + decalageX;
-        
+
         if (quadri) {
             g.drawRect(x, y, width, width);
         }
 
         if (c.whoIam() == TypeCase.mur) {                             //MUR
+            //On recupere l'obstacle corespondant.
+            try {
+                imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/images/" + c.getId() + ".jpg"));
+            } catch (IOException ex) {
+                Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
+            }
             g.drawImage(imgMur, x, y, width, width, this);
+
 
         } else if (c.whoIam() == TypeCase.vide) {                     //VIDE
             g.drawImage(imgVide, x, y, width, width, this);
