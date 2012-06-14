@@ -35,4 +35,10 @@ public interface CarteInterface {
      * Fournit la largeur de la carte.
      */
     public int getLargeur();
+    
+    /**
+     * place un élément passé en paramètre sur une case libre de la carte choisie aléatoirement
+     * @param e 
+     */
+    public void pop(PossedeCaseInterface e);
 }

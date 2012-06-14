@@ -39,4 +39,9 @@ public abstract class AbstractObjet implements PossedeCaseInterface {
     public String toString() {
         return "O";
     }
+    
+    @Override
+    public int obstacleItem (){
+        return 1;
+    }
 }
