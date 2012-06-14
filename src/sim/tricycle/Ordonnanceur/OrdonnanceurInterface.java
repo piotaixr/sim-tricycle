@@ -47,4 +47,6 @@ public interface OrdonnanceurInterface {
     
     public long getTime();
     
+    public OrdonnancableInterface getActiveTask();
+    
 }
