@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import sim.tricycle.mapping.CarteInterface;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
+import sim.tricycle.mapping.nosCarte.AbstractCarteGlobal;
 
 /**
  *
@@ -25,39 +26,28 @@ public class ViewCarte extends javax.swing.JPanel {
     private int tailleCaseBase = 50;
     private int decalageX, decalageY;    //pour plus tard essayer de centrer la carte dans le JScrollPane
     private int tailleOpti;
-    private Image imgPiece, imgMur, imgVide, imgRobot, imgBonus, imgBoule;
+    private Image imgPiece, img, imgVide, imgRobot, imgBonus, imgBoule, imgMap;
     private int px, py; //pour faire la difference lors du drag
-
-    /**
-     * Constructeur standard.
-     */
-    public ViewCarte(CarteInterface carte) {
-        initComponents();
-        this.carte = carte;
-        this.tailleCase = this.tailleCaseBase;
-        // Initialisation des images:
-        initialiserImage();
-    }
 
     /**
      * Constructeur de carte implémentées
      */
-    public ViewCarte(CarteInterface carte, Image fond) {
+    public ViewCarte(AbstractCarteGlobal cont) {
         initComponents();
-        this.carte = carte;
+
+        this.carte = cont.getCarte();
         this.tailleCase = this.tailleCaseBase;
-        // Initialisation des images:
-        initialiserImage();
+        imgMap = cont.getImage();
+        initialiserImage(cont);
     }
 
     /*
      * Initialise toutes les images néccéssaires.
      */
-    public void initialiserImage() {
+    public void initialiserImage(AbstractCarteGlobal cont) {
+        imgVide = cont.getVide();
         try {
             // Initialisation des images:
-            imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/images/mur.jpg"));
-            imgVide = ImageIO.read(new File("./src/sim/tricycle/ihm/images/vide.jpg"));
             imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robot.png"));
             imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/bonus.png"));
             imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/boule.png"));
@@ -89,15 +79,22 @@ public class ViewCarte extends javax.swing.JPanel {
         if (carte.getHauteur() * tailleCase < this.getParent().getHeight()) {
             decalageY = (this.getParent().getHeight() - carte.getHauteur() * tailleCase) / 2;
         }
+
+        boolean affFond = false;
+        if (imgMap != null) {
+            affFond = true;
+        }
         //affichage de chaque case.
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
-                paintCase(g, carte.getCase(i, j), tailleCase, false);
+                paintCase(g, carte.getCase(i, j), tailleCase, false, affFond);
             }
         }
     }
-
-    private void paintCase(Graphics2D g, Case c, int width, boolean quadri) {
+/*
+ * paint une case.
+ */
+    private void paintCase(Graphics2D g, Case c, int width, boolean quadri, boolean aff) {
 
         int y = (c.getX() * width) + decalageY;
         int x = (c.getY() * width) + decalageX;
@@ -105,35 +102,44 @@ public class ViewCarte extends javax.swing.JPanel {
         if (quadri) {
             g.drawRect(x, y, width, width);
         }
-
         if (c.whoIam() == TypeCase.mur) {                             //MUR
-            //On recupere l'obstacle corespondant.
-            try {
-                imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/images/" + c.getId() + ".jpg"));
-            } catch (IOException ex) {
-                Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
+            // SI pas de map de fond => on affiche les murs.
+            if (aff) {
+                try {
+                    img = ImageIO.read(new File("./src/sim/tricycle/ihm/images/" + c.getId() + ".jpg"));
+                } catch (IOException ex) {
+                    Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                g.drawImage(img, x, y, width, width, this);
             }
-            g.drawImage(imgMur, x, y, width, width, this);
+        } else  {                                                   //VIDE
+           
+            if(c.getId().indexOf(0) == 'A'){ //Si case à motif 
+                 try {// on recupere l'image corespondante à l'id.
+                    img = ImageIO.read(new File("./src/sim/tricycle/ihm/images/" + c.getId() + ".jpg"));
+                } catch (IOException ex) {
+                    Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                g.drawImage(img, x, y, width, width, this);
+            }else{
+                 g.drawImage(imgVide, x, y, width, width, this);
+            }
+        }
 
-
-        } else if (c.whoIam() == TypeCase.vide) {                     //VIDE
-            g.drawImage(imgVide, x, y, width, width, this);
-
-        } else if (c.whoIam() == TypeCase.piece) {                    //PIECE
+        if (c.whoIam() == TypeCase.piece) {                          //PIECE
             g.drawImage(imgPiece, x, y, width, width, this);
 
         } else if (c.whoIam() == TypeCase.bonus) {                    //BONUS
             g.drawImage(imgBonus, x, y, width, width, this);
 
-        } else if (c.whoIam() == TypeCase.robot) {                    //ROBOT
-            g.drawImage(imgRobot, x, y, width, width, this);
-
         } else if (c.whoIam() == TypeCase.boule) {                    //BOULE
             g.drawImage(imgBoule, x, y, width, width, this);
-        } else {
-            g.drawImage(imgVide, x, y, width, width, this);
-
         }
+        // possible superposition de robot sur objet:
+        if (c.whoIam() == TypeCase.robot) {                           //ROBOT
+            g.drawImage(imgRobot, x, y, width, width, this);
+
+        } 
     }
 
     public void setTaille(int txZoom) {

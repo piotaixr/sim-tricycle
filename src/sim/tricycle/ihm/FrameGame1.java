@@ -10,7 +10,7 @@ import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.CarteInterface;
-import sim.tricycle.mapping.TestMap;
+import sim.tricycle.mapping.nosCarte.AbstractCarteGlobal;
 
 /**
  *
@@ -26,19 +26,16 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
     /**
      * Creates new form MorganTestAppli
      */
-    public FrameGame1(CarteInterface carte) {
+    public FrameGame1(AbstractCarteGlobal ConteneurCarte) {
         initComponents();
-
+        Carte carte = ConteneurCarte.getCarte();
 
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
 
-        TestMap test2 = new TestMap();
-        test2.startTest();
-        Carte c = test2.getCarte();
+        vc = new ViewCarte(ConteneurCarte);
+        vmc = new ViewMiniCarte(ConteneurCarte, vc);
 
-        vc = new ViewCarte(carte);
-        vmc = new ViewMiniCarte(carte, vc);
 
         panMiniMap.setLayout(new BorderLayout());
         vmc.setVisible(true);
@@ -52,15 +49,11 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
         jspanMap.setViewportView(vc);
         panMiniMap.add(vmc);
 
-
         //jspanMap.setPreferredSize(vc.getSize());
-
 //        System.out.println(" largeur scroll pane :" + jspanMap.getWidth() + " hauteur : " + jspanMap.getHeight());
 //        System.out.println(" largeur pane Map :" + vc.getWidth() + " hauteur : " + vc.getHeight());
 
     }
-
-
 
     public void addOrdonnaceur(Ordonnanceur oi) {
         this.oi = oi;
@@ -574,12 +567,6 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                TestMap test2 = new TestMap();
-                test2.startTest();
-                Carte e = test2.getCarte();
-                // new FrameGame1(e).setVisible(true);
-
-
             }
         });
     }
@@ -620,7 +607,7 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
     public void update(Observable o, Object arg) {
 
         lblTime.setText(String.valueOf(oi.getTime()));
-    
+
         repaint();
     }
 }

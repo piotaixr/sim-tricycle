@@ -161,9 +161,6 @@ public class Case {
      * Indique quel est le type de la case. @return le type de la case
      */
     public TypeCase whoIam() {
-        if (this.hasItem() && this.hasObstacle()) {
-            return TypeCase.vide;
-        }
 
         if (this.hasItem()) {
             return this.myItem().whoIam();
