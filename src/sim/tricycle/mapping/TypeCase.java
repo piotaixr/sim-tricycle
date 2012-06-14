@@ -15,5 +15,7 @@ public enum TypeCase {
     vide,
     robot,
     boule, 
+    base,
+    ptDeControle,
     tour;
 }
