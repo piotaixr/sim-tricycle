@@ -75,7 +75,7 @@ public class TestOrdonnanceur {
 
         @Override
         public void run() {
-            ord.setTime(ord.getTime() / 2);
+            ord.setPeriod(ord.getPeriod() / 2);
             System.out.println(" --> SPEED !! <--");
         }
     }
@@ -161,8 +161,8 @@ public class TestOrdonnanceur {
     }
 
     public void goTest() {
-        FrameGame1 fg =null;
-        Ordonnanceur ordo = new Ordonnanceur(fg);
+
+        Ordonnanceur ordo = new Ordonnanceur();
         BotTest bot01 = new BotTest("01 ~o~");
         BotTest bot02 = new BotTest("02 |o~");
         BotTest bot03 = new BotTest("03 ~o|");

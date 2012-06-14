@@ -23,7 +23,7 @@ public interface OrdonnanceurInterface {
     /*
      * Permet d'avancer manuellement
      */
-    public void nextManual();
+    public void next();
     /*
      * Lance l'ordonnanceur
      */
@@ -35,14 +35,16 @@ public interface OrdonnanceurInterface {
     /*
      * Met un timer pour l'ordonnanceur
      */
-    public void setTime(long time);
+    public void setPeriod(long period);
     /*
      * Choisi un timer pour l'ordonnanceur
      */
-    public long getTime();
+    public long getPeriod();
     /*
      * Retourne la periode par defaut
      */
     public long getDefaultPeriod();
+    
+    public long getTime();
     
 }
