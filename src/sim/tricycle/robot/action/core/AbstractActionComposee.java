@@ -14,16 +14,22 @@ import sim.tricycle.robot.Robot;
 public abstract class AbstractActionComposee extends AbstractAction{
     
     
+   
     
-    ArrayDeque<ActionInterface> suiteActions;
+    ArrayDeque<AbstractAction> suiteActions;
 
-    public ArrayDeque<ActionInterface> getSuiteActions() {
+    
+    public AbstractActionComposee(){
+        super();
+        this.composee=true;
+    } 
+    
+    public ArrayDeque<AbstractAction> getSuiteActions() {
         return suiteActions;
     }
 
-    public void setSuiteActions(ArrayDeque<ActionInterface> suiteActions) {
+    public void setSuiteActions(ArrayDeque<AbstractAction> suiteActions) {
         this.suiteActions = suiteActions;
     }
-    
     
 }

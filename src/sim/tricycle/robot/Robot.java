@@ -6,6 +6,7 @@ import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
+import sim.tricycle.robot.action.core.AbstractAction;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.robot.action.core.ActionInterface;
 import sim.tricycle.team.Team;
@@ -21,8 +22,8 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     protected Point coordonnees;
     protected Sens direction;
     protected int portee;
-    protected ArrayDeque<ActionInterface> actions = new ArrayDeque();
-    protected Stack<AbstractActionComposee> pileActCompo;
+    protected ArrayDeque<AbstractAction> actions = new ArrayDeque();
+    protected Stack<AbstractAction> pileActions = new Stack();
     protected Etat etatCourant;
     protected Etat etatDestination;
     protected Automate automate;
@@ -93,11 +94,11 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         this.portee = newPortee;
     }
 
-    public ArrayDeque<ActionInterface> getActions() {
+    public ArrayDeque<AbstractAction> getActions() {
         return actions;
     }
 
-    public void setActions(ArrayDeque<ActionInterface> fileActions) {
+    public void setActions(ArrayDeque<AbstractAction> fileActions) {
         this.actions = fileActions;
     }
 
@@ -172,19 +173,21 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
 //                etatDestination = t.getEtatDestination();
 //                break;
 //            }
-//        }
+//        }      
         decollerRobotDeMap();
         if(!actions.isEmpty()){
-            actions.getFirst().executer(this);
-            System.out.println("Action :"+actions.getFirst().getId());
-            actions.removeFirst();
+          if(actions.getFirst().isComposee()){
+              AbstractActionComposee a = (AbstractActionComposee)actions.pollFirst();
+              pileActions.addAll(actions);
+              actions.clear();
+              actions.addAll(a.getSuiteActions());
+              this.executeAction();
+          }else{
+              actions.pollFirst().executer(this);
+          }
         }else{
-            if(!pileActCompo.isEmpty()){
-                actions.addAll(pileActCompo.pop().getSuiteActions());
-                actions.getFirst().executer(this);
-                System.out.println("Action :"+actions.getFirst().getId());
-                actions.removeFirst();
-            }
+            actions.addAll(pileActions);
+            this.executeAction();
         }
         collerRobotSurMap();
     }
