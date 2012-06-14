@@ -1,6 +1,5 @@
 package sim.tricycle.robot.action;
 
-import java.util.ArrayDeque;
 import java.util.LinkedList;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.PossedeCaseInterface;
@@ -9,7 +8,6 @@ import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.Sens;
 import sim.tricycle.robot.action.core.AbstractAction;
-import sim.tricycle.robot.action.core.ActionInterface;
 
 /**
  *
@@ -18,6 +16,9 @@ import sim.tricycle.robot.action.core.ActionInterface;
 public class AllerA extends AbstractAction {
 
     private Point p;
+
+    public AllerA() {
+    }
 
     public AllerA(Point p) {
         super();
@@ -38,7 +39,7 @@ public class AllerA extends AbstractAction {
         tc.executer(bot);
         System.out.println("TailleChemin :" + tc.getChemin().size());
         creerChemin(tc.getChemin(), bot);
-        
+
         return null;
     }
 
@@ -65,10 +66,9 @@ public class AllerA extends AbstractAction {
 //        chemin.removeFirst();  
 //        bot.getActions().addAll(chemin);
 //    }
-    
     private void creerChemin(LinkedList<Noeud> cheminTrouve, Robot bot) {
-        while(! cheminTrouve.isEmpty()){
-            SeTeleporterA tp = new SeTeleporterA(1,cheminTrouve.pollFirst().getPoint());
+        while (!cheminTrouve.isEmpty()) {
+            SeTeleporterA tp = new SeTeleporterA(1, cheminTrouve.pollFirst().getPoint());
             bot.getActions().addFirst(tp);
         }
     }
