@@ -21,6 +21,7 @@ public class Case {
     private AbstractObjet objet;
     private int x;
     private int y;
+    private String idImg;
 
     public Case(int cx, int cy) {
         this.x = cx;
@@ -42,10 +43,10 @@ public class Case {
      * boule. 'B': case avec un bonus. 'P': case avec une pièce. 'X': case
      * obstacle.
      */
-    public Case(char id, int cx, int cy) {
+    public Case(String id, int cx, int cy) {
         this.x = cx;
         this.y = cy;
-        switch (id) {
+        switch (id.charAt(0)) {
             case 'X':
                 obstacle = new Mur(this);
                 objet = null;
@@ -75,6 +76,10 @@ public class Case {
                 obstacle = null;
                 objet = null;
         }
+        this.idImg=id;
+    }
+    public String getId (){
+        return idImg;
     }
 
     /*
