@@ -91,7 +91,7 @@ public class ViewMiniCarte extends javax.swing.JPanel {
                 }
                 g.drawImage(imgMur, x, y, width, width, this);
             }
-        } else if (c.whoIam() == TypeCase.vide) {                     //VIDE
+        } else  {                                                    //VIDE
             g.drawImage(imgVide, x, y, width, width, this);
         }
 
