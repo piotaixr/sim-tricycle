@@ -27,7 +27,8 @@ public class Ordonnanceur extends Observable implements OrdonnanceurInterface {
     private boolean running = false; // Par défaut l'ordonnaceur est sur "pause"
     private Random randomGenerator = new Random();
     private long time = 0;
-
+    private OrdonnancableInterface botActionning = null;
+    
     /*
      * Constructeur avec timer par défaut
      */
@@ -70,6 +71,7 @@ public class Ordonnanceur extends Observable implements OrdonnanceurInterface {
         OrdonnancableInterface elem;
         synchronized (this) {
             elem = subscribersActionToDo.remove(0);
+            botActionning = elem;
             addToActionDone(elem);
         }
         doAction(elem);
@@ -186,5 +188,9 @@ public class Ordonnanceur extends Observable implements OrdonnanceurInterface {
     @Override
     public long getTime() {
         return time;
+    }
+    
+    public OrdonnancableInterface getBotActionning(){
+        return botActionning;
     }
 }
