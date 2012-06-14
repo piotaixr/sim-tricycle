@@ -65,7 +65,7 @@ public class SimTricycle {
 
 
         FrameGame1 fg = new FrameGame1(c);
-        Ordonnanceur ordo = new Ordonnanceur(fg);
+        Ordonnanceur ordo = new Ordonnanceur();
         ordo.add(bot);
         fg.addOrdonnaceur(ordo);
          
