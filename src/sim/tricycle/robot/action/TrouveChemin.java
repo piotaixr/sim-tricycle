@@ -23,6 +23,11 @@ public class TrouveChemin extends AbstractAction {
         this.chemin = new LinkedList<Noeud>();
     }
 
+    public TrouveChemin() {
+        super();
+        this.chemin = new LinkedList<Noeud>();
+    }
+        
     public LinkedList<Noeud> getChemin() {
         return this.chemin;
     }
@@ -106,5 +111,13 @@ public class TrouveChemin extends AbstractAction {
     @Override
     public String getId() {
         return "trouvechemin";
+    }
+    
+    public Point getpDest() {
+        return pDest;
+    }
+
+    public void setpDest(Point pDest) {
+        this.pDest = pDest;
     }
 }

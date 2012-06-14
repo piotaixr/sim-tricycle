@@ -14,6 +14,10 @@ import sim.tricycle.robot.action.core.AbstractAction;
 public class RamasserPiece extends AbstractAction{
 
     
+    public RamasserPiece(){
+        super(0);
+    }
+    
     public Object doExecute(Robot bot){
         bot.getTeam().setGold(bot.getTeam().getGold()+1);
         return null;
