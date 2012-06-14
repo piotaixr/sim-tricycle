@@ -81,7 +81,7 @@ public class ViewCarte extends javax.swing.JPanel {
         }
 
         boolean affFond = false;
-        if (imgMap != null) {
+        if (imgMap == null) {
             affFond = true;
         }
         //affichage de chaque case.

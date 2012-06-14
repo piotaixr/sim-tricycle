@@ -19,6 +19,10 @@ public class GenerateurCarte {
         gen.afficherMat(gen.mat);
     }
     
+    public void set (String s,int tx, int ty){
+        mat[tx][ty]=s;
+    }
+    
     public String[][] creerCarte(int tx, int ty) {
         String[][] matrice = new String[tx][ty];
         

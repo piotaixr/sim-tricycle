@@ -63,7 +63,7 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         tHmini = tailleOpti * carte.getHauteur();
         //afficher image de fond.
         boolean affFond = false;
-        if (imgMap != null) {
+        if (imgMap == null) {
             affFond = true;
         }
         g.drawImage(imgMap, 0, 0, tLmini, tHmini, this);
