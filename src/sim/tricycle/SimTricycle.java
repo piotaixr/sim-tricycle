@@ -4,6 +4,7 @@
  */
 package sim.tricycle;
 
+import java.util.ArrayList;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.ihm.FrameGame1;
 import sim.tricycle.mapping.Carte;
@@ -14,6 +15,7 @@ import sim.tricycle.robot.Sens;
 import sim.tricycle.robot.action.AllerA;
 import sim.tricycle.robot.action.Avancer;
 import sim.tricycle.robot.action.Tourner;
+import sim.tricycle.team.Ressource;
 
 /**
  *
@@ -27,7 +29,7 @@ public class SimTricycle {
     public static void main(String[] args) {
         MapTest tm = new MapTest();
         Carte c = tm.getCarte();
-        sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0));
+        sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0), new ArrayList<Ressource>());
         sim.tricycle.robot.Robot bot;
 
         c = tm.getCarte();

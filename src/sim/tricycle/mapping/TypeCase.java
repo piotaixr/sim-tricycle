@@ -14,5 +14,6 @@ public enum TypeCase {
     bonus,
     vide,
     robot,
-    boule;
+    boule, 
+    tour;
 }

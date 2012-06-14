@@ -49,7 +49,7 @@ public class ObjectBuilder {
         if (actionFactory == null) {
             actionFactory = new ActionFactory(getParamConverterProvider());
             actionFactory.register(new Avancer())
-                    .register(new RamasserPiece())
+                    .register(new Ramasser())
                     .register(new Tourner())
                     .register(new AllerA())
                     .register(new ArreterTout())
