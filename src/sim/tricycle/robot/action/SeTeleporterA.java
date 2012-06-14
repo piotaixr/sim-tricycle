@@ -15,6 +15,18 @@ import sim.tricycle.robot.action.core.AbstractAction;
 public class SeTeleporterA extends AbstractAction{
 
     private Point p;
+
+    public Point getP() {
+        return p;
+    }
+
+    public void setP(Point p) {
+        this.p = p;
+    }
+    
+    public SeTeleporterA(){
+        super(1);
+    }
     
     public SeTeleporterA(int poids,Point p){
         super(poids);

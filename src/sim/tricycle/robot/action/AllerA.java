@@ -18,8 +18,9 @@ public class AllerA extends AbstractAction {
     private Point p;
 
     public AllerA() {
+        super();
     }
-
+    
     public AllerA(Point p) {
         super();
         this.p = p;
