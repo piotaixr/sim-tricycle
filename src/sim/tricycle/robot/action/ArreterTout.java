@@ -9,16 +9,15 @@ import sim.tricycle.robot.action.core.AbstractAction;
  */
 public class ArreterTout extends AbstractAction{
 
-    public ArreterTout() {
-        super();
-    }
-    
-    public Object doExecute(Robot bot){
-        bot.setActions(null);
+    @Override
+    protected Object doExecute(Robot bot) {
+        bot.getActions().clear();
+        
         return null;
     }
-    
-    public String getId(){
-        return "arreterTout";
+
+    @Override
+    public String getId() {
+        return "arreter_tout";
     }
 }

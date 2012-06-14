@@ -10,9 +10,9 @@ public interface FactoryInterface<K, V extends IdentifiableInterface<? extends K
 
     public V create(K nom);
 
-    public void registerCollection(Collection<V> objet);
+    public FactoryInterface<K, V> registerCollection(Collection<V> objet);
 
-    public void register(V objet);
+    public FactoryInterface<K, V> register(V objet);
 
     public boolean has(K nom);
 }

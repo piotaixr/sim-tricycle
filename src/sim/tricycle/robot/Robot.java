@@ -9,6 +9,7 @@ import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.robot.action.core.ActionInterface;
 import sim.tricycle.team.Team;
+import sim.tricycle.utils.params.types.Environnement;
 
 /**
  *
@@ -16,6 +17,7 @@ import sim.tricycle.team.Team;
  */
 public abstract class Robot extends AbstractObstacle implements OrdonnancableInterface {
 
+    protected Environnement environnement = null;
     protected Point coordonnees;
     protected Sens direction;
     protected int portee;
@@ -27,7 +29,6 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     protected Team equipe;
     protected Carte mapTeam;
     protected Carte mapObjective;
-
 
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
@@ -45,23 +46,23 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         this.automate = automate;
         this.mapObjective = mapObjective;
     }
-    
+
     public Robot(Automate automate, Team equipe, Carte mapObjective) {
         this.automate = automate;
         this.mapObjective = mapObjective;
         this.equipe = equipe;
         this.mapTeam = equipe.getMap();
-    }    
-    
+    }
+
     public Robot(Carte mapObjective) {
         this.mapObjective = mapObjective;
     }
-    
-    public Robot(Team t,Carte mapObjective) {
-        this.equipe=t;
+
+    public Robot(Team t, Carte mapObjective) {
+        this.equipe = t;
         this.mapObjective = mapObjective;
     }
-    
+
     public Robot(Team equipe) {
         this.automate = null;
         this.equipe = equipe;
@@ -115,27 +116,37 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     public Carte getMapTeam() {
         return this.mapTeam;
     }
-    
+
     public Carte getMapObjective() {
         return mapObjective;
     }
 
-    public void collerRobotSurMap(){
-        if(!this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()){
-           this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
+    /**
+     * @deprecated
+     */
+    public void collerRobotSurMap() {
+        if (!this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
+            this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
         }
     }
-    
-    public void decollerRobotDeMap(){
-        if(this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()){
-           this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
+
+    /**
+     * @deprecated
+     */
+    public void decollerRobotDeMap() {
+        if (this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
+            this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
         }
     }
-    
+
+    /**
+     * @deprecated
+     */
     @Override
     public TypeCase whoIam() {
         return (TypeCase.robot);
     }
+
     /**
      * Fonction appelée a chaque tick d'horloge
      *
@@ -176,5 +187,12 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
             }
         }
         collerRobotSurMap();
+    }
+
+    public Environnement getEnvironnement() {
+        if (environnement == null) {
+            environnement = new Environnement(getTeam(), this);
+        }
+        return environnement;
     }
 }

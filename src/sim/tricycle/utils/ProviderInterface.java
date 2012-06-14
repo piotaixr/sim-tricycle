@@ -12,7 +12,7 @@ public interface ProviderInterface<K, V> {
 
     public boolean has(K nom);
 
-    public void register(V paramConverter);
+    public ProviderInterface<K, V> register(V paramConverter);
 
-    public void registerCollection(Collection<V> paramsConverter);
+    public ProviderInterface<K, V> registerCollection(Collection<V> paramsConverter);
 }
