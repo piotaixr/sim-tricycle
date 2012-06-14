@@ -1,10 +1,12 @@
 package sim.tricycle.robot;
 
 import java.util.ArrayDeque;
+import java.util.Stack;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
+import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.robot.action.core.ActionInterface;
 import sim.tricycle.team.Team;
 
@@ -18,6 +20,7 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     protected Sens direction;
     protected int portee;
     protected ArrayDeque<ActionInterface> actions = new ArrayDeque();
+    protected Stack<AbstractActionComposee> pileActCompo;
     protected Etat etatCourant;
     protected Etat etatDestination;
     protected Automate automate;
@@ -139,7 +142,6 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
      * @todo coder cette fonction
      */
     public void executeAction() {
-       // 
 //        if (actions.isEmpty()) {
 //            // liste actions vide, on change d'état
 //            etatCourant = etatDestination;
@@ -162,11 +164,16 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
 //        }
         decollerRobotDeMap();
         if(!actions.isEmpty()){
-        actions.getFirst().executer(this);
-        System.out.println("Action :"+actions.getFirst().getId());
-        actions.removeFirst();
-        
-        
+            actions.getFirst().executer(this);
+            System.out.println("Action :"+actions.getFirst().getId());
+            actions.removeFirst();
+        }else{
+            if(!pileActCompo.isEmpty()){
+                actions.addAll(pileActCompo.pop().getSuiteActions());
+                actions.getFirst().executer(this);
+                System.out.println("Action :"+actions.getFirst().getId());
+                actions.removeFirst();
+            }
         }
         collerRobotSurMap();
     }
