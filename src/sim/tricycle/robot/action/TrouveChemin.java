@@ -55,6 +55,7 @@ public class TrouveChemin extends AbstractAction {
         Noeud courant = listeOuverte.getFirst();
 
         //    System.out.println("Bot : "+bot.getPosition().getX()+" "+bot.getPosition().getY());
+       // System.out.println("Case 3 9:"+bot.getMapObjective().getCase(3, 9).whoIam());
         while (!listeOuverte.isEmpty() && courant.getPoint().distanceDepuis(this.pDest) != 0) {
 
             listeFermee.addFirst(courant);

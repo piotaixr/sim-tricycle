@@ -4,7 +4,7 @@ package sim.tricycle.utils.params.types;
  *
  * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
  */
-public interface ReferenceInterface {
+public interface VariableInterface extends ReferenceInterface {
 
-    public Object getValue();
+    public void setValue(Object value);
 }

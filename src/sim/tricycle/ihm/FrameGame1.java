@@ -3,8 +3,10 @@
 package sim.tricycle.ihm;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Toolkit;
+import java.util.Observable;
+import java.util.Observer;
+import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.CarteInterface;
@@ -14,7 +16,7 @@ import sim.tricycle.mapping.TestMap;
  *
  * @author Morgan BIDOIS <morganbidois@gmail.com>
  */
-public class FrameGame1 extends javax.swing.JFrame {
+public class FrameGame1 extends javax.swing.JFrame implements Observer {
 
     private ViewCarte vc;
     private ViewMiniCarte vmc;
@@ -58,13 +60,11 @@ public class FrameGame1 extends javax.swing.JFrame {
 
     }
 
-    public void incrementeTime() {
-        time++;
-        lblTime.setText(String.valueOf(time));
-    }
 
-    public void addOrdonnaceur(OrdonnanceurInterface oi) {
+
+    public void addOrdonnaceur(Ordonnanceur oi) {
         this.oi = oi;
+        oi.addObserver(this);
     }
 
     /**
@@ -490,7 +490,7 @@ public class FrameGame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonPauseMousePressed
 
     private void buttonPlayMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonPlayMousePressed
-        oi.setTime(oi.getDefaultPeriod());
+        oi.setPeriod(oi.getDefaultPeriod());
         oi.start();
     }//GEN-LAST:event_buttonPlayMousePressed
 
@@ -524,16 +524,17 @@ public class FrameGame1 extends javax.swing.JFrame {
 
     private void buttonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_buttonExitActionPerformed
 
     private void buttonStepPlayMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonStepPlayMousePressed
         // TODO add your handling code here:
-        oi.nextManual();
+        oi.next();
     }//GEN-LAST:event_buttonStepPlayMousePressed
 
     private void buttonSpeedUpMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSpeedUpMousePressed
         // TODO add your handling code here:
-        oi.setTime(oi.getTime() / 2);
+        oi.setPeriod(oi.getPeriod() / 2);
     }//GEN-LAST:event_buttonSpeedUpMousePressed
 
     /**
@@ -614,4 +615,12 @@ public class FrameGame1 extends javax.swing.JFrame {
     private javax.swing.JLabel txtScoreGoldTeam2;
     private javax.swing.JLabel txtscoreBallTeam1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+        lblTime.setText(String.valueOf(oi.getTime()));
+    
+        repaint();
+    }
 }

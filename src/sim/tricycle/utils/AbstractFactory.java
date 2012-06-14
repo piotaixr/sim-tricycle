@@ -39,17 +39,19 @@ public abstract class AbstractFactory<K, V extends IdentifiableInterface<? exten
     }
 
     @Override
-    public void registerCollection(Collection<V> collection) {
+    public FactoryInterface<K, V> registerCollection(Collection<V> collection) {
         for (V o : collection) {
             register(o);
         }
+        return this;
     }
 
     @Override
-    public void register(V objet) {
+    public FactoryInterface<K, V> register(V objet) {
         if (has(objet.getId())) {
             throw new RuntimeException("Une condition doit avoir un nom unique: " + objet.getId());
         }
+        return this;
     }
 
     @Override

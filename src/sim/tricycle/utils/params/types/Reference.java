@@ -4,11 +4,9 @@
  */
 package sim.tricycle.utils.params.types;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
+import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
+import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
+import sim.tricycle.robot.Robot;
 
 /**
  *
@@ -16,77 +14,37 @@ import java.util.LinkedList;
  */
 public class Reference implements ReferenceInterface {
 
-    private Object variable;
     private String selector;
-    private Object cible;
-    private Field lastField = null;
+    private OrdonnanceurInterface ordonnanceur;
 
-    public Reference(String selector, Object variable) {
+    public Reference(String selector, OrdonnanceurInterface ordonnanceur) {
         this.selector = selector;
-        this.variable = variable;
-        resolveCible();
+        this.ordonnanceur = ordonnanceur;
+
     }
+
+    public Environnement getEnvironnementRobotCourant() {
+        OrdonnancableInterface tache = ordonnanceur.getActiveTask();
+        if(tache instanceof Robot)
+            return ((Robot) tache).getEnvironnement();
+        else return null;
+    }
+
+    public String getSelector() {
+        return selector;
+    }
+    
 
     @Override
     public Object getValue() {
         try {
-            if (lastField.isAccessible()) {
-                    return lastField.get(cible);
-                } else {
-                    Method m = cible.getClass().getMethod("get" + ucfirst(lastField.getName()));
-                    return m.invoke(cible);
-                }
+            return new BasicObjectAccessor(getEnvironnementRobotCourant()).getValue(selector);
         } catch (Exception ex) {
             throw traiteException(ex);
         }
     }
 
-    @Override
-    public void setValue(Object value) {
-        try {
-            lastField.set(cible, value);
-        } catch (Exception ex) {
-            throw traiteException(ex);
-        }
-    }
-
-    private void resolveCible() {
-        try {
-            LinkedList<String> attributes = new LinkedList();
-            attributes.addAll(Arrays.asList(selector.split(selector)));
-
-            if (attributes.isEmpty()) {
-                throw new RuntimeException("Cible incorrecte: " + selector);
-            }
-            Iterator<String> it = attributes.iterator();
-            cible = variable;
-            lastField = cible.getClass().getDeclaredField(it.next());
-            while (it.hasNext()) {
-                if (lastField.isAccessible()) {
-                    cible = lastField.get(cible);
-                } else {
-                    Method m = cible.getClass().getMethod("get" + ucfirst(lastField.getName()));
-                    cible = m.invoke(cible);
-                }
-                lastField = cible.getClass().getDeclaredField(it.next());
-            }
-        } catch (Exception ex) {
-            throw traiteException(ex);
-        }
-    }
-
-    private RuntimeException traiteException(Exception ex) {
+    protected RuntimeException traiteException(Exception ex) {
         return new RuntimeException("Erreur d'accès a la variable avec le selector " + selector, ex);
-    }
-
-    private String ucfirst(String str) {
-        if (str == null) {
-            return null;
-        }
-        if (str.length() == 0) {
-            return str;
-        }
-        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
-
     }
 }

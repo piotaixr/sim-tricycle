@@ -16,8 +16,8 @@ public interface ActionFactoryInterface extends FactoryInterface<String, ActionI
     public ActionInterface create(String nom, List<Parameter> parameters, String nomVariableDest);
 
     @Override
-    public void registerCollection(Collection<ActionInterface> conditions);
+    public FactoryInterface<String, ActionInterface> registerCollection(Collection<ActionInterface> conditions);
 
     @Override
-    public void register(ActionInterface condition);
+    public FactoryInterface<String, ActionInterface> register(ActionInterface condition);
 }

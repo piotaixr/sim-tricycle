@@ -4,18 +4,14 @@
  */
 package sim.tricycle.Ordonnanceur;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-import sim.tricycle.ihm.FrameGame1;
+import java.util.*;
 
 /**
  *
  * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
  * @author Morgan BIDOIS <morganbidois@gmail.com>
  */
-public class Ordonnanceur implements OrdonnanceurInterface {
+public class Ordonnanceur extends Observable implements OrdonnanceurInterface {
 
     /*
      * Tableau représentant les éléments qu'il reste à traiter
@@ -30,21 +26,21 @@ public class Ordonnanceur implements OrdonnanceurInterface {
     private long defaultperiod = 100;
     private boolean running = false; // Par défaut l'ordonnaceur est sur "pause"
     private Random randomGenerator = new Random();
-    private FrameGame1 fg = null;
+    private long time = 0;
+    private OrdonnancableInterface activeTask = null;
 
     /*
      * Constructeur avec timer par défaut
      */
-    public Ordonnanceur(FrameGame1 f) {
+    public Ordonnanceur() {
         this(100);
-        fg = f;
     }
 
     /*
      * Constructeur avec timer en paramètre
      */
-    public Ordonnanceur(long time) {
-        period = time;
+    public Ordonnanceur(long period) {
+        this.period = period;
         subscribersActionToDo = new ArrayList();
         subscribersActionDone = new ArrayList();
         timer = new Timer();
@@ -72,15 +68,19 @@ public class Ordonnanceur implements OrdonnanceurInterface {
      * liste des actions effectuées
      */
     private void actionAndRemoveFromToDo() {
-        OrdonnancableInterface elem;
         synchronized (this) {
-            elem = subscribersActionToDo.remove(0);
-            addToActionDone(elem);
+            activeTask = subscribersActionToDo.remove(0);
+            addToActionDone(activeTask);
         }
-        doAction(elem);
+        
+        doAction(activeTask);
+        
+        synchronized (this) {
+            activeTask = null;
+        }
     }
 
-    /*
+    /**
      * Remplissage des actions à faire de manière aléatoire A faire une fois
      * qu'il n'y a plus d'action à faire
      */
@@ -110,17 +110,9 @@ public class Ordonnanceur implements OrdonnanceurInterface {
         @Override
         public void run() {
             if (running) {
-                if (!subscribersActionToDo.isEmpty()) {
-                    actionAndRemoveFromToDo();
-                    fg.incrementeTime();
-                } else /*
-                 * Plus d'action à faire donc on transvase les actions dans le
-                 * tableau des actions à faire de manière aléatoire
-                 */ {
-                    intializeActionToDo();
-                }
+                next();
             }
-            fg.repaint();
+
         }
     }
 
@@ -128,19 +120,16 @@ public class Ordonnanceur implements OrdonnanceurInterface {
      * Fonction pour faire les actions les unes après les autres manuellement.
      */
     @Override
-    public void nextManual() {
+    public synchronized void next() {
         //new TaskAction().run();
         if (!subscribersActionToDo.isEmpty()) {
             actionAndRemoveFromToDo();
-            fg.incrementeTime();
-        } else /*
-         * Plus d'action à faire donc on transvase les actions dans le tableau
-         * des actions à faire de manière aléatoire
-         */ {
+            time++;
+        } else {
             intializeActionToDo();
         }
-
-        fg.repaint();
+        setChanged();
+        notifyObservers();
     }
 
     @Override
@@ -182,20 +171,30 @@ public class Ordonnanceur implements OrdonnanceurInterface {
     }
 
     @Override
-    public void setTime(long time) {
-        period = time;
+    public void setPeriod(long period) {
+        this.period = period;
         timer.cancel();
         timer = new Timer();
         timer.schedule(new TaskAction(), 0, period);
     }
 
     @Override
-    public long getTime() {
+    public long getPeriod() {
         return period;
     }
-    
+
     @Override
-    public long getDefaultPeriod(){
+    public long getDefaultPeriod() {
         return defaultperiod;
+    }
+
+    @Override
+    public long getTime() {
+        return time;
+    }
+
+    @Override
+    public synchronized OrdonnancableInterface getActiveTask() {
+        return activeTask;
     }
 }

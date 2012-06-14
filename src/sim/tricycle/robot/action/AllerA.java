@@ -1,6 +1,5 @@
 package sim.tricycle.robot.action;
 
-import java.util.ArrayDeque;
 import java.util.LinkedList;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.PossedeCaseInterface;
@@ -9,7 +8,6 @@ import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.Sens;
 import sim.tricycle.robot.action.core.AbstractAction;
-import sim.tricycle.robot.action.core.ActionInterface;
 
 /**
  *
@@ -19,6 +17,10 @@ public class AllerA extends AbstractAction {
 
     private Point p;
 
+    public AllerA() {
+        super();
+    }
+    
     public AllerA(Point p) {
         super();
         this.p = p;
@@ -38,30 +40,38 @@ public class AllerA extends AbstractAction {
         tc.executer(bot);
         System.out.println("TailleChemin :" + tc.getChemin().size());
         creerChemin(tc.getChemin(), bot);
-        
+
         return null;
     }
 
+//    private void creerChemin2(LinkedList<Noeud> cheminTrouve, Robot bot) {
+//        ArrayDeque<ActionInterface> chemin = new ArrayDeque<ActionInterface>();
+//        Sens directCourante;
+//        Point posCourante = cheminTrouve.getFirst().getPoint();
+//        Noeud n;
+//        for (int i=0;i<cheminTrouve.size();i++){
+//
+//            n=cheminTrouve.pollFirst();
+//           // n.setPoint(new Point(n.getPoint().getY(),n.getPoint().getX()));
+//            directCourante = trouveDirection(posCourante, n.getPoint());
+//            //System.out.println("sens:" + directCourante);
+//
+//            posCourante = n.getPoint();
+//            System.out.println("case:" + posCourante.getX() + " " + posCourante.getY());
+//
+//            chemin.addFirst(new Tourner(directCourante));
+//            chemin.addFirst(new Avancer());
+//
+//        }
+//        chemin.removeFirst();
+//        chemin.removeFirst();  
+//        bot.getActions().addAll(chemin);
+//    }
     private void creerChemin(LinkedList<Noeud> cheminTrouve, Robot bot) {
-        ArrayDeque<ActionInterface> chemin = new ArrayDeque<ActionInterface>();
-        Sens directCourante;
-        Point posCourante = cheminTrouve.getFirst().getPoint();
-        for (Noeud n : cheminTrouve) {
-
-
-            directCourante = trouveDirection(posCourante, n.getPoint());
-            //System.out.println("sens:" + directCourante);
-
-            posCourante = n.getPoint();
-          //  System.out.println("case:" + posCourante.getX() + " " + posCourante.getY());
-
-            chemin.addFirst(new Tourner(directCourante));
-            chemin.addFirst(new Avancer());
-
+        while (!cheminTrouve.isEmpty()) {
+            SeTeleporterA tp = new SeTeleporterA(1, cheminTrouve.pollFirst().getPoint());
+            bot.getActions().addFirst(tp);
         }
-        chemin.removeFirst();
-        chemin.removeFirst();  
-        bot.getActions().addAll(chemin);
     }
 
     private Sens trouveDirection(Point p1, Point p2) {

@@ -14,8 +14,8 @@ public interface ConditionFactoryInterface extends FactoryInterface<String, Cond
     public ConditionInterface create(String nom, List<Parameter> parameters);
 
     @Override
-    public void registerCollection(Collection<ConditionInterface> conditions);
+    public FactoryInterface<String, ConditionInterface> registerCollection(Collection<ConditionInterface> conditions);
 
     @Override
-    public void register(ConditionInterface condition);
+    public FactoryInterface<String, ConditionInterface> register(ConditionInterface condition);
 }

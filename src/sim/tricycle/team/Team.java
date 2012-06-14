@@ -15,12 +15,22 @@ public class Team {
     private LinkedList<Robot> armee;
     private Carte map;
     private Point base;
+    private int gold;
 
+    public int getGold() {
+        return gold;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+    
     public Team(String nomTeam, Carte map, Point base) {
         this.nomTeam = nomTeam;
         this.map = map;
         this.armee = new LinkedList<Robot>();
         this.base = base;
+        this.gold = 0;
     }
 
     public void addRobot(Robot bot) {
