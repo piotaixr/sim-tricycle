@@ -26,18 +26,20 @@ public class ParamConverterProvider implements ParamConverterProviderInterface {
     }
 
     @Override
-    public void register(ParamConverterInterface paramConverter) {
+    public ParamConverterProviderInterface register(ParamConverterInterface paramConverter) {
         if (converters.containsKey(paramConverter.getName())) {
             throw new RuntimeException("Un ParamConverter doit avoir un nom unique: " + paramConverter.getName());
         }
 
         converters.put(paramConverter.getName(), paramConverter);
+        return this;
     }
 
     @Override
-    public void registerCollection(Collection<ParamConverterInterface> paramsConverter) {
+    public ParamConverterProviderInterface registerCollection(Collection<ParamConverterInterface> paramsConverter) {
         for (ParamConverterInterface p : paramsConverter) {
             register(p);
         }
+        return this;
     }
 }
