@@ -4,11 +4,12 @@
  */
 package sim.tricycle;
 
+import java.util.ArrayList;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.ihm.FrameGame1;
 import sim.tricycle.mapping.Carte;
-import sim.tricycle.mapping.TestMap;
 import sim.tricycle.mapping.elementCase.Piece;
+import sim.tricycle.mapping.nosCarte.CrossRiver;
 import sim.tricycle.robot.Collecteur;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Sens;
@@ -16,6 +17,7 @@ import sim.tricycle.robot.action.AllerA;
 import sim.tricycle.robot.action.Avancer;
 import sim.tricycle.robot.action.CollecterUnePiece;
 import sim.tricycle.robot.action.Tourner;
+import sim.tricycle.team.Ressource;
 
 /**
  *
@@ -29,12 +31,13 @@ public class SimTricycle {
     public static void main(String[] args) {
         //   System.out.println("Coucou");
         Carte c = new Carte(20, 20);
-        sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0));
+        sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0), new ArrayList<Ressource>());
         sim.tricycle.robot.Robot bot;
        // TestMap tm = new TestMap();
        // tm.startTest();
        // c = tm.getCarte();
-
+        CrossRiver cr = new CrossRiver();
+        c=cr.getCarte();
         bot = new Collecteur(t, c);
         bot.setCoordonnees(new Point(10, 10));
         bot.setDirection(Sens.NORD);
@@ -90,7 +93,7 @@ public class SimTricycle {
 
 
 
-        FrameGame1 fg = new FrameGame1(c);
+        FrameGame1 fg = new FrameGame1(cr);
         Ordonnanceur ordo = new Ordonnanceur();
         ordo.add(bot);
 //        ordo.add(bot2);

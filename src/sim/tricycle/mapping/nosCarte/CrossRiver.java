@@ -8,7 +8,7 @@ package sim.tricycle.mapping.nosCarte;
  */
 public class CrossRiver extends AbstractCarteGlobal {
 
-    CrossRiver() {
+   public CrossRiver() {
         String[][] mat = new String[][]{
             {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
             {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},

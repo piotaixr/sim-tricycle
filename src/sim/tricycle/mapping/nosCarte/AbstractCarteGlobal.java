@@ -16,7 +16,7 @@ import sim.tricycle.mapping.Carte;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class AbstractCarteGlobal implements CarteGlobalInterface{
+public abstract class AbstractCarteGlobal implements CarteGlobalInterface{
     protected String[][] matChar;
     protected Carte carte;
     protected Image imgFond=null;

@@ -1,38 +1,31 @@
 package sim.tricycle.team;
 
 import java.awt.Robot;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.robot.Point;
 
 /**
- *
- * @author Adri
- */
+ * @author Marion Dalle 
+ * @author AdriA */
 public class Team {
 
     private String nomTeam;
     private LinkedList<Robot> armee;
-    private LinkedList<Robot> modelRobot;
     private Carte map;
     private Point base;
-    private int gold;
-    private int boule;
+    private ArrayList<Ressource> ressources;
 
-    public int getGold() {
-        return gold;
-    }
-
-    public void setGold(int gold) {
-        this.gold = gold;
-    }
-
-    public Team(String nomTeam, Carte map, Point base) {
+    
+    public Team(String nomTeam, Carte map, Point base, ArrayList<Ressource> ressources ) {
         this.nomTeam = nomTeam;
         this.map = map;
         this.armee = new LinkedList<Robot>();
         this.base = base;
-        this.gold = 0;
+        this.ressources = ressources;
+        
     }
 
     public void addRobot(Robot bot) {
@@ -55,11 +48,22 @@ public class Team {
         return this.base;
     }
     
-    public LinkedList<Robot> getModels(){
-        return modelRobot;
+    public ArrayList<Ressource> getRessources() {
+        return ressources;
+    }
+
+    public void setRessources(ArrayList<Ressource> ressources) {
+        this.ressources = ressources;
     }
     
-    public void addModel(Robot bot){
-        modelRobot.add(bot);
+    /* Au secours j'y comprend rien */
+    public Ressource trouveQuantiteItem (AbstractObjet item){        
+        return ressources.get(ressources.indexOf(new Ressource (item,0)));
     }
+
+   
+
+
+
+  
 }
