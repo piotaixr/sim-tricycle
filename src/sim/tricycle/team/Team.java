@@ -13,6 +13,7 @@ public class Team {
 
     private String nomTeam;
     private LinkedList<Robot> armee;
+    private LinkedList<Robot> modelRobot;
     private Carte map;
     private Point base;
     private int gold;
@@ -25,7 +26,7 @@ public class Team {
     public void setGold(int gold) {
         this.gold = gold;
     }
-    
+
     public Team(String nomTeam, Carte map, Point base) {
         this.nomTeam = nomTeam;
         this.map = map;
@@ -53,12 +54,12 @@ public class Team {
     public Point getBase() {
         return this.base;
     }
-
-    public int getBoule() {
-        return this.boule;
+    
+    public LinkedList<Robot> getModels(){
+        return modelRobot;
     }
-
-    public void setBoule(int boule) {
-        this.boule = boule;
+    
+    public void addModel(Robot bot){
+        modelRobot.add(bot);
     }
 }

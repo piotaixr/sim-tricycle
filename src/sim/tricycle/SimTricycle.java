@@ -28,12 +28,12 @@ public class SimTricycle {
      */
     public static void main(String[] args) {
         //   System.out.println("Coucou");
-        Carte c = new Carte(4, 4);
+        Carte c = new Carte(20, 20);
         sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0));
         sim.tricycle.robot.Robot bot;
-        TestMap tm = new TestMap();
-        tm.startTest();
-        c = tm.getCarte();
+       // TestMap tm = new TestMap();
+       // tm.startTest();
+       // c = tm.getCarte();
 
         bot = new Collecteur(t, c);
         bot.setCoordonnees(new Point(10, 10));
@@ -100,7 +100,7 @@ public class SimTricycle {
         fg.setVisible(true);
 
 
-        tm.afficherCarte(c);
+       // tm.afficherCarte(c);
 
 //        ordo.start();
 //        ordo.stop();

@@ -35,7 +35,7 @@ public class Carte implements CarteInterface {
      * boule. 'B': case avec un bonus. 'P': case avec une pièce. 'X': case
      * obstacle.
      */
-    public Carte(char[][] tab) {
+    public Carte(String[][] tab) {
         this.tailleX = tab.length;
         this.tailleY = tab[0].length;
         carte = new Case[this.tailleX][this.tailleY];

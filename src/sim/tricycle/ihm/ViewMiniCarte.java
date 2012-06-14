@@ -8,9 +8,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.CarteInterface;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
+import sim.tricycle.mapping.nosCarte.AbstractCarteGlobal;
 
 /**
  *
@@ -22,28 +24,25 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     private int tailleCase;
     private int tailleCaseBase = 50;
     private int tailleOpti;
-    private Image imgMap;
+    private Image imgMap = null, imgMur, imgVide;
     private int px, py, tLmini, tHmini; //pour faire la difference lors du drag
     private ViewCarte vuc;
 
     /**
      * Crée minicarte
      */
-    public ViewMiniCarte(CarteInterface carte, ViewCarte vc) {
+    public ViewMiniCarte(AbstractCarteGlobal cont, ViewCarte vc) {
         initComponents();
-        this.carte = carte;
+        this.carte = cont.getCarte();
         this.tailleCase = this.tailleCaseBase;
-        //  this.setBackground(Color.darkGray);
         vuc = vc;
+        imgMap = cont.getImage();
+        initialiserImage(cont);
+    }
 
-        try {
+    public void initialiserImage(AbstractCarteGlobal cont) {
             // Initialisation des images:
-            imgMap = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robot.jpg"));
-
-
-        } catch (IOException ex) {
-            Logger.getLogger(ViewMiniCarte.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            imgVide = cont.getVide();
     }
 
     @Override
@@ -54,44 +53,49 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         tailleOpti = Math.min(this.getWidth() / carte.getLargeur(), this.getHeight() / carte.getHauteur());
         tailleCase = tailleOpti;
         //  Dimension d = new Dimension(carte.getLargeur() * tailleCase, carte.getHauteur() * tailleCase);
-
         //this.setPreferredSize(this.getSize());
         //   this.setPreferredSize(d);
-
-        int maxWidth = this.getWidth() / carte.getLargeur();
-        int maxHeight = this.getHeight() / carte.getHauteur();
-        int maxSize = Math.min(maxHeight, maxWidth);
-
-//        System.out.println("widht " + this.getWidth() + " nbcase : " + carte.getLargeur()
-//                + " height " + this.getHeight() + " nbcase  " + carte.getHauteur());
-//        System.out.println("PreferedSize :" + this.getPreferredSize());
-//        System.out.println("Size :" + this.getSize());
-
+//        int maxWidth = this.getWidth() / carte.getLargeur();
+//        int maxHeight = this.getHeight() / carte.getHauteur();
+//        int maxSize = Math.min(maxHeight, maxWidth);
 
         tLmini = tailleOpti * carte.getLargeur();
         tHmini = tailleOpti * carte.getHauteur();
         //afficher image de fond.
+        boolean affFond = false;
+        if (imgMap == null) {
+            affFond = true;
+        }
         g.drawImage(imgMap, 0, 0, tLmini, tHmini, this);
         //On dessine les cases.
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
-                paintCase(g, carte.getCase(i, j), tailleOpti);
+                paintCase(g, carte.getCase(i, j), tailleOpti, affFond);
             }
         }
     }
 
-    private void paintCase(Graphics2D g, Case c, int width) {
-        //coordonées de la case
+    private void paintCase(Graphics2D g, Case c, int width, boolean aff) {
+        //On calcule les coordonées de la case.
         int y = (c.getX() * width);
         int x = (c.getY() * width);
 
         if (c.whoIam() == TypeCase.mur) {                             //MUR
-            g.setColor(Color.DARK_GRAY);
-            g.fillRect(x, y, width, width);
-
+            // SI pas de map de fond donc pas besoin de tout afficher
+            // ou si obstacle redesinnable:
+            if (aff || c.getId().indexOf(0) == '#') {
+                try {
+                    imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/images/" + c.getId() + ".jpg"));
+                } catch (IOException ex) {
+                    Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                g.drawImage(imgMur, x, y, width, width, this);
+            }
         } else if (c.whoIam() == TypeCase.vide) {                     //VIDE
-            
-        } else if (c.whoIam() == TypeCase.piece) {                    //PIECE
+            g.drawImage(imgVide, x, y, width, width, this);
+        }
+
+        if (c.whoIam() == TypeCase.piece) {                          //PIECE
             g.setColor(Color.yellow);
             g.fillOval(x, y, width, width);
 
@@ -148,7 +152,7 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         if (vuc.getHeight() > vuc.getParent().getHeight()) {
 
             //coeficient de différence entre la vraie carte et la mini.
-            int diff = vuc.getHeight() / this.getHeight();  
+            int diff = vuc.getHeight() / this.getHeight();
             //On recupère la position
             int tX = this.getMousePosition().x * diff * (-1);
             int tY = this.getMousePosition().y * diff * (-1);
