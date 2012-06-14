@@ -16,6 +16,7 @@ public class Team {
     private Carte map;
     private Point base;
     private int gold;
+    private int boule;
 
     public int getGold() {
         return gold;
@@ -51,5 +52,13 @@ public class Team {
 
     public Point getBase() {
         return this.base;
+    }
+
+    public int getBoule() {
+        return this.boule;
+    }
+
+    public void setBoule(int boule) {
+        this.boule = boule;
     }
 }
