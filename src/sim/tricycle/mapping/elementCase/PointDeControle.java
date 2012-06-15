@@ -15,12 +15,11 @@ import sim.tricycle.team.Team;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class PointDeControle extends AbstractObjet {
+public class PointDeControle extends AbstractZone {
 
     private int tpsCapture = 10;
     private int tpsPopBoule = 30;
     private Team t = null;
-    private HashSet<Case> liste;
 
     public Team estControle() {
         return t;
@@ -38,7 +37,7 @@ public class PointDeControle extends AbstractObjet {
     public PointDeControle(Case pos, HashSet<Case> h) {
         this.pos = pos;
         this.liste = h;
-        pos.setItem(this);
+        pos.setZone(this);
     }
 
     public void initTpsCapture() {
