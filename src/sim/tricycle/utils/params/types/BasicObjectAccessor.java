@@ -20,39 +20,41 @@ public class BasicObjectAccessor extends VariableAccessor {
     @Override
     protected Object doGetValue(Object variable, String attribute) {
         Class c = variable.getClass();
-        // test avec le champ et recherche d'un getter si le champ n'est pas accessible
+//         test avec le champ et recherche d'un getter si le champ n'est pas accessible 
+//        for(Method m :c.getMethods())
+//            System.out.println(m.getName());
+
         try {
             Field f = c.getField(attribute);
-            if (f.isAccessible()) {
-                return f.get(variable);
-            } else {
-                Method m = getGetter(c, attribute);
-                if (m == null) {
-                    throw new RuntimeException("L'attribut auquel vous tentez d'acceder n'est pas accessible et il n'a pas de getter public");
-                } else {
+            return f.get(variable);
+
+        } catch (Exception efield) {
+            Method m = getGetter(c, attribute);
+
+            try {
+                return m.invoke(variable);
+            } catch (Exception egetter) {
+                try {
+                    m = c.getMethod(attribute);
                     return m.invoke(variable);
+                } catch (Exception ex) {
+                    throw new RuntimeException("L'objet ne possède ni attribut " + attribute + " ni getter (get" + attribute + ", is" + attribute + ") ni methode " + attribute + " n'ayant pas de parametre", ex);
                 }
             }
-        } catch (Exception ex) {
         }
-        try {
-            Method m = c.getMethod(attribute);
-            return m.invoke(variable);
-        } catch (Exception ex) {
-            throw new RuntimeException("L'objet ne possède ni attribut " + attribute + " ni getter (get" + attribute + ", is" + attribute + ") ni methode " + attribute + " n'ayant pas de parametre", ex);
-        }
-
-
     }
 
     private Method getGetter(Class c, String attribute) {
+        System.out.println("getter");
         Method m = null;
         try {
             m = c.getMethod("get" + ucfirst(attribute));
         } catch (NoSuchMethodException ex) {
+            System.out.println("pas get" + ucfirst(attribute));
             try {
                 m = c.getMethod("is" + ucfirst(attribute));
             } catch (NoSuchMethodException ex1) {
+                System.out.println("pas is" + ucfirst(attribute));
                 return null;
             } catch (SecurityException ex1) {
                 return null;
