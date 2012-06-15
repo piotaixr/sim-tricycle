@@ -56,4 +56,7 @@ public abstract class AbstractAction implements ActionInterface {
     public boolean isComposee(){
         return this.composee;
     }
+    
+        public void setParameters() {
+    }
 }
