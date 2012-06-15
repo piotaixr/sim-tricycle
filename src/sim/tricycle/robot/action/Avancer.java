@@ -69,7 +69,9 @@ public class Avancer extends AbstractAction {
                     break;
             }
         }
-        bot.setCoordonnees(p);
+        if(!bot.getMapObjective().getCase(p.getX(), p.getY()).hasObstacle()){
+          bot.setCoordonnees(p);
+        } 
         bot.collerRobotSurMap();
         return null;
     }

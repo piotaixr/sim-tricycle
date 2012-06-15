@@ -7,8 +7,10 @@ package sim.tricycle.robot.condition.core;
 public abstract class AbstractCondition implements ConditionInterface {
 
     @Override
-    public ConditionInterface clone() throws CloneNotSupportedException{
+    public ConditionInterface clone() throws CloneNotSupportedException {
         return (ConditionInterface) super.clone();
     }
 
+    public void setParameters() {
+    }
 }

@@ -1,8 +1,6 @@
 package sim.tricycle.mapping;
 
 import sim.tricycle.mapping.elementCase.*;
-import sim.tricycle.mapping.mapException.CaseMultipleObjetException;
-import sim.tricycle.mapping.mapException.CaseMultipleObstacleException;
 import sim.tricycle.robot.Robot;
 
 /**

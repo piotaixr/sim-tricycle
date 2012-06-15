@@ -6,14 +6,18 @@ import sim.tricycle.robot.action.*;
 import sim.tricycle.robot.action.core.ActionFactory;
 import sim.tricycle.robot.action.core.ActionFactoryInterface;
 import sim.tricycle.robot.condition.ConditionTrue;
+import sim.tricycle.robot.condition.PieceTrouvee;
 import sim.tricycle.robot.condition.core.ConditionFactory;
 import sim.tricycle.robot.condition.core.ConditionFactoryInterface;
+import sim.tricycle.robot.condition.core.TestCaseRobotEgalCaseBase;
+import sim.tricycle.robot.condition.core.TestCaseRobotEgalCasePiece;
 import sim.tricycle.utils.params.ParamConverterProvider;
 import sim.tricycle.utils.params.ParamConverterProviderInterface;
 import sim.tricycle.utils.params.converter.IntegerConverter;
 import sim.tricycle.utils.params.converter.ReferenceConverter;
 import sim.tricycle.utils.params.converter.StringConverter;
 import sim.tricycle.utils.params.converter.VariableConverter;
+import sim.tricycle.utils.params.types.VarBuilder;
 import sim.tricycle.xmlparser.RobotParser;
 
 /**
@@ -27,6 +31,7 @@ public class ObjectBuilder {
     private ActionFactoryInterface actionFactory = null;
     private ParamConverterProviderInterface paramConverterProvider = null;
     private OrdonnanceurInterface ordonnanceur = null;
+    private VarBuilder varBuilder = null;
     
     public RobotParser getRobotParser() {
         if (parser == null) {
@@ -39,7 +44,10 @@ public class ObjectBuilder {
     public ConditionFactoryInterface getConditionFactory() {
         if (conditionFactory == null) {
             conditionFactory = new ConditionFactory(getParamConverterProvider());
-            conditionFactory.register(new ConditionTrue());
+            conditionFactory.register(new ConditionTrue())
+                    .register(new PieceTrouvee())
+                    .register(new TestCaseRobotEgalCasePiece(getVarBuilder().buidReference("self.case"), getVarBuilder().buildVariable("piece")))
+                    .register(new TestCaseRobotEgalCaseBase(getVarBuilder().buidReference("self.case"), getVarBuilder().buildVariable("team.base")));;
         }
         
         return conditionFactory;
@@ -53,7 +61,9 @@ public class ObjectBuilder {
                     .register(new Tourner())
                     .register(new AllerA())
                     .register(new ArreterTout())
-                    .register(new SeTeleporterA());
+                    .register(new SeTeleporterA())
+                    .register(new Sleep())
+                    .register(new Ramasser());
         }
         
         return actionFactory;
@@ -77,5 +87,13 @@ public class ObjectBuilder {
         }
         
         return ordonnanceur;
+    }
+    
+        public VarBuilder getVarBuilder() {
+        if (varBuilder == null) {
+            varBuilder = new VarBuilder(ordonnanceur);
+        }
+        
+        return varBuilder;
     }
 }
