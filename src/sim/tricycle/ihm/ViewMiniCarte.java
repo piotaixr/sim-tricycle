@@ -41,8 +41,8 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     }
 
     public void initialiserImage(AbstractCarteGlobal cont) {
-            // Initialisation des images:
-            imgVide = cont.getVide();
+        // Initialisation des images:
+        imgVide = cont.getVide();
     }
 
     @Override
@@ -91,10 +91,14 @@ public class ViewMiniCarte extends javax.swing.JPanel {
                 }
                 g.drawImage(imgMur, x, y, width, width, this);
             }
-        } else  {                                                    //VIDE
+        } else {                                                    //VIDE
             g.drawImage(imgVide, x, y, width, width, this);
         }
+      if (c.hasZone()) {                                    //Pt de controle
+            g.setColor(Color.orange);
+            g.fillOval(x, y, width, width);
 
+        }
         if (c.whoIam() == TypeCase.piece) {                          //PIECE
             g.setColor(Color.yellow);
             g.fillOval(x, y, width, width);
@@ -111,6 +115,7 @@ public class ViewMiniCarte extends javax.swing.JPanel {
             g.setColor(Color.RED);
             g.fillOval(x, y, width, width);
         }
+  
     }
 
     /**
