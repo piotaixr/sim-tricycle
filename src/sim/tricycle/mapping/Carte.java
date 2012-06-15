@@ -12,6 +12,7 @@ import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
  */
 public class Carte implements CarteInterface {
 
+    HashSet<PointDeControle> liste;
     private int tailleX, tailleY;
     private Case[][] carte;
 
@@ -31,20 +32,15 @@ public class Carte implements CarteInterface {
     }
 
     /**
-     * Création d'une carte à partir d'une matrice d'entier. 
-     * @ensure la carte
-     * correspond aux informations fournit. 
-     * ' ': case vide. 
-     * 'O': case avec une boule. 
-     * 'B': case avec un bonus. 
-     * 'P': case avec une pièce. 
-     * 'X' ou 'A': case obstacle.
-     * 'T': case avec une tour.
-     * '@': case avec un point de controle.
-     * '>': case avec une base.
+     * Création d'une carte à partir d'une matrice d'entier. @ensure la carte
+     * correspond aux informations fournit. ' ': case vide. 'O': case avec une
+     * boule. 'B': case avec un bonus. 'P': case avec une pièce. 'X' ou 'A':
+     * case obstacle. 'T': case avec une tour. '@': case avec un point de
+     * controle. '>': case avec une base.
      */
     public Carte(String[][] tab) {
         HashSet<Case> liste = new HashSet<Case>();
+        HashSet<PointDeControle> listePt = new HashSet<PointDeControle>();
         this.tailleX = tab.length;
         this.tailleY = tab[0].length;
         carte = new Case[this.tailleX][this.tailleY];
@@ -58,7 +54,10 @@ public class Carte implements CarteInterface {
                     carte[i][j] = new Case(i, j);
                     casesVoisines(this, this.getCase(i, j), liste);
                     this.getCase(i, j).suprObstacle();
-                    this.getCase(i, j).setItem(new PointDeControle(this.getCase(i, j), liste));
+                    PointDeControle pt = new PointDeControle(this.getCase(i, j), liste);
+                    this.getCase(i, j).setItem(pt);
+                    //On ajoute ce point à la liste des points.
+                    listePt.add(pt);
                 } else {
                     // cas standard.
                     carte[i][j] = new Case(tab[i][j], i, j);
@@ -173,6 +172,13 @@ public class Carte implements CarteInterface {
         }
         if (e.obstacleItem() == 2) {
             c.setObstacle((AbstractObstacle) e);
+        }
+    }
+
+    @Override
+    public void routinePt() {
+        for (PointDeControle x : this.liste) {
+            x.analyseCapture();
         }
     }
 }

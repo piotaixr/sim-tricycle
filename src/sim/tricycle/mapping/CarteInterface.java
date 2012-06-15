@@ -67,4 +67,9 @@ public interface CarteInterface {
      * @param c la case
      */
     public void pop(PossedeCaseInterface e, Case c);
+    
+    /**
+     * Routine d'analyse de l'état de chaque point de controle.
+     */
+    public void routinePt();
 }
