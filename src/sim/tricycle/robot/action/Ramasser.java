@@ -4,6 +4,7 @@
  */
 package sim.tricycle.robot.action;
 
+import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractAction;
 import sim.tricycle.team.Ressource;
@@ -18,7 +19,9 @@ public class Ramasser extends AbstractAction{
 
     @Override
     protected Object doExecute(Robot bot) {
-        bot.getTeam().trouveQuantiteItem(ressource.getItem()).setQuantite(bot.getTeam().trouveQuantiteItem(ressource.getItem()).getQuantite()+1);
+        bot.getTeam().ajouterRessource(ressource.getItem());
+        bot.getMapObjective().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()).myItem().supprimerObjet();
+    //    System.out.println("Ramassage: " + bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
         return null;
     }
 
@@ -27,4 +30,17 @@ public class Ramasser extends AbstractAction{
         return "ramasser";
     }
     
+    public Ressource getRessource() {
+        return ressource;
+    }
+
+    public void setRessource(Ressource ressource) {
+        this.ressource = ressource;
+    }
+    
+    public void setRessourceParItem(AbstractObjet ao){
+        this.ressource = new Ressource();
+        this.ressource.setItem(ao);
+    }
+
 }

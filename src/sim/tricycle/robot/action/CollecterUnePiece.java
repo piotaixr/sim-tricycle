@@ -39,7 +39,11 @@ public class CollecterUnePiece extends AbstractActionComposee{
         this.piece = piece;
         AllerA go = new AllerA();
         go.setP(new Point(this.piece.getPosition().getX(),this.piece.getPosition().getY()));
+        Ramasser r = new Ramasser();
+        r.setRessourceParItem(this.piece);
+        
         this.suiteActions.add(go);
-      //  this.suiteActions.addLast(new RamasserPiece());
+        this.suiteActions.add(r);
+        
     }
 }

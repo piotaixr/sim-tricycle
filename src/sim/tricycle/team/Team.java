@@ -57,8 +57,20 @@ public class Team {
     }
     
     /* Au secours j'y comprend rien */
-    public Ressource trouveQuantiteItem (AbstractObjet item){        
+    public Ressource trouveRessourceParItem (AbstractObjet item){        
         return ressources.get(ressources.indexOf(new Ressource (item,0)));
+    }
+    
+    public void ajouterRessource(AbstractObjet item){
+        
+        Ressource r = new Ressource(item,1);
+        
+        if(this.ressources.contains(r)){
+            r=trouveRessourceParItem(item);
+            r.setQuantite(r.getQuantite()+1);
+        }else{
+            this.ressources.add(r);
+        }
     }
 
    

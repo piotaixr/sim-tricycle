@@ -47,8 +47,8 @@ public class SimTricycle {
 
         CollecterUnePiece cup = new CollecterUnePiece();
         c.pop(new Piece(c.getCase(0, 1)), c.getCase(0, 1));
-        Piece p = (Piece) c.getCase(0, 0).myItem();
-    //    cup.setPiece(p);
+        Piece p = (Piece) c.getCase(0, 1).myItem();
+        cup.setPiece(p);
         bot.getActions().add(cup);
 
 //        sim.tricycle.robot.Robot bot2;
