@@ -91,11 +91,12 @@ public class ViewCarte extends javax.swing.JPanel {
             }
         }
     }
-/*
- * paint une case.
- */
-    private void paintCase(Graphics2D g, Case c, int width, boolean quadri, boolean aff) {
 
+    /**
+     * paint une case.
+     */
+    private void paintCase(Graphics2D g, Case c, int width, boolean quadri, boolean aff) {
+        //On recupere les coordonéees
         int y = (c.getX() * width) + decalageY;
         int x = (c.getY() * width) + decalageX;
 
@@ -112,17 +113,19 @@ public class ViewCarte extends javax.swing.JPanel {
                 }
                 g.drawImage(img, x, y, width, width, this);
             }
-        } else  {                                                   //VIDE
-           
-            if(c.getId().indexOf(0) == 'A'){ //Si case à motif 
-                 try {// on recupere l'image corespondante à l'id.
+        } else {                                                   //VIDE
+
+            if (c.getId().indexOf(0) == 'A') {
+                //Si case à motif 
+                try {
+                    // on recupere l'image corespondante à l'id.
                     img = ImageIO.read(new File("./src/sim/tricycle/ihm/images/" + c.getId() + ".jpg"));
                 } catch (IOException ex) {
                     Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 g.drawImage(img, x, y, width, width, this);
-            }else{
-                 g.drawImage(imgVide, x, y, width, width, this);
+            } else {
+                g.drawImage(imgVide, x, y, width, width, this);
             }
         }
 
@@ -139,7 +142,7 @@ public class ViewCarte extends javax.swing.JPanel {
         if (c.whoIam() == TypeCase.robot) {                           //ROBOT
             g.drawImage(imgRobot, x, y, width, width, this);
 
-        } 
+        }
     }
 
     public void setTaille(int txZoom) {
