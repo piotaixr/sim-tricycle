@@ -128,6 +128,34 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         return mapObjective;
     }
 
+    /**Retourne la case qui se trouve devant les robot*/
+    public Point caseDevant(){
+        int X = this.getCoordonnees().getX();
+        int Y = this.getCoordonnees().getY();
+
+        switch (this.getDirection()){
+            case NORD :
+                if (Y>=0)Y=Y-1;
+                else throw new RuntimeException("pas de case face au robot");                       
+                break;
+                
+            case EST :
+                if (X!=this.getMapObjective().getLargeur()) X=X+1;
+                else throw new RuntimeException("pas de case face au robot");
+                break;
+                
+            case SUD : 
+                if (Y!=this.getMapObjective().getHauteur()) Y=Y+1;
+                else throw new RuntimeException("pas de case face au robot");
+                break;
+                
+            case OUEST :
+                if (X>=0) X=X-1;
+                break;
+        }
+        return new Point(X,Y);        
+    }
+    
     /**
      * @deprecated
      */

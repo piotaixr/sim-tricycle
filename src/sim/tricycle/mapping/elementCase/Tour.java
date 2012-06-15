@@ -17,9 +17,11 @@ public class Tour extends AbstractBatiment{
     public Tour(Case pos) {
         this.pos = pos;
         pos.setObstacle(this);
-        this.portee = 3;
+        this.porteeMax = 3;
         this.prix = 2;
-        this.temps = 2;
+        this.tempsMax = 2;
+        this.temps = 0;
+        this.portee = 0;
     }
 
     @Override
