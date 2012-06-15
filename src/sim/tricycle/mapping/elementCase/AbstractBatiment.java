@@ -8,7 +8,7 @@ package sim.tricycle.mapping.elementCase;
  *
  * @author marion
  */
-public class AbstractBatiment extends AbstractObstacle {
+public abstract class AbstractBatiment extends AbstractObstacle {
     
     protected int prix;
     protected int portee;
