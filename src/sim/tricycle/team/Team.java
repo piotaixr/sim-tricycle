@@ -1,5 +1,6 @@
 package sim.tricycle.team;
 
+import java.awt.Color;
 import java.awt.Robot;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -18,8 +19,10 @@ public class Team {
     private Carte map;
     private Point base;
     private ArrayList<Ressource> ressources;
-    private LinkedList<Case> collectables;
-   
+    private ArrayList<Case> collectables;
+    private Color color;
+
+    
     public Team(String nomTeam, Carte map, Point base, ArrayList<Ressource> ressources ) {
         this.nomTeam = nomTeam;
         this.map = map;
@@ -99,18 +102,34 @@ public class Team {
         this.armee = armee;
     }
 
-    public LinkedList<Case> getCollectables() {
+     public ArrayList<Case> getCollectables() {
         return collectables;
     }
 
-    public void setCollectables(LinkedList<Case> collectables) {
+    public void setCollectables(ArrayList<Case> collectables) {
         this.collectables = collectables;
     }
 
-//    public Case getCollectableCiblable(){
-//        
-//        while(this.collectables){
-//            
-//        }
-//    }
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+    
+    public Case getCollectableCiblable(){
+        
+        int i=0;
+        
+        while(i<this.collectables.size() && !this.collectables.get(i).isCiblable()){
+            i++;
+        }
+        
+        if(i>=this.collectables.size()){
+            return null;
+        }else{
+            return this.collectables.get(i);
+        }
+    }
 }

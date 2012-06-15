@@ -51,49 +51,7 @@ public class SimTricycle {
         cup.setPiece(p);
         bot.getActions().add(cup);
 
-//        sim.tricycle.robot.Robot bot2;
-//        bot2 = new Collecteur(t, c);
-//        bot2.setCoordonnees(new Point(11, 10));
-//        bot2.setDirection(Sens.NORD);
-//        bot2.collerRobotSurMap();
-//
-//
-//        sim.tricycle.robot.Robot bot3;
-//        bot3 = new Collecteur(t, c);
-//        bot3.setCoordonnees(new Point(11, 10));
-//        bot3.setDirection(Sens.NORD);
-//        bot3.collerRobotSurMap();
 
-        // Point p = new Point(0, 0);
-        // Point p2 = new Point(12, 10);
-        // Point p3 = new Point(8, 1);
-        //TrouveChemin TrCh = new TrouveChemin(p);
-        //LinkedList<Noeud> chemin= new LinkedList<Noeud>();
-        //TrCh.executer(bot);
-        //TrouveChemin tc = (TrouveChemin)TrCh;
-        //chemin = tc.getChemin();
-
-//  for(int i=0;i<chemin.size();i++){
-//     System.out.println("Chemin final case N°"+i+" :"+chemin.get(i).getPoint().getX()+" "+chemin.get(i).getPoint().getY());
-//  }
-//  
-        // AllerA go3 = new AllerA(p3);
-        // go3.executer(bot3);
-        // AllerA go2 = new AllerA(p3);
-        //   go2.executer(bot);
-        //     AllerA go = new AllerA(p);
-        //   go.executer(bot2);
-
-//  System.out.println("Lol?"+bot.getActions().size());
-//  
-//  for(ActionInterface a:bot.getActions()){
-//      System.out.println("Action :"+a.getId());
-//      
-//  }
-//bot.getActions().addFirst(new Avancer());
-//bot.getActions().addFirst(new Avancer());
-//bot.getActions().addFirst(new Tourner(Sens.EST));
-//bot.getActions().addFirst(new Avancer());
         FrameGame1 fg = new FrameGame1(cr);
         Ordonnanceur ordo = new Ordonnanceur();
         ordo.add(bot);
