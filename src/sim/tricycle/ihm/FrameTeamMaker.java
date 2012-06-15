@@ -5,28 +5,127 @@
 package sim.tricycle.ihm;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
+import javax.swing.PopupFactory;
 
 /**
  *
  * @author morgan
  */
-public class FrameTeamMaker extends javax.swing.JFrame {
+public final class FrameTeamMaker extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameTeamMaker
      */
+    private int teamNumber = 1;
+    private int maxAutoByTeam = 3;
+    private int defaultHeight;
+    private PopupFactory ppFtry = new PopupFactory();
+
     public FrameTeamMaker() {
         initComponents();
 
         this.setLayout(new BorderLayout());
         this.add(panTitile, BorderLayout.PAGE_START);
         this.add(panFooter, BorderLayout.PAGE_END);
-        PanSelectAutomate panSelect = new PanSelectAutomate();
-        this.add(panSelect, BorderLayout.CENTER);
-        PanSelectAutomate panSelect2 = new PanSelectAutomate();
-        this.add(panSelect2, BorderLayout.CENTER);
+        this.add(tabPanTeams, BorderLayout.CENTER);
 
+        this.defaultHeight = this.getSize().height;
+//        javax.swing.JPanel panTeam = new javax.swing.JPanel();
+//        tabPanTeams.addTab("team", panTeam);
+//
+//        panTeam.setLayout(new BoxLayout(panTeam, BoxLayout.Y_AXIS));
+//
+//        PanSelectAutomate panSelect = new PanSelectAutomate();
+//        panTeam.add(panSelect);
+//
+//        System.out.println("hauteur frame : " + this.getHeight() + " taille pan :" + panSelect.getPreferredSize().height);
+//         this.setSize(this.getWidth(), this.getHeight() + panSelect.getPreferredSize().height);
+//
+//        PanSelectAutomate panSelect1 = new PanSelectAutomate();
+//        panTeam.add(panSelect1);
+//
+//        this.setSize(this.getWidth(), this.getHeight() + panSelect1.getPreferredSize().height);
+//
+//        PanSelectAutomate panSelect2 = new PanSelectAutomate();
+//        panTeam.add(panSelect2);
+//
+//        this.setSize(this.getWidth(), this.getHeight() + panSelect2.getPreferredSize().height);
+//        
+//        javax.swing.JPanel panTeam2 = new javax.swing.JPanel();
+//        tabPanTeams.addTab("team2", panTeam2);
 
+        System.out.println("hauteur frame : " + this.getHeight() + " taille pan :" + tabPanTeams.getPreferredSize().height);
+
+        while (teamNumber <= 3) {
+            javax.swing.JPanel newPanTeam = createPanTeam();
+            addTabTeam(tabPanTeams, newPanTeam);
+            //addPanAutomate(newPanTeam);
+            // updateHeight(newPanTeam);
+        }
+
+    }
+
+    public void addTabTeam(javax.swing.JTabbedPane tabpan, javax.swing.JPanel panteam) {
+        String titleTab = "Team " + teamNumber;
+        tabpan.addTab(titleTab, panteam);
+        teamNumber++;
+    }
+
+    public void addPanAutomate(javax.swing.JPanel pan) {
+        if (pan.getComponents().length <= maxAutoByTeam) {
+            PanSelectAutomate panSelect = new PanSelectAutomate();
+            pan.add(panSelect);
+            updateHeight(pan);
+        } else {
+            //TODO si temps ... pop up pour dire qu'on en fait pas plus
+            //ppFtry.getPopup(this, "Coucou", 100, 100).show());      
+        }
+        //this.setSize(this.getWidth(), this.getHeight() + panSelect.getPreferredSize().height);
+    }
+
+    public void removePanAutomate(javax.swing.JPanel pan) {
+        if (pan.getComponents().length >= 2) {
+            pan.remove(pan.getComponent(pan.getComponents().length - 1));
+            updateHeight(pan);
+        }
+    }
+
+    public javax.swing.JPanel createPanTeam() {
+        javax.swing.JPanel panteam = new javax.swing.JPanel();
+        panteam.setLayout(new BoxLayout(panteam, BoxLayout.Y_AXIS));
+        addPanAutomate(panteam);
+        return panteam;
+    }
+
+    public void updateHeight(javax.swing.JPanel pan) {
+        int numberComponent = pan.getComponents().length;
+        this.setSize(this.getWidth(), defaultHeight + numberComponent * new PanSelectAutomate().getPreferredSize().height);
+    }
+
+    public boolean isValidPan(javax.swing.JPanel pan) {
+        Component[] tabComp = pan.getComponents();
+        for (Component c : tabComp) {
+            if (c instanceof PanSelectAutomate) {
+                if (!(((PanSelectAutomate) c).isValidPanAuto())) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean isValidFrame() {
+        for (int i = 0; i < tabPanTeams.getTabCount(); i++) {
+            Component c = tabPanTeams.getTabComponentAt(i);
+            if (c instanceof javax.swing.JPanel) {
+                if (!isValidPan((javax.swing.JPanel)c))
+                    return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -38,6 +137,7 @@ public class FrameTeamMaker extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnAddMod1 = new javax.swing.JButton();
         panTitile = new javax.swing.JPanel();
         lblSentence = new javax.swing.JLabel();
         panHeader = new javax.swing.JPanel();
@@ -45,6 +145,15 @@ public class FrameTeamMaker extends javax.swing.JFrame {
         panFooter = new javax.swing.JPanel();
         btnAddMod = new javax.swing.JButton();
         btnValid = new javax.swing.JButton();
+        btnRemoveMod = new javax.swing.JButton();
+        tabPanTeams = new javax.swing.JTabbedPane();
+
+        btnAddMod1.setText("Add Model");
+        btnAddMod1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddMod1MouseClicked(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,7 +195,7 @@ public class FrameTeamMaker extends javax.swing.JFrame {
             .addGroup(panTitileLayout.createSequentialGroup()
                 .addGap(62, 62, 62)
                 .addComponent(lblSentence)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         panTitileLayout.setVerticalGroup(
             panTitileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,18 +209,32 @@ public class FrameTeamMaker extends javax.swing.JFrame {
         panFooter.setBorder(null);
 
         btnAddMod.setText("Add Model");
+        btnAddMod.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddModMouseClicked(evt);
+            }
+        });
 
         btnValid.setText("Validate");
         btnValid.setEnabled(false);
+
+        btnRemoveMod.setText("Remove Model");
+        btnRemoveMod.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRemoveModMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panFooterLayout = new javax.swing.GroupLayout(panFooter);
         panFooter.setLayout(panFooterLayout);
         panFooterLayout.setHorizontalGroup(
             panFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panFooterLayout.createSequentialGroup()
-                .addGap(272, 272, 272)
+                .addGap(207, 207, 207)
                 .addComponent(btnAddMod, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRemoveMod, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnValid, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -121,9 +244,16 @@ public class FrameTeamMaker extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnValid)
-                    .addComponent(btnAddMod))
+                    .addComponent(btnAddMod)
+                    .addComponent(btnRemoveMod))
                 .addContainerGap())
         );
+
+        tabPanTeams.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tabPanTeamsStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,19 +262,42 @@ public class FrameTeamMaker extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panTitile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panFooter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 2, Short.MAX_VALUE))
+                    .addComponent(panFooter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tabPanTeams))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panTitile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(tabPanTeams, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddModMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddModMouseClicked
+        // TODO add your handling code here:
+        //addPanAutomate((javax.swing.JPanel)tabPanTeams.getTabComponentAt(tabPanTeams.getSelectedIndex()));
+        addPanAutomate((javax.swing.JPanel) tabPanTeams.getSelectedComponent());
+    }//GEN-LAST:event_btnAddModMouseClicked
+
+    private void tabPanTeamsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabPanTeamsStateChanged
+        // TODO add your handling code here:
+        updateHeight((javax.swing.JPanel) tabPanTeams.getSelectedComponent());
+    }//GEN-LAST:event_tabPanTeamsStateChanged
+
+    private void btnAddMod1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMod1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddMod1MouseClicked
+
+    private void btnRemoveModMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveModMouseClicked
+        // TODO add your handling code here:
+        removePanAutomate((javax.swing.JPanel) tabPanTeams.getSelectedComponent());
+    }//GEN-LAST:event_btnRemoveModMouseClicked
 
     /**
      * @param args the command line arguments
@@ -189,13 +342,14 @@ public class FrameTeamMaker extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMod;
+    private javax.swing.JButton btnAddMod1;
+    private javax.swing.JButton btnRemoveMod;
     private javax.swing.JButton btnValid;
     private javax.swing.JLabel lblSentence;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JPanel panAutoImage;
     private javax.swing.JPanel panFooter;
     private javax.swing.JPanel panHeader;
-    private javax.swing.JPanel panSelectAutomate;
     private javax.swing.JPanel panTitile;
+    private javax.swing.JTabbedPane tabPanTeams;
     // End of variables declaration//GEN-END:variables
 }
