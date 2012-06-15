@@ -19,10 +19,7 @@ public class Team {
     private Point base;
     private ArrayList<Ressource> ressources;
     private LinkedList<Case> collectables;
-
-
-
-    
+   
     public Team(String nomTeam, Carte map, Point base, ArrayList<Ressource> ressources ) {
         this.nomTeam = nomTeam;
         this.map = map;
@@ -109,8 +106,11 @@ public class Team {
     public void setCollectables(LinkedList<Case> collectables) {
         this.collectables = collectables;
     }
-        
+
+//    public Case getCollectableCiblable(){
+//        
+//        while(this.collectables){
+//            
+//        }
+//    }
 }
-    
-    
-    
