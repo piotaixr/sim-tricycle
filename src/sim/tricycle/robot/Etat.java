@@ -10,7 +10,7 @@ import java.util.List;
 public class Etat {
 
     private String id;
-    private List<Transition> transitions;
+    private List<Transition> transitions = new ArrayList<Transition>();
     private List<String> tags = new ArrayList<String>();
 
     public Etat(String id) {

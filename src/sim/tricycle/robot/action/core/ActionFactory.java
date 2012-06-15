@@ -37,6 +37,12 @@ public class ActionFactory extends AbstractFactory<String, ActionInterface> impl
 
     @Override
     public ActionInterface create(String nom, List<Parameter> parameters, String nomVariableDest) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ActionInterface action = super.create(nom, parameters);
+        if(nomVariableDest != null){
+            throw new UnsupportedOperationException("Creation de variables pas encore fait");
+        }
+        return action;
     }
+
+
 }

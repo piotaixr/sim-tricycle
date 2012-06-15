@@ -24,7 +24,7 @@ public abstract class AbstractFactory<K, V extends IdentifiableInterface<? exten
     @Override
     public V create(K nom) {
         if (!has(nom)) {
-            throw new RuntimeException("La condition de nom " + nom + " n'existe pas ou n'est pas enregistrée auprès du système.");
+            throw new RuntimeException("La condition/action de nom " + nom + " n'existe pas ou n'est pas enregistrée auprès du système.");
         }
 
         return doCreate(nom, new ArrayList());
@@ -32,7 +32,7 @@ public abstract class AbstractFactory<K, V extends IdentifiableInterface<? exten
 
     public V create(K nom, List<Parameter> params) {
         if (!has(nom)) {
-            throw new RuntimeException("La condition de nom " + nom + " n'existe pas ou n'est pas enregistrée auprès du système.");
+            throw new RuntimeException("La condition/action de nom " + nom + " n'existe pas ou n'est pas enregistrée auprès du système.");
         }
 
         return doCreate(nom, params);
@@ -51,6 +51,8 @@ public abstract class AbstractFactory<K, V extends IdentifiableInterface<? exten
         if (has(objet.getId())) {
             throw new RuntimeException("Une condition doit avoir un nom unique: " + objet.getId());
         }
+
+        values.put(objet.getId(), objet);
         return this;
     }
 
@@ -94,6 +96,6 @@ public abstract class AbstractFactory<K, V extends IdentifiableInterface<? exten
     }
 
     protected RuntimeException traiteException(Exception e) {
-        return new RuntimeException("Erreur lord de l'instanciation de l'objet", e);
+        return new RuntimeException("Erreur lors de l'instanciation de l'objet", e);
     }
 }
