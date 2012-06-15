@@ -23,7 +23,7 @@ public class Reference implements ReferenceInterface {
 
     }
 
-    public Environnement getEnvironnementRobotCourant() {
+    public Environnement getEnvironnement() {
         OrdonnancableInterface tache = ordonnanceur.getActiveTask();
         if(tache instanceof Robot)
             return ((Robot) tache).getEnvironnement();
@@ -38,7 +38,7 @@ public class Reference implements ReferenceInterface {
     @Override
     public Object getValue() {
         try {
-            return new BasicObjectAccessor(getEnvironnementRobotCourant()).getValue(selector);
+            return new BasicObjectAccessor(getEnvironnement()).getValue(selector);
         } catch (Exception ex) {
             throw traiteException(ex);
         }

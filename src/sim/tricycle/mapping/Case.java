@@ -16,12 +16,15 @@ public class Case implements CaseInterface {
     private AbstractZone zone = null;
     private int x, y;
     private String idImg = "X";
+    private boolean ciblable;
+
 
     public Case(int cx, int cy) {
         this.x = cx;
         this.y = cy;
         obstacle = null;
         objet = null;
+        ciblable = true;
     }
 
     /**
@@ -74,6 +77,7 @@ public class Case implements CaseInterface {
                 objet = null;
         }
         this.idImg = id;
+        ciblable = true;
     }
     
     public AbstractZone getZone() {
@@ -253,5 +257,13 @@ public class Case implements CaseInterface {
     @Override
     public boolean equals(Case c) {
         return (c.x == this.x && c.y == this.y);
+    }
+    
+    public boolean isCiblable() {
+        return ciblable;
+    }
+
+    public void setCiblable(boolean ciblable) {
+        this.ciblable = ciblable;
     }
 }

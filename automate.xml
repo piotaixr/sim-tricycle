@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='ISO-8859-1' standalone='yes' ?>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes" ?>
     <robot> 
         <etat id="normal">
             <transition>
@@ -23,7 +23,7 @@
             </transition>
             <transition>
                 <condition nom="true"/>
-                <action nom="aller">
+                <action nom="allera">
                     <para>piece</para>
                     <para>tempos</para>
                 </action>
@@ -39,17 +39,10 @@
         <etat id="deplacement_port">
             <transition>
                 <condition nom="case==base"/>
-                <action>
-                    <para>base</para>
-                    <para>tempos</para>
-                </action>
                 <etat id="normal"/>
             </transition>
             <transition>
                 <condition nom="true"/>
-                <action>
-                    <para>tempos</para>
-                </action>
                 <etat id="deplacement_port"/>
             </transition>
         </etat>

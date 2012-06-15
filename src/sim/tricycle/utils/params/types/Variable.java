@@ -19,7 +19,7 @@ public class Variable extends Reference implements VariableInterface {
     @Override
     public void setValue(Object value) {
         try {
-            new BasicObjectAccessor(getEnvironnementRobotCourant()).setValue(getSelector(), value);
+            new BasicObjectAccessor(getEnvironnement()).setValue(getSelector(), value);
         } catch (Exception ex) {
             throw traiteException(ex);
         }
