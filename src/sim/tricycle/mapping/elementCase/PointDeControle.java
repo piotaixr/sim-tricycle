@@ -3,11 +3,12 @@
  */
 package sim.tricycle.mapping.elementCase;
 
-import java.awt.Robot;
+
 import java.util.HashSet;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.mapException.CaptureParEquipeNullException;
+import sim.tricycle.robot.Robot;
 import sim.tricycle.team.Team;
 
 /**
@@ -55,13 +56,13 @@ public class PointDeControle extends AbstractObjet {
 
         for (Case x : liste) {
             if (x.whoIam() == TypeCase.robot) {
-//                Robot rob = (Robot) x.myObstacle();
-//                equipe=rob.getTeam;
-//                if (equipe == this.t) {
-//                    nballiee++;
-//                } else {
-//                    nbennemis++;
-//                }
+                Robot rob = (Robot) x.myObstacle();
+                equipe=rob.getTeam();
+                if (equipe == this.t) {
+                    nballiee++;
+                } else {
+                    nbennemis++;
+                }
             }
         }
         if (nbennemis > 0 && nballiee == 0) {
