@@ -19,7 +19,7 @@ import sim.tricycle.mapping.nosCarte.AbstractCarteGlobal;
  * @author nell
  */
 public class ViewCarte extends javax.swing.JPanel {
-    
+
     private CarteInterface carte;
     private int tailleCase;
     private int tailleCaseBase = 50;
@@ -33,7 +33,7 @@ public class ViewCarte extends javax.swing.JPanel {
      */
     public ViewCarte(AbstractCarteGlobal cont) {
         initComponents();
-        
+
         this.carte = cont.getCarte();
         this.tailleCase = this.tailleCaseBase;
         imgMap = cont.getImage();
@@ -51,22 +51,22 @@ public class ViewCarte extends javax.swing.JPanel {
             imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/bonus.png"));
             imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/boule.png"));
             imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/images/piece.png"));
-            
+
         } catch (IOException ex) {
             Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     public void paint(Graphics graphic) {
         super.paint(graphic);
         Graphics2D g = (Graphics2D) graphic;
-        
+
         Dimension d = new Dimension(carte.getLargeur() * tailleCase, carte.getHauteur() * tailleCase);
 
         //this.setPreferredSize(this.getSize());
         this.setPreferredSize(d);
-        
+
         decalageX = 0;
         decalageY = 0;
 
@@ -77,7 +77,7 @@ public class ViewCarte extends javax.swing.JPanel {
         if (carte.getHauteur() * tailleCase < this.getParent().getHeight()) {
             decalageY = (this.getParent().getHeight() - carte.getHauteur() * tailleCase) / 2;
         }
-        
+
         boolean affFond = false;
         if (imgMap == null) {
             affFond = true;
@@ -97,7 +97,7 @@ public class ViewCarte extends javax.swing.JPanel {
         //On recupere les coordonéees.
         int y = (c.getX() * width) + decalageY;
         int x = (c.getY() * width) + decalageX;
-        
+
         if (quadri) {
             g.drawRect(x, y, width, width);
         }
@@ -126,39 +126,42 @@ public class ViewCarte extends javax.swing.JPanel {
                 g.drawImage(imgVide, x, y, width, width, this);
             }
         }
-         if (c.hasZone()) {                                    //Pt de controle
-             
-             if (c.getZone().whoIam()==TypeCase.ptDeControle)
-              PointDeControle pt;
-             =  (PointtDeControle) c.getZone();
-             
-            g.setColor(Color.orange);
-            g.fillOval(x, y, width, width);
+        if (c.hasZone()) {                                    //Pt de controle
 
+            if (c.getZone().whoIam() == TypeCase.ptDeControle) {
+                PointDeControle pt = (PointDeControle) c.getZone();
+                if (pt.estNeutre()) {
+                    g.setColor(Color.DARK_GRAY);
+                    g.fillOval(x, y, width, width);
+                }else {
+                    g.setColor(pt.getTeam().getColor());
+                    g.fillOval(x, y, width, width);
+                }
+            }
         }
-         
+
         if (c.whoIam() == TypeCase.piece) {                          //PIECE
             g.drawImage(imgPiece, x, y, width, width, this);
-            
+
         } else if (c.whoIam() == TypeCase.bonus) {                    //BONUS
             g.drawImage(imgBonus, x, y, width, width, this);
-            
+
         } else if (c.whoIam() == TypeCase.boule) {                    //BOULE
             g.drawImage(imgBoule, x, y, width, width, this);
         }
         // possible superposition de robot sur objet:
         if (c.robotPresent()) {                                       //ROBOT
             g.drawImage(imgRobot, x, y, width, width, this);
-            
+
         }
 
     }
-    
+
     public void setTaille(int txZoom) {
         tailleCase = tailleCaseBase * txZoom / 100;
         this.repaint();
     }
-    
+
     public void moveMap(int x, int y) {
         this.setLocation(x, y);
     }
@@ -205,13 +208,13 @@ public class ViewCarte extends javax.swing.JPanel {
         py = evt.getLocationOnScreen().y - this.getY();
         this.getParent().validate(); //A mettre en commentaire si on veut bouger la map comme on veut mais avec les pb de dessin...
     }//GEN-LAST:event_formMouseDragged
-    
+
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // TODO add your handling code here:
         //evt.translatePoint(evt.getComponent().getLocation().x, evt.getComponent().getLocation().y);
         px = evt.getLocationOnScreen().x - this.getX();
         py = evt.getLocationOnScreen().y - this.getY();
-        
+
         System.out.println("click position : " + px + " " + py);
         System.out.println("POSITION dans le composant : X " + this.getMousePosition().x + " Y " + this.getMousePosition().y);
     }//GEN-LAST:event_formMousePressed
