@@ -5,6 +5,7 @@
 package sim.tricycle.robot.action;
 
 import java.util.ArrayDeque;
+import sim.tricycle.mapping.elementCase.Piece;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractAction;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
@@ -33,7 +34,12 @@ public class Collecter extends AbstractActionComposee{
 
     @Override
     public void setSuiteActions(ArrayDeque<AbstractAction> suiteActions) {
-        super.setSuiteActions(suiteActions);
+        TrouveCollectable tc = new TrouveCollectable();
+        CollecterUnePiece cup = new CollecterUnePiece();
+        cup.setPiece((Piece)tc.getC().myItem());
+        RevenirBase rb = new RevenirBase();
+        this.suiteActions.add(cup);
+        this.suiteActions.add(rb);
     }
 
     

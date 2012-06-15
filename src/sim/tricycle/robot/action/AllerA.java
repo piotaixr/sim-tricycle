@@ -15,7 +15,7 @@ import sim.tricycle.robot.action.core.AbstractAction;
  */
 public class AllerA extends AbstractAction {
 
-    private Point p;
+    protected Point p;
 
     public AllerA() {
         super();
