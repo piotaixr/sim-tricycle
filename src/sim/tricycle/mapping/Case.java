@@ -3,6 +3,7 @@ package sim.tricycle.mapping;
 import sim.tricycle.mapping.elementCase.*;
 import sim.tricycle.mapping.mapException.CaseMultipleObjetException;
 import sim.tricycle.mapping.mapException.CaseMultipleObstacleException;
+import sim.tricycle.robot.Robot;
 
 /**
  *
@@ -12,11 +13,10 @@ import sim.tricycle.mapping.mapException.CaseMultipleObstacleException;
  */
 public class Case implements CaseInterface {
 
-    private Carte carte = null;
-    private AbstractObstacle obstacle;
-    private AbstractObjet objet;
-    private int x;
-    private int y;
+    private AbstractObstacle obstacle = null;
+    private AbstractObjet objet = null;
+    private AbstractZone zone = null;
+    private int x,y;
     private String idImg = "X";
 
     public Case(int cx, int cy) {
@@ -27,15 +27,10 @@ public class Case implements CaseInterface {
     }
 
     /**
-     * Crée une case selon un identificateur:      
-     * ' ': case vide. 
-     * 'O': case avec une boule. 
-     * 'B': case avec un bonus. 
-     * 'P': case avec une pièce. 
-     * 'X' ou 'A': case obstacle.
-     * 'T': case avec une tour.
-     * '@': case avec un point de controle.
-     * '>': case avec une base.
+     * Crée une case selon un identificateur: ' ': case vide. 'O': case avec une
+     * boule. 'B': case avec un bonus. 'P': case avec une pièce. 'X' ou 'A':
+     * case obstacle. 'T': case avec une tour. '@': case avec un point de
+     * controle. '>': case avec une base.
      */
     public Case(String id, int cx, int cy) {
         this.x = cx;
@@ -219,5 +214,28 @@ public class Case implements CaseInterface {
      */
     public AbstractObstacle myObstacle() {
         return this.obstacle;
+    }
+
+    @Override
+    public boolean robotPresent() {
+        boolean res = false;
+        if (this.hasObstacle() && this.myObstacle().whoIam() == TypeCase.robot) {
+            res = true;
+        }
+        return res;
+    }
+
+    @Override
+    public Robot getRobotPresent() {
+        Robot rob = null;
+        if (this.robotPresent()) {
+            rob = (Robot) this.myObstacle();
+        }
+        return rob;
+    }
+
+    @Override
+    public void setZone(AbstractZone zo) {
+        this.zone=zo;
     }
 }

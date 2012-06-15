@@ -17,5 +17,6 @@ public enum TypeCase {
     boule, 
     base,
     ptDeControle,
+    zone,
     tour;
 }
