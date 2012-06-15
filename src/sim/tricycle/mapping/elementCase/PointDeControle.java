@@ -7,6 +7,7 @@ import java.awt.Robot;
 import java.util.HashSet;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
+import sim.tricycle.mapping.mapException.CaptureParEquipeNullException;
 import sim.tricycle.team.Team;
 
 /**
@@ -23,11 +24,12 @@ public class PointDeControle extends AbstractObjet {
     public Team estControle() {
         return t;
     }
-/**
- * Si un point est neutre
- * @return 1 si neutre
- * @ensure estNeutre() && t ==null
- */
+
+    /**
+     * Si un point est neutre
+     *
+     * @return 1 si neutre @ensure estNeutre() && t ==null
+     */
     public boolean estNeutre() {
         return (t == null);
     }
@@ -36,6 +38,41 @@ public class PointDeControle extends AbstractObjet {
         this.pos = pos;
         this.liste = h;
         pos.setItem(this);
+    }
+
+    public void initTpsCapture() {
+        this.tpsCapture = 30;
+    }
+
+    /**
+     * Analyse la capture par une équipe
+     *
+     * @param equipe l'équipe offensive
+     */
+    public Team analyseCapture() {
+        Team equipe = null;
+        int nballiee = 0, nbennemis = 0;
+
+        for (Case x : liste) {
+            if (x.whoIam() == TypeCase.robot) {
+//                Robot rob = (Robot) x.myObstacle();
+//                equipe=rob.getTeam;
+//                if (equipe == this.t) {
+//                    nballiee++;
+//                } else {
+//                    nbennemis++;
+//                }
+            }
+        }
+        if (nbennemis > 0 && nballiee == 0) {
+            //Capture par l'ennemis!
+            this.tpsCapture -= nbennemis;
+            this.capture(equipe);
+        } else {
+            // sinon rien ne se passe. Cad si absence de robot ennemis, 
+            // combat pour le point.
+        }
+        return equipe;
     }
 
     /**
@@ -47,46 +84,19 @@ public class PointDeControle extends AbstractObjet {
         if (equipe != null) {
             if (this.estNeutre()) {
                 // Si neutre il peut être capturé par une équipe.
-                this.analyseCapture(equipe);
                 if (this.tpsCapture <= 0) {
                     this.initTpsCapture();
                     this.t = null;
                 }
             } else {
                 //Si déja capturé il faut qu'il redevienne déja neutre.
-                this.analyseCapture(equipe);
                 if (this.tpsCapture <= 0) {
                     this.initTpsCapture();
                     this.t = equipe;
                 }
             }
-        }
-    }
-
-    public void initTpsCapture() {
-        this.tpsCapture = 30;
-    }
-/**
- * Analyse la capture par une équipe
- * @param equipe l'équipe offensive
- */
-    public void analyseCapture(Team equipe) {
-        int nballiee = 0, nbennemis = 0;
-        for (Case x : liste) {
-            if (x.whoIam() == TypeCase.robot) {
-//                Robot rob = (Robot) x.myObstacle();
-//                if (rob.getTeam == t) {
-//                    nballiee++;
-//                } else {
-//                    nbennemis++;
-//                }
-            }
-        }
-        if (nbennemis > 0) {
-            //Si combat pour le pt, rien ne se passe.
-        } else {
-            // sinon capture selon le nombre de robot présent.
-            this.tpsCapture-=nballiee;
+        }else{
+            throw new CaptureParEquipeNullException("Capture par une équipe nul?.");
         }
     }
 

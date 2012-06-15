@@ -3,6 +3,7 @@ package sim.tricycle.mapping;
 import java.util.HashSet;
 import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
+import sim.tricycle.mapping.elementCase.PointDeControle;
 import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
 
 /**
@@ -36,6 +37,7 @@ public class Carte implements CarteInterface {
      * obstacle.
      */
     public Carte(String[][] tab) {
+        HashSet<Case> liste = new HashSet<Case>();
         this.tailleX = tab.length;
         this.tailleY = tab[0].length;
         carte = new Case[this.tailleX][this.tailleY];
@@ -44,7 +46,17 @@ public class Carte implements CarteInterface {
         //parcours du tableau pour initialiser les cases.
         for (i = 0; i < tailleX; i++) {
             for (j = 0; j < tailleY; j++) {
-                carte[i][j] = new Case(tab[i][j], i, j);
+                if (tab[i][j] == "@") {
+                    //Si pt de controle il lui faut connaitre ses cases voisines.
+                    carte[i][j] = new Case(i, j);
+                    casesVoisines(this, this.getCase(i,j), liste);
+                    this.getCase(i, j).suprObstacle();
+                    this.getCase(i, j).setItem(new PointDeControle(this.getCase(i, j), liste));
+                }
+                else {
+                    // cas standard
+                    carte[i][j] = new Case(tab[i][j],i, j);
+                }
             }
         }
     }
