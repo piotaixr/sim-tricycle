@@ -16,7 +16,7 @@ public class Case implements CaseInterface {
     private AbstractObstacle obstacle = null;
     private AbstractObjet objet = null;
     private AbstractZone zone = null;
-    private int x,y;
+    private int x, y;
     private String idImg = "X";
 
     public Case(int cx, int cy) {
@@ -236,6 +236,11 @@ public class Case implements CaseInterface {
 
     @Override
     public void setZone(AbstractZone zo) {
-        this.zone=zo;
+        this.zone = zo;
+    }
+
+    @Override
+    public boolean equals(Case c) {
+        return (c.x == this.x && c.y == this.y);
     }
 }

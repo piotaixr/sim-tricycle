@@ -110,4 +110,7 @@ public interface CaseInterface {
      * @return le robot @require il y a un robot.
      */
     public Robot getRobotPresent();
-}
+
+    public boolean equals(Case c);
+    
+    }
