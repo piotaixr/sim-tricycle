@@ -16,6 +16,7 @@ public class Team {
 
     private String nomTeam;
     private LinkedList<Robot> armee;
+    private LinkedList<Robot> models;
     private Carte map;
     private Point base;
     private ArrayList<Ressource> ressources;
@@ -131,5 +132,21 @@ public class Team {
         }else{
             return this.collectables.get(i);
         }
+    }
+    
+    public LinkedList<Robot> getModel(){
+        return models;
+    }
+    
+    public void setModel(LinkedList<Robot> mod){
+        models = mod;
+    }
+    
+    public void addModel(Robot rob){
+        models.add(rob);
+    }
+    
+    public void removeModel(){
+        models.remove();
     }
 }
