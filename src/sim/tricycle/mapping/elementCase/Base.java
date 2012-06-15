@@ -1,10 +1,10 @@
 /*
  */
-
 package sim.tricycle.mapping.elementCase;
 
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
+import sim.tricycle.team.Team;
 
 /**
  *
@@ -12,9 +12,12 @@ import sim.tricycle.mapping.TypeCase;
  */
 public class Base extends AbstractObjet {
 
-    public Base(Case pos) {
+    private Team t = null;
+
+    public Base(Case pos,Team eq) {
         this.pos = pos;
         pos.setItem(this);
+        this.t=eq;
     }
 
     @Override
@@ -27,4 +30,3 @@ public class Base extends AbstractObjet {
         return " > ";
     }
 }
-
