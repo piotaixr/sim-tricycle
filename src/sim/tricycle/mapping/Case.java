@@ -77,7 +77,11 @@ public class Case implements CaseInterface {
         }
         this.idImg = id;
     }
-
+    
+    public AbstractZone getZone() {
+        return this.zone;
+    }
+    
     public int getX() {
         return x;
     }
@@ -103,7 +107,16 @@ public class Case implements CaseInterface {
     public boolean hasItem() {
         return (objet != null);
     }
-
+    
+    /**
+     * Retourne si a case possède t-elle une zone.
+     *
+     * @return 0 si absence de zone.
+     */
+    public boolean hasZone() {
+        return this.zone!=null;
+    }
+    
     /**
      * Retourne si a case est un obstacle.
      *
