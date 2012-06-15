@@ -73,6 +73,22 @@ public class Team {
         }
     }
 
+    public void supprimerRessource(AbstractObjet item, int q){
+        Ressource r = new Ressource(item,0);
+        
+        if (this.ressources.contains(r)){
+            r=trouveRessourceParItem(item);
+            if (r.getQuantite()>=q){
+            r.setQuantite(r.getQuantite()-q);
+            }
+            else {
+                throw new RuntimeException("quantité insuffisante");
+            }
+        }
+        else{
+            throw new RuntimeException("quantité insuffisante");
+        }
+    }
    
 
 
