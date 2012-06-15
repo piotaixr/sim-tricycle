@@ -27,9 +27,15 @@ public class Case implements CaseInterface {
     }
 
     /**
-     * Crée une case selon un identificateur: ' ': case vide. 'O': case avec
-     * uneboule. 'B': case avec un bonus. 'P': case avec une pièce. 'X':
-     * caseobstacle.
+     * Crée une case selon un identificateur:      
+     * ' ': case vide. 
+     * 'O': case avec une boule. 
+     * 'B': case avec un bonus. 
+     * 'P': case avec une pièce. 
+     * 'X' ou 'A': case obstacle.
+     * 'T': case avec une tour.
+     * '@': case avec un point de controle.
+     * '>': case avec une base.
      */
     public Case(String id, int cx, int cy) {
         this.x = cx;

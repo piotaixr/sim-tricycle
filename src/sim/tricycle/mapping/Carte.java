@@ -30,11 +30,18 @@ public class Carte implements CarteInterface {
         }
     }
 
-    /*
-     * Création d'une carte à partir d'une matrice d'entier. @ensure la carte
-     * correspond aux informations fournit. ' ': case vide. 'O': case avec une
-     * boule. 'B': case avec un bonus. 'P': case avec une pièce. 'X': case
-     * obstacle.
+    /**
+     * Création d'une carte à partir d'une matrice d'entier. 
+     * @ensure la carte
+     * correspond aux informations fournit. 
+     * ' ': case vide. 
+     * 'O': case avec une boule. 
+     * 'B': case avec un bonus. 
+     * 'P': case avec une pièce. 
+     * 'X' ou 'A': case obstacle.
+     * 'T': case avec une tour.
+     * '@': case avec un point de controle.
+     * '>': case avec une base.
      */
     public Carte(String[][] tab) {
         HashSet<Case> liste = new HashSet<Case>();
@@ -49,13 +56,12 @@ public class Carte implements CarteInterface {
                 if (tab[i][j] == "@") {
                     //Si pt de controle il lui faut connaitre ses cases voisines.
                     carte[i][j] = new Case(i, j);
-                    casesVoisines(this, this.getCase(i,j), liste);
+                    casesVoisines(this, this.getCase(i, j), liste);
                     this.getCase(i, j).suprObstacle();
                     this.getCase(i, j).setItem(new PointDeControle(this.getCase(i, j), liste));
-                }
-                else {
-                    // cas standard
-                    carte[i][j] = new Case(tab[i][j],i, j);
+                } else {
+                    // cas standard.
+                    carte[i][j] = new Case(tab[i][j], i, j);
                 }
             }
         }
