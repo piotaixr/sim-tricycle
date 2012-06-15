@@ -4,6 +4,7 @@ import java.awt.Robot;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.robot.Point;
 
@@ -17,6 +18,9 @@ public class Team {
     private Carte map;
     private Point base;
     private ArrayList<Ressource> ressources;
+    private LinkedList<Case> collectables;
+
+
 
     
     public Team(String nomTeam, Carte map, Point base, ArrayList<Ressource> ressources ) {
@@ -73,9 +77,40 @@ public class Team {
         }
     }
 
-   
+    public void supprimerRessource(AbstractObjet item, int q){
+        Ressource r = new Ressource(item,0);
+        
+        if (this.ressources.contains(r)){
+            r=trouveRessourceParItem(item);
+            if (r.getQuantite()>=q){
+            r.setQuantite(r.getQuantite()-q);
+            }
+            else {
+                throw new RuntimeException("quantité insuffisante");
+            }
+        }
+        else{
+            throw new RuntimeException("quantité insuffisante");
+        }
+    }
+    
+    public LinkedList<Robot> getArmee() {
+        return armee;
+    }
 
+    public void setArmee(LinkedList<Robot> armee) {
+        this.armee = armee;
+    }
 
+    public LinkedList<Case> getCollectables() {
+        return collectables;
+    }
 
-  
+    public void setCollectables(LinkedList<Case> collectables) {
+        this.collectables = collectables;
+    }
+        
 }
+    
+    
+    
