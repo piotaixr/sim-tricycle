@@ -28,7 +28,13 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     protected Etat etatDestination;
     protected Automate automate;
     protected Team equipe;
+    /**
+     * @deprecated
+     */
     protected Carte mapTeam;
+        /**
+     * @deprecated
+     */
     protected Carte mapObjective;
 
     /**
