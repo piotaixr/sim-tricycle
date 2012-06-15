@@ -72,6 +72,13 @@ public class PointDeControle extends AbstractZone {
             // sinon rien ne se passe. Cad si absence de robot ennemis, 
             // combat pour le point.
         }
+        
+        if (!this.estNeutre()){
+            if (this.tpsPopBoule<=0){
+                this.pos.setItem(new Boule(pos));
+            }
+            this.tpsPopBoule-=1;
+        }
         return equipe;
     }
 
