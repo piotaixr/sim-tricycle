@@ -139,7 +139,7 @@ public class ViewCarte extends javax.swing.JPanel {
             g.drawImage(imgBoule, x, y, width, width, this);
         }
         // possible superposition de robot sur objet:
-        if (c.whoIam() == TypeCase.robot) {                           //ROBOT
+        if (c.robotPresent()) {                                       //ROBOT
             g.drawImage(imgRobot, x, y, width, width, this);
 
         }
