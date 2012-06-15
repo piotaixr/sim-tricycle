@@ -15,6 +15,12 @@ public class PanSelectAutomate extends javax.swing.JPanel {
      */
     public PanSelectAutomate() {
         initComponents();
+        
+        cbxAutoImage.getSelectedItem();
+    }
+    
+    public boolean isValidPanAuto(){
+        return (cbxAutoImage.getSelectedItem() != null && cbxAutomate.getSelectedItem() != null);          
     }
 
     /**
