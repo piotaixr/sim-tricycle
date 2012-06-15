@@ -21,7 +21,7 @@ public class PointDeControle extends AbstractZone {
     private int tpsPopBoule = 30;
     private Team t = null;
 
-    public Team estControle() {
+    public Team getTeam() {
         return t;
     }
 
