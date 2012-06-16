@@ -127,35 +127,33 @@ public class ViewCarte extends javax.swing.JPanel {
                 g.drawImage(imgVide, x, y, width, width, this);
             }
         }
-        if (c.hasZone()) {                                    //Pt de controle
+        if (c.hasZone()) {             //-------------------Pt de controle
 
             if (c.getZone().whoIam() == TypeCase.ptDeControle) {
                 PointDeControle pt = (PointDeControle) c.getZone();
-
+System.out.print(pt.getTpspop());
                 if (pt.estNeutre()) {
-                    coul = Color.lightGray;
-                    System.out.print("neutre");
+                    coul = Color.lightGray;// Couleur de base si neutre.
                 } else {
-                    coul = Color.red;
-                    //    coul = pt.getTeam().getColor();// couleur de la team qui possède
+                    coul = pt.getTeam().getColor();// Couleur de la team qui possède
                     //le point de controle.
                 }
-                g.setColor(Color.DARK_GRAY);//rond de fons
+                g.setColor(Color.DARK_GRAY);//Rond de fond/
                 g.fillOval(x, y, width, width);
                 int coeff = width;
-                    if (pt.getTpsCapture() < 5) {// selon l'avancement de la capture.
-                        coeff = width / 8;// la taille du cercle s'agrandit.
-                    } else if (pt.getTpsCapture() < 10) {
-                        coeff = width / 6;
-                    } else if (pt.getTpsCapture() < 15) {
-                        coeff = width / 4;
-                    } else if (pt.getTpsCapture() < 20) {
-                        coeff = width / 2;
-                    } else if (pt.getTpsCapture() < 25) {
-                        coeff = 3 * width / 4;
-                    } else if (pt.getTpsCapture() < 30) {
-                        coeff = width;
-                    }
+                if (pt.getTpsCapture() < 5) {// selon l'avancement de la capture.
+                    coeff = width / 8;// la taille du cercle s'agrandit.
+                } else if (pt.getTpsCapture() < 10) {
+                    coeff = width / 6;
+                } else if (pt.getTpsCapture() < 20) {
+                    coeff = width / 4;
+                } else if (pt.getTpsCapture() < 30) {
+                    coeff = width / 2;
+                } else if (pt.getTpsCapture() < 40) {
+                    coeff = 3 * width / 4;
+                } else if (pt.getTpsCapture() < 50) {
+                    coeff = width;
+                }
                 g.setColor(coul);// on le desine de la couleur de la team et on le centre.
                 g.fillOval(x + (width - coeff) / 2, y + (width - coeff) / 2, coeff, coeff);
 

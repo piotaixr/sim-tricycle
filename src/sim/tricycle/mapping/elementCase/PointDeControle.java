@@ -16,8 +16,8 @@ import sim.tricycle.team.Team;
  */
 public class PointDeControle extends AbstractZone {
 
-    private int tpsCapture = 30;
-    private int tpsPopBoule = 30;
+    private int tpsCapture = 50;
+    private int tpsPopBoule = 300;
     private Team t = null;
 
     public Team getTeam() {
@@ -36,6 +36,9 @@ public class PointDeControle extends AbstractZone {
     public int getTpsCapture() {
         return this.tpsCapture;
     }
+        public int getTpspop() {
+        return this.tpsPopBoule;
+    }
 
     public PointDeControle(Case pos, HashSet<Case> h) {
         this.pos = pos;
@@ -44,9 +47,11 @@ public class PointDeControle extends AbstractZone {
     }
 
     public void initTpsCapture() {
-        this.tpsCapture = 30;
+        this.tpsCapture = 60;
     }
-
+    public void initTpspop() {
+        this.tpsPopBoule=100;
+    }
     /**
      * Analyse la capture par une équipe
      *
@@ -82,6 +87,7 @@ public class PointDeControle extends AbstractZone {
         if (!this.estNeutre()) {
             if (this.tpsPopBoule <= 0) {
                 this.pos.setItem(new Boule(pos));
+                initTpspop();
             }
             this.tpsPopBoule -= 1;
         }
