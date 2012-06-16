@@ -21,6 +21,7 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
     private ViewCarte vc;
     private ViewMiniCarte vmc;
     private OrdonnanceurInterface oi = null;
+    private AbstractCarteGlobal cont = null;
 
     /**
      * Creates new form MorganTestAppli
@@ -28,38 +29,29 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
     public FrameGame1(AbstractCarteGlobal ConteneurCarte) {
         initComponents();
         Carte carte = ConteneurCarte.getCarte();
-
+        cont = ConteneurCarte;
+        
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
 
         vc = new ViewCarte(ConteneurCarte);
         vmc = new ViewMiniCarte(ConteneurCarte, vc);
 
-
         panMiniMap.setLayout(new BorderLayout());
         vmc.setVisible(true);
-        //jpanMap.setSize(vc.getWidth(), vc.getHeight());
-        //panMap.add(vc);
-        //panMap = vc;
-        //panMap.setSize(vc.getWidth(), vc.getHeight());
 
-        //panMap.setSize(c.getLargeur()*vc.getWidth(), c.getHauteur()*vc.getHeight());
 
         jspanMap.setViewportView(vc);
         panMiniMap.add(vmc);
 
-        
+
         javax.swing.JPanel panTeam1 = new javax.swing.JPanel();
         javax.swing.JPanel panTeam2 = new javax.swing.JPanel();
         javax.swing.JPanel panTeam3 = new javax.swing.JPanel();
-        
+
         panActionAvailable.insertTab("team test", null, panTeam1, null, WIDTH);
         panActionAvailable.insertTab("team test", null, panTeam2, null, WIDTH);
         panActionAvailable.insertTab("team test", null, panTeam3, null, WIDTH);
-        
-        //jspanMap.setPreferredSize(vc.getSize());
-//        System.out.println(" largeur scroll pane :" + jspanMap.getWidth() + " hauteur : " + jspanMap.getHeight());
-//        System.out.println(" largeur pane Map :" + vc.getWidth() + " hauteur : " + vc.getHeight());
 
     }
 
@@ -613,7 +605,8 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        lblTime.setText(String.valueOf(oi.getTime()));   
+        lblTime.setText(String.valueOf(oi.getTime()));
+        cont.getCarte().routinePt();
         repaint();
     }
 }

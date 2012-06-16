@@ -136,24 +136,27 @@ public class ViewCarte extends javax.swing.JPanel {
                     coul = Color.lightGray;
                 } else {
                     coul = pt.getTeam().getColor();// couleur de la team qui possède
-                                                    //le point de controle.
+                    //le point de controle.
                 }
                 g.setColor(Color.DARK_GRAY);//rond de fons
                 g.fillOval(x, y, width, width);
-                double coeff = 1;
-                if (pt.getTpsCapture() < 10) {// selon l'avancement de la capture.
-                    coeff = 0.8;              // la taille du cercle s'agrandit.
+                int coeff = 1;
+                
+                if (pt.getTpsCapture() < 5) {// selon l'avancement de la capture.
+                    coeff = width / 8;             // la taille du cercle s'agrandit.
+                } else if (pt.getTpsCapture() < 10) {
+                    coeff = width / 6;
                 } else if (pt.getTpsCapture() < 15) {
-                    coeff = 0.6;
+                    coeff = width / 4;
                 } else if (pt.getTpsCapture() < 20) {
-                    coeff = 0.4;
+                    coeff = width / 2;
                 } else if (pt.getTpsCapture() < 25) {
-                    coeff = 0.2;
+                    coeff = 3 * width / 4;
                 } else if (pt.getTpsCapture() < 30) {
-                    coeff = 0;
+                    coeff = width;
                 }
                 g.setColor(coul);
-                g.fillOval(x, y, width, width);
+                g.fillOval(x, y, coeff, coeff);
 
             }
         }
