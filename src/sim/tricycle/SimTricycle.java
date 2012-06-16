@@ -41,22 +41,24 @@ public class SimTricycle {
 
 
         bot = new Collecteur(t, c);
-        bot.setCoordonnees(new Point(10, 10));
+        bot.setCoordonnees(new Point(3, 8));
         bot.setDirection(Sens.NORD);
         bot.collerRobotSurMap();
+
+
 
         CollecterUnePiece cup = new CollecterUnePiece();
         c.pop(new Piece(c.getCase(0, 1)), c.getCase(0, 1));
         Piece p = (Piece) c.getCase(0, 1).myItem();
-        cup.setPiece(p);
-        bot.getActions().add(cup);
-
+        //   cup.setPiece(p);
+        //    bot.getActions().add(cup);
+        cr.afficherCarte();
 
         FrameGame1 fg = new FrameGame1(cr);
         Ordonnanceur ordo = new Ordonnanceur();
         ordo.add(bot);
-//        ordo.add(bot2);
-//        ordo.add(bot3);
+
+//      ordo.add(bot3);
         fg.addOrdonnaceur(ordo);
 
         fg.setVisible(true);

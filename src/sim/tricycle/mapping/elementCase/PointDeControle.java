@@ -3,7 +3,6 @@
  */
 package sim.tricycle.mapping.elementCase;
 
-
 import java.util.HashSet;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
@@ -34,6 +33,10 @@ public class PointDeControle extends AbstractZone {
         return (t == null);
     }
 
+    public int getTpsCapture() {
+        return this.tpsCapture;
+    }
+
     public PointDeControle(Case pos, HashSet<Case> h) {
         this.pos = pos;
         this.liste = h;
@@ -52,15 +55,17 @@ public class PointDeControle extends AbstractZone {
     public Team analyseCapture() {
         Team equipe = null;
         int nballiee = 0, nbennemis = 0;
-
+        liste.add(pos);
         for (Case x : liste) {
-            if (x.whoIam() == TypeCase.robot) {
-                Robot rob = (Robot) x.myObstacle();
-                equipe=rob.getTeam();
-                if (equipe == this.t) {
-                    nballiee++;
-                } else {
-                    nbennemis++;
+            if (x != null) {
+                if (x.whoIam() == TypeCase.robot) {
+                    Robot rob = (Robot) x.myObstacle();
+                    equipe = rob.getTeam();
+                    if (equipe == this.t) {
+                        nballiee++;
+                    } else {
+                        nbennemis++;
+                    }
                 }
             }
         }
@@ -72,12 +77,12 @@ public class PointDeControle extends AbstractZone {
             // sinon rien ne se passe. Cad si absence de robot ennemis, 
             // combat pour le point.
         }
-        
-        if (!this.estNeutre()){
-            if (this.tpsPopBoule<=0){
+
+        if (!this.estNeutre()) {
+            if (this.tpsPopBoule <= 0) {
                 this.pos.setItem(new Boule(pos));
             }
-            this.tpsPopBoule-=1;
+            this.tpsPopBoule -= 1;
         }
         return equipe;
     }
@@ -102,7 +107,7 @@ public class PointDeControle extends AbstractZone {
                     this.t = equipe;
                 }
             }
-        }else{
+        } else {
             throw new CaptureParEquipeNullException("Capture par une équipe nul?.");
         }
     }

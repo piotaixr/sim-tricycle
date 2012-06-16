@@ -65,7 +65,7 @@ public abstract class AbstractCarteGlobal implements CarteGlobalInterface{
     public void setVide(String s) {
         try {
             // Initialisation des images:
-            imgVide = ImageIO.read(new File("./src/sim/tricycle/ihm/images/"+ s +".jpg"));
+            imgVide = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/"+ s +".jpg"));
 
         } catch (IOException ex) {
             Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);

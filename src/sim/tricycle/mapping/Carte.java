@@ -12,7 +12,7 @@ import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
  */
 public class Carte implements CarteInterface {
 
-    HashSet<PointDeControle> liste;
+    HashSet<PointDeControle> listePt;
     private int tailleX, tailleY;
     private Case[][] carte;
 
@@ -32,20 +32,16 @@ public class Carte implements CarteInterface {
     }
 
     /**
-     * Création d'une carte à partir d'une matrice d'entier. 
-     * @ensure la carte
-     * correspond aux informations fournit. 
-     * ' ': case vide. 'O': case avec une
-     * boule. 'B': case avec un bonus. 
-     * 'P': case avec une pièce. 
-     * 'X' ou 'A':case obstacle. 
-     * 'T': case avec une tour. 
-     * '@': case avec un point de controle. 
+     * Création d'une carte à partir d'une matrice d'entier. @ensure la carte
+     * correspond aux informations fournit. ' ': case vide. 'O': case avec une
+     * boule. 'B': case avec un bonus. 'P': case avec une pièce. 'X' ou 'A':case
+     * obstacle. 'T': case avec une tour. '@': case avec un point de controle.
      * '>': case avec une base.
      */
     public Carte(String[][] tab) {
         HashSet<Case> liste = new HashSet<Case>();
-        HashSet<PointDeControle> listePt = new HashSet<PointDeControle>();
+        HashSet<PointDeControle> listeP = new HashSet<PointDeControle>();
+
         this.tailleX = tab.length;
         this.tailleY = tab[0].length;
         carte = new Case[this.tailleX][this.tailleY];
@@ -54,19 +50,24 @@ public class Carte implements CarteInterface {
         //parcours du tableau pour initialiser les cases.
         for (i = 0; i < tailleX; i++) {
             for (j = 0; j < tailleY; j++) {
-                if (tab[i][j] == "@") {
+                if (!"@".equals(tab[i][j])) {
+                    carte[i][j] = new Case(tab[i][j], i, j);
+                }
+            }
+        }
+        //Recherche des points de controles et traitement.
+        for (i = 0; i < tailleX; i++) {
+            for (j = 0; j < tailleY; j++) {
+                if ("@".equals(tab[i][j])) {
                     //Si pt de controle il lui faut connaitre ses cases voisines.
                     carte[i][j] = new Case(i, j);
                     casesVoisines(this, this.getCase(i, j), liste);
-                    this.getCase(i, j).suprObstacle();
                     PointDeControle pt = new PointDeControle(this.getCase(i, j), liste);
                     this.getCase(i, j).setZone(pt);
                     //On ajoute ce point à la liste des points.
-                    listePt.add(pt);
-                } else {
-                    // cas standard.
-                    carte[i][j] = new Case(tab[i][j], i, j);
+                    listeP.add(pt);
                 }
+                this.listePt = listeP;
             }
         }
     }
@@ -109,7 +110,7 @@ public class Carte implements CarteInterface {
             Case droite = source.getCase(pos.getX() + 1, pos.getY());
             if (!(liste.contains(droite))) {
                 liste.add(droite);
-                //System.out.println("Droite");
+                System.out.println("Droite");
             }
         }
         // Si case en bordure verticale gauche:
@@ -117,7 +118,7 @@ public class Carte implements CarteInterface {
             Case gauche = source.getCase(pos.getX() - 1, pos.getY());
             if (!liste.contains(gauche)) {
                 liste.add(gauche);
-                // System.out.println("Gauche");
+                System.out.println("Gauche");
             }
         }
         // Si case en bordure horizontale gauche:
@@ -125,7 +126,7 @@ public class Carte implements CarteInterface {
             Case haut = source.getCase(pos.getX(), pos.getY() - 1);
             if (!liste.contains(haut)) {
                 liste.add(haut);
-                //  System.out.println("Haut");
+                System.out.println("Haut");
             }
         }
         // Si case en bordure horizontale droite:
@@ -133,7 +134,7 @@ public class Carte implements CarteInterface {
             Case bas = source.getCase(pos.getX(), pos.getY() + 1);
             if (!liste.contains(bas)) {
                 liste.add(bas);
-                //   System.out.println("Bas");
+                System.out.println("Bas");
             }
         }
     }
@@ -182,8 +183,10 @@ public class Carte implements CarteInterface {
 
     @Override
     public void routinePt() {
-        for (PointDeControle x : this.liste) {
-            x.analyseCapture();
+        if (!listePt.isEmpty()) {
+            for (PointDeControle x : this.listePt) {
+                x.analyseCapture();
+            }
         }
     }
 }
