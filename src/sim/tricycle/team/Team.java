@@ -21,7 +21,7 @@ public class Team {
     private Point base;
     private ArrayList<Ressource> ressources;
     private ArrayList<Case> collectables;
-    private Color color;
+    private Color color=Color.cyan;
 
     
     public Team(String nomTeam, Carte map, Point base, ArrayList<Ressource> ressources ) {

@@ -16,7 +16,7 @@ import sim.tricycle.team.Team;
  */
 public class PointDeControle extends AbstractZone {
 
-    private int tpsCapture = 10;
+    private int tpsCapture = 30;
     private int tpsPopBoule = 30;
     private Team t = null;
 
