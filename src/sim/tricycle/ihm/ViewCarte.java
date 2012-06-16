@@ -48,9 +48,9 @@ public class ViewCarte extends javax.swing.JPanel {
         try {
             // Initialisation des images:
             imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robot.png"));
-            imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/bonus.png"));
-            imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/boule.png"));
-            imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/images/piece.png"));
+            imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/bonus.png"));
+            imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/boule.png"));
+            imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/piece.png"));
 
         } catch (IOException ex) {
             Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
@@ -97,6 +97,7 @@ public class ViewCarte extends javax.swing.JPanel {
         //On recupere les coordonéees.
         int y = (c.getX() * width) + decalageY;
         int x = (c.getY() * width) + decalageX;
+        Color coul = null;
 
         if (quadri) {
             g.drawRect(x, y, width, width);
@@ -105,7 +106,7 @@ public class ViewCarte extends javax.swing.JPanel {
             // SI pas de map de fond => on affiche les murs.
             if (aff) {
                 try {
-                    img = ImageIO.read(new File("./src/sim/tricycle/ihm/images/" + c.getId() + ".jpg"));
+                    img = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + c.getId() + ".jpg"));
                 } catch (IOException ex) {
                     Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -117,7 +118,7 @@ public class ViewCarte extends javax.swing.JPanel {
                 //Si case à motif 
                 try {
                     // on recupere l'image corespondante à l'id.
-                    img = ImageIO.read(new File("./src/sim/tricycle/ihm/images/" + c.getId() + ".jpg"));
+                    img = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + c.getId() + ".jpg"));
                 } catch (IOException ex) {
                     Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -130,13 +131,30 @@ public class ViewCarte extends javax.swing.JPanel {
 
             if (c.getZone().whoIam() == TypeCase.ptDeControle) {
                 PointDeControle pt = (PointDeControle) c.getZone();
+
                 if (pt.estNeutre()) {
-                    g.setColor(Color.DARK_GRAY);
-                    g.fillOval(x, y, width, width);
-                }else {
-                    g.setColor(pt.getTeam().getColor());
-                    g.fillOval(x, y, width, width);
+                    coul = Color.lightGray;
+                } else {
+                    coul = pt.getTeam().getColor();// couleur de la team qui possède
+                                                    //le point de controle.
                 }
+                g.setColor(Color.DARK_GRAY);//rond de fons
+                g.fillOval(x, y, width, width);
+                double coeff = 1;
+                if (pt.getTpsCapture() < 10) {// selon l'avancement de la capture.
+                    coeff = 0.8;              // la taille du cercle s'agrandit.
+                } else if (pt.getTpsCapture() < 15) {
+                    coeff = 0.6;
+                } else if (pt.getTpsCapture() < 20) {
+                    coeff = 0.4;
+                } else if (pt.getTpsCapture() < 25) {
+                    coeff = 0.2;
+                } else if (pt.getTpsCapture() < 30) {
+                    coeff = 0;
+                }
+                g.setColor(coul);
+                g.fillOval(x, y, width, width);
+
             }
         }
 

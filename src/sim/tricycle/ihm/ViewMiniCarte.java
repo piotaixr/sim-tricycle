@@ -52,12 +52,6 @@ public class ViewMiniCarte extends javax.swing.JPanel {
 
         tailleOpti = Math.min(this.getWidth() / carte.getLargeur(), this.getHeight() / carte.getHauteur());
         tailleCase = tailleOpti;
-        //  Dimension d = new Dimension(carte.getLargeur() * tailleCase, carte.getHauteur() * tailleCase);
-        //this.setPreferredSize(this.getSize());
-        //   this.setPreferredSize(d);
-//        int maxWidth = this.getWidth() / carte.getLargeur();
-//        int maxHeight = this.getHeight() / carte.getHauteur();
-//        int maxSize = Math.min(maxHeight, maxWidth);
 
         tLmini = tailleOpti * carte.getLargeur();
         tHmini = tailleOpti * carte.getHauteur();
@@ -85,7 +79,7 @@ public class ViewMiniCarte extends javax.swing.JPanel {
             // ou si obstacle redesinnable:
             if (aff || c.getId().indexOf(0) == '#') {
                 try {
-                    imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/images/" + c.getId() + ".jpg"));
+                    imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + c.getId() + ".jpg"));
                 } catch (IOException ex) {
                     Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
                 }
