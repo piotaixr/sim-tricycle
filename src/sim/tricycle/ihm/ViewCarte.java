@@ -25,7 +25,7 @@ public class ViewCarte extends javax.swing.JPanel {
     private int tailleCaseBase = 50;
     private int decalageX, decalageY;    //pour plus tard essayer de centrer la carte dans le JScrollPane
     private int tailleOpti;
-    private Image imgPiece, img, imgVide, imgRobot, imgBonus, imgBoule, imgMap;
+    private Image imgPiece, img, imgVide, imgRobot, imgBonus, imgBoule, imgMap, imgPT;
     private int px, py; //pour faire la difference lors du drag
 
     /**
@@ -51,7 +51,7 @@ public class ViewCarte extends javax.swing.JPanel {
             imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/bonus.png"));
             imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/boule.png"));
             imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/piece.png"));
-
+            imgPT = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/A5.png"));
         } catch (IOException ex) {
             Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -113,12 +113,13 @@ public class ViewCarte extends javax.swing.JPanel {
                 g.drawImage(img, x, y, width, width, this);
             }
         } else {                                                   //VIDE
-
-            if (c.getId().indexOf(0) == 'A') {
+            if (c.getId().charAt(0) == 'A') {
+                System.out.print("\ncoucou    " + c.getId());
                 //Si case à motif 
                 try {
                     // on recupere l'image corespondante à l'id.
-                    img = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + c.getId() + ".jpg"));
+                    g.drawImage(imgVide, x, y, width, width, this);
+                    img = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + c.getId() + ".png"));
                 } catch (IOException ex) {
                     Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -131,13 +132,14 @@ public class ViewCarte extends javax.swing.JPanel {
 
             if (c.getZone().whoIam() == TypeCase.ptDeControle) {
                 PointDeControle pt = (PointDeControle) c.getZone();
-System.out.print(pt.getTpspop());
+//System.out.print(pt.getTpspop());
                 if (pt.estNeutre()) {
                     coul = Color.lightGray;// Couleur de base si neutre.
                 } else {
                     coul = pt.getTeam().getColor();// Couleur de la team qui possède
                     //le point de controle.
                 }
+
                 g.setColor(Color.DARK_GRAY);//Rond de fond/
                 g.fillOval(x, y, width, width);
                 int coeff = width;
@@ -156,7 +158,7 @@ System.out.print(pt.getTpspop());
                 }
                 g.setColor(coul);// on le desine de la couleur de la team et on le centre.
                 g.fillOval(x + (width - coeff) / 2, y + (width - coeff) / 2, coeff, coeff);
-
+                g.drawImage(imgPT, x, y, width, width, this);
             }
         }
 
