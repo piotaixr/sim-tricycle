@@ -56,6 +56,7 @@ public class PointDeControle extends AbstractZone {
         Team equipe = null;
         int nballiee = 0, nbennemis = 0;
         liste.add(pos);
+        // Analyse des robots présent.
         for (Case x : liste) {
             if (x != null) {
                 if (x.whoIam() == TypeCase.robot) {
@@ -98,13 +99,13 @@ public class PointDeControle extends AbstractZone {
                 // Si neutre il peut être capturé par une équipe.
                 if (this.tpsCapture <= 0) {
                     this.initTpsCapture();
-                    this.t = null;
+                    this.t = equipe;
                 }
             } else {
                 //Si déja capturé il faut qu'il redevienne déja neutre.
                 if (this.tpsCapture <= 0) {
                     this.initTpsCapture();
-                    this.t = equipe;
+                    this.t = null;
                 }
             }
         } else {
