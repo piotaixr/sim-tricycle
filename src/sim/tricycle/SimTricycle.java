@@ -32,10 +32,10 @@ public class SimTricycle {
      */
     public static void main(String[] args) {
 
-        MapTest cr = new MapTest();
+ //       MapTest cr = new MapTest();
+   //     Carte c = cr.getCarte();
+        CrossRiver cr = new CrossRiver();
         Carte c = cr.getCarte();
-//        CrossRiver cr = new CrossRiver();
-//        Carte c = cr.getCarte();
         sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0), new ArrayList<Ressource>());
         sim.tricycle.robot.Robot bot;
 
@@ -48,10 +48,10 @@ public class SimTricycle {
 
 
         CollecterUnePiece cup = new CollecterUnePiece();
-        c.pop(new Piece(c.getCase(0, 1)), c.getCase(0, 1));
-        Piece p = (Piece) c.getCase(0, 1).myItem();
-        //   cup.setPiece(p);
-        //    bot.getActions().add(cup);
+        c.pop(new Piece(c.getCase(36, 36)), c.getCase(36, 36));
+        Piece p = (Piece) c.getCase(36, 36).myItem();
+           cup.setPiece(p);
+            bot.getActions().add(cup);
         cr.afficherCarte();
 
         FrameGame1 fg = new FrameGame1(cr);

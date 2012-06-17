@@ -137,7 +137,7 @@ public class ViewCarte extends javax.swing.JPanel {
                 //Si case à motif 
                 try {
                     // on recupere l'image corespondante à l'id.
-                    g.drawImage(imgVide, x, y, width, width, this); System.out.println(c.getId());
+                    g.drawImage(imgVide, x, y, width, width, this);
                     img = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + c.getId() + ".png"));
                 } catch (IOException ex) {
                     Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
@@ -256,8 +256,8 @@ public class ViewCarte extends javax.swing.JPanel {
         px = evt.getLocationOnScreen().x - this.getX();
         py = evt.getLocationOnScreen().y - this.getY();
 
-        System.out.println("click position : " + px + " " + py);
-        System.out.println("POSITION dans le composant : X " + this.getMousePosition().x + " Y " + this.getMousePosition().y);
+     //   System.out.println("click position : " + px + " " + py);
+       // System.out.println("POSITION dans le composant : X " + this.getMousePosition().x + " Y " + this.getMousePosition().y);
     }//GEN-LAST:event_formMousePressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
