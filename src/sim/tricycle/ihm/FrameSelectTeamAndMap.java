@@ -4,6 +4,8 @@
  */
 package sim.tricycle.ihm;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author morgan
@@ -13,8 +15,19 @@ public class FrameSelectTeamAndMap extends javax.swing.JFrame {
     /**
      * Creates new form FrameSelectTeamAndMap
      */
+    
+    private ArrayList<String> maps= new ArrayList();
+    
     public FrameSelectTeamAndMap() {
         initComponents();
+        FilesFinder finder = new FilesFinder();
+        maps = finder.findFiles("./src/sim/tricycle/mapping/nosCarte");
+        mappingCbxMap(maps);
+    }
+
+    private void mappingCbxMap(ArrayList<String> arrayMap) {
+        for (String s : arrayMap)
+            cbxMap.addItem(s);
     }
 
     /**
@@ -59,9 +72,7 @@ public class FrameSelectTeamAndMap extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        cbxNumberTeam.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbxMap.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxNumberTeam.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2", "3", "4" }));
 
         lblMap.setText("Select the map :");
 
