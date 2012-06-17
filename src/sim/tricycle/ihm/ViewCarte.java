@@ -81,7 +81,10 @@ public class ViewCarte extends javax.swing.JPanel {
         boolean affFond = false;
         if (imgMap == null) {
             affFond = true;
+        } else {System.out.print("\n\n\nafficahge\n\n\n");
+            g.drawImage(imgMap, 0, 0, carte.getLargeur(), carte.getHauteur(), this);
         }
+
         //affichage de chaque case.
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
