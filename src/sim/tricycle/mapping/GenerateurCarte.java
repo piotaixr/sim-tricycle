@@ -1,6 +1,6 @@
 /*
  */
-package sim.tricycle.mapping.nosCarte;
+package sim.tricycle.mapping;
 
 /**
  *

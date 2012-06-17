@@ -1,7 +1,7 @@
 /*
  */
 
-package sim.tricycle.mapping.nosCarte;
+package sim.tricycle.mapping;
 
 import java.awt.Image;
 import java.io.File;

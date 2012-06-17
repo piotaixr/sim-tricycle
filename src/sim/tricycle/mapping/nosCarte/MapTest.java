@@ -2,6 +2,8 @@
  */
 package sim.tricycle.mapping.nosCarte;
 
+import sim.tricycle.mapping.AbstractCarteGlobal;
+
 /**
  *
  * @author Thomas Nds nds.thomas@gmail.com

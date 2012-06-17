@@ -1,6 +1,6 @@
 /*
  */
-package sim.tricycle.mapping.nosCarte;
+
 
 import java.awt.Image;
 import sim.tricycle.mapping.Carte;
