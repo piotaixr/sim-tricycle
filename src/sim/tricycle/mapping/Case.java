@@ -166,7 +166,6 @@ public class Case implements CaseInterface {
 //            throw new CaseMultipleObstacleException("Superpostion d'obstacles.");
         } else {
             this.obstacle = obst;
-            this.idImg = "X";
         }
     }
 
