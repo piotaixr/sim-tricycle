@@ -77,7 +77,7 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         if (c.whoIam() == TypeCase.mur) {                             //MUR
             // SI pas de map de fond donc pas besoin de tout afficher
             // ou si obstacle redesinnable:
-            if (aff || c.getId().indexOf(0) == '#') {
+            if (aff || c.getId().charAt(0) == 'X') {
                 try {
                     imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + c.getId() + ".jpg"));
                 } catch (IOException ex) {

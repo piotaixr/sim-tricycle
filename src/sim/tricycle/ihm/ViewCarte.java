@@ -81,16 +81,30 @@ public class ViewCarte extends javax.swing.JPanel {
         boolean affFond = false;
         if (imgMap == null) {
             affFond = true;
-        } else {System.out.print("\n\n\nafficahge\n\n\n");
-            g.drawImage(imgMap, 0, 0, carte.getLargeur(), carte.getHauteur(), this);
-        }
-
-        //affichage de chaque case.
+        } else {//initialisation avec des cases vide partout
+            for (int i = 0; i < carte.getHauteur(); i++) {
+                for (int j = 0; j < carte.getLargeur(); j++) {
+                    paintInit(g, carte.getCase(i, j), tailleCase);
+                }
+            }
+        }//dessin de la map.
+        g.drawImage(imgMap, 0, 0, d.width, d.height, this);
+        //affichage des autres cases.
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
-                paintCase(g, carte.getCase(i, j), tailleCase, false, affFond);
+                paintCase(g, carte.getCase(i, j), tailleCase, true, affFond);
             }
         }
+    }
+
+    /**
+     * init une case.
+     */
+    private void paintInit(Graphics2D g, Case c, int width) {
+        //On recupere les coordonéees.
+        int y = (c.getX() * width) + decalageY;
+        int x = (c.getY() * width) + decalageX;
+        g.drawImage(imgVide, x, y, width, width, this);
     }
 
     /**
@@ -103,6 +117,7 @@ public class ViewCarte extends javax.swing.JPanel {
         Color coul = null;
 
         if (quadri) {
+            g.setColor(Color.BLACK);
             g.drawRect(x, y, width, width);
         }
         if (c.whoIam() == TypeCase.mur) {                             //MUR
@@ -115,13 +130,14 @@ public class ViewCarte extends javax.swing.JPanel {
                 }
                 g.drawImage(img, x, y, width, width, this);
             }
+
         } else {                                                   //VIDE
-            if (c.getId().charAt(0) == 'A') {
-                System.out.print("\ncoucou    " + c.getId());
+            char ch=c.getId().charAt(0);
+            if (ch == 'A'||ch == 'C') {
                 //Si case à motif 
                 try {
                     // on recupere l'image corespondante à l'id.
-                    g.drawImage(imgVide, x, y, width, width, this);
+                    g.drawImage(imgVide, x, y, width, width, this); System.out.println(c.getId());
                     img = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + c.getId() + ".png"));
                 } catch (IOException ex) {
                     Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
