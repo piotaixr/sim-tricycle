@@ -6,15 +6,16 @@ package sim.tricycle.ihm;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
-import javax.swing.PopupFactory;
 
 /**
  *
  * @author morgan
  */
-public final class FrameTeamMaker extends javax.swing.JFrame {
+public final class FrameTeamMaker extends javax.swing.JFrame implements Observer {
 
     /**
      * Creates new form FrameTeamMaker
@@ -22,7 +23,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame {
     private int teamNumber = 1;
     private int maxAutoByTeam = 3;
     private int defaultHeight;
-    private PopupFactory ppFtry = new PopupFactory();
+    //private PopupFactory ppFtry = new PopupFactory();
 
     public FrameTeamMaker() {
         initComponents();
@@ -31,8 +32,11 @@ public final class FrameTeamMaker extends javax.swing.JFrame {
         this.add(panTitile, BorderLayout.PAGE_START);
         this.add(panFooter, BorderLayout.PAGE_END);
         this.add(tabPanTeams, BorderLayout.CENTER);
+        
+
 
         this.defaultHeight = this.getSize().height;
+        
 //        javax.swing.JPanel panTeam = new javax.swing.JPanel();
 //        tabPanTeams.addTab("team", panTeam);
 //
@@ -75,15 +79,15 @@ public final class FrameTeamMaker extends javax.swing.JFrame {
     }
 
     public void addPanAutomate(javax.swing.JPanel pan) {
-        if (pan.getComponents().length <= maxAutoByTeam) {
-            PanSelectAutomate panSelect = new PanSelectAutomate();
+        if (isPossibleToAddPan(pan)) {
+            PanSelectAutomate panSelect = new PanSelectAutomate(this);
             pan.add(panSelect);
+            panSelect.getObs().addObserver(this);
             updateHeight(pan);
         } else {
-            //TODO si temps ... pop up pour dire qu'on en fait pas plus
+            //@TODO si temps ... pop up pour dire qu'on en fait pas plus
             //ppFtry.getPopup(this, "Coucou", 100, 100).show());      
         }
-        //this.setSize(this.getWidth(), this.getHeight() + panSelect.getPreferredSize().height);
     }
 
     public void removePanAutomate(javax.swing.JPanel pan) {
@@ -102,7 +106,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame {
 
     public void updateHeight(javax.swing.JPanel pan) {
         int numberComponent = pan.getComponents().length;
-        this.setSize(this.getWidth(), defaultHeight + numberComponent * new PanSelectAutomate().getPreferredSize().height);
+        this.setSize(this.getWidth(), defaultHeight + numberComponent * new PanSelectAutomate(this).getPreferredSize().height);
     }
 
     public boolean isValidPan(javax.swing.JPanel pan) {
@@ -110,6 +114,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame {
         for (Component c : tabComp) {
             if (c instanceof PanSelectAutomate) {
                 if (!(((PanSelectAutomate) c).isValidPanAuto())) {
+                    System.out.println("Check Pan pour : " + c.toString());
                     return false;
                 }
             }
@@ -118,15 +123,36 @@ public final class FrameTeamMaker extends javax.swing.JFrame {
     }
 
     public boolean isValidFrame() {
+        System.out.println(tabPanTeams.getTabCount());
         for (int i = 0; i < tabPanTeams.getTabCount(); i++) {
-            Component c = tabPanTeams.getTabComponentAt(i);
+            Component c = tabPanTeams.getComponentAt(i);
             if (c instanceof javax.swing.JPanel) {
-                if (!isValidPan((javax.swing.JPanel)c))
+                if (!isValidPan((javax.swing.JPanel) c)) {
+                    System.out.println("Check pour : " + i + " " + c.toString());
                     return false;
+                }
             }
         }
         return true;
     }
+
+    public boolean isPossibleToAddPan(javax.swing.JPanel pan) {
+        return (pan.getComponents().length <= maxAutoByTeam);
+    }
+
+    public boolean isPossibleToDeletePan(javax.swing.JPanel pan) {
+        return (2 <= pan.getComponents().length);
+    }
+
+    public void checkValidAll() {
+        System.out.println("Je check!");
+        if (isValidFrame()) {
+            btnValid.setEnabled(true);
+        } else {
+            btnValid.setEnabled(false);
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -160,7 +186,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame {
         panTitile.setBorder(null);
 
         lblSentence.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSentence.setText("Choose your automates and associate an image for each one of them. Max 3 differents automates");
+        lblSentence.setText("Choose your automates and associate an image for each one of them. Max 4 differents automates");
 
         panHeader.setBackground(new java.awt.Color(85, 81, 78));
         panHeader.setBorder(null);
@@ -206,9 +232,11 @@ public final class FrameTeamMaker extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        panFooter.setBackground(new java.awt.Color(85, 81, 78));
         panFooter.setBorder(null);
 
         btnAddMod.setText("Add Model");
+        btnAddMod.setEnabled(false);
         btnAddMod.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAddModMouseClicked(evt);
@@ -219,6 +247,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame {
         btnValid.setEnabled(false);
 
         btnRemoveMod.setText("Remove Model");
+        btnRemoveMod.setEnabled(false);
         btnRemoveMod.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRemoveModMouseClicked(evt);
@@ -282,21 +311,39 @@ public final class FrameTeamMaker extends javax.swing.JFrame {
     private void btnAddModMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddModMouseClicked
         // TODO add your handling code here:
         //addPanAutomate((javax.swing.JPanel)tabPanTeams.getTabComponentAt(tabPanTeams.getSelectedIndex()));
-        addPanAutomate((javax.swing.JPanel) tabPanTeams.getSelectedComponent());
+        if (btnAddMod.isEnabled()) {
+            addPanAutomate((javax.swing.JPanel) tabPanTeams.getSelectedComponent());
+            btnRemoveMod.setEnabled(true);
+            btnAddMod.setEnabled(false);
+        }
+        checkValidAll();
     }//GEN-LAST:event_btnAddModMouseClicked
 
     private void tabPanTeamsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabPanTeamsStateChanged
         // TODO add your handling code here:
         updateHeight((javax.swing.JPanel) tabPanTeams.getSelectedComponent());
+        btnAddMod.setEnabled(false);
+        if (isPossibleToDeletePan((javax.swing.JPanel) tabPanTeams.getSelectedComponent())) {
+            btnRemoveMod.setEnabled(true);
+        } else {
+            btnRemoveMod.setEnabled(false);
+        }
     }//GEN-LAST:event_tabPanTeamsStateChanged
 
     private void btnAddMod1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMod1MouseClicked
         // TODO add your handling code here:
+        //Fake bouton créé sur une erreur ...
     }//GEN-LAST:event_btnAddMod1MouseClicked
 
     private void btnRemoveModMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveModMouseClicked
         // TODO add your handling code here:
         removePanAutomate((javax.swing.JPanel) tabPanTeams.getSelectedComponent());
+        if (isPossibleToDeletePan((javax.swing.JPanel) tabPanTeams.getSelectedComponent())) {
+            btnRemoveMod.setEnabled(true);
+        } else {
+            btnRemoveMod.setEnabled(false);
+        }
+        checkValidAll();
     }//GEN-LAST:event_btnRemoveModMouseClicked
 
     /**
@@ -352,4 +399,13 @@ public final class FrameTeamMaker extends javax.swing.JFrame {
     private javax.swing.JPanel panTitile;
     private javax.swing.JTabbedPane tabPanTeams;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println("event recu!!");
+        if (isPossibleToAddPan((javax.swing.JPanel) tabPanTeams.getSelectedComponent())) {
+            btnAddMod.setEnabled(true);
+        }
+        checkValidAll();
+    }
 }
