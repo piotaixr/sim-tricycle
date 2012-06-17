@@ -12,7 +12,7 @@ import sim.tricycle.mapping.CarteInterface;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.PointDeControle;
-import sim.tricycle.mapping.nosCarte.AbstractCarteGlobal;
+import sim.tricycle.mapping.AbstractCarteGlobal;
 
 /**
  *
