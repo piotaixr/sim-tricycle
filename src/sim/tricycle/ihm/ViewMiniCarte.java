@@ -78,17 +78,14 @@ public class ViewMiniCarte extends javax.swing.JPanel {
             // SI pas de map de fond donc pas besoin de tout afficher
             // ou si obstacle redesinnable:
             if (aff || c.getId().charAt(0) == 'X') {
-                try {
-                    imgMur = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + c.getId() + ".jpg"));
-                } catch (IOException ex) {
-                    Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                g.drawImage(imgMur, x, y, width, width, this);
+                g.setColor(Color.BLACK);
+                g.fillRect(x, y, width, width);
             }
         } else {                                                    //VIDE
-            g.drawImage(imgVide, x, y, width, width, this);
+                g.setColor(Color.GREEN);
+                g.fillRect(x, y, width, width);
         }
-      if (c.hasZone()) {                                    //Pt de controle
+        if (c.hasZone()) {                                    //Pt de controle
             g.setColor(Color.orange);
             g.fillOval(x, y, width, width);
 
@@ -109,7 +106,7 @@ public class ViewMiniCarte extends javax.swing.JPanel {
             g.setColor(Color.RED);
             g.fillOval(x, y, width, width);
         }
-  
+
     }
 
     /**

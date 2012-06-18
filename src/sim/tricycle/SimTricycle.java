@@ -1,6 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
  */
 package sim.tricycle;
 
@@ -32,8 +30,8 @@ public class SimTricycle {
      */
     public static void main(String[] args) {
 
- //       MapTest cr = new MapTest();
-   //     Carte c = cr.getCarte();
+        //MapTest cr = new MapTest();
+       // Carte c = cr.getCarte();
         CrossRiver cr = new CrossRiver();
         Carte c = cr.getCarte();
         sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0), new ArrayList<Ressource>());

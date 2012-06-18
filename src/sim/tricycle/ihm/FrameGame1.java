@@ -9,7 +9,6 @@ import java.util.Observer;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.mapping.Carte;
-import sim.tricycle.mapping.CarteInterface;
 import sim.tricycle.mapping.AbstractCarteGlobal;
 
 /**
