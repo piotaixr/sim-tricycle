@@ -16,4 +16,11 @@ public class Collecteur extends Robot {
     public Collecteur(Team equipe) {
         super(equipe);
     }
+
+    
+    public Collecteur(Team equipe, Automate a) {
+        super(equipe);
+        this.automate = a;
+        this.etatCourant = a.getEtat("1");
+    }
 }

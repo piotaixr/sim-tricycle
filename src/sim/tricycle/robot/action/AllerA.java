@@ -8,6 +8,7 @@ import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.Sens;
 import sim.tricycle.robot.action.core.AbstractAction;
+import sim.tricycle.utils.params.types.Reference;
 import sim.tricycle.utils.params.types.Variable;
 
 /**
@@ -16,21 +17,37 @@ import sim.tricycle.utils.params.types.Variable;
  */
 public class AllerA extends AbstractAction {
 
-    private Variable varListePoints;
+    protected Point p;
 
     public AllerA() {
         super();
     }
+    
+    public AllerA(Point p) {
+        super();
+        this.p = p;
+    }
+
+    public AllerA(Case c) {
+        this(new Point(c.getX(), c.getY()));
+    }
+
+    public AllerA(PossedeCaseInterface pc) {
+        this(pc.getPosition());
+    }
 
     @Override
     protected Object doExecute(Robot bot) {
-        LinkedList<Noeud> lln = (LinkedList<Noeud>) varListePoints.getValue();
-//        TrouveChemin tc = new TrouveChemin(this.p);
-//        tc.executer(bot);
-//        System.out.println("TailleChemin :" + tc.getChemin().size());
-        creerChemin(lln, bot);
+        TrouveChemin tc = new TrouveChemin(this.p);
+        tc.executer(bot);
+        System.out.println("TailleChemin :" + tc.getChemin().size());
+        creerChemin(tc.getChemin(), bot);
 
         return null;
+    }
+    
+    public void setParameters(Variable cible){
+        
     }
 
 //    private void creerChemin2(LinkedList<Noeud> cheminTrouve, Robot bot) {
@@ -63,29 +80,33 @@ public class AllerA extends AbstractAction {
         }
     }
 
-//    private Sens trouveDirection(Point p1, Point p2) {
-//
-//        Sens newSens = Sens.NORD;
-//
-//        if (p1.getX() < p2.getX()) {
-//            newSens = Sens.NORD;
-//        } else if (p1.getY() < p2.getY()) {
-//            newSens = Sens.OUEST;
-//        } else if (p2.getX() < p1.getX()) {
-//            newSens = Sens.SUD;
-//        } else if (p2.getY() < p1.getY()) {
-//            newSens = Sens.EST;
-//        }
-//
-//        return newSens;
-//    }
+    private Sens trouveDirection(Point p1, Point p2) {
+
+        Sens newSens = Sens.NORD;
+
+        if (p1.getX() < p2.getX()) {
+            newSens = Sens.NORD;
+        } else if (p1.getY() < p2.getY()) {
+            newSens = Sens.OUEST;
+        } else if (p2.getX() < p1.getX()) {
+            newSens = Sens.SUD;
+        } else if (p2.getY() < p1.getY()) {
+            newSens = Sens.EST;
+        }
+
+        return newSens;
+    }
+
+    public void setP(Point newP) {
+        this.p = newP;
+    }
+
+    public Point getP() {
+        return this.p;
+    }
 
     @Override
     public String getId() {
         return "allera";
-    }
-    
-    public void setParameters(Variable varListePoints){
-        this.varListePoints = varListePoints;
     }
 }
