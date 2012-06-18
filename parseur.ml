@@ -1,6 +1,6 @@
-#load "dynlink.cma";;
+(*#load "dynlink.cma";;
 
-#load "camlp4o.cma";; (* nécessaire pour faire fonctionner le parseur*)
+#load "camlp4o.cma";;*)
 
 type 'a pile= Pile_vide|Pile_non_vide of 'a*'a pile;;
 (*_______________________________________________________________________*)
@@ -207,6 +207,10 @@ let analyse ent sort =
      close_in entree;;
 
 analyse "automate" "test";;
+
+
+
+
 
 
 

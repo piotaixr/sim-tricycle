@@ -27,7 +27,7 @@ public class SeTeleporterA extends AbstractAction{
     
     
    protected Object doExecute(Robot bot){
-      if(!bot.getMapObjective().getCase(p.getX(), p.getY()).hasObstacle()){ 
+      if(!bot.getMapTeam().getCase(p.getX(), p.getY()).hasObstacle()){ 
        bot.decollerRobotDeMap();
        bot.setCoordonnees(p);
        bot.collerRobotSurMap();
