@@ -2,7 +2,6 @@
  */
 package sim.tricycle.mapping.elementCase;
 
-import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
 
 /**
@@ -12,10 +11,6 @@ import sim.tricycle.mapping.TypeCase;
  */
 public class Mur extends AbstractObstacle {
 
-    public Mur(Case pos) {
-        this.pos = pos;
-        pos.setObstacle(this);
-    }
 
     @Override
     public TypeCase whoIam() {

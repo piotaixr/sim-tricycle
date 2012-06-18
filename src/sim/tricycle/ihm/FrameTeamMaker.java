@@ -66,6 +66,8 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
 
         System.out.println("hauteur frame : " + this.getHeight() + " taille pan :" + tabPanTeams.getPreferredSize().height);
 
+        jeu.getCarte().afficherCarte();
+        
         while (teamNumber <= 3) {
             javax.swing.JPanel newPanTeam = createPanTeam();
             addTabTeam(tabPanTeams, newPanTeam);

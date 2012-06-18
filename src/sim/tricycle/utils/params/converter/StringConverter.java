@@ -22,4 +22,9 @@ public class StringConverter implements ParamConverterInterface {
     public Class getOutputClass() {
         return String.class;
     }
+
+    @Override
+    public String reveverseConvert(Object o) {
+        return (String) o;
+    }
 }

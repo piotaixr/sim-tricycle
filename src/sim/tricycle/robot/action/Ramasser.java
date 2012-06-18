@@ -22,7 +22,7 @@ public class Ramasser extends AbstractAction{
     protected Object doExecute(Robot bot) {
         Ressource r = (Ressource)varRessource.getValue();
         bot.getEquipe().ajouterRessource(r.getItem());
-        bot.getMapTeam().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()).myItem().supprimerObjet();
+        bot.getMapTeam().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()).getItem().supprimerObjet();
     //    System.out.println("Ramassage: " + bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
         return null;
     }

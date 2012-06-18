@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sim.tricycle.mapping.nosCarte;
 
 import sim.tricycle.mapping.AbstractCarteGlobal;
@@ -15,10 +14,9 @@ public class CarteFromFile extends AbstractCarteGlobal {
 
     public CarteFromFile(String nomCarte) {
         CarteFichier cf = CarteFichier.fromFile(nomCarte);
-        setImage(cf.getFond());
+        if (cf.getFond() != null) {
+            setImage(cf.getFond());
+        }
         startInit(cf.getMat());
     }
-    
-
-    
 }

@@ -12,13 +12,14 @@ import sim.tricycle.robot.action.core.AbstractAction;
  *
  * @author Adri
  */
-public class TrouveCaseDevant extends AbstractAction{
+public class TrouveCaseDevant extends AbstractAction {
 
     public TrouveCaseDevant() {
         super();
     }
    
-    public Object doExecute(Robot bot){
+    @Override
+    protected Object doExecute(Robot bot){
         return caseDevant(bot);
     }
     
@@ -50,6 +51,7 @@ public class TrouveCaseDevant extends AbstractAction{
         return new Point(X,Y);        
     }
         
+    @Override
     public String getId(){
         return "trouveCaseDevant";
     }

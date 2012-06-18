@@ -4,35 +4,37 @@
  */
 package sim.tricycle.robot.action;
 
-import java.util.ArrayDeque;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
-import sim.tricycle.robot.action.core.ActionInterface;
+import sim.tricycle.utils.ActionBuilder;
+import sim.tricycle.utils.params.types.Variable;
 
 /**
  *
  * @author Adri
  */
-public class Collecter extends AbstractActionComposee{
+public class Collecter extends AbstractActionComposee {
 
-    public Collecter() {
-        super();
+    private Variable varPiece;
+
+    public Collecter(ActionBuilder builder) {
+        super(builder);
     }
-    
-    public Object doExecute(Robot bot){
+
+    @Override
+    protected Object doExecute(Robot bot) {
         return null;
     }
-    
-    public String getId(){
-        return "collecterHautNiveau";
-    }
-    
+
     @Override
-    public ArrayDeque<ActionInterface> getSuiteActions() {
-        return super.getSuiteActions();
+    public String getId() {
+        return "collecter";
     }
 
-    
+    public void setParameters(Variable varPiece) {
+        this.varPiece = varPiece;
+    }
+
     public void setSuiteActions() {
 //        TrouveCollectable tc = new TrouveCollectable();
 //        CollecterUnePiece cup = new CollecterUnePiece();
@@ -41,6 +43,4 @@ public class Collecter extends AbstractActionComposee{
 //        this.suiteActions.add(cup);
 //        this.suiteActions.add(rb);
     }
-
-    
 }

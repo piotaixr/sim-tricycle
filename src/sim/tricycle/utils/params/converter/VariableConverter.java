@@ -30,4 +30,9 @@ public class VariableConverter implements ParamConverterInterface {
     public Class getOutputClass() {
         return Variable.class;
     }
+
+    @Override
+    public String reveverseConvert(Object o) {
+        return ((Variable) o).getSelector();
+    }
 }

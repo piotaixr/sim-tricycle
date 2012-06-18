@@ -8,7 +8,6 @@ import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.Sens;
 import sim.tricycle.robot.action.core.AbstractAction;
-import sim.tricycle.utils.params.types.Reference;
 import sim.tricycle.utils.params.types.Variable;
 
 /**

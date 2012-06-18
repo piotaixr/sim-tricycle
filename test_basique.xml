@@ -4,7 +4,7 @@
         <transition>
             <condition nom="pieceexiste"></condition>
             <action nom="pieceplusproche" dest="piece"></action>
-            <action nom="collecterPiece">
+            <action nom="collecter">
                 <parametre type="var">piece</parametre>
             </action>
             <etat id="1" />

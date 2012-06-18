@@ -6,29 +6,28 @@ package sim.tricycle.robot.action;
 
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
+import sim.tricycle.utils.ActionBuilder;
 
 /**
  *
  * @author Adri
  */
-public class RevenirBase extends AbstractActionComposee{
-    
-    public RevenirBase(){
-        super();
-        this.suiteActions.add(new TrouveChemin());
-        this.suiteActions.add(new AllerA());
+public class RevenirBase extends AbstractActionComposee {
+
+    public RevenirBase(ActionBuilder builder) {
+        super(builder);
     }
-    
-    public Object doExecute(Robot bot){
-        
-        bot.setActions(suiteActions);
+
+    @Override
+    protected Object doExecute(Robot bot) {
+        getBuilder().addNew("trouvechemin", "chemin", getBuilder().buidReference("team.base"))
+                .addNew("allera", getBuilder().buildVariable("chemin"));
+
         return null;
     }
-    
-    public String getId(){
+
+    @Override
+    public String getId() {
         return "revenirBase";
     }
-    
-
-    
 }

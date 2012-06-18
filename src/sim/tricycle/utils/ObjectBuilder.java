@@ -27,11 +27,13 @@ public class ObjectBuilder {
     private ActionFactoryInterface actionFactory = null;
     private ParamConverterProviderInterface paramConverterProvider = null;
     private Ordonnanceur ordonnanceur = null;
+    private ActionBuilder actionBuilder = null;
     private VarBuilder varBuilder = null;
+    private ParameterCreator parameterCreator = null;
     
     public RobotParser getRobotParser() {
         if (parser == null) {
-            parser = new RobotParser(getConditionFactory(), getParamConverterProvider(), getActionFactory());
+            parser = new RobotParser(getConditionFactory(), getParamConverterProvider(), getActionFactory(), getParameterCreator());
         }
         
         return parser;
@@ -39,7 +41,7 @@ public class ObjectBuilder {
     
     public ConditionFactoryInterface getConditionFactory() {
         if (conditionFactory == null) {
-            conditionFactory = new ConditionFactory(getParamConverterProvider());
+            conditionFactory = new ConditionFactory(getParamConverterProvider(), getParameterCreator());
             conditionFactory.register(new ConditionTrue())
                     .register(new PieceTrouvee())
                     .register(new TestCaseRobotEgalCasePiece(getVarBuilder().buidReference("self.case"), getVarBuilder().buildVariable("piece")))
@@ -53,7 +55,7 @@ public class ObjectBuilder {
     
     public ActionFactoryInterface getActionFactory() {
         if (actionFactory == null) {
-            actionFactory = new ActionFactory(getVarBuilder(), getParamConverterProvider());
+            actionFactory = new ActionFactory(getVarBuilder(), getParamConverterProvider(), getParameterCreator());
             actionFactory.register(new Avancer())
                  //   .register(new RamasserPiece())
                     .register(new Tourner())
@@ -64,7 +66,9 @@ public class ObjectBuilder {
                     .register(new Ramasser())
                     .register(new Deposer())
                     .register(new PiecePlusProche())
-                    .register(new TrouveChemin());
+                    .register(new TrouveChemin())
+                    .register(new Collecter(getActionBuilder()))
+                    .register(new RevenirBase(getActionBuilder()));
         }
         
         return actionFactory;
@@ -86,15 +90,30 @@ public class ObjectBuilder {
         if (ordonnanceur == null) {
             ordonnanceur = new Ordonnanceur();
         }
-        
+
         return ordonnanceur;
     }
-    
-        public VarBuilder getVarBuilder() {
+    public VarBuilder getVarBuilder() {
         if (varBuilder == null) {
-            varBuilder = new VarBuilder(ordonnanceur);
+            varBuilder = new VarBuilder(getOrdonnanceur());
         }
-        
+
         return varBuilder;
+    }
+
+    public ActionBuilder getActionBuilder() {
+        if (actionBuilder == null) {
+            actionBuilder = new ActionBuilder(getOrdonnanceur(), getParameterCreator(), getActionFactory());
+        }
+
+        return actionBuilder;
+    }
+
+    public ParameterCreator getParameterCreator() {
+        if (parameterCreator == null) {
+            parameterCreator = new ParameterCreator(getParamConverterProvider());
+        }
+
+        return parameterCreator;
     }
 }
