@@ -2,13 +2,13 @@
  */
 package sim.tricycle.mapping.nosCarte;
 
-import sim.tricycle.mapping.AbstractCarteGlobal;
+import sim.tricycle.mapping.AbstractCarte;
 
 /**
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class MapTest extends AbstractCarteGlobal {
+public class MapTest extends AbstractCarte {
 
     public MapTest() {
         String[][] mat = new String[][]{

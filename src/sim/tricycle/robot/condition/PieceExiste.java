@@ -5,7 +5,7 @@
 package sim.tricycle.robot.condition;
 
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
-import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.CarteTeam;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.condition.core.AbstractCondition;
@@ -29,7 +29,7 @@ public class PieceExiste extends AbstractCondition {
     @Override
     public boolean test() {
         Robot bot = (Robot) o.getActiveTask();
-        Carte c = bot.getMapTeam();
+        CarteTeam c = bot.getMapTeam();
         for(int i=0; i< c.getHauteur(); i++){
             for(int j = 0; i< c.getLargeur(); i++){
                 if(c.getCase(i, j).whoIam() == TypeCase.piece)

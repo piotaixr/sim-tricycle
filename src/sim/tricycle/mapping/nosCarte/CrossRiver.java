@@ -2,13 +2,13 @@
  */
 package sim.tricycle.mapping.nosCarte;
 
-import sim.tricycle.mapping.AbstractCarteGlobal;
+import sim.tricycle.mapping.AbstractCarte;
 
 /**
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class CrossRiver extends AbstractCarteGlobal {
+public class CrossRiver extends AbstractCarte {
 
     public CrossRiver() {
 

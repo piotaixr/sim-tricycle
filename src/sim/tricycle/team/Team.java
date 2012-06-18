@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Robot;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.CarteTeam;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.robot.Point;
@@ -17,14 +17,14 @@ public class Team {
     private String nomTeam;
     private LinkedList<Robot> armee;
     private LinkedList<Robot> models;
-    private Carte map;
+    private CarteTeam map;
     private Point base;
     private ArrayList<Ressource> ressources;
     private ArrayList<Case> collectables;
     private Color color=Color.cyan;
 
     
-    public Team(String nomTeam, Carte map, Point base, ArrayList<Ressource> ressources ) {
+    public Team(String nomTeam, CarteTeam map, Point base, ArrayList<Ressource> ressources ) {
         this.nomTeam = nomTeam;
         this.map = map;
         this.armee = new LinkedList<Robot>();
@@ -37,7 +37,7 @@ public class Team {
         this.armee.add(bot);
     }
 
-    public Carte getMap() {
+    public CarteTeam getMap() {
         return this.map;
     }
 

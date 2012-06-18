@@ -1,6 +1,6 @@
 package sim.tricycle.robot;
 
-import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.CarteTeam;
 import sim.tricycle.team.Team;
 
 /**

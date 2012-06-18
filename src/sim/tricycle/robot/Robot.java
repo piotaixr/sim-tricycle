@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Stack;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
-import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.CarteTeam;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.robot.action.Sleep;
@@ -188,7 +188,7 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         this.etatDestination = etatDestination;
     }
     
-    public Carte getMapTeam(){
+    public CarteTeam getMapTeam(){
         return this.equipe.getMap();
     }
     

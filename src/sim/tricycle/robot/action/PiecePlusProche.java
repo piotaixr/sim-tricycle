@@ -4,7 +4,7 @@
  */
 package sim.tricycle.robot.action;
 
-import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.CarteTeam;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractAction;
@@ -20,7 +20,7 @@ public class PiecePlusProche extends AbstractAction {
 
     @Override
     protected Object doExecute(Robot bot) {
-        Carte c = bot.getMapTeam();
+        CarteTeam c = bot.getMapTeam();
         for (int i = 0; i < c.getHauteur(); i++) {
             for (int j = 0; i < c.getLargeur(); i++) {
                 if (c.getCase(i, j).whoIam() == TypeCase.piece) {
