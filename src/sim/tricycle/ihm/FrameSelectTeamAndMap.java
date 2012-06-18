@@ -5,6 +5,9 @@
 package sim.tricycle.ihm;
 
 import java.util.ArrayList;
+import sim.tricycle.AbstractJeu;
+import sim.tricycle.Jeu;
+import sim.tricycle.mapping.CarteGlobalInterface;
 
 /**
  *
@@ -15,19 +18,21 @@ public class FrameSelectTeamAndMap extends javax.swing.JFrame {
     /**
      * Creates new form FrameSelectTeamAndMap
      */
-    
-    private ArrayList<String> maps= new ArrayList();
-    
-    public FrameSelectTeamAndMap() {
+    private ArrayList<String> maps = new ArrayList();
+    private AbstractJeu jeu = new Jeu();
+
+    public FrameSelectTeamAndMap(AbstractJeu jeu) {
         initComponents();
+        this.jeu = jeu;
         FilesFinder finder = new FilesFinder();
         maps = finder.findFiles("./src/sim/tricycle/mapping/nosCarte");
         mappingCbxMap(maps);
     }
 
     private void mappingCbxMap(ArrayList<String> arrayMap) {
-        for (String s : arrayMap)
+        for (String s : arrayMap) {
             cbxMap.addItem(s);
+        }
     }
 
     /**
@@ -79,6 +84,11 @@ public class FrameSelectTeamAndMap extends javax.swing.JFrame {
         lblTeam.setText("Select the number of teams :");
 
         btnValid.setText("Validate");
+        btnValid.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnValidMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,6 +128,18 @@ public class FrameSelectTeamAndMap extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnValidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnValidMouseClicked
+        // TODO add your handling code here:
+        CarteGlobalInterface carte = null;
+        
+
+        jeu.setCarte(carte);
+
+        FrameTeamMaker ftm = new FrameTeamMaker(jeu);
+        ftm.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnValidMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -154,8 +176,10 @@ public class FrameSelectTeamAndMap extends javax.swing.JFrame {
          */
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
-                new FrameSelectTeamAndMap().setVisible(true);
+                Jeu jeu = new Jeu();
+                new FrameSelectTeamAndMap(jeu).setVisible(true);
             }
         });
     }
