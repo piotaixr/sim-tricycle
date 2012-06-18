@@ -13,9 +13,18 @@ import sim.tricycle.team.Team;
  * @author morgan
  */
 public abstract class AbstractJeu {
-    
+
     protected CarteGlobalInterface carte;
     protected ArrayList<Team> tabTeams;
+    protected int teamNumber = 0;
+
+    public int getTeamNumber() {
+        return teamNumber;
+    }
+
+    public void setTeamNumber(int teamNumber) {
+        this.teamNumber = teamNumber;
+    }
 
     public void setCarte(CarteGlobalInterface carte) {
         this.carte = carte;
@@ -32,9 +41,8 @@ public abstract class AbstractJeu {
     public ArrayList<Team> getTabTeams() {
         return tabTeams;
     }
-    
-    public void addTeam(Team t){
+
+    public void addTeam(Team t) {
         tabTeams.add(t);
     }
-    
 }
