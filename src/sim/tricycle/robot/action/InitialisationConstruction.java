@@ -7,6 +7,7 @@ package sim.tricycle.robot.action;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.AbstractBatiment;
+import sim.tricycle.mapping.elementCase.Tour;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractAction;
 import sim.tricycle.utils.params.types.Variable;
@@ -17,14 +18,14 @@ import sim.tricycle.utils.params.types.Variable;
  */
 public class InitialisationConstruction extends AbstractAction{
     
-    private  Variable varbat;
 
     @Override
     protected Object doExecute(Robot bot) {
         
-        AbstractBatiment bat = (AbstractBatiment)varbat.getValue();
-        
+                
         Case c = bot.getMapObjective().getCase(bot.caseDevant().getX(),bot.caseDevant().getY());
+        
+        AbstractBatiment bat = new Tour(c);
         
         if (c.whoIam()== TypeCase.vide){
             c.setObstacle(bat);            
@@ -36,7 +37,7 @@ public class InitialisationConstruction extends AbstractAction{
 
     @Override
     public String getId() {
-        return "initialisation batiment";
+        return "initialisation construction";
     }
     
 }

@@ -13,10 +13,7 @@ import sim.tricycle.mapping.nosCarte.MapTest;
 import sim.tricycle.robot.Collecteur;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Sens;
-import sim.tricycle.robot.action.AllerA;
-import sim.tricycle.robot.action.Avancer;
-import sim.tricycle.robot.action.CollecterUnePiece;
-import sim.tricycle.robot.action.Tourner;
+import sim.tricycle.robot.action.*;
 import sim.tricycle.team.Ressource;
 
 /**
@@ -42,14 +39,20 @@ public class SimTricycle {
         bot.setCoordonnees(new Point(3, 8));
         bot.setDirection(Sens.NORD);
         bot.collerRobotSurMap();
+        
+        InitialisationConstruction initCons = new InitialisationConstruction();
+        Construction Cons = new Construction();
+        bot.getActions().add(initCons);
+        bot.getActions().add(Cons);
+        
 
 
 
-        CollecterUnePiece cup = new CollecterUnePiece();
+        /*CollecterUnePiece cup = new CollecterUnePiece();
         c.pop(new Piece(c.getCase(36, 36)), c.getCase(36, 36));
         Piece p = (Piece) c.getCase(36, 36).myItem();
            cup.setPiece(p);
-            bot.getActions().add(cup);
+            bot.getActions().add(cup);*/
         cr.afficherCarte();
 
         FrameGame1 fg = new FrameGame1(cr);

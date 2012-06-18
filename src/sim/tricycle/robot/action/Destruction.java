@@ -16,6 +16,8 @@ import sim.tricycle.robot.action.core.AbstractAction;
  */
 public class Destruction extends AbstractAction{
     
+    
+    
 
     @Override
     protected Object doExecute(Robot bot) {
