@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.ihm.FrameGame1;
-import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.CarteTeam;
 import sim.tricycle.mapping.elementCase.Mur;
 import sim.tricycle.mapping.elementCase.Piece;
 import sim.tricycle.mapping.nosCarte.CrossRiver;
@@ -38,7 +38,7 @@ public class SimTricycle {
         Automate a = parser.parse(new File("./test_basique.xml"));
 
         CrossRiver cr = new CrossRiver();
-        Carte c = cr.getCarte();
+        CarteTeam c = cr.getCarte();
         sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0), new ArrayList<Ressource>());
         sim.tricycle.robot.Robot bot;
 

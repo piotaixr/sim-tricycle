@@ -1,20 +1,19 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
  */
 package sim.tricycle;
 
 import java.util.ArrayList;
-import sim.tricycle.mapping.CarteGlobalInterface;
+import sim.tricycle.mapping.AbstractCarte;
+import sim.tricycle.mapping.CarteObjective;
 import sim.tricycle.team.Team;
 
 /**
- *
+ * @author thomas
  * @author morgan
  */
 public abstract class AbstractJeu {
 
-    protected CarteGlobalInterface carte;
+    protected AbstractCarte carte;
     protected ArrayList<Team> tabTeams;
     protected int teamNumber = 0;
 
@@ -26,7 +25,7 @@ public abstract class AbstractJeu {
         this.teamNumber = teamNumber;
     }
 
-    public void setCarte(CarteGlobalInterface carte) {
+    public void setCarte(AbstractCarte carte) {
         this.carte = carte;
     }
 
@@ -34,7 +33,7 @@ public abstract class AbstractJeu {
         this.tabTeams = tabTeams;
     }
 
-    public CarteGlobalInterface getCarte() {
+    public AbstractCarte getCarte() {
         return carte;
     }
 
