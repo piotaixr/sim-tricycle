@@ -64,7 +64,7 @@ public class ObjectBuilder {
                     .register(new Ramasser())
                     .register(new Deposer())
                     .register(new PiecePlusProche())
-                    .register(new CollecterUnePiece());
+                    .register(new TrouveChemin());
         }
         
         return actionFactory;

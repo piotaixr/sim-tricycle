@@ -23,7 +23,7 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
     private AbstractCarteGlobal cont = null;
 
     /**
-     * Creates new form MorganTestAppli
+     * 
      */
     public FrameGame1(AbstractCarteGlobal ConteneurCarte) {
         initComponents();

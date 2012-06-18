@@ -7,6 +7,7 @@ package sim.tricycle.robot.action;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractAction;
 import sim.tricycle.team.Ressource;
+import sim.tricycle.utils.params.types.Variable;
 
 /**
  *
@@ -14,11 +15,12 @@ import sim.tricycle.team.Ressource;
  */
 public class Deposer extends AbstractAction{
     
-    private Ressource ressource;
+    private Variable varRessource;
 
     @Override
     protected Object doExecute(Robot bot) {
-        bot.getEquipe().ajouterRessource(ressource.getItem());
+        Ressource r = (Ressource)varRessource.getValue();
+        bot.getEquipe().ajouterRessource(r.getItem());
         bot.getMapTeam().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()).myItem().supprimerObjet();
     //    System.out.println("Ramassage: " + bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
         return null;
