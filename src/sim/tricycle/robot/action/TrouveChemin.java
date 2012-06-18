@@ -7,6 +7,7 @@ import sim.tricycle.robot.Noeud;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractAction;
+import sim.tricycle.utils.params.types.Reference;
 
 /**
  *
@@ -14,18 +15,17 @@ import sim.tricycle.robot.action.core.AbstractAction;
  */
 public class TrouveChemin extends AbstractAction {
 
-    private Point pDest;
-    private LinkedList<Noeud> chemin;
+    private Point pDest = null;
+    private LinkedList<Noeud> chemin = new LinkedList<Noeud>();
+    private Reference refPointDest = null;
 
     public TrouveChemin(Point pDest) {
         super();
         this.pDest = pDest;
-        this.chemin = new LinkedList<Noeud>();
     }
 
     public TrouveChemin() {
         super();
-        this.chemin = new LinkedList<Noeud>();
     }
         
     public LinkedList<Noeud> getChemin() {
@@ -35,6 +35,9 @@ public class TrouveChemin extends AbstractAction {
     @Override
     protected Object doExecute(Robot bot) {
         //  System.out.print("Coucou");
+        if(refPointDest != null){
+            pDest = (Point) refPointDest.getValue();
+        }
         return  plusCourtChemin(new Point(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()), bot);
     }
 
@@ -53,7 +56,6 @@ public class TrouveChemin extends AbstractAction {
         LinkedList<Noeud> listeFermee = new LinkedList();
         HashSet<Case> listeVoisins = new HashSet<Case>();
         Noeud n = new Noeud(pDep);
-        Point pDest = (Point)this.getParameters(); 
         n.setPoids(n.getPoint().distanceDepuis(pDest));
         n.setParent(null);
         listeOuverte.add(n);
@@ -119,5 +121,9 @@ public class TrouveChemin extends AbstractAction {
 
     public void setpDest(Point pDest) {
         this.pDest = pDest;
+    }
+    
+    public void setParameters(Reference refPointDest){
+        this.refPointDest = refPointDest;
     }
 }

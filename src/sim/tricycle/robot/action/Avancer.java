@@ -10,10 +10,15 @@ import sim.tricycle.robot.action.core.AbstractAction;
  */
 public class Avancer extends AbstractAction {
 
+    private int nbCases;
 
     public Avancer() {
         super();
 
+    }
+    
+    public void setParameters(int nbCases){
+        this.nbCases = nbCases;
     }
 
     @Override

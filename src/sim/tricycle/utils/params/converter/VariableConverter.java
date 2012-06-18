@@ -23,7 +23,7 @@ public class VariableConverter implements ParamConverterInterface {
 
     @Override
     public String getName() {
-        return "variable";
+        return "var";
     }
 
     @Override

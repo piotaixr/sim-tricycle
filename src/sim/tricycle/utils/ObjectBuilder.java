@@ -1,16 +1,12 @@
 package sim.tricycle.utils;
 
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
-import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.robot.action.*;
 import sim.tricycle.robot.action.core.ActionFactory;
 import sim.tricycle.robot.action.core.ActionFactoryInterface;
-import sim.tricycle.robot.condition.ConditionTrue;
-import sim.tricycle.robot.condition.PieceTrouvee;
+import sim.tricycle.robot.condition.*;
 import sim.tricycle.robot.condition.core.ConditionFactory;
 import sim.tricycle.robot.condition.core.ConditionFactoryInterface;
-import sim.tricycle.robot.condition.core.TestCaseRobotEgalCaseBase;
-import sim.tricycle.robot.condition.core.TestCaseRobotEgalCasePiece;
 import sim.tricycle.utils.params.ParamConverterProvider;
 import sim.tricycle.utils.params.ParamConverterProviderInterface;
 import sim.tricycle.utils.params.converter.IntegerConverter;
@@ -30,7 +26,7 @@ public class ObjectBuilder {
     private ConditionFactoryInterface conditionFactory = null;
     private ActionFactoryInterface actionFactory = null;
     private ParamConverterProviderInterface paramConverterProvider = null;
-    private OrdonnanceurInterface ordonnanceur = null;
+    private Ordonnanceur ordonnanceur = null;
     private VarBuilder varBuilder = null;
     
     public RobotParser getRobotParser() {
@@ -47,7 +43,9 @@ public class ObjectBuilder {
             conditionFactory.register(new ConditionTrue())
                     .register(new PieceTrouvee())
                     .register(new TestCaseRobotEgalCasePiece(getVarBuilder().buidReference("self.case"), getVarBuilder().buildVariable("piece")))
-                    .register(new TestCaseRobotEgalCaseBase(getVarBuilder().buidReference("self.case"), getVarBuilder().buildVariable("team.base")));;
+                    .register(new TestCaseRobotEgalCaseBase(getVarBuilder().buidReference("self.case"), getVarBuilder().buildVariable("team.base")))
+                    .register(new Contains())
+                    .register(new PieceExiste(getOrdonnanceur()));
         }
         
         return conditionFactory;
@@ -55,7 +53,7 @@ public class ObjectBuilder {
     
     public ActionFactoryInterface getActionFactory() {
         if (actionFactory == null) {
-            actionFactory = new ActionFactory(getParamConverterProvider());
+            actionFactory = new ActionFactory(getVarBuilder(), getParamConverterProvider());
             actionFactory.register(new Avancer())
                  //   .register(new RamasserPiece())
                     .register(new Tourner())
@@ -63,7 +61,10 @@ public class ObjectBuilder {
                     .register(new ArreterTout())
                     .register(new SeTeleporterA())
                     .register(new Sleep())
-                    .register(new Ramasser());
+                    .register(new Ramasser())
+                    .register(new Deposer())
+                    .register(new PiecePlusProche())
+                    .register(new CollecterUnePiece());
         }
         
         return actionFactory;
@@ -81,7 +82,7 @@ public class ObjectBuilder {
         return paramConverterProvider;
     }
     
-    public OrdonnanceurInterface getOrdonnanceur() {
+    public Ordonnanceur getOrdonnanceur() {
         if (ordonnanceur == null) {
             ordonnanceur = new Ordonnanceur();
         }

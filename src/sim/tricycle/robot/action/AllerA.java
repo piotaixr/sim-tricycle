@@ -8,6 +8,8 @@ import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.Sens;
 import sim.tricycle.robot.action.core.AbstractAction;
+import sim.tricycle.utils.params.types.Reference;
+import sim.tricycle.utils.params.types.Variable;
 
 /**
  *
@@ -42,6 +44,10 @@ public class AllerA extends AbstractAction {
         creerChemin(tc.getChemin(), bot);
 
         return null;
+    }
+    
+    public void setParameters(Variable cible){
+        
     }
 
 //    private void creerChemin2(LinkedList<Noeud> cheminTrouve, Robot bot) {

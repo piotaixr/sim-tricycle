@@ -15,7 +15,8 @@ public class Sleep extends AbstractAction {
 
     @Override
     protected Object doExecute(Robot bot) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.println("Sleep " + bot);
+        return null;
     }
 
     @Override

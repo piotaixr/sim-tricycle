@@ -23,7 +23,7 @@ public class ReferenceConverter implements ParamConverterInterface {
 
     @Override
     public String getName() {
-        return "reference";
+        return "ref";
     }
 
     @Override

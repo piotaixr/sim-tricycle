@@ -1,12 +1,13 @@
 package sim.tricycle.robot;
 
 import java.util.ArrayDeque;
+import java.util.Iterator;
 import java.util.Stack;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
 import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
-import sim.tricycle.robot.action.core.AbstractAction;
+import sim.tricycle.robot.action.Sleep;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.robot.action.core.ActionInterface;
 import sim.tricycle.team.Team;
@@ -22,8 +23,9 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     protected Point coordonnees;
     protected Sens direction;
     protected int portee;
-    protected ArrayDeque<AbstractAction> actions = new ArrayDeque();
-    protected Stack<ArrayDeque<AbstractAction>> pileActions = new Stack();
+    protected ArrayDeque<ActionInterface> actions = new ArrayDeque();
+    protected Stack<AbstractActionComposee> pileActionsComposees = new Stack();
+    protected Stack<ArrayDeque<ActionInterface>> pileFileActions = new Stack();
     protected Etat etatCourant;
     protected Etat etatDestination;
     protected Automate automate;
@@ -63,50 +65,54 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         }
     }
 
-  
+      private Transition findTransition() {
+        Iterator<Transition> it = etatCourant.getTransitions().iterator();
+        Transition valide = null;
+        System.out.println(etatCourant.getTransitions().size());
+        while (valide == null && it.hasNext()) {
+            Transition t = it.next();
+            if (t.getCondition().test()) {
+                valide = t;
+            }
+        }
+        return valide;
+    }
 
     /**
      * Fonction appelée a chaque tick d'horloge
      *
      * @todo coder cette fonction
      */
-    public void executeAction() {
-//        if (actions.isEmpty()) {
-//            // liste actions vide, on change d'état
-//            etatCourant = etatDestination;
-//            // parcours des transitions
-//            List<Transition> transitions = etatCourant.getTransitions();
-//            Iterator<Transition> it = transitions.iterator();
-//            while (it.hasNext()) {
-//                Transition t = it.next();
-//                // si condition non valide, on passe à la suivante
-//                if (!t.getCondition().test()) {
-//                    continue;
-//                }
-//                //ajout des actions
-//                List<ActionInterface> newActions = t.getActions();
-//                actions.addAll(newActions);
-//                //on donne l'etat de destination
-//                etatDestination = t.getEtatDestination();
-//                break;
-//            }
-//        }      
-       
-        if(!actions.isEmpty()){
-          if(actions.getFirst().isComposee()){
-              AbstractActionComposee a = (AbstractActionComposee)actions.pollFirst();
-              pileActions.add(actions);
-              actions.clear();
-              actions.addAll(a.getSuiteActions());
-              this.executeAction();
-          }else{
-              actions.pollFirst().executer(this);
-          }
-        }else{
-            if(!pileActions.isEmpty()){
-                actions.addAll(pileActions.pop());
-                pileActions.clear();
+    @Override
+    public void executeAction() {    
+
+        if (!actions.isEmpty()) {
+            if (actions.getFirst().isComposee()) {
+                AbstractActionComposee a = (AbstractActionComposee) actions.pollFirst();
+                pileActionsComposees.push(a);
+                pileFileActions.push(actions);
+                actions = new ArrayDeque();
+                actions.addAll(a.getSuiteActions());
                 this.executeAction();
+            } else {
+                actions.pollFirst().executer(this);
+            }
+        } else {
+            if (!pileActionsComposees.isEmpty()) {
+                actions.addAll(pileActionsComposees);
+                pileActionsComposees.clear();
+                this.executeAction();
+            } else {
+                if (etatDestination != null) {
+                    System.out.println("change etat" + etatDestination.getId());
+                    etatCourant = etatDestination;
+                }
+                Transition t = findTransition();
+                if (t == null || t.getActions().isEmpty()) {
+                    actions.add(new Sleep());
+                }
+                actions.addAll(t.getActions());
+                etatDestination = t.getEtatDestination();
             }
         }
     }
@@ -142,11 +148,11 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         this.portee = newPortee;
     }
     
-        public ArrayDeque<AbstractAction> getActions() {
+        public ArrayDeque<ActionInterface> getActions() {
         return actions;
     }
 
-    public void setActions(ArrayDeque<AbstractAction> fileActions) {
+    public void setActions(ArrayDeque<ActionInterface> fileActions) {
         this.actions = fileActions;
     }
 
@@ -180,14 +186,6 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
 
     public void setEtatDestination(Etat etatDestination) {
         this.etatDestination = etatDestination;
-    }
-
-    public Stack<ArrayDeque<AbstractAction>> getPileActions() {
-        return pileActions;
-    }
-
-    public void setPileActions(Stack<ArrayDeque<AbstractAction>> pileActions) {
-        this.pileActions = pileActions;
     }
     
     public Carte getMapTeam(){
