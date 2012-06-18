@@ -168,7 +168,16 @@ public class Carte implements CarteInterface {
 
     @Override
     public void pop(PossedeCaseInterface e, int x, int y) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Case c = getCase(x,y);
+        if (c.hasItem() || c.hasObstacle()){
+            if (e.obstacleItem() ==1) {
+                c.setItem((AbstractObjet)e);                
+            }
+            if (e.obstacleItem()==2) {
+                c.setObstacle((AbstractObstacle)e);
+            }
+        }
+        else throw new RuntimeException("Il y a déjà quelque chose sur la case");
     }
 
     @Override
