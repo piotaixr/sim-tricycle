@@ -25,7 +25,7 @@ public class ViewCarte extends javax.swing.JPanel {
     private int tailleCaseBase = 50;
     private int decalageX, decalageY;    //pour plus tard essayer de centrer la carte dans le JScrollPane
     private int tailleOpti;
-    private Image imgPiece, img, imgVide, imgRobot, imgBonus, imgBoule, imgMap, imgPT;
+    private Image imgPiece, img, imgVide, imgRobot, imgBonus, imgBoule, imgMap, imgPT, imgBase;
     private int px, py; //pour faire la difference lors du drag
 
     /**
@@ -47,6 +47,7 @@ public class ViewCarte extends javax.swing.JPanel {
         imgVide = cont.getVide();
         try {
             // Initialisation des images:
+            imgBase = ImageIO.read(new File("./src/sim/tricycle/ihm/images/base.png"));
             imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robotCR.png"));
             imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/bonus.png"));
             imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/boule.png"));
@@ -119,7 +120,9 @@ public class ViewCarte extends javax.swing.JPanel {
             g.setColor(Color.BLACK);
             g.drawRect(x, y, width, width);
         }
-        if (c.whoIam() == TypeCase.mur) {                             //MUR
+        if (c.whoIam() == TypeCase.base) {                                  //BASE
+            g.drawImage(imgVide, x, y, width, width, this);
+        } else if (c.whoIam() == TypeCase.mur) {                             //MUR
             // SI pas de map de fond => on affiche les murs.
             if (aff) {
                 try {
@@ -130,9 +133,9 @@ public class ViewCarte extends javax.swing.JPanel {
                 g.drawImage(img, x, y, width, width, this);
             }
 
-        } else {                                                   //VIDE
-            char ch=c.getId().charAt(0);
-            if (ch == 'A'||ch == 'C') {
+        } else {                                                            //VIDE
+            char ch = c.getId().charAt(0);
+            if (ch == 'A' || ch == 'C') {
                 //Si case à motif 
                 try {
                     // on recupere l'image corespondante à l'id.
@@ -146,7 +149,7 @@ public class ViewCarte extends javax.swing.JPanel {
                 g.drawImage(imgVide, x, y, width, width, this);
             }
         }
-        if (c.hasZone()) {             //-------------------Pt de controle
+        if (c.hasZone()) {                          //-------------------Pt de controle
 
             if (c.getZone().whoIam() == TypeCase.ptDeControle) {
                 PointDeControle pt = (PointDeControle) c.getZone();
@@ -178,18 +181,18 @@ public class ViewCarte extends javax.swing.JPanel {
                 g.drawImage(imgPT, x, y, width, width, this);
             }
         }
-        if (c.whoIam() == TypeCase.piece) {                          //PIECE
+        if (c.whoIam() == TypeCase.piece) {                              //PIECE
             g.drawImage(imgPiece, x, y, width, width, this);
 
-        } else if (c.whoIam() == TypeCase.bonus) {                    //BONUS
+        } else if (c.whoIam() == TypeCase.bonus) {                        //BONUS
             g.drawImage(imgBonus, x, y, width, width, this);
 
-        } else if (c.whoIam() == TypeCase.boule) {                    //BOULE
+        } else if (c.whoIam() == TypeCase.boule) {                        //BOULE
             g.drawImage(imgBoule, x, y, width, width, this);
         }
         // possible superposition de robot sur objet:
-        if (c.robotPresent()) {                                       //ROBOT
-            sim.tricycle.robot.Robot rob =c.getRobotPresent();
+        if (c.robotPresent()) {                                           //ROBOT
+            sim.tricycle.robot.Robot rob = c.getRobotPresent();
             g.drawImage(imgRobot, x, y, width, width, this);
         }
     }
@@ -252,8 +255,8 @@ public class ViewCarte extends javax.swing.JPanel {
         px = evt.getLocationOnScreen().x - this.getX();
         py = evt.getLocationOnScreen().y - this.getY();
 
-     //   System.out.println("click position : " + px + " " + py);
-       // System.out.println("POSITION dans le composant : X " + this.getMousePosition().x + " Y " + this.getMousePosition().y);
+        //   System.out.println("click position : " + px + " " + py);
+        // System.out.println("POSITION dans le composant : X " + this.getMousePosition().x + " Y " + this.getMousePosition().y);
     }//GEN-LAST:event_formMousePressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
