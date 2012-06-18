@@ -6,10 +6,12 @@ import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.util.Observable;
 import java.util.Observer;
+import sim.tricycle.AbstractJeu;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
-import sim.tricycle.mapping.Carte;
-import sim.tricycle.mapping.AbstractCarteGlobal;
+import sim.tricycle.mapping.CarteTeam;
+import sim.tricycle.mapping.AbstractCarte;
+import sim.tricycle.mapping.CarteObjective;
 
 /**
  *
@@ -20,21 +22,21 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
     private ViewCarte vc;
     private ViewMiniCarte vmc;
     private OrdonnanceurInterface oi = null;
-    private AbstractCarteGlobal cont = null;
+    private AbstractJeu cont = null;
 
     /**
      * 
      */
-    public FrameGame1(AbstractCarteGlobal ConteneurCarte) {
+    public FrameGame1(AbstractJeu Conteneur) {
         initComponents();
-        Carte carte = ConteneurCarte.getCarte();
-        cont = ConteneurCarte;
+        CarteObjective carte = Conteneur.getCarte();
+        cont = Conteneur;
         
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
 
-        vc = new ViewCarte(ConteneurCarte);
-        vmc = new ViewMiniCarte(ConteneurCarte, vc);
+        vc = new ViewCarte(Conteneur);
+        vmc = new ViewMiniCarte(Conteneur, vc);
 
         panMiniMap.setLayout(new BorderLayout());
         vmc.setVisible(true);

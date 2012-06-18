@@ -8,11 +8,12 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import sim.tricycle.AbstractJeu;
 import sim.tricycle.mapping.CarteInterface;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.PointDeControle;
-import sim.tricycle.mapping.AbstractCarteGlobal;
+import sim.tricycle.mapping.AbstractCarte;
 
 /**
  *
@@ -31,20 +32,20 @@ public class ViewCarte extends javax.swing.JPanel {
     /**
      * Constructeur de carte implémentées
      */
-    public ViewCarte(AbstractCarteGlobal cont) {
+    public ViewCarte(AbstractJeu cont) {
         initComponents();
 
         this.carte = cont.getCarte();
         this.tailleCase = this.tailleCaseBase;
-        imgMap = cont.getImage();
+        imgMap = carte.getImage();
         initialiserImage(cont);
     }
 
     /*
      * Initialise toutes les images néccéssaires.
      */
-    public void initialiserImage(AbstractCarteGlobal cont) {
-        imgVide = cont.getVide();
+    public void initialiserImage(AbstractJeu cont) {
+        imgVide = carte.getVide();
         try {
             // Initialisation des images:
             imgBase = ImageIO.read(new File("./src/sim/tricycle/ihm/images/base.png"));
