@@ -19,8 +19,8 @@ public class Ramasser extends AbstractAction{
 
     @Override
     protected Object doExecute(Robot bot) {
-        bot.getTeam().ajouterRessource(ressource.getItem());
-        bot.getMapObjective().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()).myItem().supprimerObjet();
+        bot.getEquipe().ajouterRessource(ressource.getItem());
+        bot.getMapTeam().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()).myItem().supprimerObjet();
     //    System.out.println("Ramassage: " + bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
         return null;
     }

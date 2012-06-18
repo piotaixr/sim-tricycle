@@ -8,7 +8,6 @@ import sim.tricycle.mapping.Carte;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.robot.action.Sleep;
-import sim.tricycle.robot.action.core.AbstractAction;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.robot.action.core.ActionInterface;
 import sim.tricycle.team.Team;
@@ -25,20 +24,13 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     protected Sens direction;
     protected int portee;
     protected ArrayDeque<ActionInterface> actions = new ArrayDeque();
-    protected Stack<ActionInterface> pileActions = new Stack();
+    protected Stack<AbstractActionComposee> pileActionsComposees = new Stack();
+    protected Stack<ArrayDeque<ActionInterface>> pileFileActions = new Stack();
     protected Etat etatCourant;
     protected Etat etatDestination;
     protected Automate automate;
     protected Team equipe;
-    /**
-     * @deprecated
-     */
-    protected Carte mapTeam;
-    /**
-     * @deprecated
-     */
-    protected Carte mapObjective;
-
+ 
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
      *
@@ -47,38 +39,92 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     public Robot(Automate automate, Team equipe) {
         this.automate = automate;
         this.equipe = equipe;
-        this.mapTeam = equipe.getMap();
-
     }
 
-    public Robot(Automate automate, Carte mapObjective) {
+    public Robot(Automate automate) {
         this.automate = automate;
-        this.mapObjective = mapObjective;
     }
 
-    public Robot(Automate automate, Team equipe, Carte mapObjective) {
-        this.automate = automate;
-        this.mapObjective = mapObjective;
-        this.equipe = equipe;
-        this.mapTeam = equipe.getMap();
-    }
-
-    public Robot(Carte mapObjective) {
-        this.mapObjective = mapObjective;
-    }
-
-    public Robot(Team t, Carte mapObjective) {
+    public Robot(Team t) {
         this.equipe = t;
-        this.mapObjective = mapObjective;
     }
 
-    public Robot(Team equipe) {
-        this.automate = null;
-        this.equipe = equipe;
-        this.mapTeam = equipe.getMap();
+    /**Retourne la case qui se trouve devant les robot*/
+
+    
+
+    public void collerRobotSurMap() {
+        if (!this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
+            this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
+        }
     }
 
-    public Point getCoordonnees() {
+    public void decollerRobotDeMap() {
+        if (this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
+            this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
+        }
+    }
+
+      private Transition findTransition() {
+        Iterator<Transition> it = etatCourant.getTransitions().iterator();
+        Transition valide = null;
+        System.out.println(etatCourant.getTransitions().size());
+        while (valide == null && it.hasNext()) {
+            Transition t = it.next();
+            if (t.getCondition().test()) {
+                valide = t;
+            }
+        }
+        return valide;
+    }
+
+    /**
+     * Fonction appelée a chaque tick d'horloge
+     *
+     * @todo coder cette fonction
+     */
+    @Override
+    public void executeAction() {    
+
+        if (!actions.isEmpty()) {
+            if (actions.getFirst().isComposee()) {
+                AbstractActionComposee a = (AbstractActionComposee) actions.pollFirst();
+                pileActionsComposees.push(a);
+                pileFileActions.push(actions);
+                actions = new ArrayDeque();
+                actions.addAll(a.getSuiteActions());
+                this.executeAction();
+            } else {
+                actions.pollFirst().executer(this);
+            }
+        } else {
+            if (!pileActionsComposees.isEmpty()) {
+                actions.addAll(pileActionsComposees);
+                pileActionsComposees.clear();
+                this.executeAction();
+            } else {
+                if (etatDestination != null) {
+                    System.out.println("change etat" + etatDestination.getId());
+                    etatCourant = etatDestination;
+                }
+                Transition t = findTransition();
+                if (t == null || t.getActions().isEmpty()) {
+                    actions.add(new Sleep());
+                }
+                actions.addAll(t.getActions());
+                etatDestination = t.getEtatDestination();
+            }
+        }
+    }
+
+    public Environnement getEnvironnement() {
+        if (environnement == null) {
+            environnement = new Environnement(equipe, this);
+        }
+        return environnement;
+    }
+    
+        public Point getCoordonnees() {
         return this.coordonnees;
     }
 
@@ -101,8 +147,8 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     public void setPortee(int newPortee) {
         this.portee = newPortee;
     }
-
-    public ArrayDeque<ActionInterface> getActions() {
+    
+        public ArrayDeque<ActionInterface> getActions() {
         return actions;
     }
 
@@ -117,160 +163,37 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     public void setEtat(Etat newEtat) {
         this.etatCourant = newEtat;
     }
-
-    public Team getTeam() {
-        return this.equipe;
+    
+       public Automate getAutomate() {
+        return automate;
     }
 
-    public Carte getMapTeam() {
-        return this.mapTeam;
+    public void setAutomate(Automate automate) {
+        this.automate = automate;
     }
 
-    public Carte getMapObjective() {
-        return mapObjective;
+    public Team getEquipe() {
+        return equipe;
     }
 
-    /**
-     * Retourne la case qui se trouve devant les robot
-     */
-    public Point caseDevant() {
-        int X = this.getCoordonnees().getX();
-        int Y = this.getCoordonnees().getY();
-
-        switch (this.getDirection()) {
-            case NORD:
-                if (Y >= 0) {
-                    Y = Y - 1;
-                } else {
-                    throw new RuntimeException("pas de case face au robot");
-                }
-                break;
-
-            case EST:
-                if (X != this.getMapObjective().getLargeur()) {
-                    X = X + 1;
-                } else {
-                    throw new RuntimeException("pas de case face au robot");
-                }
-                break;
-
-            case SUD:
-                if (Y != this.getMapObjective().getHauteur()) {
-                    Y = Y + 1;
-                } else {
-                    throw new RuntimeException("pas de case face au robot");
-                }
-                break;
-
-            case OUEST:
-                if (X >= 0) {
-                    X = X - 1;
-                }
-                break;
-        }
-        return new Point(X, Y);
+    public void setEquipe(Team equipe) {
+        this.equipe = equipe;
     }
 
-    /**
-     * @deprecated
-     */
-    public void collerRobotSurMap() {
-        if (!this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
-            this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
-        }
+    public Etat getEtatDestination() {
+        return etatDestination;
     }
 
-    /**
-     * @deprecated
-     */
-    public void decollerRobotDeMap() {
-        if (this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
-            this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
-        }
+    public void setEtatDestination(Etat etatDestination) {
+        this.etatDestination = etatDestination;
     }
-
-    /**
-     * @deprecated
-     */
+    
+    public Carte getMapTeam(){
+        return this.equipe.getMap();
+    }
+    
     @Override
     public TypeCase whoIam() {
         return (TypeCase.robot);
-    }
-
-    /**
-     * Fonction appelée a chaque tick d'horloge
-     *
-     * @todo coder cette fonction
-     */
-    public void executeAction() {
-//        if (actions.isEmpty()) {
-//            // liste actions vide, on change d'état
-//            etatCourant = etatDestination;
-//            // parcours des transitions
-//            List<Transition> transitions = etatCourant.getTransitions();
-//            Iterator<Transition> it = transitions.iterator();
-//            while (it.hasNext()) {
-//                Transition t = it.next();
-//                // si condition non valide, on passe à la suivante
-//                if (!t.getCondition().test()) {
-//                    continue;
-//                }
-//                //ajout des actions
-//                List<ActionInterface> newActions = t.getActions();
-//                actions.addAll(newActions);
-//                //on donne l'etat de destination
-//                etatDestination = t.getEtatDestination();
-//                break;
-//            }
-//        }      
-
-        if (!actions.isEmpty()) {
-            if (actions.getFirst().isComposee()) {
-                AbstractActionComposee a = (AbstractActionComposee) actions.pollFirst();
-                pileActions.addAll(actions);
-                actions = new ArrayDeque();
-                actions.addAll(a.getSuiteActions());
-                this.executeAction();
-            } else {
-                actions.pollFirst().executer(this);
-            }
-        } else {
-            if (!pileActions.isEmpty()) {
-                actions.addAll(pileActions);
-                pileActions.clear();
-                this.executeAction();
-            } else {
-                if (etatDestination != null) {
-                    System.out.println("change etat" + etatDestination.getId());
-                    etatCourant = etatDestination;
-                }
-                Transition t = findTransition();
-                if (t == null || t.getActions().isEmpty()) {
-                    pileActions.add(new Sleep());
-                }
-                pileActions.addAll(t.getActions());
-                etatDestination = t.getEtatDestination();
-            }
-        }
-    }
-
-    public Environnement getEnvironnement() {
-        if (environnement == null) {
-            environnement = new Environnement(getTeam(), this);
-        }
-        return environnement;
-    }
-
-    private Transition findTransition() {
-        Iterator<Transition> it = etatCourant.getTransitions().iterator();
-        Transition valide = null;
-        System.out.println(etatCourant.getTransitions().size());
-        while (valide == null && it.hasNext()) {
-            Transition t = it.next();
-            if (t.getCondition().test()) {
-                valide = t;
-            }
-        }
-        return valide;
     }
 }

@@ -378,8 +378,8 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
 
         panZoom.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        sldZoom.setMaximum(200);
-        sldZoom.setMinimum(40);
+        sldZoom.setMaximum(220);
+        sldZoom.setMinimum(30);
         sldZoom.setValue(100);
         sldZoom.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {

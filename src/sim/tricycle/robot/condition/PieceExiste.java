@@ -29,7 +29,7 @@ public class PieceExiste extends AbstractCondition {
     @Override
     public boolean test() {
         Robot bot = (Robot) o.getActiveTask();
-        Carte c = bot.getMapObjective();
+        Carte c = bot.getMapTeam();
         for(int i=0; i< c.getHauteur(); i++){
             for(int j = 0; i< c.getLargeur(); i++){
                 if(c.getCase(i, j).whoIam() == TypeCase.piece)

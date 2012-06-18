@@ -13,15 +13,12 @@ import sim.tricycle.robot.Robot;
  */
 public abstract class AbstractActionComposee extends AbstractAction{
     
-    
-   
-    
     protected ArrayDeque<AbstractAction> suiteActions;
 
     
     public AbstractActionComposee(){
         super();
-        this.composee=true;
+        this.setPoids(0);
     } 
     
     public ArrayDeque<AbstractAction> getSuiteActions() {
@@ -31,5 +28,17 @@ public abstract class AbstractActionComposee extends AbstractAction{
     public void setSuiteActions(ArrayDeque<AbstractAction> suiteActions) {
         this.suiteActions = suiteActions;
     }
+    
+    @Override
+    public Object doExecute(Robot bot){
+        
+        return null;
+    }
+
+    @Override
+    public boolean isComposee() {
+        return true;
+    }
+    
     
 }

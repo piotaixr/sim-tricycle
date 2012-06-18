@@ -16,11 +16,12 @@ import sim.tricycle.robot.action.core.AbstractActionComposee;
 public class PiecePlusProche extends AbstractActionComposee{
 
     public PiecePlusProche() {
+        
     }
     
     @Override
     public Object doExecute(Robot bot){
-        Carte c = bot.getMapObjective();
+        Carte c = bot.getMapTeam();
         for(int i=0; i< c.getHauteur(); i++){
             for(int j = 0; i< c.getLargeur(); i++){
                 if(c.getCase(i, j).whoIam() == TypeCase.piece)

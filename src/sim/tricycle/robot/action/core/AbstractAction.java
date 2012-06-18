@@ -15,7 +15,6 @@ public abstract class AbstractAction implements ActionInterface {
 
     private int poids = 1;
     private Variable destination = null;
-     boolean composee = false;
 
     public AbstractAction(int poids) {
         this.poids = poids;
@@ -43,20 +42,21 @@ public abstract class AbstractAction implements ActionInterface {
         destination = variable;
     }
 
+    public void setParameters() {
+    }
+
     @Override
     public void executer(Robot bot) {
         Object retour = doExecute(bot);
-        if(destination != null)
+        if (destination != null) {
             destination.setValue(retour);
+        }
     }
 
     protected abstract Object doExecute(Robot bot);
-    
-        
-    public boolean isComposee(){
-        return this.composee;
-    }
-    
-        public void setParameters() {
+
+    @Override
+    public boolean isComposee() {
+        return false;
     }
 }

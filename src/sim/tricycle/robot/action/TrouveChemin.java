@@ -7,6 +7,7 @@ import sim.tricycle.robot.Noeud;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractAction;
+import sim.tricycle.utils.params.types.Reference;
 
 /**
  *
@@ -14,18 +15,17 @@ import sim.tricycle.robot.action.core.AbstractAction;
  */
 public class TrouveChemin extends AbstractAction {
 
-    private Point pDest;
-    private LinkedList<Noeud> chemin;
+    private Point pDest = null;
+    private LinkedList<Noeud> chemin = new LinkedList<Noeud>();
+    private Reference refPointDest = null;
 
     public TrouveChemin(Point pDest) {
         super();
         this.pDest = pDest;
-        this.chemin = new LinkedList<Noeud>();
     }
 
     public TrouveChemin() {
         super();
-        this.chemin = new LinkedList<Noeud>();
     }
         
     public LinkedList<Noeud> getChemin() {
@@ -34,9 +34,11 @@ public class TrouveChemin extends AbstractAction {
 
     @Override
     protected Object doExecute(Robot bot) {
-        this.chemin = plusCourtChemin(new Point(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()), bot);
         //  System.out.print("Coucou");
-        return null;
+        if(refPointDest != null){
+            pDest = (Point) refPointDest.getValue();
+        }
+        return  plusCourtChemin(new Point(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()), bot);
     }
 
     private void insereEnOrdre(Noeud n, LinkedList<Noeud> listeNoeuds) {
@@ -74,7 +76,7 @@ public class TrouveChemin extends AbstractAction {
             //  System.out.println("Y :"+courant.getPoint().getY());
             //System.out.println("Bot :"+bot.getPosition().getX());
 
-            bot.getMapObjective().casesVoisines(bot.getMapObjective(), new Case(courant.getPoint().getX(), courant.getPoint().getY()), listeVoisins);
+            bot.getMapTeam().casesVoisines(bot.getMapTeam(), new Case(courant.getPoint().getX(), courant.getPoint().getY()), listeVoisins);
             //        System.out.println("nbVoisins :"+listeVoisins.size());
             for (Case c : listeVoisins) {
                 if (!c.hasObstacle()) {
@@ -119,5 +121,9 @@ public class TrouveChemin extends AbstractAction {
 
     public void setpDest(Point pDest) {
         this.pDest = pDest;
+    }
+    
+    public void setParameters(Reference refPointDest){
+        this.refPointDest = refPointDest;
     }
 }

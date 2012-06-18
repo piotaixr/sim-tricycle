@@ -4,40 +4,40 @@
  */
 package sim.tricycle.robot.action;
 
-
 import sim.tricycle.mapping.Case;
+import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.AbstractBatiment;
+import sim.tricycle.mapping.elementCase.Tour;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractAction;
+import sim.tricycle.utils.params.types.Variable;
 
 /**
  *
- * @author Marion DALLE  mariondallesoulard@gmail.com
+ * @author marion
  */
-public class Construction extends AbstractAction {
+public class InitialisationConstruction extends AbstractAction{
     
-    
- 
-    
+
     @Override
     protected Object doExecute(Robot bot) {
         
+                
         Case c = bot.getMapObjective().getCase(bot.caseDevant().getX(),bot.caseDevant().getY());
-        AbstractBatiment bat = (AbstractBatiment)c.myObstacle();
         
-       if(bat.getTemps()==0){
-            bot.getEquipe().supprimerRessource(bat.getItem(),bat.getPrix());
-            bat.setTemps(bat.getTemps()+1);
-            bot.getMapTeam().getCase(bot.caseDevant().getX(),bot.caseDevant().getY()).setObstacle(bat);
+        AbstractBatiment bat = new Tour(c);
+        
+        if (c.whoIam()== TypeCase.vide){
+            c.setObstacle(bat);            
         }
-       else bat.setTemps(bat.getTemps()+1); 
-       return null;
+        else throw new RuntimeException("la case n'est pas vide");
+        
+        return null;
     }
 
     @Override
     public String getId() {
-        return "construction";
+        return "initialisation construction";
     }
     
-   
 }

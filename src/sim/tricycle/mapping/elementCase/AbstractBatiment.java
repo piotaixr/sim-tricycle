@@ -16,6 +16,8 @@ public abstract class AbstractBatiment extends AbstractObstacle {
     protected int tempsMax;
     protected int portee;
     protected AbstractObjet Item;
+    
+    
 
     public AbstractObjet getItem() {
         return Item;
