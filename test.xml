@@ -27,7 +27,7 @@
 </transition>
 <transition>
 <condition nom="true"/>
-<action nom="aller">
+<action nom="allera">
 <parametre type="var">piece</parametre>
 </action>
 <etat id="normal"/>
@@ -49,7 +49,7 @@
 </transition>
 <transition>
 <condition nom="true"/>
-<action nom="aller">
+<action nom="allera">
 <parametre type="var">base</parametre>
 </action>
 <etat id="deplacement_port"/>

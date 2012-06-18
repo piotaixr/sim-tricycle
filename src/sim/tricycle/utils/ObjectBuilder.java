@@ -6,6 +6,7 @@ import sim.tricycle.robot.action.*;
 import sim.tricycle.robot.action.core.ActionFactory;
 import sim.tricycle.robot.action.core.ActionFactoryInterface;
 import sim.tricycle.robot.condition.ConditionTrue;
+import sim.tricycle.robot.condition.Contains;
 import sim.tricycle.robot.condition.PieceTrouvee;
 import sim.tricycle.robot.condition.core.ConditionFactory;
 import sim.tricycle.robot.condition.core.ConditionFactoryInterface;
@@ -47,7 +48,8 @@ public class ObjectBuilder {
             conditionFactory.register(new ConditionTrue())
                     .register(new PieceTrouvee())
                     .register(new TestCaseRobotEgalCasePiece(getVarBuilder().buidReference("self.case"), getVarBuilder().buildVariable("piece")))
-                    .register(new TestCaseRobotEgalCaseBase(getVarBuilder().buidReference("self.case"), getVarBuilder().buildVariable("team.base")));;
+                    .register(new TestCaseRobotEgalCaseBase(getVarBuilder().buidReference("self.case"), getVarBuilder().buildVariable("team.base")))
+                    .register(new Contains());
         }
         
         return conditionFactory;
@@ -63,7 +65,8 @@ public class ObjectBuilder {
                     .register(new ArreterTout())
                     .register(new SeTeleporterA())
                     .register(new Sleep())
-                    .register(new Ramasser());
+                    .register(new Ramasser())
+                    .register(new Deposer());
         }
         
         return actionFactory;
