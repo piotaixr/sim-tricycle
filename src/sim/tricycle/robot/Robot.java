@@ -23,20 +23,12 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     protected Sens direction;
     protected int portee;
     protected ArrayDeque<AbstractAction> actions = new ArrayDeque();
-    protected Stack<AbstractAction> pileActions = new Stack();
+    protected Stack<ArrayDeque<AbstractAction>> pileActions = new Stack();
     protected Etat etatCourant;
     protected Etat etatDestination;
     protected Automate automate;
     protected Team equipe;
-    /**
-     * @deprecated
-     */
-    protected Carte mapTeam;
-        /**
-     * @deprecated
-     */
-    protected Carte mapObjective;
-
+ 
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
      *
@@ -45,142 +37,33 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     public Robot(Automate automate, Team equipe) {
         this.automate = automate;
         this.equipe = equipe;
-        this.mapTeam = equipe.getMap();
-
     }
 
-    public Robot(Automate automate, Carte mapObjective) {
+    public Robot(Automate automate) {
         this.automate = automate;
-        this.mapObjective = mapObjective;
     }
 
-    public Robot(Automate automate, Team equipe, Carte mapObjective) {
-        this.automate = automate;
-        this.mapObjective = mapObjective;
-        this.equipe = equipe;
-        this.mapTeam = equipe.getMap();
-    }
-
-    public Robot(Carte mapObjective) {
-        this.mapObjective = mapObjective;
-    }
-
-    public Robot(Team t, Carte mapObjective) {
+    public Robot(Team t) {
         this.equipe = t;
-        this.mapObjective = mapObjective;
-    }
-
-    public Robot(Team equipe) {
-        this.automate = null;
-        this.equipe = equipe;
-        this.mapTeam = equipe.getMap();
-    }
-
-    public Point getCoordonnees() {
-        return this.coordonnees;
-    }
-
-    public void setCoordonnees(Point newP) {
-        this.coordonnees = newP;
-    }
-
-    public Sens getDirection() {
-        return this.direction;
-    }
-
-    public void setDirection(Sens newDirection) {
-        this.direction = newDirection;
-    }
-
-    public int getPortee() {
-        return this.portee;
-    }
-
-    public void setPortee(int newPortee) {
-        this.portee = newPortee;
-    }
-
-    public ArrayDeque<AbstractAction> getActions() {
-        return actions;
-    }
-
-    public void setActions(ArrayDeque<AbstractAction> fileActions) {
-        this.actions = fileActions;
-    }
-
-    public Etat getEtat() {
-        return this.etatCourant;
-    }
-
-    public void setEtat(Etat newEtat) {
-        this.etatCourant = newEtat;
-    }
-
-    public Team getTeam() {
-        return this.equipe;
-    }
-
-    public Carte getMapTeam() {
-        return this.mapTeam;
-    }
-
-    public Carte getMapObjective() {
-        return mapObjective;
     }
 
     /**Retourne la case qui se trouve devant les robot*/
-    public Point caseDevant(){
-        int X = this.getCoordonnees().getX();
-        int Y = this.getCoordonnees().getY();
 
-        switch (this.getDirection()){
-            case NORD :
-                if (Y>=0)Y=Y-1;
-                else throw new RuntimeException("pas de case face au robot");                       
-                break;
-                
-            case EST :
-                if (X!=this.getMapObjective().getLargeur()) X=X+1;
-                else throw new RuntimeException("pas de case face au robot");
-                break;
-                
-            case SUD : 
-                if (Y!=this.getMapObjective().getHauteur()) Y=Y+1;
-                else throw new RuntimeException("pas de case face au robot");
-                break;
-                
-            case OUEST :
-                if (X>=0) X=X-1;
-                break;
-        }
-        return new Point(X,Y);        
-    }
     
-    /**
-     * @deprecated
-     */
+
     public void collerRobotSurMap() {
-        if (!this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
-            this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
+        if (!this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
+            this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
         }
     }
 
-    /**
-     * @deprecated
-     */
     public void decollerRobotDeMap() {
-        if (this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
-            this.mapObjective.getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
+        if (this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
+            this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
         }
     }
 
-    /**
-     * @deprecated
-     */
-    @Override
-    public TypeCase whoIam() {
-        return (TypeCase.robot);
-    }
+  
 
     /**
      * Fonction appelée a chaque tick d'horloge
@@ -212,7 +95,7 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         if(!actions.isEmpty()){
           if(actions.getFirst().isComposee()){
               AbstractActionComposee a = (AbstractActionComposee)actions.pollFirst();
-              pileActions.addAll(actions);
+              pileActions.add(actions);
               actions.clear();
               actions.addAll(a.getSuiteActions());
               this.executeAction();
@@ -221,7 +104,7 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
           }
         }else{
             if(!pileActions.isEmpty()){
-                actions.addAll(pileActions);
+                actions.addAll(pileActions.pop());
                 pileActions.clear();
                 this.executeAction();
             }
@@ -230,8 +113,89 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
 
     public Environnement getEnvironnement() {
         if (environnement == null) {
-            environnement = new Environnement(getTeam(), this);
+            environnement = new Environnement(equipe, this);
         }
         return environnement;
+    }
+    
+        public Point getCoordonnees() {
+        return this.coordonnees;
+    }
+
+    public void setCoordonnees(Point newP) {
+        this.coordonnees = newP;
+    }
+
+    public Sens getDirection() {
+        return this.direction;
+    }
+
+    public void setDirection(Sens newDirection) {
+        this.direction = newDirection;
+    }
+
+    public int getPortee() {
+        return this.portee;
+    }
+
+    public void setPortee(int newPortee) {
+        this.portee = newPortee;
+    }
+    
+        public ArrayDeque<AbstractAction> getActions() {
+        return actions;
+    }
+
+    public void setActions(ArrayDeque<AbstractAction> fileActions) {
+        this.actions = fileActions;
+    }
+
+    public Etat getEtat() {
+        return this.etatCourant;
+    }
+
+    public void setEtat(Etat newEtat) {
+        this.etatCourant = newEtat;
+    }
+    
+       public Automate getAutomate() {
+        return automate;
+    }
+
+    public void setAutomate(Automate automate) {
+        this.automate = automate;
+    }
+
+    public Team getEquipe() {
+        return equipe;
+    }
+
+    public void setEquipe(Team equipe) {
+        this.equipe = equipe;
+    }
+
+    public Etat getEtatDestination() {
+        return etatDestination;
+    }
+
+    public void setEtatDestination(Etat etatDestination) {
+        this.etatDestination = etatDestination;
+    }
+
+    public Stack<ArrayDeque<AbstractAction>> getPileActions() {
+        return pileActions;
+    }
+
+    public void setPileActions(Stack<ArrayDeque<AbstractAction>> pileActions) {
+        this.pileActions = pileActions;
+    }
+    
+    public Carte getMapTeam(){
+        return this.equipe.getMap();
+    }
+    
+    @Override
+    public TypeCase whoIam() {
+        return (TypeCase.robot);
     }
 }

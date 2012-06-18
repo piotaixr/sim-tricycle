@@ -23,7 +23,7 @@ public class TrouveCollectable extends AbstractAction{
     }
     
     public Object doExecute(Robot bot){
-        c = bot.getTeam().getCollectableCiblable();
+        c = bot.getEquipe().getCollectableCiblable();
         return null;
     }
     

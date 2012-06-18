@@ -34,9 +34,8 @@ public class TrouveChemin extends AbstractAction {
 
     @Override
     protected Object doExecute(Robot bot) {
-        this.chemin = plusCourtChemin(new Point(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()), bot);
         //  System.out.print("Coucou");
-        return null;
+        return  plusCourtChemin(new Point(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()), bot);
     }
 
     private void insereEnOrdre(Noeud n, LinkedList<Noeud> listeNoeuds) {
@@ -54,6 +53,7 @@ public class TrouveChemin extends AbstractAction {
         LinkedList<Noeud> listeFermee = new LinkedList();
         HashSet<Case> listeVoisins = new HashSet<Case>();
         Noeud n = new Noeud(pDep);
+        Point pDest = (Point)this.getParameters(); 
         n.setPoids(n.getPoint().distanceDepuis(pDest));
         n.setParent(null);
         listeOuverte.add(n);
@@ -74,7 +74,7 @@ public class TrouveChemin extends AbstractAction {
             //  System.out.println("Y :"+courant.getPoint().getY());
             //System.out.println("Bot :"+bot.getPosition().getX());
 
-            bot.getMapObjective().casesVoisines(bot.getMapObjective(), new Case(courant.getPoint().getX(), courant.getPoint().getY()), listeVoisins);
+            bot.getMapTeam().casesVoisines(bot.getMapTeam(), new Case(courant.getPoint().getX(), courant.getPoint().getY()), listeVoisins);
             //        System.out.println("nbVoisins :"+listeVoisins.size());
             for (Case c : listeVoisins) {
                 if (!c.hasObstacle()) {

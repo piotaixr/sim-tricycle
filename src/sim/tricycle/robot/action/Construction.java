@@ -27,9 +27,9 @@ public class Construction extends AbstractAction {
     protected Object doExecute(Robot bot) {
        AbstractBatiment bat = (AbstractBatiment)varbat.getValue();
        if(bat.getTemps()==0){
-            bot.getTeam().supprimerRessource(bat.getItem(),bat.getPrix());
+            bot.getEquipe().supprimerRessource(bat.getItem(),bat.getPrix());
             bat.setTemps(bat.getTemps()+1);
-            bot.getMapObjective().getCase(bot.caseDevant().getX(),bot.caseDevant().getY()).setObstacle(bat);
+            bot.getMapTeam().getCase(bot.caseDevant().getX(),bot.caseDevant().getY()).setObstacle(bat);
         }
        else bat.setTemps(bat.getTemps()+1); 
        return null;
