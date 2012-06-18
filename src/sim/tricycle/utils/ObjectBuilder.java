@@ -28,7 +28,8 @@ public class ObjectBuilder {
     private ParamConverterProviderInterface paramConverterProvider = null;
     private Ordonnanceur ordonnanceur = null;
     private ActionBuilder actionBuilder = null;
-    private ParameterCreator parameterCreator;
+    private VarBuilder varBuilder = null;
+    private ParameterCreator parameterCreator = null;
     
     public RobotParser getRobotParser() {
         if (parser == null) {
@@ -92,9 +93,12 @@ public class ObjectBuilder {
 
         return ordonnanceur;
     }
-
     public VarBuilder getVarBuilder() {
-        return getActionBuilder();
+        if (varBuilder == null) {
+            varBuilder = new VarBuilder(getOrdonnanceur());
+        }
+
+        return varBuilder;
     }
 
     public ActionBuilder getActionBuilder() {
