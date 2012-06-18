@@ -13,7 +13,7 @@ import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 public class Variable extends Reference implements VariableInterface {
 
     public Variable(String selector, OrdonnanceurInterface ordonnanceur) {
-        super(selector, ordonnanceur);
+        super("var." + selector, ordonnanceur);
     }
 
     @Override
