@@ -4,6 +4,7 @@
  */
 package sim.tricycle.robot.action;
 
+import sim.tricycle.mapping.elementCase.Piece;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.utils.ActionBuilder;
@@ -23,6 +24,13 @@ public class Collecter extends AbstractActionComposee {
 
     @Override
     protected Object doExecute(Robot bot) {
+        Piece piece = (Piece) varPiece.getValue();
+        
+        //on crée les "sous-actions"
+        getBuilder().addNewReturn("trouvechemin", "chemin", getBuilder().buildVariable("piece"))
+                .addNew("allera", getBuilder().buildVariable("chemin"))
+                .addNew("ramasser");
+        
         return null;
     }
 
@@ -35,12 +43,13 @@ public class Collecter extends AbstractActionComposee {
         this.varPiece = varPiece;
     }
 
-    public void setSuiteActions() {
-//        TrouveCollectable tc = new TrouveCollectable();
-//        CollecterUnePiece cup = new CollecterUnePiece();
-//        cup.setPiece((Piece)tc.getC().myItem());
-//        RevenirBase rb = new RevenirBase();
-//        this.suiteActions.add(cup);
-//        this.suiteActions.add(rb);
-    }
+//    public void computeNewActions() {
+//
+////        TrouveCollectable tc = new TrouveCollectable();
+////        CollecterUnePiece cup = new CollecterUnePiece();
+////        cup.setPiece((Piece)tc.getC().myItem());
+////        RevenirBase rb = new RevenirBase();
+////        this.suiteActions.add(cup);
+////        this.suiteActions.add(rb);
+//    }
 }
