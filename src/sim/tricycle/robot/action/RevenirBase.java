@@ -20,7 +20,7 @@ public class RevenirBase extends AbstractAction{
     }
     
     public Object doExecute(Robot bot){
-        aa.setP(bot.getTeam().getBase());
+        aa.setP(bot.getEquipe().getBase());
         aa.doExecute(bot);
         return null;
     }

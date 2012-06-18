@@ -17,6 +17,7 @@ import sim.tricycle.robot.action.core.AbstractActionComposee;
 public class Collecter extends AbstractActionComposee{
 
     public Collecter() {
+        super();
     }
     
     public Object doExecute(Robot bot){
@@ -32,8 +33,8 @@ public class Collecter extends AbstractActionComposee{
         return super.getSuiteActions();
     }
 
-    @Override
-    public void setSuiteActions(ArrayDeque<AbstractAction> suiteActions) {
+    
+    public void setSuiteActions() {
         TrouveCollectable tc = new TrouveCollectable();
         CollecterUnePiece cup = new CollecterUnePiece();
         cup.setPiece((Piece)tc.getC().myItem());

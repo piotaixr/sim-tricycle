@@ -16,8 +16,4 @@ public class Collecteur extends Robot {
     public Collecteur(Team equipe) {
         super(equipe);
     }
-    
-    public Collecteur(Team equipe,Carte c) {
-        super(equipe,c);
-    }
 }
