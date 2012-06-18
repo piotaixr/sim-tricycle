@@ -4,17 +4,23 @@
  */
 package sim.tricycle.ihm;
 
+import sim.tricycle.AbstractJeu;
+import sim.tricycle.Jeu;
+
 /**
  *
  * @author morgan
  */
 public class FrameMenu extends javax.swing.JFrame {
 
+    private AbstractJeu superGameDeLaMortQuiTue = new Jeu();
+
     /**
      * Creates new form FrameMenu
      */
-    public FrameMenu() {
+    public FrameMenu(AbstractJeu jeu) {
         initComponents();
+        superGameDeLaMortQuiTue = jeu;
     }
 
     /**
@@ -59,6 +65,11 @@ public class FrameMenu extends javax.swing.JFrame {
         btnGuid.getAccessibleContext().setAccessibleName("btnGuid");
 
         btnPlay.setText("PLAY");
+        btnPlay.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPlayMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,6 +92,13 @@ public class FrameMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPlayMouseClicked
+        // TODO add your handling code here:
+        FrameSelectTeamAndMap fstam = new FrameSelectTeamAndMap(superGameDeLaMortQuiTue);
+        fstam.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnPlayMouseClicked
 
     /**
      * @param args the command line arguments
@@ -119,7 +137,8 @@ public class FrameMenu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new FrameMenu().setVisible(true);
+                Jeu superGameDeLaMortQuiTue = new Jeu();
+                new FrameMenu(superGameDeLaMortQuiTue).setVisible(true);
             }
         });
     }

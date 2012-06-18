@@ -6,10 +6,11 @@ package sim.tricycle.ihm;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BoxLayout;
+import sim.tricycle.AbstractJeu;
+import sim.tricycle.Jeu;
 
 /**
  *
@@ -23,11 +24,13 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
     private int teamNumber = 1;
     private int maxAutoByTeam = 3;
     private int defaultHeight;
+    private AbstractJeu jeu;
     //private PopupFactory ppFtry = new PopupFactory();
 
-    public FrameTeamMaker() {
+    public FrameTeamMaker(AbstractJeu paraJeu) {
         initComponents();
-
+        
+        jeu = paraJeu;
         this.setLayout(new BorderLayout());
         this.add(panTitile, BorderLayout.PAGE_START);
         this.add(panFooter, BorderLayout.PAGE_END);
@@ -383,7 +386,8 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new FrameTeamMaker().setVisible(true);
+                AbstractJeu jeu = new Jeu();
+                new FrameTeamMaker(jeu).setVisible(true);
             }
         });
     }
