@@ -6,9 +6,9 @@ package sim.tricycle.mapping.nosCarte;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sim.tricycle.ihm.FilesFinder;
 
 /**
  *
@@ -18,7 +18,9 @@ public class CarteFichier implements Serializable {
 
     private String[][] mat;
     private String fond;
-
+    static final long serialVersionUID = 42L;
+    public static final String basename = "./Cartes/";
+    
     public CarteFichier(String[][] mat, String fond) {
         this.mat = mat;
         this.fond = fond;
@@ -39,7 +41,6 @@ public class CarteFichier implements Serializable {
     public void setMat(String[][] mat) {
         this.mat = mat;
     }
-    public static final String basename = "./Cartes/";
 
     public static void createFile(String nomFichier, String[][] mat, String imageFond) {
         CarteFichier cf = new CarteFichier(mat, imageFond);
@@ -59,8 +60,10 @@ public class CarteFichier implements Serializable {
         }
     }
 
-    public static List<String> getMapNames() {
-        return new ArrayList<String>();
+    public static ArrayList<String> getMapNames() {
+         FilesFinder finder = new FilesFinder();
+         //findImg renvoie le nom du fichier et son extension
+         return finder.findImg("./Cartes/");
     }
 
     public static CarteFichier fromFile(String nomFichier) {

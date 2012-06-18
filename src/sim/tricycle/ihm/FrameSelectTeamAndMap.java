@@ -7,7 +7,8 @@ package sim.tricycle.ihm;
 import java.util.ArrayList;
 import sim.tricycle.AbstractJeu;
 import sim.tricycle.Jeu;
-import sim.tricycle.mapping.CarteGlobalInterface;
+import sim.tricycle.mapping.nosCarte.CarteFichier;
+import sim.tricycle.mapping.nosCarte.CarteFromFile;
 
 /**
  *
@@ -20,12 +21,14 @@ public class FrameSelectTeamAndMap extends javax.swing.JFrame {
      */
     private ArrayList<String> maps = new ArrayList();
     private AbstractJeu jeu = new Jeu();
+    private CarteFromFile cff = null;
 
     public FrameSelectTeamAndMap(AbstractJeu jeu) {
         initComponents();
         this.jeu = jeu;
         FilesFinder finder = new FilesFinder();
-        maps = finder.findFiles("./src/sim/tricycle/mapping/nosCarte");
+       // maps = finder.findFiles("./src/sim/tricycle/mapping/nosCarte");
+        maps = CarteFichier.getMapNames();
         mappingCbxMap(maps);
     }
 
@@ -130,10 +133,10 @@ public class FrameSelectTeamAndMap extends javax.swing.JFrame {
 
     private void btnValidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnValidMouseClicked
         // TODO add your handling code here:
-        CarteGlobalInterface carte = null;
-        
+        cff = new CarteFromFile(CarteFichier.basename+cbxMap.getSelectedItem());
 
-        jeu.setCarte(carte);
+
+        jeu.setCarte(cff);
 
         FrameTeamMaker ftm = new FrameTeamMaker(jeu);
         ftm.setVisible(true);
