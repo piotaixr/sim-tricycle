@@ -89,20 +89,23 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         if (!actions.isEmpty()) {
             if (actions.getFirst().isComposee()) {
                 AbstractActionComposee a = (AbstractActionComposee) actions.pollFirst();
+                //sauvegarde du contexte
                 pileActionsComposees.push(a);
                 pileFileActions.push(actions);
                 actions = new ArrayDeque();
                 actions.addAll(a.getNewActions());
+                //on execute
                 this.executeAction();
             } else {
                 actions.pollFirst().executer(this);
             }
         } else {
-            if (!pileActionsComposees.isEmpty()) {
-                actions.addAll(pileActionsComposees);
-                pileActionsComposees.clear();
+            if (!pileActionsComposees.isEmpty()) {// rechargement du contexte: on depile
+                pileActionsComposees.pop();
+                actions = pileFileActions.pop();
                 this.executeAction();
             } else {
+                //actions vides, il faut changer d'etat et trouver une transition a prendre
                 if (etatDestination != null) {
                     System.out.println("change etat" + etatDestination.getId());
                     etatCourant = etatDestination;
@@ -111,6 +114,7 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
                 if (t == null || t.getActions().isEmpty()) {
                     actions.add(new Sleep());
                 }
+                // transition trouvée. On récupère les actions a executer ainsi que l'etet de destination
                 actions.addAll(t.getActions());
                 etatDestination = t.getEtatDestination();
             }
@@ -123,8 +127,8 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         }
         return environnement;
     }
-    
-        public Point getCoordonnees() {
+
+    public Point getCoordonnees() {
         return this.coordonnees;
     }
 
