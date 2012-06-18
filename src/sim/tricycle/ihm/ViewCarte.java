@@ -77,7 +77,6 @@ public class ViewCarte extends javax.swing.JPanel {
         if (carte.getHauteur() * tailleCase < this.getParent().getHeight()) {
             decalageY = (this.getParent().getHeight() - carte.getHauteur() * tailleCase) / 2;
         }
-
         boolean affFond = false;
         if (imgMap == null) {
             affFond = true;
@@ -158,7 +157,6 @@ public class ViewCarte extends javax.swing.JPanel {
                     coul = pt.getTeam().getColor();// Couleur de la team qui possède
                     //le point de controle.
                 }
-
                 g.setColor(Color.DARK_GRAY);//Rond de fond/
                 g.fillOval(x, y, width, width);
                 int coeff = width;
@@ -180,7 +178,6 @@ public class ViewCarte extends javax.swing.JPanel {
                 g.drawImage(imgPT, x, y, width, width, this);
             }
         }
-
         if (c.whoIam() == TypeCase.piece) {                          //PIECE
             g.drawImage(imgPiece, x, y, width, width, this);
 
@@ -193,9 +190,7 @@ public class ViewCarte extends javax.swing.JPanel {
         // possible superposition de robot sur objet:
         if (c.robotPresent()) {                                       //ROBOT
             g.drawImage(imgRobot, x, y, width, width, this);
-
         }
-
     }
 
     public void setTaille(int txZoom) {
