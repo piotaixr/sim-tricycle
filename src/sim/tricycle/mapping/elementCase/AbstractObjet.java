@@ -44,4 +44,8 @@ public abstract class AbstractObjet implements PossedeCaseInterface {
     public int obstacleItem (){
         return 1;
     }
+
+    public void setCase(Case c) {
+        pos = c;
+    }
 }
