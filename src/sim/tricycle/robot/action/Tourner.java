@@ -21,6 +21,9 @@ public class Tourner extends AbstractAction {
         super();
         this.direction = dir;
     }
+    public void setParameters(String direction){
+        this.direction = Sens.valueOf(direction);
+    }
 
     @Override
     protected Object doExecute(Robot bot) {

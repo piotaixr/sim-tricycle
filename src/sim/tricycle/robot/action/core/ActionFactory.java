@@ -5,17 +5,21 @@ import java.util.List;
 import sim.tricycle.utils.AbstractFactory;
 import sim.tricycle.utils.params.ParamConverterProviderInterface;
 import sim.tricycle.utils.params.Parameter;
+import sim.tricycle.utils.params.types.VarBuilder;
 
 /**
  *
  * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
  */
 public class ActionFactory extends AbstractFactory<String, ActionInterface> implements ActionFactoryInterface {
+    
+    private VarBuilder varBuilder;
 
-    public ActionFactory(ParamConverterProviderInterface paramConverterProvider) {
+    public ActionFactory(VarBuilder varBuilder, ParamConverterProviderInterface paramConverterProvider) {
         super(paramConverterProvider);
+        this.varBuilder = varBuilder;
     }
-
+    
     @Override
     public ActionInterface doCreate(String nom, List<Parameter> parameters) {
         ActionInterface returnValue = null;
@@ -39,7 +43,7 @@ public class ActionFactory extends AbstractFactory<String, ActionInterface> impl
     public ActionInterface create(String nom, List<Parameter> parameters, String nomVariableDest) {
         ActionInterface action = super.create(nom, parameters);
         if(nomVariableDest != null){
-            throw new UnsupportedOperationException("Creation de variables pas encore fait");
+            action.setVariableDestination(varBuilder.buildVariable(nomVariableDest.trim()));
         }
         return action;
     }

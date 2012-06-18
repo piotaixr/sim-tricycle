@@ -23,6 +23,10 @@ public class Avancer extends AbstractAction {
         this.nbCases = nbCases;
         this.setPoids(1);
     }
+    
+    public void setParameters(int nbCases){
+        this.nbCases = nbCases;
+    }
 
     @Override
     protected Object doExecute(Robot bot) {
