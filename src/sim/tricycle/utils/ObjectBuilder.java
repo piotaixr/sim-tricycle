@@ -63,7 +63,8 @@ public class ObjectBuilder {
                     .register(new ArreterTout())
                     .register(new SeTeleporterA())
                     .register(new Sleep())
-                    .register(new Ramasser());
+                    .register(new Ramasser())
+                    .register(new TrouveChemin());
         }
         
         return actionFactory;
