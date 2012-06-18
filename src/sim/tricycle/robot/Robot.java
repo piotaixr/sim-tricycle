@@ -47,10 +47,6 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         this.equipe = t;
     }
 
-    /**Retourne la case qui se trouve devant les robot*/
-
-    
-
     public void collerRobotSurMap() {
         if (!this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
             this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
@@ -62,13 +58,9 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
             this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
         }
     }
-
-  
-
+    
     /**
      * Fonction appelée a chaque tick d'horloge
-     *
-     * @todo coder cette fonction
      */
     public void executeAction() {
 //        if (actions.isEmpty()) {
@@ -96,7 +88,7 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
           if(actions.getFirst().isComposee()){
               AbstractActionComposee a = (AbstractActionComposee)actions.pollFirst();
               pileActions.add(actions);
-              actions.clear();
+              actions=new ArrayDeque<AbstractAction>();
               actions.addAll(a.getSuiteActions());
               this.executeAction();
           }else{
@@ -118,7 +110,7 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         return environnement;
     }
     
-        public Point getCoordonnees() {
+    public Point getCoordonnees() {
         return this.coordonnees;
     }
 

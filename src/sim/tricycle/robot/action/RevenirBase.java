@@ -6,22 +6,23 @@ package sim.tricycle.robot.action;
 
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractAction;
+import sim.tricycle.robot.action.core.AbstractActionComposee;
 
 /**
  *
  * @author Adri
  */
-public class RevenirBase extends AbstractAction{
+public class RevenirBase extends AbstractActionComposee{
     
-    AllerA aa;
-
     public RevenirBase(){
         super();
+        this.suiteActions.add(new TrouveChemin());
+        this.suiteActions.add(new AllerA());
     }
     
     public Object doExecute(Robot bot){
-        aa.setP(bot.getEquipe().getBase());
-        aa.doExecute(bot);
+        
+        bot.setActions(suiteActions);
         return null;
     }
     
@@ -29,12 +30,6 @@ public class RevenirBase extends AbstractAction{
         return "revenirBase";
     }
     
-    public AllerA getAa() {
-        return aa;
-    }
 
-    public void setAa(AllerA aa) {
-        this.aa = aa;
-    }
     
 }

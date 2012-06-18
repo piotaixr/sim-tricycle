@@ -15,7 +15,7 @@ import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Sens;
 import sim.tricycle.robot.action.AllerA;
 import sim.tricycle.robot.action.Avancer;
-import sim.tricycle.robot.action.CollecterUnePiece;
+import sim.tricycle.robot.action.Collecter;
 import sim.tricycle.robot.action.Tourner;
 import sim.tricycle.team.Ressource;
 
@@ -38,14 +38,14 @@ public class SimTricycle {
         sim.tricycle.robot.Robot bot;
 
 
-        bot = new Collecteur(t, c);
+        bot = new Collecteur(t);
         bot.setCoordonnees(new Point(3, 8));
         bot.setDirection(Sens.NORD);
         bot.collerRobotSurMap();
 
 
 
-        CollecterUnePiece cup = new CollecterUnePiece();
+        Collecter cup = new Collecter();
         c.pop(new Piece(c.getCase(36, 36)), c.getCase(36, 36));
         Piece p = (Piece) c.getCase(36, 36).myItem();
            cup.setPiece(p);

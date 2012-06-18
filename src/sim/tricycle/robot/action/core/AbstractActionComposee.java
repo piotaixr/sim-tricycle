@@ -34,7 +34,10 @@ public abstract class AbstractActionComposee extends AbstractAction{
     }
     
     public Object doExecute(Robot bot){
-        
-        return null;
+
+              bot.getPileActions().add(bot.getActions().clone());
+              bot.getActions().clear();
+              bot.getActions().addAll(this.suiteActions);
+              return null;
     }
 }
