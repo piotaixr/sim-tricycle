@@ -68,10 +68,10 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
       private Transition findTransition() {
         Iterator<Transition> it = etatCourant.getTransitions().iterator();
         Transition valide = null;
-        System.out.println(etatCourant.getTransitions().size());
         while (valide == null && it.hasNext()) {
             Transition t = it.next();
             if (t.getCondition().test()) {
+                System.out.println("Robot: transition choisie. Condition: " + t.getCondition().getId());
                 valide = t;
             }
         }
@@ -94,7 +94,9 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
                 pileFileActions.push(actions);
                 actions = new ArrayDeque();
                 actions.addAll(a.getNewActions());
+                
                 //on execute
+                a.executer(this);
                 this.executeAction();
             } else {
                 actions.pollFirst().executer(this);
