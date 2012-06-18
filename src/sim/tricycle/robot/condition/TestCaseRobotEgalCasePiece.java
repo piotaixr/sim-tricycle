@@ -2,22 +2,23 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sim.tricycle.robot.condition.core;
+package sim.tricycle.robot.condition;
 
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.elementCase.Piece;
+import sim.tricycle.robot.condition.core.AbstractCondition;
 import sim.tricycle.utils.params.types.Reference;
 
 /**
  *
  * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
  */
-public class TestCaseRobotEgalCaseBase extends AbstractCondition {
+public class TestCaseRobotEgalCasePiece extends AbstractCondition {
 
     private Reference refCase;
     private Reference refPiece;
 
-    public TestCaseRobotEgalCaseBase(Reference refCase, Reference refPiece) {
+    public TestCaseRobotEgalCasePiece(Reference refCase, Reference refPiece) {
         this.refCase = refCase;
         this.refPiece = refPiece;
     }
@@ -35,6 +36,6 @@ public class TestCaseRobotEgalCaseBase extends AbstractCondition {
 
     @Override
     public String getId() {
-        return "case==base";
+        return "case==piece";
     }
 }
