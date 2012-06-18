@@ -92,7 +92,7 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
                 pileActionsComposees.push(a);
                 pileFileActions.push(actions);
                 actions = new ArrayDeque();
-                actions.addAll(a.getSuiteActions());
+                actions.addAll(a.getNewActions());
                 this.executeAction();
             } else {
                 actions.pollFirst().executer(this);

@@ -5,6 +5,7 @@ import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.mapping.elementCase.PointDeControle;
 import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
+import sim.tricycle.robot.Robot;
 
 /**
  *
@@ -168,16 +169,17 @@ public class Carte implements CarteInterface {
 
     @Override
     public void pop(PossedeCaseInterface e, int x, int y) {
-        Case c = getCase(x,y);
-        if (c.hasItem() || c.hasObstacle()){
-            if (e.obstacleItem() ==1) {
-                c.setItem((AbstractObjet)e);                
+        Case c = getCase(x, y);
+        if (c.hasItem() || c.hasObstacle()) {
+            if (e.obstacleItem() == 1) {
+                c.setItem((AbstractObjet) e);
             }
-            if (e.obstacleItem()==2) {
-                c.setObstacle((AbstractObstacle)e);
+            if (e.obstacleItem() == 2) {
+                c.setObstacle((AbstractObstacle) e);
             }
+        } else {
+            throw new RuntimeException("Il y a déjà quelque chose sur la case");
         }
-        else throw new RuntimeException("Il y a déjà quelque chose sur la case");
     }
 
     @Override
@@ -197,5 +199,15 @@ public class Carte implements CarteInterface {
                 x.analyseCapture();
             }
         }
+    }
+
+    /**
+     * @todo a completer
+     *
+     * @param bot
+     * @return
+     */
+    public Case getCaseDevant(Robot bot) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

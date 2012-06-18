@@ -4,37 +4,36 @@
  */
 package sim.tricycle.robot.action.core;
 
-import java.util.ArrayDeque;
+import java.util.Deque;
 import sim.tricycle.robot.Robot;
+import sim.tricycle.utils.ActionBuilder;
 
 /**
  *
  * @author Adri
  */
-public abstract class AbstractActionComposee extends AbstractAction{
-    
-    protected ArrayDeque<ActionInterface> suiteActions;
-    
-    public AbstractActionComposee(){
-        super();
-        this.setPoids(0);
-    } 
-    
-    public ArrayDeque<ActionInterface> getSuiteActions() {
-        return suiteActions;
+public abstract class AbstractActionComposee extends AbstractAction {
+
+    private ActionBuilder builder;
+
+    public AbstractActionComposee(ActionBuilder builder) {
+        super(0);
+        this.builder = builder;
     }
 
-    public void setSuiteActions(ArrayDeque<ActionInterface> suiteActions) {
-        this.suiteActions = suiteActions;
+    public ActionBuilder getBuilder() {
+        return builder;
     }
     
+    public Deque<ActionInterface> getNewActions(){
+        return builder.getActions();
+    }
+
     @Override
-    public abstract Object doExecute(Robot bot);
+    protected abstract Object doExecute(Robot bot);
 
     @Override
     public boolean isComposee() {
         return true;
     }
-    
-    
 }

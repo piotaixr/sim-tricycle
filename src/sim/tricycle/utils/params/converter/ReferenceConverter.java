@@ -30,4 +30,9 @@ public class ReferenceConverter implements ParamConverterInterface {
     public Class getOutputClass() {
         return Reference.class;
     }
+
+    @Override
+    public String reveverseConvert(Object o) {
+        return ((Reference) o).getSelector();
+    }
 }

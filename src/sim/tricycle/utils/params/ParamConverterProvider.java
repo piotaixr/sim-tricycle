@@ -1,7 +1,9 @@
 package sim.tricycle.utils.params;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -41,5 +43,10 @@ public class ParamConverterProvider implements ParamConverterProviderInterface {
             register(p);
         }
         return this;
+    }
+
+    @Override
+    public Map<String, ParamConverterInterface> getConverters() {
+        return Collections.unmodifiableMap(converters);
     }
 }

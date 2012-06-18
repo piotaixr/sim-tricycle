@@ -90,14 +90,14 @@ public interface CaseInterface {
      *
      * @return l'objet.
      */
-    public AbstractObjet myItem();
+    public AbstractObjet getItem();
 
     /**
      * Renvoi l'obstacle associé.
      *
      * @return l'obstacle.
      */
-    public AbstractObstacle myObstacle();
+    public AbstractObstacle getObstacle();
 
     /**
      *

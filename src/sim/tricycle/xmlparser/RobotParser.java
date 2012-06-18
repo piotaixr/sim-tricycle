@@ -27,12 +27,13 @@ public class RobotParser {
     private ConditionFactoryInterface condifionFactory;
     private ParamConverterProviderInterface paramConverterProvider;
     private ActionFactoryInterface actionFactory;
-    private ParameterCreator parameterCreator = new ParameterCreator();
+    private ParameterCreator parameterCreator;
 
-    public RobotParser(ConditionFactoryInterface condifionFactory, ParamConverterProviderInterface paramConverterProvider, ActionFactoryInterface actionFactory) {
+    public RobotParser(ConditionFactoryInterface condifionFactory, ParamConverterProviderInterface paramConverterProvider, ActionFactoryInterface actionFactory, ParameterCreator parameterCreator) {
         this.condifionFactory = condifionFactory;
         this.paramConverterProvider = paramConverterProvider;
         this.actionFactory = actionFactory;
+        this.parameterCreator = parameterCreator;
     }
 
     public Automate parse(File f) {
@@ -121,22 +122,23 @@ public class RobotParser {
     }
 
     private ConditionInterface creerCondition(Element conditionTransitionElement) {
-        if(conditionTransitionElement == null){
+        if (conditionTransitionElement == null) {
             return condifionFactory.create("true");
         }
         String conditionNom = conditionTransitionElement.getAttributeValue("nom").trim();
         System.out.println("creerCondition /" + conditionNom + "/");
-        List<Parameter> parametersList = parameterCreator.toParameterList(conditionTransitionElement.getChildren("parametre"));
+        List<Parameter> parametersList = parameterCreator.elementListToParameterList(conditionTransitionElement.getChildren("parametre"));
 
         return condifionFactory.create(conditionNom, parametersList);
     }
 
     private ActionInterface creerAction(Element actionElement) {
         String actionNom = actionElement.getAttributeValue("nom").trim();
-        List<Parameter> parametersList = parameterCreator.toParameterList(actionElement.getChildren("parametre"));
+        List<Parameter> parametersList = parameterCreator.elementListToParameterList(actionElement.getChildren("parametre"));
         String variableDest = actionElement.getAttributeValue("dest");
-        if(variableDest != null)
+        if (variableDest != null) {
             variableDest = variableDest.trim();
+        }
 
         return actionFactory.create(actionNom, parametersList, variableDest);
     }

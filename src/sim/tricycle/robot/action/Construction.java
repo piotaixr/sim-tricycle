@@ -4,40 +4,40 @@
  */
 package sim.tricycle.robot.action;
 
-
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.elementCase.AbstractBatiment;
 import sim.tricycle.robot.Robot;
-import sim.tricycle.robot.action.core.AbstractAction;
+import sim.tricycle.robot.action.core.AbstractActionComposee;
+import sim.tricycle.utils.ActionBuilder;
 
 /**
  *
- * @author Marion DALLE  mariondallesoulard@gmail.com
+ * @author Marion DALLE mariondallesoulard@gmail.com
  */
-public class Construction extends AbstractAction {
-    
-    
- 
-    
+public class Construction extends AbstractActionComposee {
+
+    public Construction(ActionBuilder builder) {
+        super(builder);
+    }
+
     @Override
     protected Object doExecute(Robot bot) {
-        
-        Case c = bot.getMapObjective().getCase(bot.caseDevant().getX(),bot.caseDevant().getY());
-        AbstractBatiment bat = (AbstractBatiment)c.myObstacle();
-        
-       if(bat.getTemps()==0){
-            bot.getEquipe().supprimerRessource(bat.getItem(),bat.getPrix());
-            bat.setTemps(bat.getTemps()+1);
-            bot.getMapTeam().getCase(bot.caseDevant().getX(),bot.caseDevant().getY()).setObstacle(bat);
+
+        Case c = bot.getMapObjective().getCase(bot.caseDevant().getX(), bot.caseDevant().getY());
+        AbstractBatiment bat = (AbstractBatiment) c.getObstacle();
+
+        if (bat.getTemps() == 0) {
+            bot.getEquipe().supprimerRessource(bat.getItem(), bat.getPrix());
+            bat.setTemps(bat.getTemps() + 1);
+            bot.getMapTeam().getCase(bot.caseDevant().getX(), bot.caseDevant().getY()).setObstacle(bat);
+        } else {
+            bat.setTemps(bat.getTemps() + 1);
         }
-       else bat.setTemps(bat.getTemps()+1); 
-       return null;
+        return null;
     }
 
     @Override
     public String getId() {
         return "construction";
     }
-    
-   
 }

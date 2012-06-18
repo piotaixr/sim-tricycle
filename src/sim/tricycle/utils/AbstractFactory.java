@@ -12,9 +12,15 @@ public abstract class AbstractFactory<K, V extends IdentifiableInterface<? exten
 
     private HashMap<K, V> values = new HashMap();
     private ParamConverterProviderInterface paramConverterProvider;
+    private ParameterCreator parameterCreator;
 
-    public AbstractFactory(ParamConverterProviderInterface paramConverterProvider) {
+    public AbstractFactory(ParamConverterProviderInterface paramConverterProvider, ParameterCreator parameterCreator) {
         this.paramConverterProvider = paramConverterProvider;
+        this.parameterCreator = parameterCreator;
+    }
+
+    public ParameterCreator getParameterCreator() {
+        return parameterCreator;
     }
 
     public ParamConverterProviderInterface getParamConverterProvider() {
@@ -66,34 +72,6 @@ public abstract class AbstractFactory<K, V extends IdentifiableInterface<? exten
     }
 
     protected abstract V doCreate(K nom, List<Parameter> params);
-
-    protected Class[] toRequiredTypes(List<Parameter> parameters) {
-        int nombre = parameters.size();
-        Class[] types = new Class[nombre];
-        int i = 0;
-        Iterator<Parameter> it = parameters.iterator();
-        while (it.hasNext()) {
-            Parameter param = it.next();
-
-            types[i++] = paramConverterProvider.get(param.getType()).getOutputClass();
-        }
-
-        return types;
-    }
-
-    protected Object[] toConvertedValues(List<Parameter> parameters) {
-        int nombre = parameters.size();
-        Object[] arrayParams = new Object[nombre];
-        int i = 0;
-        Iterator<Parameter> it = parameters.iterator();
-        while (it.hasNext()) {
-            Parameter param = it.next();
-
-            arrayParams[i++] = paramConverterProvider.get(param.getType()).convert(param.getValue());
-        }
-
-        return arrayParams;
-    }
 
     protected RuntimeException traiteException(Exception e) {
         return new RuntimeException("Erreur lors de l'instanciation de l'objet", e);

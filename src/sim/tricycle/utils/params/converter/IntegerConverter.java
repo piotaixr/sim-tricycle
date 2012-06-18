@@ -22,4 +22,9 @@ public class IntegerConverter implements ParamConverterInterface {
     public Class getOutputClass() {
         return Integer.class;
     }
+
+    @Override
+    public String reveverseConvert(Object o) {
+        return String.valueOf((Integer) o);
+    }
 }

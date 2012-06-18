@@ -38,17 +38,17 @@ public class Case implements CaseInterface {
         this.y = cy;
         switch (id.charAt(0)) {
             case 'X':
-                obstacle = new Mur(this);
+                setObstacle(new Mur());
                 objet = null;
                 break;
 
             case 'T':
-                obstacle = new Tour(this);
+                setObstacle(new Tour());
                 objet = null;
                 break;
 
             case '>':
-                obstacle = new Mur(this);
+                setObstacle(new Mur());
                 objet = null;
                 break;
 
@@ -68,7 +68,7 @@ public class Case implements CaseInterface {
                 break;
 
             case '#':
-                obstacle = new Mur(this);
+                setObstacle(new Mur());
                 objet = null;
                 break;
 
@@ -84,10 +84,12 @@ public class Case implements CaseInterface {
         return this.zone;
     }
     
+    @Override
     public int getX() {
         return x;
     }
 
+    @Override
     public int getY() {
         return y;
     }
@@ -97,6 +99,7 @@ public class Case implements CaseInterface {
      *
      * @return son id.
      */
+    @Override
     public String getId() {
         return idImg;
     }
@@ -106,6 +109,7 @@ public class Case implements CaseInterface {
      *
      * @return 0 si absence d'objet.
      */
+    @Override
     public boolean hasItem() {
         return (objet != null);
     }
@@ -124,6 +128,7 @@ public class Case implements CaseInterface {
      *
      * @return 0 si absence d'objet.
      */
+    @Override
     public boolean hasObstacle() {
         return (obstacle != null);
     }
@@ -131,6 +136,7 @@ public class Case implements CaseInterface {
     /**
      * Supression de l'objet.
      */
+    @Override
     public void suprObjet() {
         this.objet = null;
     }
@@ -138,6 +144,7 @@ public class Case implements CaseInterface {
     /**
      * Supression de l'obstacle.
      */
+    @Override
     public void suprObstacle() {
         this.obstacle = null;
     }
@@ -148,6 +155,7 @@ public class Case implements CaseInterface {
      * @param ob l'objet à placer.
      * @param l'objet à placer.
      */
+    @Override
     public void setItem(AbstractObjet ob) {
         if (this.objet != null) {
             //      throw new CaseMultipleObjetException("Superpostion d'objets.");
@@ -161,11 +169,13 @@ public class Case implements CaseInterface {
      *
      * @param obst l'objet à placer.
      */
+    @Override
     public void setObstacle(AbstractObstacle obst) {
         if (this.hasObstacle()) {
 //            throw new CaseMultipleObstacleException("Superpostion d'obstacles.");
         } else {
             this.obstacle = obst;
+            obst.setPos(this);
         }
     }
 
@@ -174,6 +184,7 @@ public class Case implements CaseInterface {
      *
      * @param nouv la case à copiée.
      */
+    @Override
     public void copy(Case nouv) {
         this.objet = nouv.objet;
         this.obstacle = nouv.obstacle;
@@ -186,10 +197,10 @@ public class Case implements CaseInterface {
         }
 
         if (this.hasItem()) {
-            return this.myItem().toString();
+            return this.getItem().toString();
         }
         if (this.hasObstacle()) {
-            return this.myObstacle().toString();
+            return this.getObstacle().toString();
         }
 
         return " . ";
@@ -200,13 +211,14 @@ public class Case implements CaseInterface {
      *
      * @return le type de la case
      */
+    @Override
     public TypeCase whoIam() {
 
         if (this.hasItem()) {
-            return this.myItem().whoIam();
+            return this.getItem().whoIam();
         }
         if (this.hasObstacle()) {
-            return this.myObstacle().whoIam();
+            return this.getObstacle().whoIam();
         }
 
         return TypeCase.vide;
@@ -217,7 +229,8 @@ public class Case implements CaseInterface {
      *
      * @return l'objet.
      */
-    public AbstractObjet myItem() {
+    @Override
+    public AbstractObjet getItem() {
         return this.objet;
     }
 
@@ -226,14 +239,15 @@ public class Case implements CaseInterface {
      *
      * @return l'obstacle.
      */
-    public AbstractObstacle myObstacle() {
+    @Override
+    public AbstractObstacle getObstacle() {
         return this.obstacle;
     }
 
     @Override
     public boolean robotPresent() {
         boolean res = false;
-        if (this.hasObstacle() && this.myObstacle().whoIam() == TypeCase.robot) {
+        if (this.hasObstacle() && this.getObstacle().whoIam() == TypeCase.robot) {
             res = true;
         }
         return res;
@@ -243,7 +257,7 @@ public class Case implements CaseInterface {
     public Robot getRobotPresent() {
         Robot rob = null;
         if (this.robotPresent()) {
-            rob = (Robot) this.myObstacle();
+            rob = (Robot) this.getObstacle();
         }
         return rob;
     }

@@ -22,7 +22,7 @@ public class TrouveCollectable extends AbstractAction{
         super();
     }
     
-    public Object doExecute(Robot bot){
+    protected Object doExecute(Robot bot){
         return bot.getEquipe().getCollectableCiblable();
     }
     

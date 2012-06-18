@@ -12,6 +12,10 @@ public class AbstractObstacle implements PossedeCaseInterface {
 
     protected Case pos;
 
+    public void setPos(Case pos) {
+        this.pos = pos;
+    }
+
     @Override
     public Case getPosition() {
         return pos;

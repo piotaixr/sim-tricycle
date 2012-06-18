@@ -11,4 +11,6 @@ public interface ParamConverterInterface {
     public String getName();
 
     public Class getOutputClass();
+
+    public String reveverseConvert(Object o);
 }
