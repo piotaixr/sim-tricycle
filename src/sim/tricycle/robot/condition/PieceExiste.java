@@ -15,14 +15,15 @@ import sim.tricycle.robot.condition.core.AbstractCondition;
  * @author Adri
  */
 public class PieceExiste extends AbstractCondition {
+
     private Ordonnanceur o;
 
     public PieceExiste(Ordonnanceur o) {
         this.o = o;
     }
-    
+
     @Override
-    public String getId(){
+    public String getId() {
         return "pieceexiste";
     }
 
@@ -30,13 +31,13 @@ public class PieceExiste extends AbstractCondition {
     public boolean test() {
         Robot bot = (Robot) o.getActiveTask();
         Carte c = bot.getMapTeam();
-        for(int i=0; i< c.getHauteur(); i++){
-            for(int j = 0; i< c.getLargeur(); i++){
-                if(c.getCase(i, j).whoIam() == TypeCase.piece)
+        for (int i = 0; i < c.getLargeur(); i++) {
+            for (int j = 0; j < c.getHauteur(); j++) {
+                if (c.getCase(i, j).whoIam() == TypeCase.piece) {
                     return true;
+                }
             }
         }
         return false;
     }
-    
 }

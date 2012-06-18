@@ -21,8 +21,8 @@ public class PiecePlusProche extends AbstractAction {
     @Override
     protected Object doExecute(Robot bot) {
         Carte c = bot.getMapTeam();
-        for (int i = 0; i < c.getHauteur(); i++) {
-            for (int j = 0; i < c.getLargeur(); i++) {
+        for (int i = 0; i < c.getLargeur(); i++) {
+            for (int j = 0; j < c.getHauteur(); j++) {
                 if (c.getCase(i, j).whoIam() == TypeCase.piece) {
                     return c.getCase(i, j).getItem();
                 }
