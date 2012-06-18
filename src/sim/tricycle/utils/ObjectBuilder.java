@@ -44,8 +44,8 @@ public class ObjectBuilder {
             conditionFactory = new ConditionFactory(getParamConverterProvider(), getParameterCreator());
             conditionFactory.register(new ConditionTrue())
                     .register(new PieceTrouvee())
-                    .register(new TestCaseRobotEgalCasePiece(getVarBuilder().buidReference("self.case"), getVarBuilder().buildVariable("piece")))
-                    .register(new TestCaseRobotEgalCaseBase(getVarBuilder().buidReference("self.case"), getVarBuilder().buildVariable("team.base")))
+                    .register(new TestCaseRobotEgalCasePiece(getVarBuilder().buildReference("self.case"), getVarBuilder().buildVariable("piece")))
+                    .register(new TestCaseRobotEgalCaseBase(getVarBuilder().buildReference("self.case"), getVarBuilder().buildReference("team.base")))
                     .register(new Contains())
                     .register(new PieceExiste(getOrdonnanceur()));
         }
