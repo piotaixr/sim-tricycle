@@ -1,6 +1,15 @@
+/*
+ */
 package sim.tricycle.mapping;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import sim.tricycle.ihm.ViewCarte;
 import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.mapping.elementCase.PointDeControle;
@@ -11,55 +20,61 @@ import sim.tricycle.robot.Robot;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class Carte implements CarteInterface {
+public abstract class AbstractCarte implements CarteInterface {
 
-    HashSet<PointDeControle> listePt;
-    private int tailleX, tailleY;
-    private Case[][] carte;
+    protected String[][] matChar;
+    protected Image imgFond = null;
+    protected Image imgVide = null;
+    protected HashSet<PointDeControle> listePt;
+    protected int tailleX, tailleY;
+    protected Case[][] carte;
 
-    public Carte(int cx, int cy) {
-        carte = new Case[cx][cy];
+    @Override
+    public void afficherCarte() {
         int i, j;
+        System.out.println("");
+        for (i = 0; i < this.getLargeur(); i++) {
+            for (j = 0; j < this.getHauteur(); j++) {
+                System.out.print(this.getCase(i, j).toString() + this.getCase(i, j).getId());
+            }
+            System.out.print("\n");
+        }
+    }
 
-        this.tailleX = cx;
-        this.tailleY = cy;
+    @Override
+    public void setMat(String[][] mat) {
+        matChar = mat;
+    }
 
-        //parcours du tableau pour initialiser les cases.
+    /**
+     * Initialise la carte à partir de la matrice contenu dans l'abstraction.
+     * @ensure la matrice à était initialisée
+     */
+    public void initAllCases() {
+        int i, j;
+//parcours du tableau pour initialiser les cases.
         for (i = 0; i < tailleX; i++) {
             for (j = 0; j < tailleY; j++) {
-                carte[i][j] = new Case(i, j);
+                if (!"@".equals(this.matChar[i][j])) {
+                    carte[i][j] = new Case(matChar[i][j], i, j);
+                }
             }
         }
     }
 
     /**
-     * Création d'une carte à partir d'une matrice d'entier. @ensure la carte
-     * correspond aux informations fournit. ' ': case vide. 'O': case avec une
-     * boule. 'B': case avec un bonus. 'P': case avec une pièce. 'X' ou 'A':case
-     * obstacle. 'T': case avec une tour. '@': case avec un point de controle.
-     * '>': case avec une base.
+     * Construit la carte à partir de la matrice contenu dans l'abstraction.
+     * @ensure la matrice à était initialisée
      */
-    public Carte(String[][] tab) {
+    public void PlacerPoint() {
+        int i, j;
         HashSet<Case> liste = new HashSet<Case>();
         HashSet<PointDeControle> listeP = new HashSet<PointDeControle>();
 
-        this.tailleX = tab.length;
-        this.tailleY = tab[0].length;
-        carte = new Case[this.tailleX][this.tailleY];
-        int i, j;
-
-        //parcours du tableau pour initialiser les cases.
-        for (i = 0; i < tailleX; i++) {
-            for (j = 0; j < tailleY; j++) {
-                if (!"@".equals(tab[i][j])) {
-                    carte[i][j] = new Case(tab[i][j], i, j);
-                }
-            }
-        }
         //Recherche des points de controles et traitement.
         for (i = 0; i < tailleX; i++) {
             for (j = 0; j < tailleY; j++) {
-                if ("@".equals(tab[i][j])) {
+                if ("@".equals(matChar[i][j])) {
                     //Si pt de controle il lui faut connaitre ses cases voisines.
                     carte[i][j] = new Case(i, j);
                     casesVoisines(this, this.getCase(i, j), liste);
@@ -73,6 +88,45 @@ public class Carte implements CarteInterface {
         }
     }
 
+    public void startInit(String[][] mat) {
+        setMat(mat);
+        setVide("vide");
+        initAllCases();
+        PlacerPoint();
+    }
+
+    @Override
+    public Image getImage() {
+        return this.imgFond;
+    }
+
+    @Override
+    public Image getVide() {
+        return this.imgVide;
+    }
+
+    @Override
+    public void setVide(String s) {
+        try {
+            // Initialisation des images:
+            imgVide = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + s + ".jpg"));
+
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void setImage(String s) {
+        try {
+            // Initialisation des images:
+            imgFond = ImageIO.read(new File("./src/sim/tricycle/ihm/images/" + s));
+
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
     public Case getCase(int x, int y) {
         if (x > tailleX || y > tailleY || x < 0 || y < 0) {
@@ -82,7 +136,7 @@ public class Carte implements CarteInterface {
     }
 
     @Override
-    public void actualiserCarte(Carte source, int rayon, Case pos) {
+    public void actualiserCarte(CarteTeam source, int rayon, Case pos) {
         HashSet<Case> liste = new HashSet<Case>();
 
         // Capture de toute les cases dans le rayon souhaité.
@@ -104,7 +158,7 @@ public class Carte implements CarteInterface {
     }
 
     @Override
-    public void casesVoisines(Carte source, Case pos, HashSet<Case> liste) {
+    public void casesVoisines(AbstractCarte source, Case pos, HashSet<Case> liste) {
 
         // Si case en bordure verticale droite:
         if ((this.tailleX - 1) > pos.getX()) {
