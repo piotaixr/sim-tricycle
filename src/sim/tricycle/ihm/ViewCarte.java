@@ -80,15 +80,15 @@ public class ViewCarte extends javax.swing.JPanel {
         boolean affFond = false;
         if (imgMap == null) {
             affFond = true;
-        } else {//initialisation avec des cases vide partout
+        } else {//Initialisation avec des cases vide partout
             for (int i = 0; i < carte.getHauteur(); i++) {
                 for (int j = 0; j < carte.getLargeur(); j++) {
                     paintInit(g, carte.getCase(i, j), tailleCase);
                 }
             }
-        }//dessin de la map.
-        g.drawImage(imgMap, 0, 0, d.width, d.height, this);
-        //affichage des autres cases.
+        }//Dessin de la map.
+        g.drawImage(imgMap, decalageX, decalageY, d.width, d.height, this);
+        //Affichage des autres cases.
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
                 paintCase(g, carte.getCase(i, j), tailleCase, true, affFond);
