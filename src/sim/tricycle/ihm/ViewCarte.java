@@ -47,7 +47,7 @@ public class ViewCarte extends javax.swing.JPanel {
         imgVide = cont.getVide();
         try {
             // Initialisation des images:
-            imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robot.png"));
+            imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robotCR.png"));
             imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/bonus.png"));
             imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/boule.png"));
             imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/piece.png"));
@@ -189,6 +189,7 @@ public class ViewCarte extends javax.swing.JPanel {
         }
         // possible superposition de robot sur objet:
         if (c.robotPresent()) {                                       //ROBOT
+            sim.tricycle.robot.Robot rob =c.getRobotPresent();
             g.drawImage(imgRobot, x, y, width, width, this);
         }
     }
