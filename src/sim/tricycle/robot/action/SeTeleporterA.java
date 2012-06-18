@@ -11,6 +11,7 @@ import sim.tricycle.robot.action.core.AbstractAction;
 /**
  *
  * @author Adri
+ * @deprecated
  */
 public class SeTeleporterA extends AbstractAction{
 
@@ -26,6 +27,7 @@ public class SeTeleporterA extends AbstractAction{
     }
     
     
+    @Override
    protected Object doExecute(Robot bot){
       if(!bot.getMapTeam().getCase(p.getX(), p.getY()).hasObstacle()){ 
        bot.decollerRobotDeMap();
@@ -43,6 +45,7 @@ public class SeTeleporterA extends AbstractAction{
         this.p = p;
     }
    
+    @Override
    public String getId(){
        return "seTeleporter";
    }
