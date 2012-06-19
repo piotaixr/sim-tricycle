@@ -33,8 +33,8 @@ public class AbstractZone implements PossedeCaseInterface {
     }
 
     @Override
-    public int obstacleItem() {
-        return 3;
+    public TypeCase typeDeCase() {
+        return TypeCase.zone;
     }
 
     @Override

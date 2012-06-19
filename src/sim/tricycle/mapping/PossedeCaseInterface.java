@@ -26,7 +26,7 @@ public interface PossedeCaseInterface {
     /**
      * renvoie 1 si c'est un objet et 2 si c'est un Obstacle
      */
-    public int obstacleItem();
+    public TypeCase typeDeCase();
 
     /**
      * Place la case associée

@@ -2,6 +2,7 @@ package sim.tricycle.mapping.elementCase;
 
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.PossedeCaseInterface;
+import sim.tricycle.mapping.TypeCase;
 
 /**
  *
@@ -50,8 +51,8 @@ public abstract class AbstractObjet implements PossedeCaseInterface {
     }
     
     @Override
-    public int obstacleItem (){
-        return 1;
+    public TypeCase typeDeCase (){
+        return TypeCase.objet;
     }
 
     public void setCase(Case c) {
