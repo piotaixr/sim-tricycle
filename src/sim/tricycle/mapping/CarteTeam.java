@@ -47,18 +47,8 @@ public class CarteTeam extends AbstractCarte {
         if (!res) {
             return false;
         } else {
-            Case c = getCaseDevant(bot);
-            if (c != null) {
-                if (bot.getPosition().hasObstacle()) {
-                    bot.getPosition().suprObstacle();
-                }
-                if (!c.hasObstacle()) {
-                    c.setObstacle(bot);
-                }
-            }
-            this.actualiserCarte(bot.getPortee(), c);
+            return super.avancer(bot);
         }
-        return true;
     }
 
     /**
@@ -87,47 +77,26 @@ public class CarteTeam extends AbstractCarte {
         }
     }
 
-    @Override
-    public void pop(PossedeCaseInterface e) {
-        Case c;
-        if (this.vraiCarte.pop(e,c)) {
-        }
-        int l, h;
-        if (e.obstacleItem() == 1) {
-            c.setItem((AbstractObjet) e);
-        }
-        if (e.obstacleItem() == 2) {
-            c.setObstacle((AbstractObstacle) e);
-        }
+    public void popAlea(PossedeCaseInterface e) {
+        Case c = null;
+        super.popAlea(e, c);
+        this.actualiserCarte(0, c);
     }
 
-    public void pop(PossedeCaseInterface e, int x, int y) {
+    public boolean pop(PossedeCaseInterface e, int x, int y) {
         if (this.vraiCarte.pop(e, x, y)) {
-            Case c = getCase(x, y);
-            if (c.hasItem() || c.hasObstacle()) {
-                if (e.obstacleItem() == 1) {
-                    c.setItem((AbstractObjet) e);
-                }
-                if (e.obstacleItem() == 2) {
-                    c.setObstacle((AbstractObstacle) e);
-                }
-            } else {
-                throw new RuntimeException("Il y a déjà quelque chose sur la case");
-            }
+            super.pop(e, this.getCase(x, y));
+            return true;
         }
+        return false;
     }
 
-    @Override
-    public void pop(PossedeCaseInterface e, Case c) {
+    public boolean pop(PossedeCaseInterface e, Case c) {
         if (this.vraiCarte.pop(e, c)) {
-            if (e.obstacleItem() == 1) {
-                c.setItem((AbstractObjet) e);
-            }
-            if (e.obstacleItem() == 2) {
-                c.setObstacle((AbstractObstacle) e);
-            }
+            super.pop(e, c);
+            return true;
         }
-
-
+        return false;
+    }
     
 }

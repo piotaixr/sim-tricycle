@@ -9,14 +9,15 @@ package sim.tricycle.mapping;
 public enum TypeCase {
 
     obstacle,
+    objet,
+    zone,
     mur,
     piece,
     bonus,
     vide,
     robot,
-    boule, 
+    boule,
     base,
     ptDeControle,
-    zone,
     tour;
 }
