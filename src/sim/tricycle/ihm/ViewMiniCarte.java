@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import sim.tricycle.AbstractJeu;
 import sim.tricycle.mapping.CarteTeam;
 import sim.tricycle.mapping.CarteInterface;
 import sim.tricycle.mapping.Case;
@@ -31,18 +32,18 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     /**
      * Crée minicarte
      */
-    public ViewMiniCarte(AbstractCarte cont, ViewCarte vc) {
+    public ViewMiniCarte(AbstractJeu cont, ViewCarte vc) {
         initComponents();
         this.carte = cont.getCarte();
         this.tailleCase = this.tailleCaseBase;
         vuc = vc;
-        imgMap = cont.getImage();
-        initialiserImage(cont);
+        imgMap = carte.getImage();
+        initialiserImage();
     }
 
-    public void initialiserImage(AbstractCarte cont) {
+    public void initialiserImage() {
         // Initialisation des images:
-        imgVide = cont.getVide();
+        imgVide = carte.getVide();
     }
 
     @Override

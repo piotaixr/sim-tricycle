@@ -29,7 +29,7 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
      */
     public FrameGame1(AbstractJeu Conteneur) {
         initComponents();
-        CarteObjective carte = Conteneur.getCarte();
+        AbstractCarte carte = Conteneur.getCarte();
         cont = Conteneur;
         
         Toolkit tk = Toolkit.getDefaultToolkit();

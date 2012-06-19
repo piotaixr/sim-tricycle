@@ -37,17 +37,17 @@ public class SimTricycle {
         RobotParser parser = ob.getRobotParser();
         Automate a = parser.parse(new File("./test_basique.xml"));
 
-        CrossRiver cr = new CrossRiver();
-        CarteTeam c = cr.getCarte();
-        sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0), new ArrayList<Ressource>());
-        sim.tricycle.robot.Robot bot;
-
-
-
-        bot = new Collecteur(t, a);
-        bot.setCoordonnees(new Point(3, 8));
-        bot.setDirection(Sens.SUD);
-        bot.collerRobotSurMap();
+       // CrossRiver cr = new CrossRiver();
+        //CarteObjective c = cr.getCarte();
+       // sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0), new ArrayList<Ressource>());
+//        sim.tricycle.robot.Robot bot;
+//
+//
+//
+//       // bot = new Collecteur(t, a);
+//        bot.setCoordonnees(new Point(3, 8));
+//        bot.setDirection(Sens.SUD);
+//        bot.collerRobotSurMap();
         
 //MARION
 //        InitialisationConstruction initCons = new InitialisationConstruction();
@@ -62,16 +62,16 @@ public class SimTricycle {
          * bot.getActions().add(cup);
          *
          */
-        cr.afficherCarte();
-
-        FrameGame1 fg = new FrameGame1(cr);
-        Ordonnanceur ordo = ob.getOrdonnanceur();
-        ordo.add(bot);
+//        cr.afficherCarte();
+//
+//        FrameGame1 fg = new FrameGame1(cr);
+//        Ordonnanceur ordo = ob.getOrdonnanceur();
+//        ordo.add(bot);
 
 //      ordo.add(bot3);
-        fg.addOrdonnaceur(ordo);
-
-        fg.setVisible(true);
+//        fg.addOrdonnaceur(ordo);
+//
+//        fg.setVisible(true);
 
     }
 }
