@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding='ISO-8859-1' standalone='yes' ?>
+<robot>
+    <etat id="1">
+        <transition>
+            <action nom="avancer">
+                <parameter type="integer">4</parameter>
+            </action>
+            <action nom="tourner">
+                <parametre>OUEST</parametre>
+            </action>
+            <action nom="avancer"></action>
+            <action nom="avancer"></action>
+            <etat id="2" />
+        </transition>
+    </etat>
+    <etat id="2">
+        <transition>
+            <etat id="2" />
+        </transition>
+    </etat>
+</robot>

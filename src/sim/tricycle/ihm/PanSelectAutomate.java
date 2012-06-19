@@ -35,7 +35,7 @@ public final class PanSelectAutomate extends javax.swing.JPanel {
         initComponents();
 
         bots = finder.findFilesWithExtensions("./src/sim/tricycle/ihm/images/robots");
-        automates = finder.findFilesWithExtensions("./src/sim/tricycle/mapping/nosCarte");
+        automates = finder.findFilesWithExtensions("./Automates");
 
         mappingCbxAutoImage(bots);
         mappingCbxAutomate(automates);
