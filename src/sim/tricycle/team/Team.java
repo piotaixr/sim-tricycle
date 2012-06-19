@@ -46,6 +46,7 @@ public class Team {
         this.id = iden;
         this.map = new CarteTeam(carteObj);
         this.armee = new LinkedList<Robot>();
+        this.models = new LinkedList<Robot>();
         this.ressources = new ArrayList<Ressource>();
     }
 

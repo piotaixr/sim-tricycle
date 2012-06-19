@@ -32,6 +32,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
     private int defaultHeight;
     private AbstractJeu jeu = new Jeu();
     private RobotParser robPars;
+    private FrameGame1 fg = null;
     //private PopupFactory ppFtry = new PopupFactory();
 
     public FrameTeamMaker(AbstractJeu paraJeu) {
@@ -169,29 +170,30 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
         }
     }
 
-    public Team createTeam(int ident,String name) {
+    public Team createTeam(int ident, String name) {
         Team t = new Team(ident, name, jeu.getCarte());
         return t;
     }
 
     public void createAllTeams() {
         for (int i = 0; i < tabPanTeams.getTabCount(); i++) {
-            Team t = createTeam(i,tabPanTeams.getTitleAt(i));
+            Team t = createTeam(i, tabPanTeams.getTitleAt(i));
             jeu.addTeam(t);
-            createModels(t);
+            createModels(t, i);
         }
     }
 
-    public void createModels(Team t) {
-        javax.swing.JPanel pan = (javax.swing.JPanel) tabPanTeams.getSelectedComponent();
+    public void createModels(Team t, int index) {
+        javax.swing.JPanel pan = (javax.swing.JPanel) tabPanTeams.getComponentAt(index);
         Component[] tabcomp = pan.getComponents();
         for (Component c : tabcomp) {
             if (c instanceof PanSelectAutomate) {
                 //pour éviter d'avoir une ligne de code indigerable
-                String automateTxt =((PanSelectAutomate) c).getStringAutomate();
+                String automateTxt = ((PanSelectAutomate) c).getStringAutomate();
+                System.out.println(automateTxt);
                 File f = new File(automateTxt);
                 Automate auto = robPars.parse(f);
-                t.addModel(new Robot(auto,t));
+                t.addModel(new Robot(auto, t));
             }
         }
     }
@@ -396,7 +398,17 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
     private void btnValidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnValidMouseClicked
         // TODO add your handling code here:
         createAllTeams();
-        System.out.println(jeu.getTabTeams().get(0).getNomTeam());
+//        for (Team t : jeu.getTabTeams()) {
+//            System.out.println(t.getNomTeam());
+//            for (Robot mod : t.getModel()) {
+//                System.out.println("" + mod.getAutomate());
+//            }
+//        }
+        if (fg == null) {
+            fg = new FrameGame1(jeu);
+            fg.setVisible(true);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnValidMouseClicked
 
     /**

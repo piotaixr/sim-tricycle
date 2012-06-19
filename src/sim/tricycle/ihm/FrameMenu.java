@@ -14,6 +14,7 @@ import sim.tricycle.Jeu;
 public class FrameMenu extends javax.swing.JFrame {
 
     private AbstractJeu superGameDeLaMortQuiTue = new Jeu();
+    private FrameSelectTeamAndMap fstam = null;
 
     /**
      * Creates new form FrameMenu
@@ -95,9 +96,11 @@ public class FrameMenu extends javax.swing.JFrame {
 
     private void btnPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPlayMouseClicked
         // TODO add your handling code here:
-        FrameSelectTeamAndMap fstam = new FrameSelectTeamAndMap(superGameDeLaMortQuiTue);
-        fstam.setVisible(true);
-        this.setVisible(false);
+        if (fstam == null) {
+            fstam = new FrameSelectTeamAndMap(superGameDeLaMortQuiTue);
+            fstam.setVisible(true);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnPlayMouseClicked
 
     /**
