@@ -52,7 +52,7 @@ public class Ordonnanceur extends Observable implements OrdonnanceurInterface {
      * Exécute l'action de l'élément en paramètre
      */
     private void doAction(OrdonnancableInterface oi) {
-        oi.executeAction();
+        oi.tick();
     }
 
     /*

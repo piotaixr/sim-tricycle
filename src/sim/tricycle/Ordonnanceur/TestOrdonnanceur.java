@@ -29,7 +29,7 @@ public class TestOrdonnanceur {
         }
 
         @Override
-        public void executeAction() {
+        public void tick() {
             System.out.println("Salut moi c'est : " + this.nom);
         }
     }

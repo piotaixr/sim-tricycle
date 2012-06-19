@@ -30,7 +30,9 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     protected Etat etatDestination;
     protected Automate automate;
     protected Team equipe;
- 
+    protected boolean plante = false;
+    protected int cout = 0;
+
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
      *
@@ -49,23 +51,27 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
         this.equipe = t;
     }
 
-    /**Retourne la case qui se trouve devant les robot*/
-
-    
-
+    /**
+     * Retourne la case qui se trouve devant les robot
+     *
+     * @deprecated
+     */
     public void collerRobotSurMap() {
         if (!this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
             this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
         }
     }
 
+    /**
+     * @deprecated
+     */
     public void decollerRobotDeMap() {
         if (this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
             this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
         }
     }
 
-      private Transition findTransition() {
+    private Transition findTransition() {
         Iterator<Transition> it = etatCourant.getTransitions().iterator();
         Transition valide = null;
         while (valide == null && it.hasNext()) {
@@ -84,41 +90,57 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
      * @todo coder cette fonction
      */
     @Override
-    public void executeAction() {    
+    public void tick() {
+        if (plante) {
+            System.out.println("Robot planté!");
+            new Sleep().executer(this);
+            return;
+        }
+        // l'action coute plus d'un toc, le robot doit attendre
+        if (cout > 0) {
+            cout--;
+            return;
+        }
+        //dans le cas ou il n'a pas a attendre, on cherche l'action a executer. 
+        //On boucle tant que l'on n'execute des actions qui ne coutent rien.
+        while (cout == 0) {
+            if (!actions.isEmpty()) {
+                //si il y aune action, on depile l'action
+                if (actions.getFirst().isComposee()) {
+                    //si composée on sauvegarde le contexte
+                    AbstractActionComposee a = (AbstractActionComposee) actions.pollFirst();
+                    //sauvegarde du contexte
+                    pileActionsComposees.push(a);
+                    pileFileActions.push(actions);
+                    actions = new ArrayDeque();
 
-        if (!actions.isEmpty()) {
-            if (actions.getFirst().isComposee()) {
-                AbstractActionComposee a = (AbstractActionComposee) actions.pollFirst();
-                //sauvegarde du contexte
-                pileActionsComposees.push(a);
-                pileFileActions.push(actions);
-                actions = new ArrayDeque();
-                actions.addAll(a.getNewActions());
-                
-                //on execute
-                a.executer(this);
-                this.executeAction();
-            } else {
-                actions.pollFirst().executer(this);
-            }
-        } else {
-            if (!pileActionsComposees.isEmpty()) {// rechargement du contexte: on depile
-                pileActionsComposees.pop();
-                actions = pileFileActions.pop();
-                this.executeAction();
-            } else {
-                //actions vides, il faut changer d'etat et trouver une transition a prendre
-                if (etatDestination != null) {
-                    System.out.println("change etat" + etatDestination.getId());
-                    etatCourant = etatDestination;
+                    //on execute et on récupère les actions générées
+                    executerAction(a);
+                } else {
+                    //si simple, on execute simplement
+                    executerAction(actions.pollFirst());
                 }
-                Transition t = findTransition();
-                if (t == null || t.getActions().isEmpty()) {
-                    actions.add(new Sleep());
+            } else {
+                //si file action vide
+                if (!pileActionsComposees.isEmpty()) {
+                    //fin d'une action composée -> rechargement du contexte: on depile
+                    pileActionsComposees.pop();
+                    actions = pileFileActions.pop();
+                } else {
+                    //actions vides, il faut changer d'etat et trouver une transition a prendre
+                    if (etatDestination != null) {
+                        System.out.println("change etat" + etatDestination.getId());
+                        etatCourant = etatDestination;
+                    }
+                    Transition t = findTransition();
+                    if (t == null) {
+                        //si on ne trouve pas de transition, on ajoute une action vide de cout 1: sleep
+                        cout++;
+                    }
+                    // transition trouvée. On récupère les actions a executer ainsi que l'etet de destination
+                    actions.addAll(t.getActions());
+                    etatDestination = t.getEtatDestination();
                 }
-                // transition trouvée. On récupère les actions a executer ainsi que l'etet de destination
-                actions.addAll(t.getActions());
-                etatDestination = t.getEtatDestination();
             }
         }
     }
@@ -153,8 +175,8 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     public void setPortee(int newPortee) {
         this.portee = newPortee;
     }
-    
-        public ArrayDeque<ActionInterface> getActions() {
+
+    public ArrayDeque<ActionInterface> getActions() {
         return actions;
     }
 
@@ -169,8 +191,8 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     public void setEtat(Etat newEtat) {
         this.etatCourant = newEtat;
     }
-    
-       public Automate getAutomate() {
+
+    public Automate getAutomate() {
         return automate;
     }
 
@@ -193,13 +215,50 @@ public abstract class Robot extends AbstractObstacle implements OrdonnancableInt
     public void setEtatDestination(Etat etatDestination) {
         this.etatDestination = etatDestination;
     }
-    
-    public CarteTeam getMapTeam(){
+
+    public CarteTeam getMapTeam() {
         return this.equipe.getMap();
     }
-    
+
     @Override
     public TypeCase whoIam() {
         return (TypeCase.robot);
+    }
+
+    private void executerAction(ActionInterface action) {
+        try {
+            action.executer(this);
+            cout = action.getPoids();
+            if (action instanceof AbstractActionComposee) {
+                actions.addAll(((AbstractActionComposee) action).getNewActions());
+            }
+        } catch (Exception e) {//erreur lors de l'execution de l'action
+            /*
+             * Si action composée empilée, on vide la file et on relance SAUF SI
+             * ON PLANTE LORS DU LANCEMENT D'UNE ACTION COMPOSEE
+             */
+            if (pileActionsComposees.isEmpty()) {
+                //on plante
+                plante = true;
+                return;
+            }
+            //si action composee au sommet de la pile est l'action qui a planté, on la depile.
+            if (pileActionsComposees.peek() == action) {
+                pileActionsComposees.pop();
+                actions = pileFileActions.pop();
+            }
+            //si il n'y a plus d'actions composées, on plante
+            if (pileActionsComposees.isEmpty()) {
+                //on plante
+                plante = true;
+                return;
+            }
+            //ICI, on a une action comp a relancer
+
+            actions.clear();
+            AbstractActionComposee acomp = pileActionsComposees.peek();
+            acomp.relaunch();
+            actions.addAll(acomp.getNewActions());
+        }
     }
 }

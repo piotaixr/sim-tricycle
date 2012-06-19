@@ -36,4 +36,8 @@ public abstract class AbstractActionComposee extends AbstractAction {
     public boolean isComposee() {
         return true;
     }
+    
+    public void relaunch(){
+        builder.reinit();
+    }
 }
