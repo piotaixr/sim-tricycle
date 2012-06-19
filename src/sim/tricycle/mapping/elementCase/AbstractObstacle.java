@@ -32,8 +32,8 @@ public class AbstractObstacle implements PossedeCaseInterface {
     }
 
     @Override
-    public int obstacleItem() {
-        return 2;
+    public TypeCase typeDeCase() {
+        return TypeCase.obstacle;
     }
 
     @Override
