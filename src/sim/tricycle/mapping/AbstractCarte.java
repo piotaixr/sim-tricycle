@@ -22,7 +22,6 @@ import sim.tricycle.robot.Robot;
  */
 public abstract class AbstractCarte implements CarteInterface {
 
-    protected String[][] matChar;
     protected Image imgFond = null;
     protected Image imgVide = null;
     protected HashSet<PointDeControle> listePt;
@@ -41,22 +40,17 @@ public abstract class AbstractCarte implements CarteInterface {
         }
     }
 
-    @Override
-    public void setMat(String[][] mat) {
-        matChar = mat;
-    }
-
     /**
      * Initialise la carte à partir de la matrice contenu dans l'abstraction.
      * @ensure la matrice à était initialisée
      */
-    public void initAllCases() {
+    protected void initAllCases(String[][] mat) {
         int i, j;
 //parcours du tableau pour initialiser les cases.
         for (i = 0; i < tailleX; i++) {
             for (j = 0; j < tailleY; j++) {
-                if (!"@".equals(this.matChar[i][j])) {
-                    carte[i][j] = new Case(matChar[i][j], i, j);
+                if (!"@".equals(mat[i][j])) {
+                    carte[i][j] = new Case(mat[i][j], i, j);
                 }
             }
         }
@@ -66,7 +60,7 @@ public abstract class AbstractCarte implements CarteInterface {
      * Construit la carte à partir de la matrice contenu dans l'abstraction.
      * @ensure la matrice à était initialisée
      */
-    public void PlacerPoint() {
+    protected void placerPoint(String[][] mat) {
         int i, j;
         HashSet<Case> liste = new HashSet<Case>();
         HashSet<PointDeControle> listeP = new HashSet<PointDeControle>();
@@ -74,7 +68,7 @@ public abstract class AbstractCarte implements CarteInterface {
         //Recherche des points de controles et traitement.
         for (i = 0; i < tailleX; i++) {
             for (j = 0; j < tailleY; j++) {
-                if ("@".equals(matChar[i][j])) {
+                if ("@".equals(mat[i][j])) {
                     //Si pt de controle il lui faut connaitre ses cases voisines.
                     carte[i][j] = new Case(i, j);
                     casesVoisines(this, this.getCase(i, j), liste);
@@ -89,10 +83,9 @@ public abstract class AbstractCarte implements CarteInterface {
     }
 
     public void startInit(String[][] mat) {
-        setMat(mat);
         setVide("vide");
-        initAllCases();
-        PlacerPoint();
+        initAllCases(mat);
+        placerPoint( mat);
     }
 
     @Override
@@ -256,12 +249,27 @@ public abstract class AbstractCarte implements CarteInterface {
     }
 
     /**
-     * @todo a completer
+     * Retourne la case devant.
      *
      * @param bot
      * @return
      */
     public Case getCaseDevant(Robot bot) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Case c = null;
+        switch (bot.getDirection()) {
+            case EST:
+                c = bot.getMapTeam().getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
+                break;
+            case OUEST:
+                c = bot.getMapTeam().getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
+                break;
+            case NORD:
+                c = bot.getMapTeam().getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
+                break;
+            case SUD:
+                c = bot.getMapTeam().getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
+                break;
+        }
+        return c;
     }
 }
