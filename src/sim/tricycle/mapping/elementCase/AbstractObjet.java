@@ -10,6 +10,15 @@ import sim.tricycle.mapping.PossedeCaseInterface;
 public abstract class AbstractObjet implements PossedeCaseInterface {
 
     protected Case pos;
+    protected String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     /*
      * getPosition retourne la case sur laquelle se trouve la boule. @return La

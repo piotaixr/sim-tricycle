@@ -15,17 +15,8 @@ public abstract class AbstractBatiment extends AbstractObstacle {
     protected int temps;
     protected int tempsMax;
     protected int portee;
-    protected AbstractObjet Item;
-    
-    
 
-    public AbstractObjet getItem() {
-        return Item;
-    }
-
-    public void setItem(AbstractObjet Item) {
-        this.Item = Item;
-    }
+    
 
     public int getPorteeMax() {
         return porteeMax;

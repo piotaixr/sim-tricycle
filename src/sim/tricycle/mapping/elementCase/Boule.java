@@ -8,6 +8,10 @@ import sim.tricycle.mapping.TypeCase;
  * @author Thomas Nds nds.thomas@gmail.com
  */
 public class Boule extends AbstractObjet {
+    
+    public Boule (){
+        id = "Boule";
+    }
 
 
     @Override
