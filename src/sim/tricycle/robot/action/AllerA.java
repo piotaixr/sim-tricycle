@@ -95,7 +95,7 @@ public class AllerA extends AbstractAction {
 
         return newSens;
     }
-
+    
     public void setP(Point newP) {
         this.p = newP;
     }
