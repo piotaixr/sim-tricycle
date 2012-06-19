@@ -65,7 +65,7 @@ public class ObjectBuilder {
             actionFactory.register(new Avancer())
                  //   .register(new RamasserPiece())
                     .register(new Tourner())
-                    .register(new AllerA())
+                    .register(new AllerA(getActionBuilder()))
                     .register(new ArreterTout())
                     .register(new SeTeleporterA())
                     .register(new Sleep())
