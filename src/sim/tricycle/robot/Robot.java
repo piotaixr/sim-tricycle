@@ -228,7 +228,8 @@ public  class Robot extends AbstractObstacle implements OrdonnancableInterface {
     private void executerAction(ActionInterface action) {
         try {
             action.executer(this);
-            cout = action.getPoids();
+            
+            cout = etatCourant.getValeurAction(action);
             if (action instanceof AbstractActionComposee) {
                 actions.addAll(((AbstractActionComposee) action).getNewActions());
             }
