@@ -73,6 +73,7 @@ public abstract class AbstractCarte implements CarteInterface {
                     carte[i][j] = new Case(i, j);
                     casesVoisines(this, this.getCase(i, j), liste);
                     PointDeControle pt = new PointDeControle(liste);
+                    pt.setCase(this.getCase(i, j));
                     this.getCase(i, j).setZone(pt);
                     //On ajoute ce point à la liste des points.
                     listeP.add(pt);
@@ -266,16 +267,19 @@ public abstract class AbstractCarte implements CarteInterface {
         }
         return c;
     }
-
+    
+    @Override
     public void avancer(Robot bot) {
         Case c = getCaseDevant(bot);
+        if (c != null) {
+            if (bot.getPosition().hasObstacle()) {
+                bot.getPosition().suprObstacle();
+            }
+            if (!c.hasObstacle()) {
+                c.setObstacle(bot);
+            }
 
-        if (!c.hasObstacle()) {
-            c.setObstacle(bot);
         }
-        if (c.hasObstacle()) {
-            c.suprObstacle();
-        }
-
     }
+    
 }
