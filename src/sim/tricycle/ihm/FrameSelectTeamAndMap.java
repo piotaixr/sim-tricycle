@@ -135,8 +135,8 @@ public class FrameSelectTeamAndMap extends javax.swing.JFrame {
         // TODO add your handling code here:
         cff = new CarteFromFile(CarteFichier.basename+cbxMap.getSelectedItem());
 
-
         jeu.setCarte(cff);
+        jeu.setTeamNumber(Integer.parseInt(cbxNumberTeam.getSelectedItem().toString()));
 
         FrameTeamMaker ftm = new FrameTeamMaker(jeu);
         ftm.setVisible(true);

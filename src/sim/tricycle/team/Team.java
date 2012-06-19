@@ -32,6 +32,10 @@ public class Team {
         this.ressources = ressources;
         
     }
+    
+    public Team(String nomTeam){
+        this.nomTeam = nomTeam;
+    }
 
     public void addRobot(Robot bot) {
         this.armee.add(bot);

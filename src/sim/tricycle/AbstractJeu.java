@@ -6,6 +6,7 @@ package sim.tricycle;
 
 import java.util.ArrayList;
 import sim.tricycle.mapping.CarteGlobalInterface;
+import sim.tricycle.team.Ressource;
 import sim.tricycle.team.Team;
 
 /**
@@ -17,6 +18,7 @@ public abstract class AbstractJeu {
     protected CarteGlobalInterface carte;
     protected ArrayList<Team> tabTeams;
     protected int teamNumber = 0;
+    protected ArrayList<Ressource> ressourcesDefaut = null;
 
     public int getTeamNumber() {
         return teamNumber;
@@ -42,7 +44,15 @@ public abstract class AbstractJeu {
         return tabTeams;
     }
 
+    public ArrayList<Ressource> getRessourcesDefaut() {
+        return ressourcesDefaut;
+    }
+
     public void addTeam(Team t) {
+        if (t != null) {
+            System.out.println("AAAAAAAAAAAAAAAAAaa");
+        }
         tabTeams.add(t);
+        
     }
 }
