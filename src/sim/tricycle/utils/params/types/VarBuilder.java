@@ -18,7 +18,7 @@ public class VarBuilder {
         this.ordonnanceur = ordonnanceur;
     }
     
-    public Reference buidReference(String selector){
+    public Reference buildReference(String selector){
         return new Reference(selector, ordonnanceur);
     }
     

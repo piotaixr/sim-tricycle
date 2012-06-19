@@ -64,7 +64,7 @@ public class Case implements CaseInterface {
 
             case 'P':
                 obstacle = null;
-                objet = new Piece(this);
+                objet = new Piece();
                 break;
 
             case '#':
@@ -161,6 +161,7 @@ public class Case implements CaseInterface {
             //      throw new CaseMultipleObjetException("Superpostion d'objets.");
         } else {
             this.objet = ob;
+            ob.setCase(this);
         }
     }
 

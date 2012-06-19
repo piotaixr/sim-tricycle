@@ -36,7 +36,7 @@ public class ActionBuilder extends VarBuilder {
         return this;
     }
 
-    public ActionBuilder addNew(String actionNom, String varDestNom, Object... paramsArray) {
+    public ActionBuilder addNewReturn(String actionNom, String varDestNom, Object... paramsArray) {
         List<Parameter> params = parameterCreator.arrayParameterToParameterList(paramsArray);
         actions.add(actionFactory.create(actionNom, params, varDestNom));
 

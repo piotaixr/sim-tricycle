@@ -8,6 +8,7 @@ import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractAction;
 import sim.tricycle.utils.params.types.Reference;
+import sim.tricycle.utils.params.types.Variable;
 
 /**
  *
@@ -27,7 +28,7 @@ public class TrouveChemin extends AbstractAction {
     public TrouveChemin() {
         super();
     }
-        
+
     public LinkedList<Noeud> getChemin() {
         return this.chemin;
     }
@@ -62,7 +63,7 @@ public class TrouveChemin extends AbstractAction {
         Noeud courant = listeOuverte.getFirst();
 
         //    System.out.println("Bot : "+bot.getPosition().getX()+" "+bot.getPosition().getY());
-       // System.out.println("Case 3 9:"+bot.getMapObjective().getCase(3, 9).whoIam());
+        // System.out.println("Case 3 9:"+bot.getMapObjective().getCase(3, 9).whoIam());
         while (!listeOuverte.isEmpty() && courant.getPoint().distanceDepuis(this.pDest) != 0) {
 
             listeFermee.addFirst(courant);
@@ -83,8 +84,8 @@ public class TrouveChemin extends AbstractAction {
                     n = new Noeud(new Point(c.getX(), c.getY()), courant);
                     n.setPoids(n.getPoint().distanceDepuis(pDest));
                     //  System.out.println(n.getPoids());
-                       //System.out.println("Liste ouverte: "+n.getPoint().getX()+" "+n.getPoint().getY());
-                     //  System.out.println("Type Case: "+c.whoIam());
+                    //System.out.println("Liste ouverte: "+n.getPoint().getX()+" "+n.getPoint().getY());
+                    //  System.out.println("Type Case: "+c.whoIam());
                     if (!listeOuverte.contains(n) && !listeFermee.contains(n)) {
                         insereEnOrdre(n, listeOuverte);
                     }
@@ -103,7 +104,7 @@ public class TrouveChemin extends AbstractAction {
         //  cheminFinal.add(lastNode);
         while (lastNode != null) {
             cheminFinal.add(lastNode);
-            System.out.println("Chemin final: "+lastNode.getPoint().getX()+" "+lastNode.getPoint().getY());
+            System.out.println("Chemin final: " + lastNode.getPoint().getX() + " " + lastNode.getPoint().getY());
             lastNode = lastNode.getParent();
         }
         //cheminFinal.add(lastNode);
@@ -114,7 +115,7 @@ public class TrouveChemin extends AbstractAction {
     public String getId() {
         return "trouvechemin";
     }
-    
+
     public Point getpDest() {
         return pDest;
     }
@@ -122,8 +123,12 @@ public class TrouveChemin extends AbstractAction {
     public void setpDest(Point pDest) {
         this.pDest = pDest;
     }
-    
-    public void setParameters(Reference refPointDest){
+
+    public void setParameters(Reference refPointDest) {
+        this.refPointDest = refPointDest;
+    }
+
+    public void setParameters(Variable refPointDest) {
         this.refPointDest = refPointDest;
     }
 }

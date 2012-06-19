@@ -33,6 +33,7 @@ public class VariableConverter implements ParamConverterInterface {
 
     @Override
     public String reveverseConvert(Object o) {
-        return ((Variable) o).getSelector();
+        Variable v = (Variable) o;
+        return v.getSelector().substring(v.getSelector().indexOf(".") + 1);
     }
 }

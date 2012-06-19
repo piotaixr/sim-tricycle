@@ -12,20 +12,20 @@ import sim.tricycle.team.Team;
  */
 public class Environnement {
 
-    private Team team;
+    private TeamHelper team;
     private Map<String, Object> var = new HashMap();
-    private Robot self;
+    private RobotHelper self;
 
     public Environnement(Team team, Robot robot) {
-        this.team = team;
-        this.self = robot;
+        this.team = new TeamHelper(team);
+        this.self = new RobotHelper(robot);
     }
 
-    public Robot getSelf() {
+    public RobotHelper getSelf() {
         return self;
     }
 
-    public Team getTeam() {
+    public TeamHelper getTeam() {
         return team;
     }
 

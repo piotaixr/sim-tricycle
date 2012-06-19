@@ -1,51 +1,87 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
  */
 package sim.tricycle;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import sim.tricycle.Ordonnanceur.Ordonnanceur;
+import sim.tricycle.ihm.FrameGame1;
+import sim.tricycle.mapping.Carte;
+import sim.tricycle.mapping.elementCase.Piece;
+import sim.tricycle.mapping.nosCarte.CrossRiver;
+import sim.tricycle.robot.Automate;
+import sim.tricycle.robot.Collecteur;
+import sim.tricycle.robot.Point;
+import sim.tricycle.robot.Sens;
+import sim.tricycle.team.Ressource;
 import sim.tricycle.utils.ObjectBuilder;
-import sim.tricycle.utils.params.types.BasicObjectAccessor;
+import sim.tricycle.xmlparser.RobotParser;
 
 /**
  *
- * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
+ * @author nell
  */
-public class TestReference {
+public class TestReference extends TimerTask {
 
-    public Map<String, Object> map = new HashMap();
-    private int privateproperty = 42;
-    public int publicproperty = 21;
-    private int privatepropertygetter = 66;
+    public Carte carte;
 
-    public String meth() {
-        return "ok";
-    }
-
-    private String privateMeth() {
-        return "private";
-    }
-
-    public int getPrivatepropertygetter() {
-        return privatepropertygetter;
-    }
-
-    public Map<String, Object> getMap() {
-        return map;
-    }
-
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
-        ObjectBuilder builder = new ObjectBuilder();
+        TestReference tr = new TestReference();
+        //MapTest cr = new MapTest();
+        // Carte c = cr.getCarte();
+        ObjectBuilder ob = new ObjectBuilder();
+        RobotParser parser = ob.getRobotParser();
+        Automate a = parser.parse(new File("./test_basique.xml"));
 
-        TestReference test = new TestReference();
+        CrossRiver cr = new CrossRiver();
+        Carte c = cr.getCarte();
+        tr.carte = c;
+
+        sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0), new ArrayList<Ressource>());
+        sim.tricycle.robot.Robot bot;
 
 
-        BasicObjectAccessor objectAccessor = new BasicObjectAccessor(test);
 
-        objectAccessor.setValue("map.aaa", new Exception());
+        bot = new Collecteur(t, a);
+        bot.setCoordonnees(new Point(3, 8));
+        bot.setDirection(Sens.SUD);
+        bot.collerRobotSurMap();
 
-        System.out.println(objectAccessor.getValue("privateproperty"));
+//MARION
+//        InitialisationConstruction initCons = new InitialisationConstruction();
+//        Construction Cons = new Construction();
+//        bot.getActions().add(initCons);
+//        bot.getActions().add(Cons);
+
+        /*
+         * CollecterUnePiece cup = new CollecterUnePiece(); c.pop(new
+         * Piece(c.getCase(36, 36)), c.getCase(36, 36)); Piece p = (Piece)
+         * c.getCase(36, 36).myItem(); cup.setPiece(p);
+         * bot.getActions().add(cup);
+         *
+         */
+        cr.afficherCarte();
+
+        FrameGame1 fg = new FrameGame1(cr);
+        Ordonnanceur ordo = ob.getOrdonnanceur();
+        ordo.add(bot);
+
+//      ordo.add(bot3);
+        fg.addOrdonnaceur(ordo);
+
+        fg.setVisible(true);
+
+        new Timer().schedule(tr, 3000);
+    }
+
+    @Override
+    public void run() {
+        System.out.println("ajout de la piece");
+        carte.getCase(8, 8).setItem(new Piece());
     }
 }
