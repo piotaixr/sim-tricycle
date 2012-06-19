@@ -83,9 +83,13 @@ public abstract class AbstractCarte implements CarteInterface {
     }
 
     public void startInit(String[][] mat) {
+        this.tailleX = mat.length;
+        this.tailleY = mat[0].length;
+        carte = new Case[this.tailleX][this.tailleY];
+        
         setVide("vide");
         initAllCases(mat);
-        placerPoint( mat);
+        placerPoint(mat);
     }
 
     @Override
