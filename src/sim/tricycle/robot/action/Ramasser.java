@@ -4,6 +4,7 @@
  */
 package sim.tricycle.robot.action;
 
+import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractAction;
@@ -16,13 +17,16 @@ import sim.tricycle.utils.params.types.Variable;
  */
 public class Ramasser extends AbstractAction{
     
-    private Variable varRessource;
-
+    private AbstractObjet Item;
+    
     @Override
-    protected Object doExecute(Robot bot) {
-        Ressource r = (Ressource)varRessource.getValue();
-        bot.getT().ajouterRessource(r.getIdItem());
-        bot.getT().getMap().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()).getItem().supprimerObjet();
+    protected Object doExecute(Robot bot) {        
+        if (bot.getItemPorte()!=null){
+            throw new RuntimeException ("Le robot porte déjà un objet");                    
+        }
+        Case c = bot.getT().getMap().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY());
+        bot.setItemPorte(c.getItem());
+        c.getItem().supprimerObjet();
     //    System.out.println("Ramassage: " + bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
         return null;
     }
@@ -32,8 +36,5 @@ public class Ramasser extends AbstractAction{
         return "ramasser";
     }
  
-    public void setParameters(Variable varRessource){
-        this.varRessource = varRessource;
-    }
-
+    
 }

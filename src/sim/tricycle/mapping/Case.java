@@ -221,7 +221,10 @@ public class Case implements CaseInterface {
      */
     @Override
     public TypeCase whoIam() {
-
+        
+        if (this.hasZone()) {
+            return this.getZone().whoIam();
+        }
         if (this.hasItem()) {
             return this.getItem().whoIam();
         }
