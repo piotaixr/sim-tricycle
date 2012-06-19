@@ -1,7 +1,7 @@
 package sim.tricycle.team;
 
 import java.awt.Color;
-import java.awt.Robot;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import sim.tricycle.mapping.AbstractCarte;
@@ -10,6 +10,7 @@ import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.mapping.elementCase.Base;
 import sim.tricycle.robot.Point;
+import sim.tricycle.robot.Robot;
 
 /**
  * @author Marion Dalle
@@ -31,6 +32,7 @@ public class Team {
         this.nomTeam = nomTeam;
         this.map = map;
         this.armee = new LinkedList<Robot>();
+        this.models = new LinkedList<Robot>();
         this.ressources = new ArrayList<Ressource>();
         this.base = new Base();
         this.base.setCase(posBase);

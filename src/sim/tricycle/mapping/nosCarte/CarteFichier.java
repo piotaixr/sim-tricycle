@@ -63,7 +63,7 @@ public class CarteFichier implements Serializable {
     public static ArrayList<String> getMapNames() {
          FilesFinder finder = new FilesFinder();
          //findImg renvoie le nom du fichier et son extension
-         return finder.findImg("./Cartes/");
+         return finder.findFilesWithExtensions("./Cartes/");
     }
 
     public static CarteFichier fromFile(String nomFichier) {
