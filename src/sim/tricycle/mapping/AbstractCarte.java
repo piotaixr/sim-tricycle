@@ -78,7 +78,7 @@ public abstract class AbstractCarte implements CarteInterface {
                     //Si pt de controle il lui faut connaitre ses cases voisines.
                     carte[i][j] = new Case(i, j);
                     casesVoisines(this, this.getCase(i, j), liste);
-                    PointDeControle pt = new PointDeControle(this.getCase(i, j), liste);
+                    PointDeControle pt = new PointDeControle(liste);
                     this.getCase(i, j).setZone(pt);
                     //On ajoute ce point à la liste des points.
                     listeP.add(pt);
