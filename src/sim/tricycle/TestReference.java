@@ -22,7 +22,7 @@ public class TestReference {
         // Carte c = cr.getCarte();
         ObjectBuilder ob = new ObjectBuilder();
         RobotParser parser = ob.getRobotParser();
-        Automate a = parser.parse(new File("./test_basique.xml"));
+        Automate a = parser.parse(new File("./test.xml"));
 
     }
 }

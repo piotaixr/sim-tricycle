@@ -2,20 +2,21 @@
 <robot>
     <etat id="normal">
         <tag nom="tag1"/>
-        <condition type="multiple" nom="ou">
+        <transition>
+            <condition type="multiple" nom="ou">
+                <condition nom="true"/>
+                <condition nom="true"/>
+            </condition>
+            <action nom="pieceplusproche" dest="piece">
+            </action>
+            <etat id="deplacement_norm"/>
+        </transition>
+        <transition>
             <condition nom="true"/>
-            <condition nom="true"/>
-        </condition>
-        <action nom="piece_plus_proche" dest="piece">
-        </action>
-        <action nom="marquer">
-            <parametre> piece </parametre>
-        </action>
-        <etat id="deplacement_norm"/>
-        <condition nom="true"/>
-        <action nom="attente">
-        </action>
-        <etat id="normal"/>
+            <action nom="sleep">
+            </action>
+            <etat id="normal"/>
+        </transition>
     </etat>
     <etat id="deplacement_norm">
         <tag nom="tag1"/>

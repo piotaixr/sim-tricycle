@@ -133,11 +133,13 @@ public class RobotParser {
         System.out.println("creerCondition /" + conditionNom + "/");
 
         String typeCondition = conditionElement.getAttributeValue("type");
+        System.out.println("TYPE:" + typeCondition);
         if (typeCondition == null || typeCondition.trim().equals("simple")) {
             //condition simple
             List<Parameter> parametersList = parameterCreator.elementListToParameterList(conditionElement.getChildren("parametre"));
             return condifionFactory.create(conditionNom, parametersList);
         } else {
+            System.out.println("conditionmultiple");
             //condition multiple
             ConditionInterface condition = condifionFactory.create(conditionNom);
             if(condition instanceof AbstractConditionMultiple){
