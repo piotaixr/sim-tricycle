@@ -132,27 +132,27 @@ public abstract class AbstractCarte implements CarteInterface {
         return carte[x][y];
     }
 
-    @Override
-    public void actualiserCarte(CarteObjective source, int rayon, Case pos) {
-        HashSet<Case> liste = new HashSet<Case>();
-
-        // Capture de toute les cases dans le rayon souhaité.
-        liste.add(source.getCase(pos.getX(), pos.getY()));
-        while (rayon > 0) {
-            HashSet<Case> newliste = (HashSet<Case>) liste.clone();
-
-            for (Case x : newliste) {
-                casesVoisines(source, source.getCase(x.getX(), x.getY()), liste);
-            }
-            rayon--;
-        }
-        System.out.print("liste crée    ");
-        System.out.print(liste.toString());
-        // Traitement des cases selectionnées:
-        for (Case x : liste) {
-            this.getCase(x.getX(), x.getY()).copy(x);
-        }
-    }
+//    @Override
+//    public void actualiserCarte(CarteObjective source, int rayon, Case pos) {
+//        HashSet<Case> liste = new HashSet<Case>();
+//
+//        // Capture de toute les cases dans le rayon souhaité.
+//        liste.add(source.getCase(pos.getX(), pos.getY()));
+//        while (rayon > 0) {
+//            HashSet<Case> newliste = (HashSet<Case>) liste.clone();
+//
+//            for (Case x : newliste) {
+//                casesVoisines(source, source.getCase(x.getX(), x.getY()), liste);
+//            }
+//            rayon--;
+//        }
+//        System.out.print("liste crée    ");
+//        System.out.print(liste.toString());
+//        // Traitement des cases selectionnées:
+//        for (Case x : liste) {
+//            this.getCase(x.getX(), x.getY()).copy(x);
+//        }
+//    }
 
     @Override
     public void casesVoisines(AbstractCarte source, Case pos, HashSet<Case> liste) {
@@ -195,48 +195,6 @@ public abstract class AbstractCarte implements CarteInterface {
     @Override
     public int getLargeur() {
         return this.tailleX;
-    }
-
-    @Override
-    public void pop(PossedeCaseInterface e) {
-        int l, h;
-        Case c;
-        do {
-            l = (int) (Math.random() * this.getLargeur());
-            h = (int) (Math.random() * this.getHauteur());
-            c = this.getCase(l, h);
-        } while (c.hasItem() || c.hasObstacle());
-        if (e.obstacleItem() == 1) {
-            c.setItem((AbstractObjet) e);
-        }
-        if (e.obstacleItem() == 2) {
-            c.setObstacle((AbstractObstacle) e);
-        }
-    }
-
-    @Override
-    public void pop(PossedeCaseInterface e, int x, int y) {
-        Case c = getCase(x, y);
-        if (c.hasItem() || c.hasObstacle()) {
-            if (e.obstacleItem() == 1) {
-                c.setItem((AbstractObjet) e);
-            }
-            if (e.obstacleItem() == 2) {
-                c.setObstacle((AbstractObstacle) e);
-            }
-        } else {
-            throw new RuntimeException("Il y a déjà quelque chose sur la case");
-        }
-    }
-
-    @Override
-    public void pop(PossedeCaseInterface e, Case c) {
-        if (e.obstacleItem() == 1) {
-            c.setItem((AbstractObjet) e);
-        }
-        if (e.obstacleItem() == 2) {
-            c.setObstacle((AbstractObstacle) e);
-        }
     }
 
     @Override

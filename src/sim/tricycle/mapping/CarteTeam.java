@@ -1,6 +1,10 @@
 package sim.tricycle.mapping;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import sim.tricycle.mapping.elementCase.AbstractObjet;
+import sim.tricycle.mapping.elementCase.AbstractObstacle;
+import sim.tricycle.mapping.elementCase.AbstractVision;
 import sim.tricycle.robot.Robot;
 
 /**
@@ -30,14 +34,16 @@ public class CarteTeam extends AbstractCarte {
         }
         vraiCarte = source;
     }
-/**
- * Redéfinition
- * @param bot
- * @return vrai si deplacement réussi
- */
+
+    /**
+     * Redéfinition
+     *
+     * @param bot
+     * @return vrai si deplacement réussi
+     */
     public boolean avancer(Robot bot) {
         boolean res = vraiCarte.avancer(bot);
-        
+
         if (!res) {
             return false;
         } else {
@@ -50,17 +56,18 @@ public class CarteTeam extends AbstractCarte {
                     c.setObstacle(bot);
                 }
             }
-            this.actualiserCarte(vraiCarte, bot.getPortee(), c);
+            this.actualiserCarte(bot.getPortee(), c);
         }
         return true;
     }
-    
+
     /**
      * Redefinition.
+     *
      * @param rayon
-     * @param pos 
+     * @param pos
      */
-        public void actualiserCarte(int rayon, Case pos) {
+    public void actualiserCarte(int rayon, Case pos) {
         HashSet<Case> liste = new HashSet<Case>();
         // Capture de toute les cases dans le rayon souhaité.
         liste.add(vraiCarte.getCase(pos.getX(), pos.getY()));
@@ -79,5 +86,48 @@ public class CarteTeam extends AbstractCarte {
             this.getCase(x.getX(), x.getY()).copy(x);
         }
     }
+
+    @Override
+    public void pop(PossedeCaseInterface e) {
+        Case c;
+        if (this.vraiCarte.pop(e,c)) {
+        }
+        int l, h;
+        if (e.obstacleItem() == 1) {
+            c.setItem((AbstractObjet) e);
+        }
+        if (e.obstacleItem() == 2) {
+            c.setObstacle((AbstractObstacle) e);
+        }
+    }
+
+    public void pop(PossedeCaseInterface e, int x, int y) {
+        if (this.vraiCarte.pop(e, x, y)) {
+            Case c = getCase(x, y);
+            if (c.hasItem() || c.hasObstacle()) {
+                if (e.obstacleItem() == 1) {
+                    c.setItem((AbstractObjet) e);
+                }
+                if (e.obstacleItem() == 2) {
+                    c.setObstacle((AbstractObstacle) e);
+                }
+            } else {
+                throw new RuntimeException("Il y a déjà quelque chose sur la case");
+            }
+        }
+    }
+
+    @Override
+    public void pop(PossedeCaseInterface e, Case c) {
+        if (this.vraiCarte.pop(e, c)) {
+            if (e.obstacleItem() == 1) {
+                c.setItem((AbstractObjet) e);
+            }
+            if (e.obstacleItem() == 2) {
+                c.setObstacle((AbstractObstacle) e);
+            }
+        }
+
+
     
 }
