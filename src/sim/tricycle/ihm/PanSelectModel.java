@@ -38,13 +38,13 @@ public class PanSelectModel extends javax.swing.JPanel {
         Graphics2D g = (Graphics2D) graphic;
 
         Image imgBot = null;
-        try {
+        try {//TODO ne pas faire IO mais chercher dans les images enregistré dans la frame
             imgBot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robots/" + model.getImg()));
         } catch (IOException ex) {
             Logger.getLogger(PanSelectAutomate.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        g.drawImage(imgBot, 10, 10, 50, 50, this);
+        g.drawImage(imgBot, 20, 20, 60, 60, this);
     }
 
     /**
@@ -67,8 +67,10 @@ public class PanSelectModel extends javax.swing.JPanel {
 
         lblNameauto.setText("jLabel1");
 
+        lblGold.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         lblGold.setText("Gold :");
 
+        lblGoldValue.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         lblGoldValue.setText("jLabel3");
 
         btnCreateBot.setText("Create");
@@ -78,22 +80,21 @@ public class PanSelectModel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap()
                 .addComponent(lblNameauto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
                         .addComponent(lblGold)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblGoldValue, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCreateBot, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17))
+                    .addComponent(btnCreateBot, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGold)
                     .addComponent(lblGoldValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
