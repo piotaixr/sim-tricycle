@@ -11,6 +11,7 @@ import java.util.Observer;
 import javax.swing.BoxLayout;
 import sim.tricycle.AbstractJeu;
 import sim.tricycle.Jeu;
+import sim.tricycle.team.Team;
 
 /**
  *
@@ -24,22 +25,22 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
     private int teamNumber = 1;
     private int maxAutoByTeam = 3;
     private int defaultHeight;
-    private AbstractJeu jeu;
+    private AbstractJeu jeu = new Jeu();
     //private PopupFactory ppFtry = new PopupFactory();
 
     public FrameTeamMaker(AbstractJeu paraJeu) {
         initComponents();
-        
+
         jeu = paraJeu;
         this.setLayout(new BorderLayout());
         this.add(panTitile, BorderLayout.PAGE_START);
         this.add(panFooter, BorderLayout.PAGE_END);
         this.add(tabPanTeams, BorderLayout.CENTER);
-        
+
 
 
         this.defaultHeight = this.getSize().height;
-        
+
 //        javax.swing.JPanel panTeam = new javax.swing.JPanel();
 //        tabPanTeams.addTab("team", panTeam);
 //
@@ -67,8 +68,10 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
         System.out.println("hauteur frame : " + this.getHeight() + " taille pan :" + tabPanTeams.getPreferredSize().height);
 
         jeu.getCarte().afficherCarte();
-        
-        while (teamNumber <= 3) {
+        System.out.println(jeu.getTeamNumber());
+
+
+        while (teamNumber <= jeu.getTeamNumber()) {
             javax.swing.JPanel newPanTeam = createPanTeam();
             addTabTeam(tabPanTeams, newPanTeam);
             //addPanAutomate(newPanTeam);
@@ -157,7 +160,25 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
             btnValid.setEnabled(false);
         }
     }
-    
+
+    public Team createTeam(String name) {
+        Team t = new Team(name);
+//        if (t != null) {
+//            System.out.println("AAAAAAAAAAAAAAAAAaa");
+//        }
+        return t;
+    }
+
+    public void createAllTeams() {
+        for (int i = 0; i < tabPanTeams.getTabCount(); i++) {
+//            Component c = tabPanTeams.getComponentAt(i);
+//            if (c instanceof javax.swing.JTabbedPane) {
+//               jeu.addTeam(createTeam(c.getName()));
+//            }
+            System.out.println(tabPanTeams.getTitleAt(i));
+            jeu.addTeam(createTeam(tabPanTeams.getTitleAt(i)));
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -250,6 +271,11 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
 
         btnValid.setText("Validate");
         btnValid.setEnabled(false);
+        btnValid.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnValidMouseClicked(evt);
+            }
+        });
 
         btnRemoveMod.setText("Remove Model");
         btnRemoveMod.setEnabled(false);
@@ -350,6 +376,12 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
         }
         checkValidAll();
     }//GEN-LAST:event_btnRemoveModMouseClicked
+
+    private void btnValidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnValidMouseClicked
+        // TODO add your handling code here:
+        createAllTeams();
+        System.out.println(jeu.getTabTeams().get(0).getNomTeam());
+    }//GEN-LAST:event_btnValidMouseClicked
 
     /**
      * @param args the command line arguments

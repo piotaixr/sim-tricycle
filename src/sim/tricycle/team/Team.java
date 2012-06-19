@@ -39,6 +39,10 @@ public class Team {
     public void setBase(Base base) {
         this.base = base;
     }
+    
+    public Team(String nomTeam){
+        this.nomTeam = nomTeam;
+    }
 
     public Base getBase() {
         return base;
