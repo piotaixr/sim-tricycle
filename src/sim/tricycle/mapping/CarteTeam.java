@@ -1,10 +1,6 @@
 package sim.tricycle.mapping;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import sim.tricycle.mapping.elementCase.AbstractObjet;
-import sim.tricycle.mapping.elementCase.AbstractObstacle;
-import sim.tricycle.mapping.elementCase.AbstractVision;
 import sim.tricycle.robot.Robot;
 
 /**

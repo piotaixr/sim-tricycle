@@ -75,7 +75,29 @@ public interface CarteInterface {
      */
     public boolean avancer(Robot bot);
 
+    /**
+     *
+     * @param e l'element à faire apparaitre.
+     * @param x coordonées
+     * @param y coordonées
+     * @return vrai si réussi
+     */
     public boolean pop(PossedeCaseInterface e, int x, int y);
 
+    /**
+     *
+     * @param e l'element à faire apparaitre.
+     * @param c case où faire apparaitre
+     * @return vrai si réussi
+     */
     public boolean pop(PossedeCaseInterface e, Case c);
+
+    /**
+     * Suprime un element de la carte.
+     *
+     * @param e l'element à suprimer.
+     * @param c
+     * @return
+     */
+    public boolean suprimer(PossedeCaseInterface e, Case c);
 }
