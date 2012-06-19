@@ -78,7 +78,7 @@ public final class PanSelectAutomate extends javax.swing.JPanel {
         }
 
         g.drawImage(imgBot, 30, 20, 60, 60, this);
-        System.out.println("TOTO");
+        //System.out.println("TOTO");
     }
 
     private class MyObs extends Observable {
