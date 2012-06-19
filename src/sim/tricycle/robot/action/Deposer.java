@@ -4,6 +4,8 @@
  */
 package sim.tricycle.robot.action;
 
+import sim.tricycle.mapping.Case;
+import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractAction;
 import sim.tricycle.team.Ressource;
@@ -15,13 +17,24 @@ import sim.tricycle.utils.params.types.Variable;
  */
 public class Deposer extends AbstractAction{
     
-    private Variable varRessource;
+   
 
     @Override
     protected Object doExecute(Robot bot) {
-        Ressource r = (Ressource)varRessource.getValue();
-        bot.getT().ajouterRessource(r.getIdItem());
-        bot.getT().getMap().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()).getItem().supprimerObjet();
+        
+        if (bot.getItemPorte()==null)throw new RuntimeException ("le robot ne porte pas d'objet");
+        
+        Case c = bot.getT().getMap().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY());
+        if (c.whoIam()== TypeCase.base){
+            bot.getT().ajouterRessource(bot.getItemPorte().getId());
+        }
+        else {
+            if (c.whoIam() == TypeCase.vide){
+                bot.getT().getMap().pop(bot.getItemPorte(),c);                       
+            }
+            else throw new RuntimeException ("la case n'est pas vide et n'est pas une base on ne peut déposer quelque chose dessus");
+        }     
+        
     //    System.out.println("Ramassage: " + bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
         return null;
     }
