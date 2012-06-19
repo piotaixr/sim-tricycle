@@ -50,9 +50,18 @@ public class AbstractVision extends AbstractObstacle {
         return t;
     }
 
+    /**
+     * Si l'element peut voir une case c.
+     * @param c
+     * @return vrai s'il voit la case.
+     */
     public boolean voit(Case c) {
-        c.getX();
-        
-        return true;
+        int x=(Math.abs(c.getX()- this.pos.getX()));
+        int y=Math.abs(c.getX()- this.pos.getX());
+        return (x+y>this.portee);
+    }
+    
+    public void majvision(){
+        this.getT().getMap().actualiserCarte( this.portee, pos);
     }
 }

@@ -1,5 +1,6 @@
 package sim.tricycle.mapping;
 
+import java.util.HashSet;
 import sim.tricycle.robot.Robot;
 
 /**
@@ -52,6 +53,31 @@ public class CarteTeam extends AbstractCarte {
             this.actualiserCarte(vraiCarte, bot.getPortee(), c);
         }
         return true;
+    }
+    
+    /**
+     * Redefinition.
+     * @param rayon
+     * @param pos 
+     */
+        public void actualiserCarte(int rayon, Case pos) {
+        HashSet<Case> liste = new HashSet<Case>();
+        // Capture de toute les cases dans le rayon souhaité.
+        liste.add(vraiCarte.getCase(pos.getX(), pos.getY()));
+        while (rayon > 0) {
+            HashSet<Case> newliste = (HashSet<Case>) liste.clone();
+
+            for (Case x : newliste) {
+                casesVoisines(vraiCarte, vraiCarte.getCase(x.getX(), x.getY()), liste);
+            }
+            rayon--;
+        }
+        System.out.print("liste crée    ");
+        System.out.print(liste.toString());
+        // Traitement des cases selectionnées:
+        for (Case x : liste) {
+            this.getCase(x.getX(), x.getY()).copy(x);
+        }
     }
     
 }
