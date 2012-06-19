@@ -46,4 +46,8 @@ public class ActionBuilder extends VarBuilder {
     public Deque<ActionInterface> getActions() {
         return actions;
     }
+
+    public void reinit() {
+        actions.clear();
+    }
 }

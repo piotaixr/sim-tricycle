@@ -13,5 +13,5 @@ public interface OrdonnancableInterface {
     /*
      * Fonction qui sera exécutée à chaque 'tic'
      */
-    public void executeAction();
+    public void tick();
 }
