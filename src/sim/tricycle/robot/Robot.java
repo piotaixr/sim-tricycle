@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Stack;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
 import sim.tricycle.mapping.TypeCase;
+import sim.tricycle.mapping.elementCase.AbstractObjet;
+import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.mapping.elementCase.AbstractVision;
 import sim.tricycle.robot.action.Sleep;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
@@ -28,6 +30,16 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
     protected Etat etatDestination;
     protected Automate automate;
     protected boolean plante = false;
+    protected int cout = 0;
+    protected AbstractObjet ItemPorte = null;
+
+    public AbstractObjet getItemPorte() {
+        return ItemPorte;
+    }
+
+    public void setItemPorte(AbstractObjet ItemPorte) {
+        this.ItemPorte = ItemPorte;
+    }
 
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate

@@ -20,14 +20,6 @@ public interface CarteInterface {
     public Case getCase(int x, int y);
 
     /**
-     * Actualise les cases dans un rayon particulier.
-     *
-     * @param source La cartesource.
-     * @param rayon le rayon d'actualisation de la carte.
-     */
-    public void actualiserCarte(CarteObjective source, int rayon, Case pos);
-
-    /**
      * casesVoisines fournit les cases voisines de pos.
      *
      * @param pos la case de départ.
@@ -45,30 +37,30 @@ public interface CarteInterface {
      */
     public int getLargeur();
 
-    /**
-     * place un élément passé en paramètre sur une case libre de la carte
-     * choisie aléatoirement
-     *
-     * @param e l'elt
-     */
-    public void pop(PossedeCaseInterface e);
-
-    /**
-     * place un élément passé en paramètre sur une case
-     *
-     * @param e l'elt
-     * @param x cooddonnée en abscisse.
-     * @param y coordonnée en ordonée.
-     */
-    public void pop(PossedeCaseInterface e, int x, int y);
-
-    /**
-     * place un élément passé en paramètre sur une case
-     *
-     * @param e l'elt
-     * @param c la case
-     */
-    public void pop(PossedeCaseInterface e, Case c);
+//    /**
+//     * place un élément passé en paramètre sur une case libre de la carte
+//     * choisie aléatoirement
+//     *
+//     * @param e l'elt
+//     */
+//    public void pop(PossedeCaseInterface e);
+//
+//    /**
+//     * place un élément passé en paramètre sur une case
+//     *
+//     * @param e l'elt
+//     * @param x cooddonnée en abscisse.
+//     * @param y coordonnée en ordonée.
+//     */
+//    public void pop(PossedeCaseInterface e, int x, int y);
+//
+//    /**
+//     * place un élément passé en paramètre sur une case
+//     *
+//     * @param e l'elt
+//     * @param c la case
+//     */
+//    public void pop(PossedeCaseInterface e, Case c);
 
     /**
      * Routine d'analyse de l'état de chaque point de controle.
