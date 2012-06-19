@@ -3,7 +3,6 @@
 package sim.tricycle;
 
 import java.util.ArrayList;
-import sim.tricycle.mapping.AbstractCarte;
 import sim.tricycle.mapping.CarteObjective;
 import sim.tricycle.team.Ressource;
 import sim.tricycle.team.Team;
@@ -49,7 +48,7 @@ public abstract class AbstractJeu {
 
     public void addTeam(Team t) {
         if (t != null) {
-            System.out.println("AAAAAAAAAAAAAAAAAaa");
+            System.out.println("Nouvelle Team");
         }
         tabTeams.add(t);
         

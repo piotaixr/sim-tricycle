@@ -45,7 +45,8 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
         jspanMap.setViewportView(vc);
         panMiniMap.add(vmc);
 
-
+        
+        
         javax.swing.JPanel panTeam1 = new javax.swing.JPanel();
         javax.swing.JPanel panTeam2 = new javax.swing.JPanel();
         javax.swing.JPanel panTeam3 = new javax.swing.JPanel();

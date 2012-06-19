@@ -1,21 +1,70 @@
 <?xml version="1.0" encoding='ISO-8859-1' standalone='yes' ?>
 <robot>
-    <etat id="1">
+    <etat id="normal">
+        <tag nom="tag1"/>
+        <condition nom="piece_trouvee"/>
+        <action nom="piece_plus_proche" dest="piece">
+        </action>
+        <action nom="marquer">
+            <parametre> piece </parametre>
+        </action>
+        <etat id="deplacement_norm"/>
+        <condition nom="true"/>
+        <action nom="attente">
+        </action>
+        <etat id="normal"/>
+    </etat>
+    <etat id="deplacement_norm">
+        <tag nom="tag1"/>
         <transition>
-            <action nom="avancer">
-                <parameter type="integer">4</parameter>
+            <condition nom="contains">
+                <parametre> caseCourante </parametre>
+                <parametre> pieceRecherchee </parametre>
+            </condition>
+            <action nom="ramasser">
             </action>
-            <action nom="tourner">
-                <parametre>OUEST</parametre>
+            <etat id="porteur"/>
+        </transition>
+        <transition>
+            <condition nom="true"/>
+            <action nom="allera">
+                <parametre type="var">piece</parametre>
             </action>
-            <action nom="avancer"></action>
-            <action nom="avancer"></action>
-            <etat id="2" />
+            <etat id="normal"/>
         </transition>
     </etat>
-    <etat id="2">
+    <etat id="porteur">
+        <tag nom="tag2"/>
         <transition>
-            <etat id="2" />
+            <etat id="deplacement_port"/>
         </transition>
     </etat>
+    <etat id="deplacement_port">
+        <tag nom="tag2"/>
+        <transition>
+            <condition nom="case==base"/>
+            <action nom="deposer">
+            </action>
+            <etat id="normal"/>
+        </transition>
+        <transition>
+            <condition nom="true"/>
+            <action nom="allera">
+                <parametre type="var">base</parametre>
+            </action>
+            <etat id="deplacement_port"/>
+        </transition>
+    </etat>
+    <tag nom="tag1">
+        <action nom="avancer">1</action>
+        <action nom="reculer">1</action>
+        <action nom="tourner_droite">1</action>
+        <action nom="tourner_gauche">1</action>
+    </tag>
+    <tag nom="tag2">
+        <action nom="avancer">2</action>
+        <action nom="reculer">2</action>
+        <action nom="tourner_droite">1</action>
+        <action nom="tourner_gauche">1</action>
+    </tag>
 </robot>

@@ -214,7 +214,8 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
     private void executerAction(ActionInterface action) {
         try {
             action.executer(this);
-            prix = action.getPoids();
+
+           prix= etatCourant.getValeurAction(action);
             if (action instanceof AbstractActionComposee) {
                 actions.addAll(((AbstractActionComposee) action).getNewActions());
             }

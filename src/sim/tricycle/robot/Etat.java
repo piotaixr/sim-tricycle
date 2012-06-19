@@ -2,6 +2,8 @@ package sim.tricycle.robot;
 
 import java.util.ArrayList;
 import java.util.List;
+import sim.tricycle.robot.action.core.ActionInterface;
+import sim.tricycle.utils.tag.Tag;
 
 /**
  *
@@ -11,10 +13,12 @@ public class Etat {
 
     private String id;
     private List<Transition> transitions = new ArrayList<Transition>();
-    private List<String> tags = new ArrayList<String>();
+    private List<Tag> tags = new ArrayList<Tag>();
+    private Automate automate;
 
-    public Etat(String id) {
+    public Etat(String id, Automate automate) {
         this.id = id;
+        this.automate = automate;
     }
 
     public String getId() {
@@ -38,11 +42,17 @@ public class Etat {
         transitions.add(t);
     }
 
-    public void addTag(String nomTag) {
-        tags.add(nomTag);
+    public void addTag(Tag tag) {
+        tags.add(tag);
     }
 
-    public List<String> getTags() {
-        return tags;
+    public int getValeurAction(ActionInterface action) {
+        for (Tag t : tags) {
+            if (t.hasValeur(action.getId())) {
+                return t.getValeur(action.getId());
+            }
+        }
+        // retourner la valeur par defaut
+        return action.getPoids();
     }
 }
