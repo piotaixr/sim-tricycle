@@ -22,13 +22,13 @@ import sim.tricycle.robot.Robot;
  * @author Thomas Nds nds.thomas@gmail.com
  */
 public abstract class AbstractCarte implements CarteInterface {
-    
+
     protected Image imgFond = null;
     protected Image imgVide = null;
     protected HashSet<PointDeControle> listePt;
     protected int tailleX, tailleY;
     protected Case[][] carte;
-    
+
     @Override
     public void afficherCarte() {
         int i, j;
@@ -83,7 +83,7 @@ public abstract class AbstractCarte implements CarteInterface {
             }
         }
     }
-    
+
     public void startInit(String[][] mat) {
         this.tailleX = mat.length;
         this.tailleY = mat[0].length;
@@ -92,39 +92,39 @@ public abstract class AbstractCarte implements CarteInterface {
         initAllCases(mat);
         placerPoint(mat);
     }
-    
+
     @Override
     public Image getImage() {
         return this.imgFond;
     }
-    
+
     @Override
     public Image getVide() {
         return this.imgVide;
     }
-    
+
     @Override
     public void setVide(String s) {
         try {
             // Initialisation des images:
             imgVide = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + s + ".jpg"));
-            
+
         } catch (IOException ex) {
             Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     public void setImage(String s) {
         try {
             // Initialisation des images:
             imgFond = ImageIO.read(new File("./src/sim/tricycle/ihm/images/" + s));
-            
+
         } catch (IOException ex) {
             Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     public Case getCase(int x, int y) {
         if (x > tailleX || y > tailleY || x < 0 || y < 0) {
@@ -133,27 +133,6 @@ public abstract class AbstractCarte implements CarteInterface {
         return carte[x][y];
     }
 
-//    @Override
-//    public void actualiserCarte(CarteObjective source, int rayon, Case pos) {
-//        HashSet<Case> liste = new HashSet<Case>();
-//
-//        // Capture de toute les cases dans le rayon souhaité.
-//        liste.add(source.getCase(pos.getX(), pos.getY()));
-//        while (rayon > 0) {
-//            HashSet<Case> newliste = (HashSet<Case>) liste.clone();
-//
-//            for (Case x : newliste) {
-//                casesVoisines(source, source.getCase(x.getX(), x.getY()), liste);
-//            }
-//            rayon--;
-//        }
-//        System.out.print("liste crée    ");
-//        System.out.print(liste.toString());
-//        // Traitement des cases selectionnées:
-//        for (Case x : liste) {
-//            this.getCase(x.getX(), x.getY()).copy(x);
-//        }
-//    }
     @Override
     public void casesVoisines(AbstractCarte source, Case pos, HashSet<Case> liste) {
 
@@ -186,17 +165,17 @@ public abstract class AbstractCarte implements CarteInterface {
             }
         }
     }
-    
+
     @Override
     public int getHauteur() {
         return this.tailleY;
     }
-    
+
     @Override
     public int getLargeur() {
         return this.tailleX;
     }
-    
+
     @Override
     public void routinePt() {
         if (!listePt.isEmpty()) {
@@ -205,7 +184,7 @@ public abstract class AbstractCarte implements CarteInterface {
             }
         }
     }
-    
+
     @Override
     public Case getCaseDevant(Robot bot) {
         Case c = null;
@@ -225,7 +204,7 @@ public abstract class AbstractCarte implements CarteInterface {
         }
         return c;
     }
-    
+
     @Override
     public boolean avancer(Robot bot) {
         Case c = getCaseDevant(bot);
@@ -241,7 +220,7 @@ public abstract class AbstractCarte implements CarteInterface {
         }
         return true;
     }
-    
+
     public Case popAlea(PossedeCaseInterface e, Case c) {
         int l, h;
         do {
@@ -249,23 +228,39 @@ public abstract class AbstractCarte implements CarteInterface {
             h = (int) (Math.random() * this.getHauteur());
             c = this.getCase(l, h);
         } while (c.hasItem() || c.hasObstacle() || c.hasZone());
-        pop(e,c);
+        pop(e, c);
         return c;
     }
-    
+
     public boolean pop(PossedeCaseInterface e, int x, int y) {
         Case c = getCase(x, y);
-       return pop(e,c);
+        return pop(e, c);
     }
-    
+
     public boolean pop(PossedeCaseInterface e, Case c) {
-        
         if (e.typeDeCase() == TypeCase.objet) {
             c.setItem((AbstractObjet) e);
         } else if (e.typeDeCase() == TypeCase.obstacle) {
             c.setObstacle((AbstractObstacle) e);
-        } else if (e.typeDeCase() == TypeCase.obstacle) {
+        } else if (e.typeDeCase() == TypeCase.zone) {
             c.setZone((AbstractZone) e);
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean suprimer(PossedeCaseInterface e, Case c) {
+        if (e.typeDeCase() == TypeCase.objet) {
+            if (c.getItem().equals(e)) {
+                c.suprObjet();
+            }
+
+        } else if (e.typeDeCase() == TypeCase.obstacle) {
+            c.setObstacle((AbstractObstacle) e);
+            if (c.getObstacle().equals(e)) {
+                c.suprObstacle();
+            }
         } else {
             return false;
         }

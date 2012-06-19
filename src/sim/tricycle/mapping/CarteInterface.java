@@ -37,31 +37,6 @@ public interface CarteInterface {
      */
     public int getLargeur();
 
-//    /**
-//     * place un élément passé en paramètre sur une case libre de la carte
-//     * choisie aléatoirement
-//     *
-//     * @param e l'elt
-//     */
-//    public void pop(PossedeCaseInterface e);
-//
-//    /**
-//     * place un élément passé en paramètre sur une case
-//     *
-//     * @param e l'elt
-//     * @param x cooddonnée en abscisse.
-//     * @param y coordonnée en ordonée.
-//     */
-//    public void pop(PossedeCaseInterface e, int x, int y);
-//
-//    /**
-//     * place un élément passé en paramètre sur une case
-//     *
-//     * @param e l'elt
-//     * @param c la case
-//     */
-//    public void pop(PossedeCaseInterface e, Case c);
-
     /**
      * Routine d'analyse de l'état de chaque point de controle.
      */
@@ -99,4 +74,8 @@ public interface CarteInterface {
      * @return vrai si réussi.
      */
     public boolean avancer(Robot bot);
+
+    public boolean pop(PossedeCaseInterface e, int x, int y);
+
+    public boolean pop(PossedeCaseInterface e, Case c);
 }

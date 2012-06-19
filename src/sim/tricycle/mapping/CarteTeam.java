@@ -52,10 +52,10 @@ public class CarteTeam extends AbstractCarte {
     }
 
     /**
-     * Redefinition.
+     * Actualise la carte dans un rayon donné autour d'une case pos.
      *
-     * @param rayon
-     * @param pos
+     * @param rayon de vision.
+     * @param pos la postion de la case observateur;
      */
     public void actualiserCarte(int rayon, Case pos) {
         HashSet<Case> liste = new HashSet<Case>();
@@ -91,9 +91,15 @@ public class CarteTeam extends AbstractCarte {
         return false;
     }
 
-    public boolean pop(PossedeCaseInterface e, Case c) {
-        if (this.vraiCarte.pop(e, c)) {
-            super.pop(e, c);
+/**
+ * Suprime un element de la carte.
+ * @param e l'element à suprimer.
+ * @param c
+ * @return 
+ */
+  public boolean suprimer(PossedeCaseInterface e,Case c) {
+        if (this.vraiCarte.suprimer(e,c)) {
+            super.suprimer(e,c);
             return true;
         }
         return false;
