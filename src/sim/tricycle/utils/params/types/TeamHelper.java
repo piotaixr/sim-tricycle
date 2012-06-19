@@ -4,6 +4,7 @@
  */
 package sim.tricycle.utils.params.types;
 
+import sim.tricycle.mapping.Case;
 import sim.tricycle.robot.Point;
 import sim.tricycle.team.Team;
 
@@ -19,7 +20,7 @@ public class TeamHelper {
         this.team = team;
     }
     
-    public Point base(){
-        return team.getBase();
+    public Case base(){
+        return team.getBase().getPosition();
     }
 }
