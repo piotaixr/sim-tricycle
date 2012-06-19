@@ -4,6 +4,7 @@ package sim.tricycle;
 
 import java.util.ArrayList;
 import sim.tricycle.mapping.AbstractCarte;
+import sim.tricycle.mapping.CarteObjective;
 import sim.tricycle.team.Ressource;
 import sim.tricycle.team.Team;
 
@@ -13,7 +14,7 @@ import sim.tricycle.team.Team;
  */
 public abstract class AbstractJeu {
 
-    protected AbstractCarte carte;
+    protected CarteObjective carte;
     protected ArrayList<Team> tabTeams;
     protected int teamNumber = 0;
     protected ArrayList<Ressource> ressourcesDefaut = null;
@@ -26,7 +27,7 @@ public abstract class AbstractJeu {
         this.teamNumber = teamNumber;
     }
 
-    public void setCarte(AbstractCarte carte) {
+    public void setCarte(CarteObjective carte) {
         this.carte = carte;
     }
 
@@ -34,7 +35,7 @@ public abstract class AbstractJeu {
         this.tabTeams = tabTeams;
     }
 
-    public AbstractCarte getCarte() {
+    public CarteObjective getCarte() {
         return carte;
     }
 

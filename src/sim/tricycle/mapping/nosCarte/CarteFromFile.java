@@ -11,15 +11,15 @@ import sim.tricycle.mapping.CarteObjective;
  */
 public class CarteFromFile extends CarteObjective {
 
+    public CarteFromFile(String[][] tab) {
+        super(tab);
+    }
+
     public CarteFromFile(String nomCarte) {
         CarteFichier cf = CarteFichier.fromFile(nomCarte);
         if (cf.getFond() != null) {
             setImage(cf.getFond());
         }
         startInit(cf.getMat());
-    }
-
-    public CarteFromFile(String[][] tab) {
-        super(tab);
     }
 }

@@ -2,6 +2,7 @@ package sim.tricycle.mapping;
 
 import java.awt.Image;
 import java.util.HashSet;
+import sim.tricycle.robot.Robot;
 
 /**
  *
@@ -53,7 +54,7 @@ public interface CarteInterface {
     public void pop(PossedeCaseInterface e);
 
     /**
-     * place un élément passé en paramètre sur une case 
+     * place un élément passé en paramètre sur une case
      *
      * @param e l'elt
      * @param x cooddonnée en abscisse.
@@ -62,20 +63,26 @@ public interface CarteInterface {
     public void pop(PossedeCaseInterface e, int x, int y);
 
     /**
-     * place un élément passé en paramètre sur une case 
+     * place un élément passé en paramètre sur une case
      *
      * @param e l'elt
      * @param c la case
      */
     public void pop(PossedeCaseInterface e, Case c);
-    
+
     /**
      * Routine d'analyse de l'état de chaque point de controle.
      */
     public void routinePt();
 
+    /**
+     * Afiichage de la carte sous forme textuelle
+     */
     public void afficherCarte();
 
+    /**
+     * Démare l'initialisation de la carte.
+     */
     public void startInit(String[][] mat);
 
     public Image getImage();
@@ -85,4 +92,17 @@ public interface CarteInterface {
     public void setVide(String s);
 
     public void setImage(String s);
+
+    /**
+     * Retourne la case devant.
+     *
+     * @param bot
+     * @return
+     */
+    public Case getCaseDevant(Robot bot);
+    
+    /**
+     * Avancer le robot d'une case.
+     */
+    public void  avancer(Robot bot);
 }

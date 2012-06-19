@@ -96,6 +96,7 @@ public class ViewCarte extends javax.swing.JPanel {
                 paintCase(g, carte.getCase(i, j), tailleCase, true, affFond);
             }
         }
+        
     }
 
     /**

@@ -6,12 +6,17 @@ package sim.tricycle.ihm;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BoxLayout;
 import sim.tricycle.AbstractJeu;
 import sim.tricycle.Jeu;
+import sim.tricycle.robot.Automate;
+import sim.tricycle.robot.Robot;
 import sim.tricycle.team.Team;
+import sim.tricycle.utils.ObjectBuilder;
+import sim.tricycle.xmlparser.RobotParser;
 
 /**
  *
@@ -26,12 +31,15 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
     private int maxAutoByTeam = 3;
     private int defaultHeight;
     private AbstractJeu jeu = new Jeu();
+    private RobotParser robPars;
     //private PopupFactory ppFtry = new PopupFactory();
 
     public FrameTeamMaker(AbstractJeu paraJeu) {
         initComponents();
 
         jeu = paraJeu;
+        ObjectBuilder o = new ObjectBuilder();
+        robPars = o.getRobotParser();
         this.setLayout(new BorderLayout());
         this.add(panTitile, BorderLayout.PAGE_START);
         this.add(panFooter, BorderLayout.PAGE_END);
@@ -161,14 +169,30 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
         }
     }
 
-    public Team createTeam(String name) {
-        Team t = new Team(name,jeu.getCarte());
+    public Team createTeam(int ident,String name) {
+        Team t = new Team(ident, name, jeu.getCarte());
         return t;
     }
 
     public void createAllTeams() {
         for (int i = 0; i < tabPanTeams.getTabCount(); i++) {
-            jeu.addTeam(createTeam(tabPanTeams.getTitleAt(i)));
+            Team t = createTeam(i,tabPanTeams.getTitleAt(i));
+            jeu.addTeam(t);
+            createModels(t);
+        }
+    }
+
+    public void createModels(Team t) {
+        javax.swing.JPanel pan = (javax.swing.JPanel) tabPanTeams.getSelectedComponent();
+        Component[] tabcomp = pan.getComponents();
+        for (Component c : tabcomp) {
+            if (c instanceof PanSelectAutomate) {
+                //pour éviter d'avoir une ligne de code indigerable
+                String automateTxt =((PanSelectAutomate) c).getStringAutomate();
+                File f = new File(automateTxt);
+                Automate auto = robPars.parse(f);
+                t.addModel(new Robot(auto,t));
+            }
         }
     }
 

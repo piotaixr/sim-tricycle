@@ -1,17 +1,12 @@
 package sim.tricycle.mapping;
 
-import java.util.HashSet;
-import sim.tricycle.mapping.elementCase.AbstractObjet;
-import sim.tricycle.mapping.elementCase.AbstractObstacle;
-import sim.tricycle.mapping.elementCase.PointDeControle;
-import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
 import sim.tricycle.robot.Robot;
 
 /**
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class CarteTeam extends AbstractCarte implements CarteInterface {
+public class CarteTeam extends AbstractCarte {
 
     /** Construit la map d'une team.
      * 
@@ -30,6 +25,18 @@ public class CarteTeam extends AbstractCarte implements CarteInterface {
             }
         }
     }
+    
+    public void avancer(Robot bot) {
+        Case c = getCaseDevant(bot);
+        if (c != null) {
+            if (bot.getPosition().hasObstacle()) {
+                bot.getPosition().suprObstacle();
+            }
+            if (!c.hasObstacle()) {
+                c.setObstacle(bot);
+            }
 
+        }
+    }
    
 }

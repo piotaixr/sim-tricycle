@@ -20,6 +20,10 @@ public class PointDeControle extends AbstractZone {
     private int tpsPopBoule = 300;
     private Team t = null;
 
+    public PointDeControle(HashSet<Case> h) {
+        this.liste = h;
+    }
+
     public Team getTeam() {
         return t;
     }
@@ -36,21 +40,19 @@ public class PointDeControle extends AbstractZone {
     public int getTpsCapture() {
         return this.tpsCapture;
     }
-        public int getTpspop() {
-        return this.tpsPopBoule;
-    }
 
-    public PointDeControle( HashSet<Case> h) {
-        this.liste = h;
-        pos.setZone(this);
+    public int getTpspop() {
+        return this.tpsPopBoule;
     }
 
     public void initTpsCapture() {
         this.tpsCapture = 60;
     }
+
     public void initTpspop() {
-        this.tpsPopBoule=100;
+        this.tpsPopBoule = 100;
     }
+
     /**
      * Analyse la capture par une équipe
      *
