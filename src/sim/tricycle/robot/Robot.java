@@ -17,7 +17,7 @@ import sim.tricycle.utils.params.types.Environnement;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public abstract class Robot extends AbstractObstacle implements OrdonnancableInterface {
+public  class Robot extends AbstractObstacle implements OrdonnancableInterface {
 
     protected Environnement environnement = null;
     protected Point coordonnees;

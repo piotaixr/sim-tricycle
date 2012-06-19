@@ -39,7 +39,7 @@ public class FilesFinder {
         return filesName;
     }
     
-        public ArrayList<String> findImg(String directoryPath) {
+        public ArrayList<String> findFilesWithExtensions(String directoryPath) {
         File directory = new File(directoryPath);
         File[] subfiles = null;
         ArrayList<String> filesName = new ArrayList();
