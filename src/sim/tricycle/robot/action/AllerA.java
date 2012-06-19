@@ -17,6 +17,7 @@ import sim.tricycle.utils.params.types.Variable;
 public class AllerA extends AbstractAction {
 
     protected Point p;
+    protected Variable varChemin;
 
     public AllerA() {
         super();
@@ -37,11 +38,10 @@ public class AllerA extends AbstractAction {
 
     @Override
     protected Object doExecute(Robot bot) {
-        TrouveChemin tc = new TrouveChemin(this.p);
-        tc.executer(bot);
-        System.out.println("TailleChemin :" + tc.getChemin().size());
-        creerChemin(tc.getChemin(), bot);
 
+        //System.out.println("TailleChemin :" + tc.getChemin().size());
+        LinkedList<Noeud> c =(LinkedList<Noeud>) varChemin.getValue();
+        creerChemin(c, bot);
         return null;
     }
     
