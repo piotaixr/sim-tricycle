@@ -19,10 +19,10 @@ public abstract class AbstractObjet implements PossedeCaseInterface {
     public Case getPosition() {
         return pos;
     }
+    
     /*
      * Supprimer l'objet de la case. @ensure l'objet n'est plus sur la carte.
      */
-
     public void supprimerObjet() {
         pos.suprObjet();
     }

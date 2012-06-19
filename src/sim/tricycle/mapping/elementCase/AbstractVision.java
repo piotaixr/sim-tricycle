@@ -2,6 +2,7 @@
  */
 package sim.tricycle.mapping.elementCase;
 
+import sim.tricycle.mapping.Case;
 import sim.tricycle.team.Team;
 
 /**
@@ -10,9 +11,11 @@ import sim.tricycle.team.Team;
  */
 public class AbstractVision extends AbstractObstacle {
 
-    protected Team t=null;
-    protected int prix=0;
-    protected int porteeMax=0;
+    protected Team t = null;
+    protected int prix = 0;
+    protected int porteeMax = 0;
+    protected int pv = 0;
+    protected int pointAttaque = 0;
 
     public int getPorteeMax() {
         return porteeMax;
@@ -45,5 +48,11 @@ public class AbstractVision extends AbstractObstacle {
 
     public Team getT() {
         return t;
+    }
+
+    public boolean voit(Case c) {
+        c.getX();
+        
+        return true;
     }
 }

@@ -27,13 +27,14 @@ public class Avancer extends AbstractAction {
     }
     
     public void avancerUneCase(Robot bot){
-    
-        Point p = nextCase(bot);       
-        if(!bot.getT().getMap().getCase(p.getX(), p.getY()).hasObstacle()){
-         // bot.decollerRobotDeMap();  
-          bot.setCoordonnees(p);
-        //  bot.collerRobotSurMap();
-        } 
+        bot.getT().getMap().avancer(bot);
+//    
+//        Point p = nextCase(bot);       
+//        if(!bot.getT().getMap().getCase(p.getX(), p.getY()).hasObstacle()){
+//          bot.decollerRobotDeMap();  
+//          bot.setCoordonnees(p);
+//          bot.collerRobotSurMap();
+//        } 
     }
     
     private Point nextCase(Robot bot){
