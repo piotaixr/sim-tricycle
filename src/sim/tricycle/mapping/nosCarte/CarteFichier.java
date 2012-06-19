@@ -6,9 +6,13 @@ package sim.tricycle.mapping.nosCarte;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sim.tricycle.ihm.FilesFinder;
+import sim.tricycle.robot.Point;
 
 /**
  *
@@ -20,6 +24,7 @@ public class CarteFichier implements Serializable {
     private String fond;
     static final long serialVersionUID = 42L;
     public static final String basename = "./Cartes/";
+    private Map<Integer,List<Point>> dispositions = new HashMap();
     
     public CarteFichier(String[][] mat, String fond) {
         this.mat = mat;
@@ -42,7 +47,7 @@ public class CarteFichier implements Serializable {
         this.mat = mat;
     }
 
-    public static void createFile(String nomFichier, String[][] mat, String imageFond) {
+    public static void createFile(String nomFichier, String[][] mat, String imageFond, Map<Integer,List<Point>> dispositions) {
         CarteFichier cf = new CarteFichier(mat, imageFond);
         ObjectOutputStream oos = null;
         try {
@@ -85,5 +90,9 @@ public class CarteFichier implements Serializable {
             }
         }
         return cf;
+    }
+    
+    public List<Point> getDispositionBases(int nbTeams){
+        
     }
 }

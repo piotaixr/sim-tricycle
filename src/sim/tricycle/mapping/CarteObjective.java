@@ -9,6 +9,7 @@ import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.mapping.elementCase.AbstractVision;
 import sim.tricycle.mapping.nosCarte.CarteFichier;
+import sim.tricycle.robot.Point;
 import sim.tricycle.team.Team;
 
 /**
@@ -16,8 +17,9 @@ import sim.tricycle.team.Team;
  * @author Thomas Nds nds.thomas@gmail.com
  */
 public class CarteObjective extends AbstractCarte {
-        protected ArrayList<AbstractVision> elements=null;
-    
+
+    protected ArrayList<AbstractVision> elements = null;
+
     /**
      * Création d'une carte à partir d'une matrice d'entier. @ensure la carte
      * correspond aux informations fournit.
@@ -25,23 +27,25 @@ public class CarteObjective extends AbstractCarte {
     public CarteObjective(String[][] tab) {
         startInit(tab);
     }
-    
+
     public CarteObjective() {
     }
-    /** Actualise le broullard des teams sur une case.
-     * 
+
+    /**
+     * Actualise le broullard des teams sur une case.
+     *
      * @param c la case depuis laquelle actualisé.
      */
-    public void ActualiserBroullard(Case c){
-        
-        for (AbstractVision x: elements){
-            if (x.voit(c)){
+    public void ActualiserBroullard(Case c) {
+
+        for (AbstractVision x : elements) {
+            if (x.voit(c)) {
                 x.getT().getMap().actualiserCarte(x.getPortee(), c);
             }
         }
     }
-    
-    public boolean pop(PossedeCaseInterface e,Case c) {
+
+    public boolean pop(PossedeCaseInterface e, Case c) {
         int l, h;
         Case c;
         do {
@@ -57,7 +61,6 @@ public class CarteObjective extends AbstractCarte {
         }
     }
 
-   
     public boolean pop(PossedeCaseInterface e, int x, int y) {
         Case c = getCase(x, y);
         if (c.hasItem() || c.hasObstacle()) {
@@ -79,5 +82,9 @@ public class CarteObjective extends AbstractCarte {
         if (e.obstacleItem() == 2) {
             c.setObstacle((AbstractObstacle) e);
         }
+    }
+
+    protected void setDispositionBases(List<Point> dispositionBases) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }
