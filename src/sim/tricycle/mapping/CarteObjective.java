@@ -10,20 +10,14 @@ import sim.tricycle.mapping.nosCarte.CarteFichier;
  */
 public class CarteObjective extends AbstractCarte {
 
-    
-        public CarteObjective(String nomCarte) {
-        CarteFichier cf = CarteFichier.fromFile(nomCarte);
-        if (cf.getFond() != null) {
-            setImage(cf.getFond());
-        }
-        startInit(cf.getMat());
-    }
-        
     /**
      * Création d'une carte à partir d'une matrice d'entier. @ensure la carte
      * correspond aux informations fournit.
      */
     public CarteObjective(String[][] tab) {
         startInit(tab);
+    }
+    
+    public CarteObjective() {
     }
 }
