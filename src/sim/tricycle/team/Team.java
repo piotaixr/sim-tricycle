@@ -23,31 +23,36 @@ public class Team {
     private ArrayList<Ressource> ressources;
     private ArrayList<Case> collectables;
     private Color color = Color.cyan;
-    private Base base=null;
+    private Base base = null;
+    private int id = 0;
 
-
-    public Team(String nomTeam, CarteTeam map, Case posBase) {
+    public Team(int iden, String nomTeam, CarteTeam map, Case posBase) {
         this.nomTeam = nomTeam;
         this.map = map;
         this.armee = new LinkedList<Robot>();
         this.ressources = new ArrayList<Ressource>();
-        this.base= new Base();
+        this.base = new Base();
         this.base.setCase(posBase);
         this.base.setT(this);
+        this.id = iden;
     }
-    
+
+    public int getId() {
+        return id;
+    }
+
     public void setBase(Base base) {
         this.base = base;
     }
-    
-    public Team(String nomTeam){
+
+    public Team(String nomTeam) {
         this.nomTeam = nomTeam;
     }
 
     public Base getBase() {
         return base;
     }
-    
+
     public void addRobot(Robot bot) {
         this.armee.add(bot);
     }
