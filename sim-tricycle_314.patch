@@ -1,0 +1,375 @@
+# HG changeset patch
+# User Adri@Adri-ToSh
+# Date 1340028697 -7200
+# Node ID 91876cc52d42b8e9d23be18b54a2d85e527fdc14
+# Parent  cdeca21eecba80559899773ed97ec8613db68219
+refonte Actions/Parametres etc.. (2/3)
+
+diff -r cdeca21eecba -r 91876cc52d42 src/sim/tricycle/SimTricycle.java
+--- a/src/sim/tricycle/SimTricycle.java	Mon Jun 18 11:33:32 2012 +0200
++++ b/src/sim/tricycle/SimTricycle.java	Mon Jun 18 16:11:37 2012 +0200
+@@ -15,7 +15,7 @@
+ import sim.tricycle.robot.Sens;
+ import sim.tricycle.robot.action.AllerA;
+ import sim.tricycle.robot.action.Avancer;
+-import sim.tricycle.robot.action.CollecterUnePiece;
++import sim.tricycle.robot.action.Collecter;
+ import sim.tricycle.robot.action.Tourner;
+ import sim.tricycle.team.Ressource;
+ 
+@@ -38,14 +38,14 @@
+         sim.tricycle.robot.Robot bot;
+ 
+ 
+-        bot = new Collecteur(t, c);
++        bot = new Collecteur(t);
+         bot.setCoordonnees(new Point(3, 8));
+         bot.setDirection(Sens.NORD);
+         bot.collerRobotSurMap();
+ 
+ 
+ 
+-        CollecterUnePiece cup = new CollecterUnePiece();
++        Collecter cup = new Collecter();
+         c.pop(new Piece(c.getCase(36, 36)), c.getCase(36, 36));
+         Piece p = (Piece) c.getCase(36, 36).myItem();
+            cup.setPiece(p);
+diff -r cdeca21eecba -r 91876cc52d42 src/sim/tricycle/robot/Robot.java
+--- a/src/sim/tricycle/robot/Robot.java	Mon Jun 18 11:33:32 2012 +0200
++++ b/src/sim/tricycle/robot/Robot.java	Mon Jun 18 16:11:37 2012 +0200
+@@ -47,10 +47,6 @@
+         this.equipe = t;
+     }
+ 
+-    /**Retourne la case qui se trouve devant les robot*/
+-
+-    
+-
+     public void collerRobotSurMap() {
+         if (!this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
+             this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
+@@ -62,13 +58,9 @@
+             this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
+         }
+     }
+-
+-  
+-
++    
+     /**
+      * Fonction appelée a chaque tick d'horloge
+-     *
+-     * @todo coder cette fonction
+      */
+     public void executeAction() {
+ //        if (actions.isEmpty()) {
+@@ -96,7 +88,7 @@
+           if(actions.getFirst().isComposee()){
+               AbstractActionComposee a = (AbstractActionComposee)actions.pollFirst();
+               pileActions.add(actions);
+-              actions.clear();
++              actions=new ArrayDeque<AbstractAction>();
+               actions.addAll(a.getSuiteActions());
+               this.executeAction();
+           }else{
+@@ -118,7 +110,7 @@
+         return environnement;
+     }
+     
+-        public Point getCoordonnees() {
++    public Point getCoordonnees() {
+         return this.coordonnees;
+     }
+ 
+diff -r cdeca21eecba -r 91876cc52d42 src/sim/tricycle/robot/action/AllerA.java
+--- a/src/sim/tricycle/robot/action/AllerA.java	Mon Jun 18 11:33:32 2012 +0200
++++ b/src/sim/tricycle/robot/action/AllerA.java	Mon Jun 18 16:11:37 2012 +0200
+@@ -8,6 +8,7 @@
+ import sim.tricycle.robot.Robot;
+ import sim.tricycle.robot.Sens;
+ import sim.tricycle.robot.action.core.AbstractAction;
++import sim.tricycle.utils.params.types.Variable;
+ 
+ /**
+  *
+@@ -15,31 +16,19 @@
+  */
+ public class AllerA extends AbstractAction {
+ 
+-    protected Point p;
++    private Variable varListePoints;
+ 
+     public AllerA() {
+         super();
+     }
+-    
+-    public AllerA(Point p) {
+-        super();
+-        this.p = p;
+-    }
+-
+-    public AllerA(Case c) {
+-        this(new Point(c.getX(), c.getY()));
+-    }
+-
+-    public AllerA(PossedeCaseInterface pc) {
+-        this(pc.getPosition());
+-    }
+ 
+     @Override
+     protected Object doExecute(Robot bot) {
+-        TrouveChemin tc = new TrouveChemin(this.p);
+-        tc.executer(bot);
+-        System.out.println("TailleChemin :" + tc.getChemin().size());
+-        creerChemin(tc.getChemin(), bot);
++        LinkedList<Noeud> lln = (LinkedList<Noeud>) varListePoints.getValue();
++//        TrouveChemin tc = new TrouveChemin(this.p);
++//        tc.executer(bot);
++//        System.out.println("TailleChemin :" + tc.getChemin().size());
++        creerChemin(lln, bot);
+ 
+         return null;
+     }
+@@ -74,33 +63,29 @@
+         }
+     }
+ 
+-    private Sens trouveDirection(Point p1, Point p2) {
+-
+-        Sens newSens = Sens.NORD;
+-
+-        if (p1.getX() < p2.getX()) {
+-            newSens = Sens.NORD;
+-        } else if (p1.getY() < p2.getY()) {
+-            newSens = Sens.OUEST;
+-        } else if (p2.getX() < p1.getX()) {
+-            newSens = Sens.SUD;
+-        } else if (p2.getY() < p1.getY()) {
+-            newSens = Sens.EST;
+-        }
+-
+-        return newSens;
+-    }
+-
+-    public void setP(Point newP) {
+-        this.p = newP;
+-    }
+-
+-    public Point getP() {
+-        return this.p;
+-    }
++//    private Sens trouveDirection(Point p1, Point p2) {
++//
++//        Sens newSens = Sens.NORD;
++//
++//        if (p1.getX() < p2.getX()) {
++//            newSens = Sens.NORD;
++//        } else if (p1.getY() < p2.getY()) {
++//            newSens = Sens.OUEST;
++//        } else if (p2.getX() < p1.getX()) {
++//            newSens = Sens.SUD;
++//        } else if (p2.getY() < p1.getY()) {
++//            newSens = Sens.EST;
++//        }
++//
++//        return newSens;
++//    }
+ 
+     @Override
+     public String getId() {
+         return "allera";
+     }
++    
++    public void setParameters(Variable varListePoints){
++        this.varListePoints = varListePoints;
++    }
+ }
+diff -r cdeca21eecba -r 91876cc52d42 src/sim/tricycle/robot/action/Collecter.java
+--- a/src/sim/tricycle/robot/action/Collecter.java	Mon Jun 18 11:33:32 2012 +0200
++++ b/src/sim/tricycle/robot/action/Collecter.java	Mon Jun 18 16:11:37 2012 +0200
+@@ -6,8 +6,8 @@
+ 
+ import java.util.ArrayDeque;
+ import sim.tricycle.mapping.elementCase.Piece;
++import sim.tricycle.robot.Point;
+ import sim.tricycle.robot.Robot;
+-import sim.tricycle.robot.action.core.AbstractAction;
+ import sim.tricycle.robot.action.core.AbstractActionComposee;
+ 
+ /**
+@@ -15,33 +15,37 @@
+  * @author Adri
+  */
+ public class Collecter extends AbstractActionComposee{
++    
++
+ 
+     public Collecter() {
+-        super();
++        this.suiteActions=new ArrayDeque();
++        this.suiteActions.add(new TrouveCollectable());
++        this.suiteActions.add(new TrouveChemin());
++        this.suiteActions.add(new AllerA());
++        this.suiteActions.add(new Ramasser());
+     }
+     
+     public Object doExecute(Robot bot){
++        bot.setActions(suiteActions);
+         return null;
+     }
+     
+     public String getId(){
+-        return "collecterHautNiveau";
++        return "collecterPiece";
+     }
+     
+-    @Override
+-    public ArrayDeque<AbstractAction> getSuiteActions() {
+-        return super.getSuiteActions();
+-    }
+ 
+-    
+-    public void setSuiteActions() {
+-        TrouveCollectable tc = new TrouveCollectable();
+-        CollecterUnePiece cup = new CollecterUnePiece();
+-        cup.setPiece((Piece)tc.getC().myItem());
+-        RevenirBase rb = new RevenirBase();
+-        this.suiteActions.add(cup);
+-        this.suiteActions.add(rb);
+-    }
+ 
+-    
++//    public void setPiece(Piece piece) {
++//        this.piece = piece;
++//        AllerA go = new AllerA();
++//        go.setP(new Point(this.piece.getPosition().getX(),this.piece.getPosition().getY()));
++//        Ramasser r = new Ramasser();
++//        r.setRessourceParItem(this.piece);
++//        
++//        this.suiteActions.add(go);
++//        this.suiteActions.add(r);
++//        
++//    }
+ }
+diff -r cdeca21eecba -r 91876cc52d42 src/sim/tricycle/robot/action/Ramasser.java
+--- a/src/sim/tricycle/robot/action/Ramasser.java	Mon Jun 18 11:33:32 2012 +0200
++++ b/src/sim/tricycle/robot/action/Ramasser.java	Mon Jun 18 16:11:37 2012 +0200
+@@ -8,6 +8,7 @@
+ import sim.tricycle.robot.Robot;
+ import sim.tricycle.robot.action.core.AbstractAction;
+ import sim.tricycle.team.Ressource;
++import sim.tricycle.utils.params.types.Variable;
+ 
+ /**
+  *
+@@ -15,11 +16,12 @@
+  */
+ public class Ramasser extends AbstractAction{
+     
+-    private Ressource ressource;
++    private Variable varRessource;
+ 
+     @Override
+     protected Object doExecute(Robot bot) {
+-        bot.getEquipe().ajouterRessource(ressource.getItem());
++        Ressource r = (Ressource)varRessource.getValue();
++        bot.getEquipe().ajouterRessource(r.getItem());
+         bot.getMapTeam().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()).myItem().supprimerObjet();
+     //    System.out.println("Ramassage: " + bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
+         return null;
+@@ -29,18 +31,9 @@
+     public String getId() {
+         return "ramasser";
+     }
+-    
+-    public Ressource getRessource() {
+-        return ressource;
+-    }
+-
+-    public void setRessource(Ressource ressource) {
+-        this.ressource = ressource;
+-    }
+-    
+-    public void setRessourceParItem(AbstractObjet ao){
+-        this.ressource = new Ressource();
+-        this.ressource.setItem(ao);
++ 
++    public void setParameters(Variable varRessource){
++        this.varRessource = varRessource;
+     }
+ 
+ }
+diff -r cdeca21eecba -r 91876cc52d42 src/sim/tricycle/robot/action/RevenirBase.java
+--- a/src/sim/tricycle/robot/action/RevenirBase.java	Mon Jun 18 11:33:32 2012 +0200
++++ b/src/sim/tricycle/robot/action/RevenirBase.java	Mon Jun 18 16:11:37 2012 +0200
+@@ -6,22 +6,23 @@
+ 
+ import sim.tricycle.robot.Robot;
+ import sim.tricycle.robot.action.core.AbstractAction;
++import sim.tricycle.robot.action.core.AbstractActionComposee;
+ 
+ /**
+  *
+  * @author Adri
+  */
+-public class RevenirBase extends AbstractAction{
++public class RevenirBase extends AbstractActionComposee{
+     
+-    AllerA aa;
+-
+     public RevenirBase(){
+         super();
++        this.suiteActions.add(new TrouveChemin());
++        this.suiteActions.add(new AllerA());
+     }
+     
+     public Object doExecute(Robot bot){
+-        aa.setP(bot.getEquipe().getBase());
+-        aa.doExecute(bot);
++        
++        bot.setActions(suiteActions);
+         return null;
+     }
+     
+@@ -29,12 +30,6 @@
+         return "revenirBase";
+     }
+     
+-    public AllerA getAa() {
+-        return aa;
+-    }
+ 
+-    public void setAa(AllerA aa) {
+-        this.aa = aa;
+-    }
+     
+ }
+diff -r cdeca21eecba -r 91876cc52d42 src/sim/tricycle/robot/action/TrouveCollectable.java
+--- a/src/sim/tricycle/robot/action/TrouveCollectable.java	Mon Jun 18 11:33:32 2012 +0200
++++ b/src/sim/tricycle/robot/action/TrouveCollectable.java	Mon Jun 18 16:11:37 2012 +0200
+@@ -23,8 +23,7 @@
+     }
+     
+     public Object doExecute(Robot bot){
+-        c = bot.getEquipe().getCollectableCiblable();
+-        return null;
++        return bot.getEquipe().getCollectableCiblable();
+     }
+     
+     public String getId(){
+diff -r cdeca21eecba -r 91876cc52d42 src/sim/tricycle/robot/action/core/AbstractActionComposee.java
+--- a/src/sim/tricycle/robot/action/core/AbstractActionComposee.java	Mon Jun 18 11:33:32 2012 +0200
++++ b/src/sim/tricycle/robot/action/core/AbstractActionComposee.java	Mon Jun 18 16:11:37 2012 +0200
+@@ -34,7 +34,10 @@
+     }
+     
+     public Object doExecute(Robot bot){
+-        
+-        return null;
++
++              bot.getPileActions().add(bot.getActions().clone());
++              bot.getActions().clear();
++              bot.getActions().addAll(this.suiteActions);
++              return null;
+     }
+ }

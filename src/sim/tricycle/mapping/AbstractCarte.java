@@ -73,6 +73,7 @@ public abstract class AbstractCarte implements CarteInterface {
                     carte[i][j] = new Case(i, j);
                     casesVoisines(this, this.getCase(i, j), liste);
                     PointDeControle pt = new PointDeControle(liste);
+                    pt.setCase(this.getCase(i, j));
                     this.getCase(i, j).setZone(pt);
                     //On ajoute ce point à la liste des points.
                     listeP.add(pt);
@@ -83,9 +84,12 @@ public abstract class AbstractCarte implements CarteInterface {
     }
 
     public void startInit(String[][] mat) {
+        this.tailleX = mat.length;
+        this.tailleY = mat[0].length;
+        carte = new Case[this.tailleX][this.tailleY];
         setVide("vide");
         initAllCases(mat);
-        placerPoint( mat);
+        placerPoint(mat);
     }
 
     @Override
@@ -158,7 +162,6 @@ public abstract class AbstractCarte implements CarteInterface {
             Case droite = source.getCase(pos.getX() + 1, pos.getY());
             if (!(liste.contains(droite))) {
                 liste.add(droite);
-                System.out.println("Droite");
             }
         }
         // Si case en bordure verticale gauche:
@@ -166,7 +169,6 @@ public abstract class AbstractCarte implements CarteInterface {
             Case gauche = source.getCase(pos.getX() - 1, pos.getY());
             if (!liste.contains(gauche)) {
                 liste.add(gauche);
-                System.out.println("Gauche");
             }
         }
         // Si case en bordure horizontale gauche:
@@ -174,7 +176,6 @@ public abstract class AbstractCarte implements CarteInterface {
             Case haut = source.getCase(pos.getX(), pos.getY() - 1);
             if (!liste.contains(haut)) {
                 liste.add(haut);
-                System.out.println("Haut");
             }
         }
         // Si case en bordure horizontale droite:
@@ -182,7 +183,6 @@ public abstract class AbstractCarte implements CarteInterface {
             Case bas = source.getCase(pos.getX(), pos.getY() + 1);
             if (!liste.contains(bas)) {
                 liste.add(bas);
-                System.out.println("Bas");
             }
         }
     }
@@ -248,12 +248,7 @@ public abstract class AbstractCarte implements CarteInterface {
         }
     }
 
-    /**
-     * Retourne la case devant.
-     *
-     * @param bot
-     * @return
-     */
+    @Override
     public Case getCaseDevant(Robot bot) {
         Case c = null;
         switch (bot.getDirection()) {
@@ -272,4 +267,19 @@ public abstract class AbstractCarte implements CarteInterface {
         }
         return c;
     }
+    
+    @Override
+    public void avancer(Robot bot) {
+        Case c = getCaseDevant(bot);
+        if (c != null) {
+            if (bot.getPosition().hasObstacle()) {
+                bot.getPosition().suprObstacle();
+            }
+            if (!c.hasObstacle()) {
+                c.setObstacle(bot);
+            }
+
+        }
+    }
+    
 }

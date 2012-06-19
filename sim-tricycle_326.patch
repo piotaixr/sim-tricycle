@@ -1,0 +1,757 @@
+# HG changeset patch
+# User Ardi
+# Date 1340031381 -7200
+# Node ID 99ba034672852cb3f2692679f7c1186eb3954cee
+# Parent  795cadd6af333725cb9eb1572f304a2a7f4506a6
+GRRRRRRRRRR
+
+diff -r 795cadd6af33 -r 99ba03467285 automate.txt
+--- a/automate.txt	Mon Jun 18 16:20:57 2012 +0200
++++ b/automate.txt	Mon Jun 18 16:56:21 2012 +0200
+@@ -17,7 +17,7 @@
+                 }
+             }
+             transition{
+-		sinon{aller(var : piece);
++		sinon{allera(var : piece);
+ 		      etat=normal;
+ 		}
+             }
+@@ -34,7 +34,7 @@
+ 			     }
+             }
+             transition{
+-		sinon{aller(var :base);
++		sinon{allera(var :base);
+ 		      etat=deplacement_port;
+ 		}
+             }
+diff -r 795cadd6af33 -r 99ba03467285 src/sim/tricycle/SimTricycle.java
+--- a/src/sim/tricycle/SimTricycle.java	Mon Jun 18 16:20:57 2012 +0200
++++ b/src/sim/tricycle/SimTricycle.java	Mon Jun 18 16:56:21 2012 +0200
+@@ -2,6 +2,7 @@
+  */
+ package sim.tricycle;
+ 
++import java.io.File;
+ import java.util.ArrayList;
+ import sim.tricycle.Ordonnanceur.Ordonnanceur;
+ import sim.tricycle.ihm.FrameGame1;
+@@ -10,14 +11,14 @@
+ import sim.tricycle.mapping.elementCase.Piece;
+ import sim.tricycle.mapping.nosCarte.CrossRiver;
+ import sim.tricycle.mapping.nosCarte.MapTest;
++import sim.tricycle.robot.Automate;
+ import sim.tricycle.robot.Collecteur;
+ import sim.tricycle.robot.Point;
+ import sim.tricycle.robot.Sens;
+-import sim.tricycle.robot.action.AllerA;
+-import sim.tricycle.robot.action.Avancer;
+-import sim.tricycle.robot.action.Collecter;
+-import sim.tricycle.robot.action.Tourner;
++import sim.tricycle.robot.action.*;
+ import sim.tricycle.team.Ressource;
++import sim.tricycle.utils.ObjectBuilder;
++import sim.tricycle.xmlparser.RobotParser;
+ 
+ /**
+  *
+@@ -31,29 +32,40 @@
+     public static void main(String[] args) {
+ 
+         //MapTest cr = new MapTest();
+-       // Carte c = cr.getCarte();
++        // Carte c = cr.getCarte();
++        ObjectBuilder ob = new ObjectBuilder();
++        RobotParser parser = ob.getRobotParser();
++        Automate a = parser.parse(new File("./test_basique.xml"));
++
+         CrossRiver cr = new CrossRiver();
+         Carte c = cr.getCarte();
+         sim.tricycle.team.Team t = new sim.tricycle.team.Team("Winneurs", c, new Point(0, 0), new ArrayList<Ressource>());
+         sim.tricycle.robot.Robot bot;
+ 
+ 
+-        bot = new Collecteur(t);
++
++        bot = new Collecteur(t, a);
+         bot.setCoordonnees(new Point(3, 8));
+-        bot.setDirection(Sens.NORD);
++        bot.setDirection(Sens.SUD);
+         bot.collerRobotSurMap();
++        
++//MARION
++//        InitialisationConstruction initCons = new InitialisationConstruction();
++//        Construction Cons = new Construction();
++//        bot.getActions().add(initCons);
++//        bot.getActions().add(Cons);
+ 
+-
+-
+-        Collecter cup = new Collecter();
+-        c.pop(new Piece(c.getCase(36, 36)), c.getCase(36, 36));
+-        Piece p = (Piece) c.getCase(36, 36).myItem();
+-           cup.setPiece(p);
+-            bot.getActions().add(cup);
++        /*
++         * CollecterUnePiece cup = new CollecterUnePiece(); c.pop(new
++         * Piece(c.getCase(36, 36)), c.getCase(36, 36)); Piece p = (Piece)
++         * c.getCase(36, 36).myItem(); cup.setPiece(p);
++         * bot.getActions().add(cup);
++         *
++         */
+         cr.afficherCarte();
+ 
+         FrameGame1 fg = new FrameGame1(cr);
+-        Ordonnanceur ordo = new Ordonnanceur();
++        Ordonnanceur ordo = ob.getOrdonnanceur();
+         ordo.add(bot);
+ 
+ //      ordo.add(bot3);
+diff -r 795cadd6af33 -r 99ba03467285 src/sim/tricycle/TestParser.java
+--- a/src/sim/tricycle/TestParser.java	Mon Jun 18 16:20:57 2012 +0200
++++ b/src/sim/tricycle/TestParser.java	Mon Jun 18 16:56:21 2012 +0200
+@@ -20,6 +20,6 @@
+         
+         RobotParser parser = builder.getRobotParser();
+         System.out.println("aaaa");
+-        parser.parse(new File("./automate.xml"));
++        parser.parse(new File("./test.xml"));
+     }
+ }
+diff -r 795cadd6af33 -r 99ba03467285 src/sim/tricycle/mapping/elementCase/PointDeControle.java
+--- a/src/sim/tricycle/mapping/elementCase/PointDeControle.java	Mon Jun 18 16:20:57 2012 +0200
++++ b/src/sim/tricycle/mapping/elementCase/PointDeControle.java	Mon Jun 18 16:56:21 2012 +0200
+@@ -66,7 +66,7 @@
+             if (x != null) {
+                 if (x.whoIam() == TypeCase.robot) {
+                     Robot rob = (Robot) x.myObstacle();
+-                    equipe = rob.getTeam();
++                    equipe = rob.getEquipe();
+                     if (equipe == this.t) {
+                         nballiee++;
+                     } else {
+diff -r 795cadd6af33 -r 99ba03467285 src/sim/tricycle/mapping/nosCarte/CarteFichier.java
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/src/sim/tricycle/mapping/nosCarte/CarteFichier.java	Mon Jun 18 16:56:21 2012 +0200
+@@ -0,0 +1,86 @@
++/*
++ * To change this template, choose Tools | Templates
++ * and open the template in the editor.
++ */
++package sim.tricycle.mapping.nosCarte;
++
++import java.io.*;
++import java.util.ArrayList;
++import java.util.List;
++import java.util.logging.Level;
++import java.util.logging.Logger;
++
++/**
++ *
++ * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
++ */
++public class CarteFichier implements Serializable {
++
++    private String[][] mat;
++    private String fond;
++
++    public CarteFichier(String[][] mat, String fond) {
++        this.mat = mat;
++        this.fond = fond;
++    }
++
++    public String getFond() {
++        return fond;
++    }
++
++    public void setFond(String fond) {
++        this.fond = fond;
++    }
++
++    public String[][] getMat() {
++        return mat;
++    }
++
++    public void setMat(String[][] mat) {
++        this.mat = mat;
++    }
++    public static final String basename = "./Cartes/";
++
++    public static void createFile(String nomFichier, String[][] mat, String imageFond) {
++        CarteFichier cf = new CarteFichier(mat, imageFond);
++        ObjectOutputStream oos = null;
++        try {
++            File f = new File(basename + nomFichier + ".stc");
++            oos = new ObjectOutputStream(new FileOutputStream(f));
++            oos.writeObject(cf);
++        } catch (IOException ex) {
++            Logger.getLogger(CarteFichier.class.getName()).log(Level.SEVERE, null, ex);
++        } finally {
++            try {
++                oos.close();
++            } catch (IOException ex) {
++                Logger.getLogger(CarteFichier.class.getName()).log(Level.SEVERE, null, ex);
++            }
++        }
++    }
++
++    public static List<String> getMapNames() {
++        return new ArrayList<String>();
++    }
++
++    public static CarteFichier fromFile(String nomFichier) {
++        ObjectInputStream ois = null;
++        CarteFichier cf = null;
++        try {
++
++            ois = new ObjectInputStream(new FileInputStream(nomFichier));
++            cf = (CarteFichier) ois.readObject();
++        } catch (ClassNotFoundException ex) {
++            Logger.getLogger(CrossRiver.class.getName()).log(Level.SEVERE, null, ex);
++        } catch (IOException ex) {
++            Logger.getLogger(CrossRiver.class.getName()).log(Level.SEVERE, null, ex);
++        } finally {
++            try {
++                ois.close();
++            } catch (IOException ex) {
++                Logger.getLogger(CrossRiver.class.getName()).log(Level.SEVERE, null, ex);
++            }
++        }
++        return cf;
++    }
++}
+diff -r 795cadd6af33 -r 99ba03467285 src/sim/tricycle/mapping/nosCarte/CarteFromFile.java
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/src/sim/tricycle/mapping/nosCarte/CarteFromFile.java	Mon Jun 18 16:56:21 2012 +0200
+@@ -0,0 +1,24 @@
++/*
++ * To change this template, choose Tools | Templates
++ * and open the template in the editor.
++ */
++
++package sim.tricycle.mapping.nosCarte;
++
++import sim.tricycle.mapping.AbstractCarteGlobal;
++
++/**
++ *
++ * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
++ */
++public class CarteFromFile extends AbstractCarteGlobal {
++
++    public CarteFromFile(String nomCarte) {
++        CarteFichier cf = CarteFichier.fromFile(nomCarte);
++        setImage(cf.getFond());
++        startInit(cf.getMat());
++    }
++    
++
++    
++}
+diff -r 795cadd6af33 -r 99ba03467285 src/sim/tricycle/robot/Collecteur.java
+--- a/src/sim/tricycle/robot/Collecteur.java	Mon Jun 18 16:20:57 2012 +0200
++++ b/src/sim/tricycle/robot/Collecteur.java	Mon Jun 18 16:56:21 2012 +0200
+@@ -1,19 +1,26 @@
+-package sim.tricycle.robot;
+-
+-import sim.tricycle.mapping.Carte;
+-import sim.tricycle.team.Team;
+-
+-/**
+- *
+- * @author Adri
+- */
+-public class Collecteur extends Robot {
+-
+-    public Collecteur(Automate automate, Team equipe) {
+-        super(automate, equipe);
+-    }
+-
+-    public Collecteur(Team equipe) {
+-        super(equipe);
+-    }
+-}
++package sim.tricycle.robot;
++
++import sim.tricycle.mapping.Carte;
++import sim.tricycle.team.Team;
++
++/**
++ *
++ * @author Adri
++ */
++public class Collecteur extends Robot {
++
++    public Collecteur(Automate automate, Team equipe) {
++        super(automate, equipe);
++    }
++
++    public Collecteur(Team equipe) {
++        super(equipe);
++    }
++
++    
++    public Collecteur(Team equipe, Automate a) {
++        super(equipe);
++        this.automate = a;
++        this.etatCourant = a.getEtat("1");
++    }
++}
+diff -r 795cadd6af33 -r 99ba03467285 src/sim/tricycle/robot/Robot.java
+--- a/src/sim/tricycle/robot/Robot.java	Mon Jun 18 16:20:57 2012 +0200
++++ b/src/sim/tricycle/robot/Robot.java	Mon Jun 18 16:56:21 2012 +0200
+@@ -1,12 +1,13 @@
+ package sim.tricycle.robot;
+ 
+ import java.util.ArrayDeque;
++import java.util.Iterator;
+ import java.util.Stack;
+ import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
+ import sim.tricycle.mapping.Carte;
+ import sim.tricycle.mapping.TypeCase;
+ import sim.tricycle.mapping.elementCase.AbstractObstacle;
+-import sim.tricycle.robot.action.core.AbstractAction;
++import sim.tricycle.robot.action.Sleep;
+ import sim.tricycle.robot.action.core.AbstractActionComposee;
+ import sim.tricycle.robot.action.core.ActionInterface;
+ import sim.tricycle.team.Team;
+@@ -22,8 +23,9 @@
+     protected Point coordonnees;
+     protected Sens direction;
+     protected int portee;
+-    protected ArrayDeque<AbstractAction> actions = new ArrayDeque();
+-    protected Stack<ArrayDeque<AbstractAction>> pileActions = new Stack();
++    protected ArrayDeque<ActionInterface> actions = new ArrayDeque();
++    protected Stack<AbstractActionComposee> pileActionsComposees = new Stack();
++    protected Stack<ArrayDeque<ActionInterface>> pileFileActions = new Stack();
+     protected Etat etatCourant;
+     protected Etat etatDestination;
+     protected Automate automate;
+@@ -47,6 +49,10 @@
+         this.equipe = t;
+     }
+ 
++    /**Retourne la case qui se trouve devant les robot*/
++
++    
++
+     public void collerRobotSurMap() {
+         if (!this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
+             this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
+@@ -58,47 +64,55 @@
+             this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
+         }
+     }
+-    
++
++      private Transition findTransition() {
++        Iterator<Transition> it = etatCourant.getTransitions().iterator();
++        Transition valide = null;
++        System.out.println(etatCourant.getTransitions().size());
++        while (valide == null && it.hasNext()) {
++            Transition t = it.next();
++            if (t.getCondition().test()) {
++                valide = t;
++            }
++        }
++        return valide;
++    }
++
+     /**
+      * Fonction appelée a chaque tick d'horloge
++     *
++     * @todo coder cette fonction
+      */
+-    public void executeAction() {
+-//        if (actions.isEmpty()) {
+-//            // liste actions vide, on change d'état
+-//            etatCourant = etatDestination;
+-//            // parcours des transitions
+-//            List<Transition> transitions = etatCourant.getTransitions();
+-//            Iterator<Transition> it = transitions.iterator();
+-//            while (it.hasNext()) {
+-//                Transition t = it.next();
+-//                // si condition non valide, on passe à la suivante
+-//                if (!t.getCondition().test()) {
+-//                    continue;
+-//                }
+-//                //ajout des actions
+-//                List<ActionInterface> newActions = t.getActions();
+-//                actions.addAll(newActions);
+-//                //on donne l'etat de destination
+-//                etatDestination = t.getEtatDestination();
+-//                break;
+-//            }
+-//        }      
+-       
+-        if(!actions.isEmpty()){
+-          if(actions.getFirst().isComposee()){
+-              AbstractActionComposee a = (AbstractActionComposee)actions.pollFirst();
+-              pileActions.add(actions);
+-              actions=new ArrayDeque<AbstractAction>();
+-              actions.addAll(a.getSuiteActions());
+-              this.executeAction();
+-          }else{
+-              actions.pollFirst().executer(this);
+-          }
+-        }else{
+-            if(!pileActions.isEmpty()){
+-                actions.addAll(pileActions.pop());
+-                pileActions.clear();
++    @Override
++    public void executeAction() {    
++
++        if (!actions.isEmpty()) {
++            if (actions.getFirst().isComposee()) {
++                AbstractActionComposee a = (AbstractActionComposee) actions.pollFirst();
++                pileActionsComposees.push(a);
++                pileFileActions.push(actions);
++                actions = new ArrayDeque();
++                actions.addAll(a.getSuiteActions());
+                 this.executeAction();
++            } else {
++                actions.pollFirst().executer(this);
++            }
++        } else {
++            if (!pileActionsComposees.isEmpty()) {
++                actions.addAll(pileActionsComposees);
++                pileActionsComposees.clear();
++                this.executeAction();
++            } else {
++                if (etatDestination != null) {
++                    System.out.println("change etat" + etatDestination.getId());
++                    etatCourant = etatDestination;
++                }
++                Transition t = findTransition();
++                if (t == null || t.getActions().isEmpty()) {
++                    actions.add(new Sleep());
++                }
++                actions.addAll(t.getActions());
++                etatDestination = t.getEtatDestination();
+             }
+         }
+     }
+@@ -110,7 +124,7 @@
+         return environnement;
+     }
+     
+-    public Point getCoordonnees() {
++        public Point getCoordonnees() {
+         return this.coordonnees;
+     }
+ 
+@@ -134,11 +148,11 @@
+         this.portee = newPortee;
+     }
+     
+-        public ArrayDeque<AbstractAction> getActions() {
++        public ArrayDeque<ActionInterface> getActions() {
+         return actions;
+     }
+ 
+-    public void setActions(ArrayDeque<AbstractAction> fileActions) {
++    public void setActions(ArrayDeque<ActionInterface> fileActions) {
+         this.actions = fileActions;
+     }
+ 
+@@ -173,14 +187,6 @@
+     public void setEtatDestination(Etat etatDestination) {
+         this.etatDestination = etatDestination;
+     }
+-
+-    public Stack<ArrayDeque<AbstractAction>> getPileActions() {
+-        return pileActions;
+-    }
+-
+-    public void setPileActions(Stack<ArrayDeque<AbstractAction>> pileActions) {
+-        this.pileActions = pileActions;
+-    }
+     
+     public Carte getMapTeam(){
+         return this.equipe.getMap();
+diff -r 795cadd6af33 -r 99ba03467285 src/sim/tricycle/robot/action/AllerA.java
+--- a/src/sim/tricycle/robot/action/AllerA.java	Mon Jun 18 16:20:57 2012 +0200
++++ b/src/sim/tricycle/robot/action/AllerA.java	Mon Jun 18 16:56:21 2012 +0200
+@@ -8,6 +8,7 @@
+ import sim.tricycle.robot.Robot;
+ import sim.tricycle.robot.Sens;
+ import sim.tricycle.robot.action.core.AbstractAction;
++import sim.tricycle.utils.params.types.Reference;
+ import sim.tricycle.utils.params.types.Variable;
+ 
+ /**
+@@ -16,22 +17,38 @@
+  */
+ public class AllerA extends AbstractAction {
+ 
+-    private Variable varListePoints;
++    protected Point p;
+ 
+     public AllerA() {
+         super();
+     }
++    
++    public AllerA(Point p) {
++        super();
++        this.p = p;
++    }
++
++    public AllerA(Case c) {
++        this(new Point(c.getX(), c.getY()));
++    }
++
++    public AllerA(PossedeCaseInterface pc) {
++        this(pc.getPosition());
++    }
+ 
+     @Override
+     protected Object doExecute(Robot bot) {
+-        LinkedList<Noeud> lln = (LinkedList<Noeud>) varListePoints.getValue();
+-//        TrouveChemin tc = new TrouveChemin(this.p);
+-//        tc.executer(bot);
+-//        System.out.println("TailleChemin :" + tc.getChemin().size());
+-        creerChemin(lln, bot);
++        TrouveChemin tc = new TrouveChemin(this.p);
++        tc.executer(bot);
++        System.out.println("TailleChemin :" + tc.getChemin().size());
++        creerChemin(tc.getChemin(), bot);
+ 
+         return null;
+     }
++    
++    public void setParameters(Variable cible){
++        
++    }
+ 
+ //    private void creerChemin2(LinkedList<Noeud> cheminTrouve, Robot bot) {
+ //        ArrayDeque<ActionInterface> chemin = new ArrayDeque<ActionInterface>();
+@@ -63,29 +80,33 @@
+         }
+     }
+ 
+-//    private Sens trouveDirection(Point p1, Point p2) {
+-//
+-//        Sens newSens = Sens.NORD;
+-//
+-//        if (p1.getX() < p2.getX()) {
+-//            newSens = Sens.NORD;
+-//        } else if (p1.getY() < p2.getY()) {
+-//            newSens = Sens.OUEST;
+-//        } else if (p2.getX() < p1.getX()) {
+-//            newSens = Sens.SUD;
+-//        } else if (p2.getY() < p1.getY()) {
+-//            newSens = Sens.EST;
+-//        }
+-//
+-//        return newSens;
+-//    }
++    private Sens trouveDirection(Point p1, Point p2) {
++
++        Sens newSens = Sens.NORD;
++
++        if (p1.getX() < p2.getX()) {
++            newSens = Sens.NORD;
++        } else if (p1.getY() < p2.getY()) {
++            newSens = Sens.OUEST;
++        } else if (p2.getX() < p1.getX()) {
++            newSens = Sens.SUD;
++        } else if (p2.getY() < p1.getY()) {
++            newSens = Sens.EST;
++        }
++
++        return newSens;
++    }
++
++    public void setP(Point newP) {
++        this.p = newP;
++    }
++
++    public Point getP() {
++        return this.p;
++    }
+ 
+     @Override
+     public String getId() {
+         return "allera";
+     }
+-    
+-    public void setParameters(Variable varListePoints){
+-        this.varListePoints = varListePoints;
+-    }
+ }
+diff -r 795cadd6af33 -r 99ba03467285 src/sim/tricycle/robot/action/Avancer.java
+--- a/src/sim/tricycle/robot/action/Avancer.java	Mon Jun 18 16:20:57 2012 +0200
++++ b/src/sim/tricycle/robot/action/Avancer.java	Mon Jun 18 16:56:21 2012 +0200
+@@ -10,11 +10,16 @@
+  */
+ public class Avancer extends AbstractAction {
+ 
++    private int nbCases;
+ 
+     public Avancer() {
+         super();
+ 
+     }
++    
++    public void setParameters(int nbCases){
++        this.nbCases = nbCases;
++    }
+ 
+     @Override
+     protected Object doExecute(Robot bot) {
+diff -r 795cadd6af33 -r 99ba03467285 src/sim/tricycle/robot/action/Collecter.java
+--- a/src/sim/tricycle/robot/action/Collecter.java	Mon Jun 18 16:20:57 2012 +0200
++++ b/src/sim/tricycle/robot/action/Collecter.java	Mon Jun 18 16:56:21 2012 +0200
+@@ -6,8 +6,8 @@
+ 
+ import java.util.ArrayDeque;
+ import sim.tricycle.mapping.elementCase.Piece;
+-import sim.tricycle.robot.Point;
+ import sim.tricycle.robot.Robot;
++import sim.tricycle.robot.action.core.AbstractAction;
+ import sim.tricycle.robot.action.core.AbstractActionComposee;
+ 
+ /**
+@@ -15,37 +15,33 @@
+  * @author Adri
+  */
+ public class Collecter extends AbstractActionComposee{
+-    
+-
+ 
+     public Collecter() {
+-        this.suiteActions=new ArrayDeque();
+-        this.suiteActions.add(new TrouveCollectable());
+-        this.suiteActions.add(new TrouveChemin());
+-        this.suiteActions.add(new AllerA());
+-        this.suiteActions.add(new Ramasser());
++        super();
+     }
+     
+     public Object doExecute(Robot bot){
+-        bot.setActions(suiteActions);
+         return null;
+     }
+     
+     public String getId(){
+-        return "collecterPiece";
++        return "collecterHautNiveau";
+     }
+     
++    @Override
++    public ArrayDeque<AbstractAction> getSuiteActions() {
++        return super.getSuiteActions();
++    }
+ 
++    
++    public void setSuiteActions() {
++        TrouveCollectable tc = new TrouveCollectable();
++        CollecterUnePiece cup = new CollecterUnePiece();
++        cup.setPiece((Piece)tc.getC().myItem());
++        RevenirBase rb = new RevenirBase();
++        this.suiteActions.add(cup);
++        this.suiteActions.add(rb);
++    }
+ 
+-//    public void setPiece(Piece piece) {
+-//        this.piece = piece;
+-//        AllerA go = new AllerA();
+-//        go.setP(new Point(this.piece.getPosition().getX(),this.piece.getPosition().getY()));
+-//        Ramasser r = new Ramasser();
+-//        r.setRessourceParItem(this.piece);
+-//        
+-//        this.suiteActions.add(go);
+-//        this.suiteActions.add(r);
+-//        
+-//    }
++    
+ }
+diff -r 795cadd6af33 -r 99ba03467285 src/sim/tricycle/robot/condition/core/TestCaseRobotEgalCaseBase.java
+--- a/src/sim/tricycle/robot/condition/core/TestCaseRobotEgalCaseBase.java	Mon Jun 18 16:20:57 2012 +0200
++++ /dev/null	Thu Jan 01 00:00:00 1970 +0000
+@@ -1,40 +0,0 @@
+-/*
+- * To change this template, choose Tools | Templates
+- * and open the template in the editor.
+- */
+-package sim.tricycle.robot.condition.core;
+-
+-import sim.tricycle.mapping.Case;
+-import sim.tricycle.mapping.elementCase.Piece;
+-import sim.tricycle.utils.params.types.Reference;
+-
+-/**
+- *
+- * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
+- */
+-public class TestCaseRobotEgalCaseBase extends AbstractCondition {
+-
+-    private Reference refCase;
+-    private Reference refPiece;
+-
+-    public TestCaseRobotEgalCaseBase(Reference refCase, Reference refPiece) {
+-        this.refCase = refCase;
+-        this.refPiece = refPiece;
+-    }
+-
+-    @Override
+-    /**
+-     * @todo creer une methode dans case pour tester l'egalite de deux cases
+-     */
+-    public boolean test() {
+-        Case c = (Case) refCase.getValue();
+-        Case cp = ((Piece)refPiece.getValue()).getPosition();
+-        
+-        return c.equals(cp);
+-    }
+-
+-    @Override
+-    public String getId() {
+-        return "case==base";
+-    }
+-}
+diff -r 795cadd6af33 -r 99ba03467285 src/sim/tricycle/robot/condition/core/TestCaseRobotEgalCasePiece.java
+--- a/src/sim/tricycle/robot/condition/core/TestCaseRobotEgalCasePiece.java	Mon Jun 18 16:20:57 2012 +0200
++++ /dev/null	Thu Jan 01 00:00:00 1970 +0000
+@@ -1,40 +0,0 @@
+-/*
+- * To change this template, choose Tools | Templates
+- * and open the template in the editor.
+- */
+-package sim.tricycle.robot.condition.core;
+-
+-import sim.tricycle.mapping.Case;
+-import sim.tricycle.mapping.elementCase.Piece;
+-import sim.tricycle.utils.params.types.Reference;
+-
+-/**
+- *
+- * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
+- */
+-public class TestCaseRobotEgalCasePiece extends AbstractCondition {
+-
+-    private Reference refCase;
+-    private Reference refPiece;
+-
+-    public TestCaseRobotEgalCasePiece(Reference refCase, Reference refPiece) {
+-        this.refCase = refCase;
+-        this.refPiece = refPiece;
+-    }
+-
+-    @Override
+-    /**
+-     * @todo creer une methode dans case pour tester l'egalite de deux cases
+-     */
+-    public boolean test() {
+-        Case c = (Case) refCase.getValue();
+-        Case cp = ((Piece)refPiece.getValue()).getPosition();
+-        
+-        return c.equals(cp);
+-    }
+-
+-    @Override
+-    public String getId() {
+-        return "case==piece";
+-    }
+-}

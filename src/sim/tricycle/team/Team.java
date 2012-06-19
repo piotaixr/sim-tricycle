@@ -1,15 +1,17 @@
 package sim.tricycle.team;
 
 import java.awt.Color;
-import java.awt.Robot;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import sim.tricycle.mapping.AbstractCarte;
+import sim.tricycle.mapping.CarteObjective;
 import sim.tricycle.mapping.CarteTeam;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.mapping.elementCase.Base;
 import sim.tricycle.robot.Point;
+import sim.tricycle.robot.Robot;
 
 /**
  * @author Marion Dalle
@@ -27,15 +29,24 @@ public class Team {
     private Base base = null;
     private int id = 0;
 
-    public Team(int iden, String nomTeam, CarteTeam map, Case posBase) {
+    public Team(int iden, String nomTeam, AbstractCarte carteObj, Case posBase) {
         this.nomTeam = nomTeam;
-        this.map = map;
+        this.map = new CarteTeam((CarteObjective) carteObj);
         this.armee = new LinkedList<Robot>();
+        this.models = new LinkedList<Robot>();
         this.ressources = new ArrayList<Ressource>();
         this.base = new Base();
         this.base.setCase(posBase);
         this.base.setT(this);
         this.id = iden;
+    }
+
+    public Team(int iden, String nomTeam, CarteObjective carteObj) {
+        this.nomTeam = nomTeam;
+        this.id = iden;
+        this.map = new CarteTeam(carteObj);
+        this.armee = new LinkedList<Robot>();
+        this.ressources = new ArrayList<Ressource>();
     }
 
     public int getId() {
@@ -48,10 +59,6 @@ public class Team {
 
     public void setMap(CarteTeam map) {
         this.map = map;
-    }
-    
-    public Team(String nomTeam, AbstractCarte carteObj){
-        this.nomTeam = nomTeam;
     }
 
     public Base getBase() {
