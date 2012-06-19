@@ -33,7 +33,8 @@ public class Deposer extends AbstractAction{
                 bot.getT().getMap().pop(bot.getItemPorte(),c);                       
             }
             else throw new RuntimeException ("la case n'est pas vide et n'est pas une base on ne peut déposer quelque chose dessus");
-        }     
+        } 
+        bot.setItemPorte(null);
         
     //    System.out.println("Ramassage: " + bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());
         return null;
