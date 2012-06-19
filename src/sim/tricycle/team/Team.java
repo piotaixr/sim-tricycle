@@ -89,27 +89,27 @@ public class Team {
     /*
      * Au secours j'y comprend rien
      */
-    public Ressource trouveRessourceParItem(AbstractObjet item) {
-        return ressources.get(ressources.indexOf(new Ressource(item, 0)));
+    public Ressource trouveRessourceParItem(String idItem) {
+        return ressources.get(ressources.indexOf(new Ressource(idItem, 0)));
     }
 
-    public void ajouterRessource(AbstractObjet item) {
+    public void ajouterRessource(String idItem) {
 
-        Ressource r = new Ressource(item, 1);
+        Ressource r = new Ressource(idItem, 1);
 
         if (this.ressources.contains(r)) {
-            r = trouveRessourceParItem(item);
+            r = trouveRessourceParItem(idItem);
             r.setQuantite(r.getQuantite() + 1);
         } else {
             this.ressources.add(r);
         }
     }
 
-    public void supprimerRessource(AbstractObjet item, int q) {
-        Ressource r = new Ressource(item, 0);
+    public void supprimerRessource(String idItem, int q) {
+        Ressource r = new Ressource(idItem, 0);
 
         if (this.ressources.contains(r)) {
-            r = trouveRessourceParItem(item);
+            r = trouveRessourceParItem(idItem);
             if (r.getQuantite() >= q) {
                 r.setQuantite(r.getQuantite() - q);
             } else {
