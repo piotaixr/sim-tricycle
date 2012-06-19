@@ -4,17 +4,21 @@
  */
 package sim.tricycle.robot.action;
 
-import sim.tricycle.mapping.Case;
-import sim.tricycle.mapping.elementCase.AbstractBatiment;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.utils.ActionBuilder;
 
 /**
  *
- * @author Marion DALLE mariondallesoulard@gmail.com
+ * @author marion
  */
 public class Construction extends AbstractActionComposee {
+    
+    private String nombat;
+    
+    public void setParameters (String nombat){
+        this.nombat = nombat;
+    }
 
     public Construction(ActionBuilder builder) {
         super(builder);
@@ -22,22 +26,16 @@ public class Construction extends AbstractActionComposee {
 
     @Override
     protected Object doExecute(Robot bot) {
-
-        Case c = bot.getMapTeam().getCaseDevant(bot);
-        AbstractBatiment bat = (AbstractBatiment) c.getObstacle();
-
-        if (bat.getTemps() == 0) {
-            bot.getEquipe().supprimerRessource(bat.getItem(), bat.getPrix());
-            bat.setTemps(bat.getTemps() + 1);
-            bot.getMapTeam().getCaseDevant(bot).setObstacle(bat);
-        } else {
-            bat.setTemps(bat.getTemps() + 1);
-        }
+        ActionBuilder b = getBuilder();
+        b.addNewReturn("InitialisationConstruction","bat", b.buildVariable("nombat"));
+        b.addNew("ConstructionApInit",b.buildVariable("bat"));
         return null;
     }
 
     @Override
     public String getId() {
-        return "construction";
+        return "Construction éffectuée";
     }
+
+   
 }
