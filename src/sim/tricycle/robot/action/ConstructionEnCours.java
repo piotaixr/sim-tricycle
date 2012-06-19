@@ -25,13 +25,13 @@ public class ConstructionEnCours extends AbstractActionComposee {
     @Override
     protected Object doExecute(Robot bot) {
 
-        Case c = bot.getMapTeam().getCaseDevant(bot);
+        Case c = bot.getT().getMap().getCaseDevant(bot);
         AbstractBatiment bat = (AbstractBatiment) c.getObstacle();
 
         if (bat.getTemps() == 0) {
-            bot.getEquipe().supprimerRessource("Piece", bat.getPrix());
+            bot.getT().supprimerRessource("Piece", bat.getPrix());
             bat.setTemps(bat.getTemps() + 1);
-            bot.getMapTeam().getCaseDevant(bot).setObstacle(bat);
+            bot.getT().getMap().getCaseDevant(bot).setObstacle(bat);
         } else {
             bat.setTemps(bat.getTemps() + 1);
         }
