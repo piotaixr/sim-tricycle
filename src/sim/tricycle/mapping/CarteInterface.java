@@ -76,8 +76,6 @@ public interface CarteInterface {
 
     public void afficherCarte();
 
-    public void setMat(String[][] mat);
-
     public void startInit(String[][] mat);
 
     public Image getImage();

@@ -22,12 +22,11 @@ public class CarteObjective extends AbstractCarte implements CarteInterface {
      */
     public CarteObjective(String[][] tab) {
 
-        this.setMat(tab);
         this.tailleX = tab.length;
         this.tailleY = tab[0].length;
         carte = new Case[this.tailleX][this.tailleY];
-        initAllCases();
-        PlacerPoint();
+        initAllCases(tab);
+        placerPoint(tab);
     }
 
 
