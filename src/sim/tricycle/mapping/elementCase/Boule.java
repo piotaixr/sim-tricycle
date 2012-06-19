@@ -9,13 +9,6 @@ import sim.tricycle.mapping.TypeCase;
  */
 public class Boule extends AbstractObjet {
 
-    /*
-     * Constructeur d'une boule. @param pos la case de la boule.
-     */
-    public Boule(Case pos) {
-        this.pos = pos;
-        pos.setItem(this);
-    }
 
     @Override
     public TypeCase whoIam() {

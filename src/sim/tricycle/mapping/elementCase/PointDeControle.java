@@ -40,8 +40,7 @@ public class PointDeControle extends AbstractZone {
         return this.tpsPopBoule;
     }
 
-    public PointDeControle(Case pos, HashSet<Case> h) {
-        this.pos = pos;
+    public PointDeControle( HashSet<Case> h) {
         this.liste = h;
         pos.setZone(this);
     }
@@ -86,7 +85,7 @@ public class PointDeControle extends AbstractZone {
 
         if (!this.estNeutre()) {
             if (this.tpsPopBoule <= 0) {
-                this.pos.setItem(new Boule(pos));
+                this.pos.setItem(new Boule());
                 initTpspop();
             }
             this.tpsPopBoule -= 1;

@@ -11,10 +11,6 @@ import sim.tricycle.mapping.TypeCase;
  */
 public class Bonus extends AbstractObjet {
 
-    public Bonus(Case pos) {
-        this.pos = pos;
-        pos.setItem(this);
-    }
 
     @Override
     public TypeCase whoIam() {

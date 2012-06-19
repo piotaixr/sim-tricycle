@@ -18,7 +18,6 @@ public class Case implements CaseInterface {
     private String idImg = "X";
     private boolean ciblable;
 
-
     public Case(int cx, int cy) {
         this.x = cx;
         this.y = cy;
@@ -54,17 +53,17 @@ public class Case implements CaseInterface {
 
             case 'O':
                 obstacle = null;
-                objet = new Boule(this);
+                setItem(new Boule());
                 break;
 
             case 'B':
                 obstacle = null;
-                objet = new Bonus(this);
+                setItem(new Bonus());
                 break;
 
             case 'P':
                 obstacle = null;
-                objet = new Piece();
+                setItem(new Piece());
                 break;
 
             case '#':
@@ -79,11 +78,11 @@ public class Case implements CaseInterface {
         this.idImg = id;
         ciblable = true;
     }
-    
+
     public AbstractZone getZone() {
         return this.zone;
     }
-    
+
     @Override
     public int getX() {
         return x;
@@ -113,16 +112,16 @@ public class Case implements CaseInterface {
     public boolean hasItem() {
         return (objet != null);
     }
-    
+
     /**
      * Retourne si a case possède t-elle une zone.
      *
      * @return 0 si absence de zone.
      */
     public boolean hasZone() {
-        return this.zone!=null;
+        return this.zone != null;
     }
-    
+
     /**
      * Retourne si a case est un obstacle.
      *
@@ -176,7 +175,15 @@ public class Case implements CaseInterface {
 //            throw new CaseMultipleObstacleException("Superpostion d'obstacles.");
         } else {
             this.obstacle = obst;
-            obst.setPos(this);
+            obst.setCase(this);
+        }
+    }
+
+    @Override
+    public void setZone(AbstractZone zo) {
+        if (this.hasZone()) {
+            this.zone = zo;
+            zo.setCase(this);
         }
     }
 
@@ -264,15 +271,10 @@ public class Case implements CaseInterface {
     }
 
     @Override
-    public void setZone(AbstractZone zo) {
-        this.zone = zo;
-    }
-
-    @Override
     public boolean equals(Case c) {
         return (c.x == this.x && c.y == this.y);
     }
-    
+
     public boolean isCiblable() {
         return ciblable;
     }
