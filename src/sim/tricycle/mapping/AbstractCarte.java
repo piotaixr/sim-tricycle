@@ -133,7 +133,7 @@ public abstract class AbstractCarte implements CarteInterface {
     }
 
     @Override
-    public void actualiserCarte(CarteTeam source, int rayon, Case pos) {
+    public void actualiserCarte(CarteObjective source, int rayon, Case pos) {
         HashSet<Case> liste = new HashSet<Case>();
 
         // Capture de toute les cases dans le rayon souhaité.
@@ -267,9 +267,9 @@ public abstract class AbstractCarte implements CarteInterface {
         }
         return c;
     }
-    
+
     @Override
-    public void avancer(Robot bot) {
+    public boolean avancer(Robot bot) {
         Case c = getCaseDevant(bot);
         if (c != null) {
             if (bot.getPosition().hasObstacle()) {
@@ -278,8 +278,9 @@ public abstract class AbstractCarte implements CarteInterface {
             if (!c.hasObstacle()) {
                 c.setObstacle(bot);
             }
-
+        } else {
+            return false;
         }
+        return true;
     }
-    
 }

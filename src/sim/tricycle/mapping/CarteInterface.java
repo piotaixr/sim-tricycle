@@ -25,7 +25,7 @@ public interface CarteInterface {
      * @param source La cartesource.
      * @param rayon le rayon d'actualisation de la carte.
      */
-    public void actualiserCarte(CarteTeam source, int rayon, Case pos);
+    public void actualiserCarte(CarteObjective source, int rayon, Case pos);
 
     /**
      * casesVoisines fournit les cases voisines de pos.
@@ -100,9 +100,11 @@ public interface CarteInterface {
      * @return
      */
     public Case getCaseDevant(Robot bot);
-    
+
     /**
      * Avancer le robot d'une case.
+     *
+     * @return vrai si réussi.
      */
-    public void  avancer(Robot bot);
+    public boolean avancer(Robot bot);
 }
