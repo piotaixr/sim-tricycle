@@ -5,6 +5,7 @@
 package sim.tricycle.robot.action;
 
 import sim.tricycle.mapping.elementCase.Piece;
+import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.utils.ActionBuilder;
@@ -25,11 +26,12 @@ public class Collecter extends AbstractActionComposee {
     @Override
     protected Object doExecute(Robot bot) {
         Piece piece = (Piece) varPiece.getValue();
-        
+        Point point = new Point(piece.getPosition().getX(),piece.getPosition().getY());
         //on crée les "sous-actions"
-        getBuilder().addNewReturn("trouvechemin", "chemin", getBuilder().buildVariable("piece"))
+        getBuilder().addNewReturn("trouvechemin", "chemin", getBuilder().buildVariable("point"))
                 .addNew("allera", getBuilder().buildVariable("chemin"))
-                .addNew("ramasser");
+                .addNew("ramasser")
+                .addNew("revenirbase");
         
         return null;
     }

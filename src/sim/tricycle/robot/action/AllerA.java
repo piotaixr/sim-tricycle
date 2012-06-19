@@ -3,107 +3,43 @@ package sim.tricycle.robot.action;
 import java.util.LinkedList;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.PossedeCaseInterface;
+import sim.tricycle.mapping.elementCase.Piece;
 import sim.tricycle.robot.Noeud;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.Sens;
 import sim.tricycle.robot.action.core.AbstractAction;
+import sim.tricycle.robot.action.core.AbstractActionComposee;
+import sim.tricycle.utils.ActionBuilder;
 import sim.tricycle.utils.params.types.Variable;
 
 /**
  *
  * @author Adri
  */
-public class AllerA extends AbstractAction {
+public class AllerA extends AbstractActionComposee {
 
-    protected Point p;
-    protected Variable varChemin;
-
-    public AllerA() {
-        super();
-    }
+    private Variable varChemin;
+//    private Variable courant;
     
-    public AllerA(Point p) {
-        super();
-        this.p = p;
-    }
-
-    public AllerA(Case c) {
-        this(new Point(c.getX(), c.getY()));
-    }
-
-    public AllerA(PossedeCaseInterface pc) {
-        this(pc.getPosition());
+    public AllerA(ActionBuilder builder) {
+        super(builder);
     }
 
     @Override
     protected Object doExecute(Robot bot) {
 
-        //System.out.println("TailleChemin :" + tc.getChemin().size());
-        LinkedList<Noeud> c =(LinkedList<Noeud>) varChemin.getValue();
-        creerChemin(c, bot);
+        LinkedList<Noeud> chemin = (LinkedList<Noeud>) varChemin.getValue();
+        Point courant = new Point(chemin.pollFirst().getPoint());
+       
+        while(!chemin.isEmpty()){
+                   getBuilder().addNew("sedeplacerunecase",getBuilder().buildVariable("courant"));
+                   courant = new Point(chemin.pollFirst().getPoint());
+        }
+        
         return null;
     }
     
-    public void setParameters(Variable cible){
-        
-    }
-
-//    private void creerChemin2(LinkedList<Noeud> cheminTrouve, Robot bot) {
-//        ArrayDeque<ActionInterface> chemin = new ArrayDeque<ActionInterface>();
-//        Sens directCourante;
-//        Point posCourante = cheminTrouve.getFirst().getPoint();
-//        Noeud n;
-//        for (int i=0;i<cheminTrouve.size();i++){
-//
-//            n=cheminTrouve.pollFirst();
-//           // n.setPoint(new Point(n.getPoint().getY(),n.getPoint().getX()));
-//            directCourante = trouveDirection(posCourante, n.getPoint());
-//            //System.out.println("sens:" + directCourante);
-//
-//            posCourante = n.getPoint();
-//            System.out.println("case:" + posCourante.getX() + " " + posCourante.getY());
-//
-//            chemin.addFirst(new Tourner(directCourante));
-//            chemin.addFirst(new Avancer());
-//
-//        }
-//        chemin.removeFirst();
-//        chemin.removeFirst();  
-//        bot.getActions().addAll(chemin);
-//    }
-    private void creerChemin(LinkedList<Noeud> cheminTrouve, Robot bot) {
-        while (!cheminTrouve.isEmpty()) {
-            SeTeleporterA tp = new SeTeleporterA(1, cheminTrouve.pollFirst().getPoint());
-            bot.getActions().addFirst(tp);
-        }
-    }
-
-    private Sens trouveDirection(Point p1, Point p2) {
-
-        Sens newSens = Sens.NORD;
-
-        if (p1.getX() < p2.getX()) {
-            newSens = Sens.NORD;
-        } else if (p1.getY() < p2.getY()) {
-            newSens = Sens.OUEST;
-        } else if (p2.getX() < p1.getX()) {
-            newSens = Sens.SUD;
-        } else if (p2.getY() < p1.getY()) {
-            newSens = Sens.EST;
-        }
-
-        return newSens;
-    }
-    
-    public void setP(Point newP) {
-        this.p = newP;
-    }
-
-    public Point getP() {
-        return this.p;
-    }
-
     @Override
     public String getId() {
         return "allera";
