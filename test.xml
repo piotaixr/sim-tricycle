@@ -2,7 +2,10 @@
 <robot>
     <etat id="normal">
         <tag nom="tag1"/>
-        <condition nom="piece_trouvee"/>
+        <condition type="multiple" nom="ou">
+            <condition nom="true"/>
+            <condition nom="true"/>
+        </condition>
         <action nom="piece_plus_proche" dest="piece">
         </action>
         <action nom="marquer">
