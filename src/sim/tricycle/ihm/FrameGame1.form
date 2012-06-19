@@ -8,7 +8,7 @@
       <Color blue="66" green="66" red="66" type="rgb"/>
     </Property>
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-      <Color id="Curseur par d&#xe9;faut"/>
+      <Color id="Pointeur par d&#xe9;faut"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -32,7 +32,7 @@
           <Component id="headband" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="panActionAvailable" min="-2" pref="213" max="-2" attributes="0"/>
+              <Component id="tabPanActionAvailable" min="-2" pref="213" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jspanMap" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
@@ -56,7 +56,7 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jspanMap" alignment="0" max="32767" attributes="0"/>
-                          <Component id="panActionAvailable" max="32767" attributes="0"/>
+                          <Component id="tabPanActionAvailable" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="11" max="-2" attributes="0"/>
                   </Group>
@@ -82,7 +82,7 @@
           </Border>
         </Property>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Curseur par d&#xe9;faut"/>
+          <Color id="Pointeur par d&#xe9;faut"/>
         </Property>
       </Properties>
       <AccessibilityProperties>
@@ -357,13 +357,6 @@
                           <Component id="buttonGlobalMap" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="buttonMapTeam1" alignment="1" max="32767" attributes="0"/>
-                              <Component id="buttonTteam2" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                           <Component id="lblMap" min="-2" pref="78" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -380,11 +373,7 @@
                   <Component id="lblMap" min="-2" pref="23" max="-2" attributes="0"/>
                   <EmptySpace pref="52" max="32767" attributes="0"/>
                   <Component id="buttonGlobalMap" min="-2" pref="33" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="buttonTteam2" min="-2" pref="33" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="buttonMapTeam1" min="-2" pref="33" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -399,23 +388,6 @@
             <Property name="text" type="java.lang.String" value="Maps"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="buttonTteam2">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Team 2"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonTteam2MousePressed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="buttonMapTeam1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Team 1"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonMapTeam1MousePressed"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="buttonGlobalMap">
           <Properties>
             <Property name="text" type="java.lang.String" value="Global"/>
@@ -426,7 +398,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JTabbedPane" name="panActionAvailable">
+    <Container class="javax.swing.JTabbedPane" name="tabPanActionAvailable">
       <AccessibilityProperties>
         <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="tabPan"/>
       </AccessibilityProperties>
@@ -445,51 +417,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="208" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="566" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-        </Container>
-        <Container class="javax.swing.JPanel" name="panActionAvailableTeam1">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Team 1">
-                <Property name="tabTitle" type="java.lang.String" value="Team 1"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="208" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="566" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-        </Container>
-        <Container class="javax.swing.JPanel" name="panActionAvailableTeam2">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Team 2">
-                <Property name="tabTitle" type="java.lang.String" value="Team 2"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="208" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="205" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
