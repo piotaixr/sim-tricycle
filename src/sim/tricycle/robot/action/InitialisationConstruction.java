@@ -22,7 +22,7 @@ public class InitialisationConstruction extends AbstractAction {
     @Override
     protected Object doExecute(Robot bot) {
 
-        Case c = bot.getMapTeam().getCaseDevant(bot);
+        Case c = bot.getT().getMap().getCaseDevant(bot);
         if (c.whoIam() == TypeCase.vide) {
             c.setObstacle(getBatimentFromNom());
         } else {
