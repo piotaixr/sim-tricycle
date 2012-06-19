@@ -43,6 +43,7 @@ public class SimTricycle {
 //        sim.tricycle.robot.Robot bot;
 //
 //
+        
 //
 //       // bot = new Collecteur(t, a);
 //        bot.setCoordonnees(new Point(3, 8));

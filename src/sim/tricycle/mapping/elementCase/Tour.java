@@ -18,7 +18,7 @@ public class Tour extends AbstractBatiment{
         this.prix = 2;
         this.tempsMax = 2;
         this.temps = 0;
-        this.portee = 0;
+        this.portee = 2;
     }
 
     @Override

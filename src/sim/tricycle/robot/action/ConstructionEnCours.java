@@ -6,6 +6,8 @@ package sim.tricycle.robot.action;
 
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.elementCase.AbstractBatiment;
+import sim.tricycle.mapping.elementCase.AbstractObjet;
+import sim.tricycle.mapping.elementCase.Piece;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.utils.ActionBuilder;
@@ -23,13 +25,13 @@ public class ConstructionEnCours extends AbstractActionComposee {
     @Override
     protected Object doExecute(Robot bot) {
 
-        Case c = bot.getMapTeam().getCaseDevant(bot);
+        Case c = bot.getT().getMap().getCaseDevant(bot);
         AbstractBatiment bat = (AbstractBatiment) c.getObstacle();
 
         if (bat.getTemps() == 0) {
-            bot.getEquipe().supprimerRessource(bat.getItem(), bat.getPrix());
+            bot.getT().supprimerRessource("Piece", bat.getPrix());
             bat.setTemps(bat.getTemps() + 1);
-            bot.getMapTeam().getCaseDevant(bot).setObstacle(bat);
+            bot.getT().getMap().getCaseDevant(bot).setObstacle(bat);
         } else {
             bat.setTemps(bat.getTemps() + 1);
         }

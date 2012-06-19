@@ -29,10 +29,10 @@ public class SeTeleporterA extends AbstractAction{
     
     @Override
    protected Object doExecute(Robot bot){
-      if(!bot.getMapTeam().getCase(p.getX(), p.getY()).hasObstacle()){ 
-       bot.decollerRobotDeMap();
+      if(!bot.getT().getMap().getCase(p.getX(), p.getY()).hasObstacle()){ 
+    //   bot.decollerRobotDeMap();
        bot.setCoordonnees(p);
-       bot.collerRobotSurMap();
+    //   bot.collerRobotSurMap();
       } 
        return null;
    }

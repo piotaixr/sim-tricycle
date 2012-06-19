@@ -11,11 +11,13 @@ import sim.tricycle.robot.Etat;
 import sim.tricycle.robot.Transition;
 import sim.tricycle.robot.action.core.ActionFactoryInterface;
 import sim.tricycle.robot.action.core.ActionInterface;
+import sim.tricycle.robot.condition.core.AbstractConditionMultiple;
 import sim.tricycle.robot.condition.core.ConditionInterface;
 import sim.tricycle.utils.ParameterCreator;
 import sim.tricycle.robot.condition.core.ConditionFactoryInterface;
 import sim.tricycle.utils.params.ParamConverterProviderInterface;
 import sim.tricycle.utils.params.Parameter;
+import sim.tricycle.utils.tag.Tag;
 
 /**
  * @todo implementation non finie. Il doit rester des fonctions a ajouter
@@ -57,6 +59,8 @@ public class RobotParser {
         List<Element> etats = racine.getChildren("etat");
         creerEtats(etats, automate);
 
+        parseTags(racine, automate);
+
         Iterator<Element> it = etats.iterator();
         while (it.hasNext()) {
             Element elementEtat = it.next();
@@ -74,7 +78,7 @@ public class RobotParser {
         while (it.hasNext()) {
             Element e = it.next();
             String id = e.getAttributeValue("id");
-            Etat etat = new Etat(id);
+            Etat etat = new Etat(id, automate);
             automate.addEtat(etat);
         }
     }
@@ -121,15 +125,34 @@ public class RobotParser {
         }
     }
 
-    private ConditionInterface creerCondition(Element conditionTransitionElement) {
-        if (conditionTransitionElement == null) {
+    private ConditionInterface creerCondition(Element conditionElement) {
+        if (conditionElement == null) {
             return condifionFactory.create("true");
         }
-        String conditionNom = conditionTransitionElement.getAttributeValue("nom").trim();
+        String conditionNom = conditionElement.getAttributeValue("nom").trim();
         System.out.println("creerCondition /" + conditionNom + "/");
-        List<Parameter> parametersList = parameterCreator.elementListToParameterList(conditionTransitionElement.getChildren("parametre"));
 
-        return condifionFactory.create(conditionNom, parametersList);
+        String typeCondition = conditionElement.getAttributeValue("type");
+        System.out.println("TYPE:" + typeCondition);
+        if (typeCondition == null || typeCondition.trim().equals("simple")) {
+            //condition simple
+            List<Parameter> parametersList = parameterCreator.elementListToParameterList(conditionElement.getChildren("parametre"));
+            return condifionFactory.create(conditionNom, parametersList);
+        } else {
+            System.out.println("conditionmultiple");
+            //condition multiple
+            ConditionInterface condition = condifionFactory.create(conditionNom);
+            if(condition instanceof AbstractConditionMultiple){
+                AbstractConditionMultiple acm = (AbstractConditionMultiple) condition;
+                List<Element> listSousConditionElements = conditionElement.getChildren("condition");
+                for(Element e:listSousConditionElements){
+                    acm.addCondition(creerCondition(e));
+                }
+                return acm;
+            } else {
+                throw new RuntimeException("La condition de nom " + conditionNom + " n'est pas une condition multiple");
+            }
+        }
     }
 
     private ActionInterface creerAction(Element actionElement) {
@@ -152,7 +175,25 @@ public class RobotParser {
             if (nomTag.equals("")) {
                 continue; // TODO: afficher un warning
             }
-            e.addTag(nomTag);
+            e.addTag(automate.getTag(nomTag));
+        }
+    }
+
+    private void parseTags(Element racine, Automate automate) {
+        List<Element> elemsTags = racine.getChildren("tag");
+        for (Element elem : elemsTags) {
+            String nomtag = elem.getAttributeValue("nom");
+            Tag t = new Tag(nomtag);
+            addActionCout(t, elem.getChildren("action"), automate);
+            automate.addTag(t);
+        }
+    }
+
+    private void addActionCout(Tag t, List<Element> children, Automate automate) {
+        for (Element elem : children) {
+            String actionNom = elem.getAttributeValue("nom");
+            int value = Integer.parseInt(elem.getTextTrim());
+            t.addValeur(actionNom, value);
         }
     }
 }

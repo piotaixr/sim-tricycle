@@ -4,9 +4,8 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Stack;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
-import sim.tricycle.mapping.CarteTeam;
 import sim.tricycle.mapping.TypeCase;
-import sim.tricycle.mapping.elementCase.AbstractObstacle;
+import sim.tricycle.mapping.elementCase.AbstractVision;
 import sim.tricycle.robot.action.Sleep;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.robot.action.core.ActionInterface;
@@ -17,21 +16,18 @@ import sim.tricycle.utils.params.types.Environnement;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public  class Robot extends AbstractObstacle implements OrdonnancableInterface {
+public  class Robot extends AbstractVision implements OrdonnancableInterface {
 
     protected Environnement environnement = null;
     protected Point coordonnees;
     protected Sens direction;
-    protected int portee;
     protected ArrayDeque<ActionInterface> actions = new ArrayDeque();
     protected Stack<AbstractActionComposee> pileActionsComposees = new Stack();
     protected Stack<ArrayDeque<ActionInterface>> pileFileActions = new Stack();
     protected Etat etatCourant;
     protected Etat etatDestination;
     protected Automate automate;
-    protected Team equipe;
     protected boolean plante = false;
-    protected int cout = 0;
 
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
@@ -40,36 +36,36 @@ public  class Robot extends AbstractObstacle implements OrdonnancableInterface {
      */
     public Robot(Automate automate, Team equipe) {
         this.automate = automate;
-        this.equipe = equipe;
+        this.setT(equipe);
     }
 
     public Robot(Automate automate) {
         this.automate = automate;
     }
 
-    public Robot(Team t) {
-        this.equipe = t;
+    public Robot(Team equipe) {
+        this.setT(equipe);
     }
 
     /**
      * Retourne la case qui se trouve devant les robot
      *
      * @deprecated
-     */
-    public void collerRobotSurMap() {
-        if (!this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
-            this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
-        }
-    }
-
-    /**
-     * @deprecated
-     */
-    public void decollerRobotDeMap() {
-        if (this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
-            this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
-        }
-    }
+//     */
+//    public void collerRobotSurMap() {
+//        if (!this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
+//            this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
+//        }
+//    }
+//
+//    /**
+//     * @deprecated
+//     */
+//    public void decollerRobotDeMap() {
+//        if (this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
+//            this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
+//        }
+//    }
 
     private Transition findTransition() {
         Iterator<Transition> it = etatCourant.getTransitions().iterator();
@@ -97,13 +93,13 @@ public  class Robot extends AbstractObstacle implements OrdonnancableInterface {
             return;
         }
         // l'action coute plus d'un toc, le robot doit attendre
-        if (cout > 0) {
-            cout--;
+        if (prix > 0) {
+            prix--;
             return;
         }
         //dans le cas ou il n'a pas a attendre, on cherche l'action a executer. 
         //On boucle tant que l'on n'execute des actions qui ne coutent rien.
-        while (cout == 0) {
+        while (prix == 0) {
             if (!actions.isEmpty()) {
                 //si il y aune action, on depile l'action
                 if (actions.getFirst().isComposee()) {
@@ -135,7 +131,7 @@ public  class Robot extends AbstractObstacle implements OrdonnancableInterface {
                     Transition t = findTransition();
                     if (t == null) {
                         //si on ne trouve pas de transition, on ajoute une action vide de cout 1: sleep
-                        cout++;
+                        prix++;
                     }
                     // transition trouvée. On récupère les actions a executer ainsi que l'etet de destination
                     actions.addAll(t.getActions());
@@ -147,7 +143,7 @@ public  class Robot extends AbstractObstacle implements OrdonnancableInterface {
 
     public Environnement getEnvironnement() {
         if (environnement == null) {
-            environnement = new Environnement(equipe, this);
+            environnement = new Environnement(this.getT(), this);
         }
         return environnement;
     }
@@ -200,24 +196,12 @@ public  class Robot extends AbstractObstacle implements OrdonnancableInterface {
         this.automate = automate;
     }
 
-    public Team getEquipe() {
-        return equipe;
-    }
-
-    public void setEquipe(Team equipe) {
-        this.equipe = equipe;
-    }
-
     public Etat getEtatDestination() {
         return etatDestination;
     }
 
     public void setEtatDestination(Etat etatDestination) {
         this.etatDestination = etatDestination;
-    }
-
-    public CarteTeam getMapTeam() {
-        return this.equipe.getMap();
     }
 
     @Override
@@ -228,7 +212,8 @@ public  class Robot extends AbstractObstacle implements OrdonnancableInterface {
     private void executerAction(ActionInterface action) {
         try {
             action.executer(this);
-            cout = action.getPoids();
+
+           prix= etatCourant.getValeurAction(action);
             if (action instanceof AbstractActionComposee) {
                 actions.addAll(((AbstractActionComposee) action).getNewActions());
             }

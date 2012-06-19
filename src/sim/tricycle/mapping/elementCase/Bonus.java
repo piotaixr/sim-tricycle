@@ -10,6 +10,10 @@ import sim.tricycle.mapping.TypeCase;
  * @author Thomas Nds nds.thomas@gmail.com
  */
 public class Bonus extends AbstractObjet {
+    
+    public Bonus(){
+        id = "Bonus";
+    }
 
 
     @Override

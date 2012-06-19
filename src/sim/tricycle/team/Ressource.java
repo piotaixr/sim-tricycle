@@ -12,15 +12,15 @@ import sim.tricycle.mapping.elementCase.AbstractObjet;
  */
 public class Ressource {
     
-    private AbstractObjet item;
+    private String idItem;
     private int quantite;
 
-    public AbstractObjet getItem() {
-        return item;
+    public String getIdItem() {
+        return idItem;
     }
 
-    public void setItem(AbstractObjet item) {
-        this.item = item;
+    public void setItem(String IdItem) {
+        this.idItem = idItem;
     }
 
     public int getQuantite() {
@@ -35,14 +35,14 @@ public class Ressource {
         
     }
     
-    public Ressource (AbstractObjet item, int quantite){
-        this.item = item;
+    public Ressource (String idItem, int quantite){
+        this.idItem = idItem;
         this.quantite = quantite;
     }
     
     public boolean equals (Object o){
         Ressource r = (Ressource)o; 
-        return this.item.equals(r.item);
+        return this.idItem.equals(r.idItem);
     }
     
     

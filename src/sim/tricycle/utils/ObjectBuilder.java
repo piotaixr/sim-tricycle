@@ -7,6 +7,9 @@ import sim.tricycle.robot.action.core.ActionFactoryInterface;
 import sim.tricycle.robot.condition.*;
 import sim.tricycle.robot.condition.core.ConditionFactory;
 import sim.tricycle.robot.condition.core.ConditionFactoryInterface;
+import sim.tricycle.robot.condition.multiple.ConditionEt;
+import sim.tricycle.robot.condition.multiple.ConditionNon;
+import sim.tricycle.robot.condition.multiple.ConditionOu;
 import sim.tricycle.utils.params.ParamConverterProvider;
 import sim.tricycle.utils.params.ParamConverterProviderInterface;
 import sim.tricycle.utils.params.converter.IntegerConverter;
@@ -47,7 +50,10 @@ public class ObjectBuilder {
                     .register(new TestCaseRobotEgalCasePiece(getVarBuilder().buildReference("self.case"), getVarBuilder().buildVariable("piece")))
                     .register(new TestCaseRobotEgalCaseBase(getVarBuilder().buildReference("self.case"), getVarBuilder().buildReference("team.base")))
                     .register(new Contains())
-                    .register(new PieceExiste(getOrdonnanceur()));
+                    .register(new PieceExiste(getOrdonnanceur()))
+                    .register(new ConditionEt())
+                    .register(new ConditionNon())
+                    .register(new ConditionOu());
         }
         
         return conditionFactory;
