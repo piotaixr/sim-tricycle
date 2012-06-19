@@ -10,6 +10,7 @@ import sim.tricycle.mapping.CarteTeam;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.mapping.elementCase.Base;
+import sim.tricycle.robot.Model;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 
@@ -21,7 +22,7 @@ public class Team {
 
     private String nomTeam;
     private LinkedList<Robot> armee;
-    private LinkedList<Robot> models;
+    private LinkedList<Model> models;
     private CarteTeam map;
     private ArrayList<Ressource> ressources;
     private ArrayList<Case> collectables;
@@ -33,7 +34,7 @@ public class Team {
         this.nomTeam = nomTeam;
         this.map = new CarteTeam((CarteObjective) carteObj);
         this.armee = new LinkedList<Robot>();
-        this.models = new LinkedList<Robot>();
+        this.models = new LinkedList<Model>();
         this.ressources = new ArrayList<Ressource>();
         this.base = new Base();
         this.base.setCase(posBase);
@@ -46,7 +47,7 @@ public class Team {
         this.id = iden;
         this.map = new CarteTeam(carteObj);
         this.armee = new LinkedList<Robot>();
-        this.models = new LinkedList<Robot>();
+        this.models = new LinkedList<Model>();
         this.ressources = new ArrayList<Ressource>();
     }
 
@@ -159,16 +160,16 @@ public class Team {
         }
     }
 
-    public LinkedList<Robot> getModel() {
+    public LinkedList<Model> getModel() {
         return models;
     }
 
-    public void setModel(LinkedList<Robot> mod) {
+    public void setModel(LinkedList<Model> mod) {
         models = mod;
     }
 
-    public void addModel(Robot rob) {
-        models.add(rob);
+    public void addModel(Robot rob, String img) {
+        models.add(new Model(rob,img));
     }
 
     public void removeModel() {

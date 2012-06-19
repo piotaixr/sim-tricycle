@@ -6,6 +6,7 @@ package sim.tricycle.ihm;
 
 import sim.tricycle.AbstractJeu;
 import sim.tricycle.Jeu;
+import sim.tricycle.utils.ObjectBuilder;
 
 /**
  *
@@ -21,7 +22,9 @@ public class FrameMenu extends javax.swing.JFrame {
      */
     public FrameMenu(AbstractJeu jeu) {
         initComponents();
+        ObjectBuilder ob = new ObjectBuilder();
         superGameDeLaMortQuiTue = jeu;
+        superGameDeLaMortQuiTue.setObjectBuilder(ob);
     }
 
     /**

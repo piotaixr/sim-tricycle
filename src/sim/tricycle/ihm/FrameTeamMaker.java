@@ -77,14 +77,14 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
         System.out.println("hauteur frame : " + this.getHeight() + " taille pan :" + tabPanTeams.getPreferredSize().height);
 
         jeu.getCarte().afficherCarte();
-        System.out.println(jeu.getTeamNumber());
+//        System.out.println(jeu.getTeamNumber());
 
 
         while (teamNumber <= jeu.getTeamNumber()) {
             javax.swing.JPanel newPanTeam = createPanTeam();
             addTabTeam(tabPanTeams, newPanTeam);
             //addPanAutomate(newPanTeam);
-            // updateHeight(newPanTeam);
+            //updateHeight(newPanTeam);
         }
 
     }
@@ -193,7 +193,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
                 System.out.println(automateTxt);
                 File f = new File(automateTxt);
                 Automate auto = robPars.parse(f);
-                t.addModel(new Robot(auto, t));
+                t.addModel(new Robot(auto, t),((PanSelectAutomate) c).getStringImg());
             }
         }
     }

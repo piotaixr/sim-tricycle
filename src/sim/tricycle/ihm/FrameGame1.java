@@ -6,18 +6,17 @@ import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.BoxLayout;
 import sim.tricycle.AbstractJeu;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
-import sim.tricycle.mapping.CarteTeam;
-import sim.tricycle.mapping.AbstractCarte;
-import sim.tricycle.mapping.CarteObjective;
+import sim.tricycle.robot.Model;
 
 /**
  *
  * @author Morgan BIDOIS <morganbidois@gmail.com>
  */
-public class FrameGame1 extends javax.swing.JFrame implements Observer {
+public final class FrameGame1 extends javax.swing.JFrame implements Observer {
 
     private ViewCarte vc;
     private ViewMiniCarte vmc;
@@ -25,18 +24,18 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
     private AbstractJeu cont = null;
 
     /**
-     * 
+     *
      */
-    public FrameGame1(AbstractJeu Conteneur) {
+    public FrameGame1(AbstractJeu jeu) {
         initComponents();
-        AbstractCarte carte = Conteneur.getCarte();
-        cont = Conteneur;
-        
+        //AbstractCarte carte = jeu.getCarte();
+        cont = jeu;
+
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
 
-        vc = new ViewCarte(Conteneur);
-        vmc = new ViewMiniCarte(Conteneur, vc);
+        vc = new ViewCarte(jeu);
+        vmc = new ViewMiniCarte(jeu, vc);
 
         panMiniMap.setLayout(new BorderLayout());
         vmc.setVisible(true);
@@ -45,21 +44,51 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
         jspanMap.setViewportView(vc);
         panMiniMap.add(vmc);
 
-        
-        
-        javax.swing.JPanel panTeam1 = new javax.swing.JPanel();
-        javax.swing.JPanel panTeam2 = new javax.swing.JPanel();
-        javax.swing.JPanel panTeam3 = new javax.swing.JPanel();
+        addOrdonnaceur(jeu.getObjectBuilder().getOrdonnanceur());
 
-        panActionAvailable.insertTab("team test", null, panTeam1, null, WIDTH);
-        panActionAvailable.insertTab("team test", null, panTeam2, null, WIDTH);
-        panActionAvailable.insertTab("team test", null, panTeam3, null, WIDTH);
+        int i = 0;
+        while (i < jeu.getTeamNumber()) {
+            System.out.println("Passe" + i);
+            javax.swing.JPanel newPanTeam = createPanTeam(i);
+            addTabTeam(tabPanActionAvailable, newPanTeam, i);
+            i++;
+        }
+
+//        javax.swing.JPanel panTeam1 = new javax.swing.JPanel();
+//        javax.swing.JPanel panTeam2 = new javax.swing.JPanel();
+//        javax.swing.JPanel panTeam3 = new javax.swing.JPanel();
+//
+//        tabPanActionAvailable.insertTab("team test", null, panTeam1, null, WIDTH);
+//        tabPanActionAvailable.insertTab("team test", null, panTeam2, null, WIDTH);
+//        tabPanActionAvailable.insertTab("team test", null, panTeam3, null, WIDTH);
 
     }
 
     public void addOrdonnaceur(Ordonnanceur oi) {
         this.oi = oi;
         oi.addObserver(this);
+    }
+
+    public void addTabTeam(javax.swing.JTabbedPane tabpan, javax.swing.JPanel panteam, int index) {
+        tabpan.addTab(cont.getTabTeams().get(index).getNomTeam(), panteam);
+    }
+
+    public void addPanAuto(javax.swing.JPanel pan, Model mod) {
+        PanSelectModel panSelect = new PanSelectModel(mod);
+        pan.add(panSelect);
+    }
+
+    public void addPansAutomateByTeam(javax.swing.JPanel pan, int numTeam) {
+        for (Model m : cont.getTabTeams().get(numTeam).getModel()) {
+            addPanAuto(pan,m);
+        }
+    }
+
+    public javax.swing.JPanel createPanTeam(int numTeam) {
+        javax.swing.JPanel panteam = new javax.swing.JPanel();
+        panteam.setLayout(new BoxLayout(panteam, BoxLayout.Y_AXIS));
+        addPansAutomateByTeam(panteam, numTeam);
+        return panteam;
     }
 
     /**
@@ -89,13 +118,9 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(80, 0), new java.awt.Dimension(80, 0), new java.awt.Dimension(80, 32767));
         panSelectTeamMap = new javax.swing.JPanel();
         lblMap = new javax.swing.JLabel();
-        buttonTteam2 = new javax.swing.JButton();
-        buttonMapTeam1 = new javax.swing.JButton();
         buttonGlobalMap = new javax.swing.JButton();
-        panActionAvailable = new javax.swing.JTabbedPane();
+        tabPanActionAvailable = new javax.swing.JTabbedPane();
         panActionAvailableGlobale = new javax.swing.JPanel();
-        panActionAvailableTeam1 = new javax.swing.JPanel();
-        panActionAvailableTeam2 = new javax.swing.JPanel();
         jspanMap = new javax.swing.JScrollPane();
         panZoom = new javax.swing.JPanel();
         sldZoom = new javax.swing.JSlider();
@@ -271,25 +296,6 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
         lblMap.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMap.setText("Maps");
 
-        buttonTteam2.setText("Team 2");
-        buttonTteam2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                buttonTteam2MousePressed(evt);
-            }
-        });
-
-        buttonMapTeam1.setText("Team 1");
-        buttonMapTeam1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                buttonMapTeam1MousePressed(evt);
-            }
-        });
-        buttonMapTeam1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ActionPerformed(evt);
-            }
-        });
-
         buttonGlobalMap.setText("Global");
         buttonGlobalMap.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -307,11 +313,6 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
                         .addContainerGap()
                         .addComponent(buttonGlobalMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panSelectTeamMapLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(panSelectTeamMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(buttonMapTeam1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buttonTteam2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(panSelectTeamMapLayout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(lblMap, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -324,51 +325,21 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
                 .addComponent(lblMap, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(buttonGlobalMap, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonTteam2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonMapTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(104, 104, 104))
         );
 
         javax.swing.GroupLayout panActionAvailableGlobaleLayout = new javax.swing.GroupLayout(panActionAvailableGlobale);
         panActionAvailableGlobale.setLayout(panActionAvailableGlobaleLayout);
         panActionAvailableGlobaleLayout.setHorizontalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGap(0, 205, Short.MAX_VALUE)
         );
         panActionAvailableGlobaleLayout.setVerticalGroup(
             panActionAvailableGlobaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 566, Short.MAX_VALUE)
         );
 
-        panActionAvailable.addTab("Global", panActionAvailableGlobale);
-
-        javax.swing.GroupLayout panActionAvailableTeam1Layout = new javax.swing.GroupLayout(panActionAvailableTeam1);
-        panActionAvailableTeam1.setLayout(panActionAvailableTeam1Layout);
-        panActionAvailableTeam1Layout.setHorizontalGroup(
-            panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
-        );
-        panActionAvailableTeam1Layout.setVerticalGroup(
-            panActionAvailableTeam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 566, Short.MAX_VALUE)
-        );
-
-        panActionAvailable.addTab("Team 1", panActionAvailableTeam1);
-
-        javax.swing.GroupLayout panActionAvailableTeam2Layout = new javax.swing.GroupLayout(panActionAvailableTeam2);
-        panActionAvailableTeam2.setLayout(panActionAvailableTeam2Layout);
-        panActionAvailableTeam2Layout.setHorizontalGroup(
-            panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
-        );
-        panActionAvailableTeam2Layout.setVerticalGroup(
-            panActionAvailableTeam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 566, Short.MAX_VALUE)
-        );
-
-        panActionAvailable.addTab("Team 2", panActionAvailableTeam2);
+        tabPanActionAvailable.addTab("Global", panActionAvailableGlobale);
 
         jspanMap.setBackground(new java.awt.Color(255, 102, 102));
         jspanMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -437,7 +408,7 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
             .addComponent(headband, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panActionAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tabPanActionAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jspanMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(40, 40, 40)
@@ -457,7 +428,7 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jspanMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panActionAvailable))
+                            .addComponent(tabPanActionAvailable))
                         .addGap(0, 11, 11))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panSelectTeamMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -470,7 +441,7 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
 
         headband.getAccessibleContext().setAccessibleName("headband");
         headband.getAccessibleContext().setAccessibleDescription("");
-        panActionAvailable.getAccessibleContext().setAccessibleName("tabPan");
+        tabPanActionAvailable.getAccessibleContext().setAccessibleName("tabPan");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -489,20 +460,8 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
         oi.start();
     }//GEN-LAST:event_buttonPlayMousePressed
 
-    private void ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ActionPerformed
-
-    private void buttonMapTeam1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMapTeam1MousePressed
-        panActionAvailable.setSelectedComponent(panActionAvailableTeam1);
-    }//GEN-LAST:event_buttonMapTeam1MousePressed
-
-    private void buttonTteam2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonTteam2MousePressed
-        panActionAvailable.setSelectedComponent(panActionAvailableTeam2);
-    }//GEN-LAST:event_buttonTteam2MousePressed
-
     private void buttonGlobalMapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGlobalMapMousePressed
-        panActionAvailable.setSelectedComponent(panActionAvailableGlobale);
+        tabPanActionAvailable.setSelectedComponent(panActionAvailableGlobale);
     }//GEN-LAST:event_buttonGlobalMapMousePressed
 
     private void sldZoomStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sldZoomStateChanged
@@ -575,12 +534,10 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonExit;
     private javax.swing.JButton buttonGlobalMap;
-    private javax.swing.JButton buttonMapTeam1;
     private javax.swing.JButton buttonPause;
     private javax.swing.JButton buttonPlay;
     private javax.swing.JButton buttonSpeedUp;
     private javax.swing.JButton buttonStepPlay;
-    private javax.swing.JButton buttonTteam2;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JPanel headband;
     private javax.swing.JLabel jLabel1;
@@ -590,15 +547,13 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
     private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblUnitTime;
     private javax.swing.JLabel lblZoom;
-    private javax.swing.JTabbedPane panActionAvailable;
     private javax.swing.JPanel panActionAvailableGlobale;
-    private javax.swing.JPanel panActionAvailableTeam1;
-    private javax.swing.JPanel panActionAvailableTeam2;
     private javax.swing.JPanel panMiniMap;
     private javax.swing.JPanel panSelectTeamMap;
     private javax.swing.JPanel panZoom;
     private javax.swing.JPanel scorePanel;
     private javax.swing.JSlider sldZoom;
+    private javax.swing.JTabbedPane tabPanActionAvailable;
     private javax.swing.JLabel txtScoreBallTeam2;
     private javax.swing.JLabel txtScoreGoldTeam1;
     private javax.swing.JLabel txtScoreGoldTeam2;
@@ -609,6 +564,6 @@ public class FrameGame1 extends javax.swing.JFrame implements Observer {
     public void update(Observable o, Object arg) {
         lblTime.setText(String.valueOf(oi.getTime()));
         cont.getCarte().routinePt();
-        repaint();
+        //repaint();
     }
 }
