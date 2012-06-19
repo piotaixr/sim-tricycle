@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Robot;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import sim.tricycle.mapping.AbstractCarte;
 import sim.tricycle.mapping.CarteTeam;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.elementCase.AbstractObjet;
@@ -45,7 +46,11 @@ public class Team {
         this.base = base;
     }
 
-    public Team(String nomTeam) {
+    public void setMap(CarteTeam map) {
+        this.map = map;
+    }
+    
+    public Team(String nomTeam, AbstractCarte carteObj){
         this.nomTeam = nomTeam;
     }
 

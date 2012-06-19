@@ -137,7 +137,7 @@ public class FrameMenu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                Jeu superGameDeLaMortQuiTue = new Jeu();
+                AbstractJeu superGameDeLaMortQuiTue = new Jeu();
                 new FrameMenu(superGameDeLaMortQuiTue).setVisible(true);
             }
         });

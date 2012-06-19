@@ -17,7 +17,7 @@ public abstract class AbstractJeu {
     protected ArrayList<Team> tabTeams;
     protected int teamNumber = 0;
     protected ArrayList<Ressource> ressourcesDefaut = null;
-
+    
     public int getTeamNumber() {
         return teamNumber;
     }
