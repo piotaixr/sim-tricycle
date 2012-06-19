@@ -162,20 +162,12 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
     }
 
     public Team createTeam(String name) {
-        Team t = new Team(name);
-//        if (t != null) {
-//            System.out.println("AAAAAAAAAAAAAAAAAaa");
-//        }
+        Team t = new Team(name,jeu.getCarte());
         return t;
     }
 
     public void createAllTeams() {
         for (int i = 0; i < tabPanTeams.getTabCount(); i++) {
-//            Component c = tabPanTeams.getComponentAt(i);
-//            if (c instanceof javax.swing.JTabbedPane) {
-//               jeu.addTeam(createTeam(c.getName()));
-//            }
-            System.out.println(tabPanTeams.getTitleAt(i));
             jeu.addTeam(createTeam(tabPanTeams.getTitleAt(i)));
         }
     }
