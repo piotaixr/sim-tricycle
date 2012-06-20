@@ -9,6 +9,7 @@ import sim.tricycle.mapping.elementCase.AbstractBatiment;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.utils.ActionBuilder;
+import sim.tricycle.utils.params.types.Variable;
 
 /**
  *
@@ -27,12 +28,15 @@ public class DestructionTotale extends AbstractActionComposee {
         
         Case c = bot.getTeam().getMap().getCaseDevant(bot);
         
+        
         if(c.getObstacle() instanceof AbstractBatiment){
-            AbstractBatiment bat = (AbstractBatiment) c.getObstacle();            
-            while(bat.getTemps()>0){
-                b.addNew("Destruction", bat);
+            AbstractBatiment bat = (AbstractBatiment) c.getObstacle(); 
+            int nb = bat.getTemps();
+            for (int i=1;i<=nb;i++){
+                b.addNew("Destruction");
             }
         }
+        else throw new RuntimeException ("il n'y a pas de batiment debant le robot");
         
         return null;
     }
