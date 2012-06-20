@@ -128,10 +128,13 @@ public class PanSelectModel extends javax.swing.JPanel {
         // TODO add your handling code here:
 //        if (t.getRessources().get("GOLD") - price > 0)
 //        {
-        Robot rob = new Robot(model.getRob().getAutomate(), t);   /////////////////// A verifier si faut pas mieux clone ou quoi ...
-        rob.setCoordonnees(new Point(t.getBase().getPosition().getX(), t.getBase().getPosition().getY()));
-        rob.setDirection(Sens.NORD);
-        oi.add(rob);        ////////////////////// A verifier si c'est pas bon, mettre un observable ....
+        if (!t.getBase().getPosition().hasObstacle()) {
+            Robot rob = new Robot(model.getRob().getAutomate(), t);
+            rob.setCoordonnees(t.getBase().getPosition());
+            rob.setDirection(Sens.NORD);
+            oi.add(rob);
+            this.getParent().repaint();
+        }
         //       }
     }//GEN-LAST:event_btnCreateBotMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables

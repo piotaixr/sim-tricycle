@@ -565,6 +565,6 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
     public void update(Observable o, Object arg) {
         lblTime.setText(String.valueOf(oi.getTime()));
         cont.getCarte().routinePt();
-        //repaint();
+        repaint();
     }
 }
