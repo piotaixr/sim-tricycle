@@ -2,7 +2,10 @@
 <robot>
     <etat id="1">
         <transition>
-            <condition nom="pieceexiste"></condition>
+            <condition type="multiple" nom="et">
+                <condition nom="pieceexiste"></condition>
+                <condition nom="pieceexiste"></condition>
+            </condition>
             <action nom="pieceplusproche" dest="piece"></action>
             <action nom="collecter">
                 <parametre type="var">piece</parametre>

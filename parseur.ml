@@ -1,6 +1,6 @@
-#load "dynlink.cma";;
+(*#load "dynlink.cma";;
 
-#load "camlp4o.cma";;
+#load "camlp4o.cma";;*)
 
 type 'a pile= Pile_vide|Pile_non_vide of 'a*'a pile;;
 (*_______________________________________________________________________*)
@@ -169,7 +169,7 @@ let rec parseur pile sortie stream detection nom piece= match stream with parser
 		    (parseur pile sortie f detection "" piece)
 			      
 
-  |[<''1'..'9'|'a'..'z'|'A'..'Z'|'_'  as n; f>] -> parseur pile sortie f detection (nom^(char_to_string n)) piece
+  |[<''1'..'9'|'a'..'z'|'A'..'Z'|'_'|'.'  as n; f>] -> parseur pile sortie f detection (nom^(char_to_string n)) piece
 
   |[<''}';f>]->(let name = (sommet_pile pile) 
 	       in match name with 

@@ -192,7 +192,7 @@ public class RobotParser {
     private void addActionCout(Tag t, List<Element> children, Automate automate) {
         for (Element elem : children) {
             String actionNom = elem.getAttributeValue("nom");
-            int value = Integer.parseInt(elem.getTextTrim());
+            int value = Integer.parseInt(elem.getAttributeValue("val").trim());
             t.addValeur(actionNom, value);
         }
     }
