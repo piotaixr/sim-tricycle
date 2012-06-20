@@ -5,6 +5,8 @@ package sim.tricycle.ihm;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -26,8 +28,10 @@ public class ViewCarte extends javax.swing.JPanel {
     private int tailleCaseBase = 50;
     private int decalageX, decalageY;    //pour plus tard essayer de centrer la carte dans le JScrollPane
     private int tailleOpti;
-    private Image imgPiece, img, imgVide, imgRobot, imgBonus, imgBoule, imgMap, imgPT, imgBase;
+    private Image img, imgMap, imgVide;
     private int px, py; //pour faire la difference lors du drag
+    private HashMap<String, Image> ensaCharger = null;
+    private HashMap<String, Image> enstteCase = null;
 
     /**
      * Constructeur de carte implémentées
@@ -48,12 +52,24 @@ public class ViewCarte extends javax.swing.JPanel {
         imgVide = carte.getVide();
         try {
             // Initialisation des images:
-            imgBase = ImageIO.read(new File("./src/sim/tricycle/ihm/images/base.png"));
-            imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robotCR.png"));
-            imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/bonus.png"));
-            imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/boule.png"));
-            imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/piece.png"));
-            imgPT = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/A5.png"));
+            FilesFinder ff = new FilesFinder();
+            ArrayList<String> aCharger = ff.findFilesWithExtensions("./src/sim/tricycle/ihm/images/imageAcharger");
+            ArrayList<String> tteCase = ff.findFilesWithExtensions("./src/sim/tricycle/ihm/images/imageAcharger");
+
+            for (String x : aCharger) {
+                ensaCharger.put(x, ImageIO.read(new File("./src/sim/tricycle/ihm/images/imageAcharger/" + x)));
+            }
+
+            for (String x : tteCase) {
+                enstteCase.put(x, ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + x)));
+            }
+
+//            imgBase = ImageIO.read(new File("./src/sim/tricycle/ihm/images/base.png"));
+//            imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robotCR.png"));
+//            imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/bonus.png"));
+//            imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/boule.png"));
+//            imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/piece.png"));
+//            imgPT = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/A5.png"));
         } catch (IOException ex) {
             Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -96,7 +112,7 @@ public class ViewCarte extends javax.swing.JPanel {
                 paintCase(g, carte.getCase(i, j), tailleCase, true, affFond);
             }
         }
-        
+
     }
 
     /**
@@ -127,35 +143,20 @@ public class ViewCarte extends javax.swing.JPanel {
         } else if (c.whoIam() == TypeCase.mur) {                             //MUR
             // SI pas de map de fond => on affiche les murs.
             if (aff) {
-                try {
-                    img = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + c.getId() + ".jpg"));
-                } catch (IOException ex) {
-                    Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                g.drawImage(img, x, y, width, width, this);
+                g.drawImage(enstteCase.get(c.getId() + ".png"), x, y, width, width, this);
             }
-
         } else {                                                            //VIDE
             char ch = c.getId().charAt(0);
-            if (ch == 'A' || ch == 'C') {
-                //Si case à motif 
-                try {
-                    // on recupere l'image corespondante à l'id.
-                    g.drawImage(imgVide, x, y, width, width, this);
-                    img = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + c.getId() + ".png"));
-                } catch (IOException ex) {
-                    Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                g.drawImage(img, x, y, width, width, this);
+            if (ch == 'A' || ch == 'C') {   //Si case à motif 
+                // on recupere l'image corespondante à l'id.
+                g.drawImage(enstteCase.get(c.getId() + ".png"), x, y, width, width, this);
             } else {
                 g.drawImage(imgVide, x, y, width, width, this);
             }
         }
         if (c.hasZone()) {                          //-------------------Pt de controle
-
             if (c.getZone().whoIam() == TypeCase.ptDeControle) {
                 PointDeControle pt = (PointDeControle) c.getZone();
-//System.out.print(pt.getTpspop());
                 if (pt.estNeutre()) {
                     coul = Color.lightGray;// Couleur de base si neutre.
                 } else {
@@ -180,22 +181,26 @@ public class ViewCarte extends javax.swing.JPanel {
                 }
                 g.setColor(coul);// on le desine de la couleur de la team et on le centre.
                 g.fillOval(x + (width - coeff) / 2, y + (width - coeff) / 2, coeff, coeff);
-                g.drawImage(imgPT, x, y, width, width, this);
+                g.drawImage(enstteCase.get("A5.png"), x, y, width, width, this);
             }
+            if (c.getZone().whoIam() == TypeCase.base) {
+                 g.drawImage(ensaCharger.get("base.png"), x, y, width, width, this);
+            }
+
         }
         if (c.whoIam() == TypeCase.piece) {                              //PIECE
-            g.drawImage(imgPiece, x, y, width, width, this);
+            g.drawImage(enstteCase.get("piece.png"), x, y, width, width, this);
 
         } else if (c.whoIam() == TypeCase.bonus) {                        //BONUS
-            g.drawImage(imgBonus, x, y, width, width, this);
+            g.drawImage(enstteCase.get("bonus.png"), x, y, width, width, this);
 
         } else if (c.whoIam() == TypeCase.boule) {                        //BOULE
-            g.drawImage(imgBoule, x, y, width, width, this);
+            g.drawImage(enstteCase.get("boule.png"), x, y, width, width, this);
         }
         // possible superposition de robot sur objet:
         if (c.robotPresent()) {                                           //ROBOT
             sim.tricycle.robot.Robot rob = c.getRobotPresent();
-            g.drawImage(imgRobot, x, y, width, width, this);
+            g.drawImage(ensaCharger.get("robotCR.png"), x, y, width, width, this);
         }
     }
 

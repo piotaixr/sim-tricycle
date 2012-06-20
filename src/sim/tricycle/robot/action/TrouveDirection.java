@@ -8,6 +8,7 @@ import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.Sens;
 import sim.tricycle.robot.action.core.AbstractAction;
+import sim.tricycle.utils.params.types.Reference;
 import sim.tricycle.utils.params.types.Variable;
 
 /**
@@ -16,17 +17,20 @@ import sim.tricycle.utils.params.types.Variable;
  */
 public class TrouveDirection extends AbstractAction{
 
-    private Variable varCaseCiblee;
+    private Reference refPoint;
+    private Point point;
     
     public TrouveDirection() {
     }
     
     @Override
     protected Object doExecute(Robot bot) {
-       Point p = (Point)varCaseCiblee.getValue();
-        return trouveDirection(bot.getCoordonnees(),p);
+       Point p = (Point)refPoint.getValue();
+       if(p!=null){
+           point=p;
+       }
+        return trouveDirection(bot.getCoordonnees(),point);
     }
-    
     
     private Sens trouveDirection(Point p1, Point p2) {
         
@@ -45,6 +49,18 @@ public class TrouveDirection extends AbstractAction{
         return newSens;
     }
 
+    public void setParameters(Point point) {
+        this.point = point;
+    }
+
+    public void setParameters(Reference point) {
+        this.refPoint = point;
+    }
+    
+    public void setParameters(Variable point) {
+        this.refPoint = point;
+    }
+    
     @Override
     public String getId() {
         return "trouvedirection";

@@ -1,10 +1,12 @@
 package sim.tricycle.robot;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Adri
  */
-public class Point {
+public class Point implements Serializable {
 
     private int x;
     private int y;
@@ -35,6 +37,10 @@ public class Point {
         return this.y;
     }
 
+    public String getStringedCoord(){
+        return this.getX()+" "+this.getY();
+    }
+    
     public int distanceDepuis(Point p) {
 
         return Math.abs(p.getX() - this.getX()) + Math.abs(p.getY() - this.getY());

@@ -2,6 +2,7 @@
  */
 package sim.tricycle.mapping;
 
+
 import java.util.List;
 import sim.tricycle.robot.Point;
 
@@ -22,7 +23,8 @@ public class CarteObjective extends AbstractCarte {
     public CarteObjective() {
     }
 
+    //rempli ensemble de bases
     protected void setDispositionBases(List<Point> dispositionBases) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        super.setListeBase(dispositionBases);
     }
 }

@@ -32,14 +32,7 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
     protected boolean plante = false;
     protected int cout = 0;
     protected AbstractObjet ItemPorte = null;
-
-    public AbstractObjet getItemPorte() {
-        return ItemPorte;
-    }
-
-    public void setItemPorte(AbstractObjet ItemPorte) {
-        this.ItemPorte = ItemPorte;
-    }
+    protected int tempsConstruction = 3;//arbitrarire
 
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
@@ -58,26 +51,6 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
     public Robot(Team equipe) {
         this.setTeam(equipe);
     }
-
-    /**
-     * Retourne la case qui se trouve devant les robot
-     *
-     * @deprecated
-//     */
-//    public void collerRobotSurMap() {
-//        if (!this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
-//            this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
-//        }
-//    }
-//
-//    /**
-//     * @deprecated
-//     */
-//    public void decollerRobotDeMap() {
-//        if (this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
-//            this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
-//        }
-//    }
 
     private Transition findTransition() {
         Iterator<Transition> it = etatCourant.getTransitions().iterator();
@@ -214,6 +187,22 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
 
     public void setEtatDestination(Etat etatDestination) {
         this.etatDestination = etatDestination;
+    }
+    
+    public AbstractObjet getItemPorte() {
+        return ItemPorte;
+    }
+
+    public void setItemPorte(AbstractObjet ItemPorte) {
+        this.ItemPorte = ItemPorte;
+    }
+    
+    public int getTempsConstruction() {
+        return tempsConstruction;
+    }
+
+    public void setTempsConstruction(int tempsConstruction) {
+        this.tempsConstruction = tempsConstruction;
     }
 
     @Override

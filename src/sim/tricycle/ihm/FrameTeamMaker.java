@@ -12,6 +12,8 @@ import java.util.Observer;
 import javax.swing.BoxLayout;
 import sim.tricycle.AbstractJeu;
 import sim.tricycle.Jeu;
+import sim.tricycle.mapping.Case;
+import sim.tricycle.mapping.elementCase.Base;
 import sim.tricycle.robot.Automate;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.team.Team;
@@ -172,6 +174,10 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
 
     public Team createTeam(int ident, String name) {
         Team t = new Team(ident, name, jeu.getCarte());
+       // t.setBase(new Base(jeu.getCarte().getListeBase().get(ident)));       ----------------------------------------------------------
+        Base b = new Base();
+        jeu.getCarte().pop(b, new Case(jeu. getCarte().getListeBase().get(ident).getX(),jeu. getCarte().getListeBase().get(ident).getY()));
+        t.setBase(b);
         return t;
     }
 

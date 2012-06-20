@@ -12,10 +12,7 @@ import sim.tricycle.robot.condition.multiple.ConditionNon;
 import sim.tricycle.robot.condition.multiple.ConditionOu;
 import sim.tricycle.utils.params.ParamConverterProvider;
 import sim.tricycle.utils.params.ParamConverterProviderInterface;
-import sim.tricycle.utils.params.converter.IntegerConverter;
-import sim.tricycle.utils.params.converter.ReferenceConverter;
-import sim.tricycle.utils.params.converter.StringConverter;
-import sim.tricycle.utils.params.converter.VariableConverter;
+import sim.tricycle.utils.params.converter.*;
 import sim.tricycle.utils.params.types.VarBuilder;
 import sim.tricycle.xmlparser.RobotParser;
 
@@ -86,7 +83,8 @@ public class ObjectBuilder {
             paramConverterProvider.register(new IntegerConverter())
                     .register(new StringConverter())
                     .register(new ReferenceConverter(getOrdonnanceur()))
-                    .register(new VariableConverter(getOrdonnanceur()));
+                    .register(new VariableConverter(getOrdonnanceur()))
+                    .register(new PointConverter());
         }
         
         return paramConverterProvider;

@@ -12,7 +12,12 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.robot.Model;
+import sim.tricycle.robot.Point;
+import sim.tricycle.robot.Robot;
+import sim.tricycle.robot.Sens;
+import sim.tricycle.team.Team;
 
 /**
  *
@@ -21,28 +26,33 @@ import sim.tricycle.robot.Model;
 public class PanSelectModel extends javax.swing.JPanel {
 
     private Model model;
-    
+    private Team t;
+    private int price = 0;
+    private OrdonnanceurInterface oi = null;
+    private Image imgBot = null;
+
     /**
      * Creates new form PanSelectModel
      */
-    public PanSelectModel(Model mod) {
+    public PanSelectModel(Model mod, Team t, OrdonnanceurInterface oi) {
         initComponents();
         this.model = mod;
+        this.t = t;
+        this.price = model.getRob().getPrix();
+        this.oi = oi;
+        try {
+            imgBot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robots/" + model.getImg()));
+        } catch (IOException ex) {
+            Logger.getLogger(PanSelectAutomate.class.getName()).log(Level.SEVERE, null, ex);
+        }
         lblNameauto.setText(model.getImg());
-//        lblGoldValue.setText(model.getRob().getPrix());
+        lblGoldValue.setText(price + "g");
     }
 
     @Override
     public void paint(Graphics graphic) {
         super.paint(graphic);
         Graphics2D g = (Graphics2D) graphic;
-
-        Image imgBot = null;
-        try {//TODO ne pas faire IO mais chercher dans les images enregistré dans la frame
-            imgBot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robots/" + model.getImg()));
-        } catch (IOException ex) {
-            Logger.getLogger(PanSelectAutomate.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         g.drawImage(imgBot, 20, 20, 60, 60, this);
     }
@@ -74,17 +84,23 @@ public class PanSelectModel extends javax.swing.JPanel {
         lblGoldValue.setText("jLabel3");
 
         btnCreateBot.setText("Create");
+        btnCreateBot.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCreateBotMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addComponent(lblNameauto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
                         .addComponent(lblGold)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblGoldValue, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -94,17 +110,30 @@ public class PanSelectModel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGold)
                     .addComponent(lblGoldValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCreateBot)
-                    .addComponent(lblNameauto))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblNameauto)
+                        .addGap(7, 7, 7)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCreateBotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateBotMouseClicked
+        // TODO add your handling code here:
+//        if (t.getRessources().get("GOLD") - price > 0)
+//        {
+        Robot rob = new Robot(model.getRob().getAutomate(), t);   /////////////////// A verifier si faut pas mieux clone ou quoi ...
+        rob.setCoordonnees(new Point(t.getBase().getPosition().getX(), t.getBase().getPosition().getY()));
+        rob.setDirection(Sens.NORD);
+        oi.add(rob);        ////////////////////// A verifier si c'est pas bon, mettre un observable ....
+        //       }
+    }//GEN-LAST:event_btnCreateBotMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreateBot;
     private javax.swing.JLabel lblGold;
