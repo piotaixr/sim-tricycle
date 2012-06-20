@@ -21,7 +21,7 @@ public class RevenirBase extends AbstractActionComposee {
     @Override
     protected Object doExecute(Robot bot) {
         getBuilder().addNewReturn("trouvechemin", "chemin", getBuilder().buildReference("team.base"))
-                .addNew("allera", getBuilder().buildVariable("chemin"));
+                .addNew("suivrechemin", getBuilder().buildVariable("chemin"));
 
         return null;
     }

@@ -17,12 +17,12 @@ import sim.tricycle.utils.params.types.Variable;
  *
  * @author Adri
  */
-public class AllerA extends AbstractActionComposee {
+public class SuivreChemin extends AbstractActionComposee {
 
     private Variable varChemin;
 //    private Variable courant;
 
-    public AllerA(ActionBuilder builder) {
+    public SuivreChemin(ActionBuilder builder) {
         super(builder);
     }
 
@@ -42,6 +42,6 @@ public class AllerA extends AbstractActionComposee {
 
     @Override
     public String getId() {
-        return "allera";
+        return "suivrechemin";
     }
 }
