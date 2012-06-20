@@ -2,10 +2,8 @@
  */
 package sim.tricycle.mapping;
 
-import java.awt.Point;
-import java.util.ArrayList;
 import java.util.List;
-import sim.tricycle.mapping.elementCase.AbstractVision;
+import sim.tricycle.robot.Point;
 
 /**
  *
