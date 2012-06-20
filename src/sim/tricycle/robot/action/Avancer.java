@@ -16,7 +16,7 @@ public class Avancer extends AbstractAction {
 
     @Override
     protected Object doExecute(Robot bot) {
-        bot.getT().getMap().avancer(bot);
+        bot.getTeam().getMap().avancer(bot);
         return null;
     }
     

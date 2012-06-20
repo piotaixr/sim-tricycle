@@ -155,7 +155,7 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
 
     public Environnement getEnvironnement() {
         if (environnement == null) {
-            environnement = new Environnement(this.getT(), this);
+            environnement = new Environnement(this.getTeam(), this);
         }
         return environnement;
     }

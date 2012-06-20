@@ -190,16 +190,16 @@ public abstract class AbstractCarte implements CarteInterface {
         Case c = null;
         switch (bot.getDirection()) {
             case EST:
-                c = bot.getT().getMap().getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
+                c = bot.getTeam().getMap().getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
                 break;
             case OUEST:
-                c = bot.getT().getMap().getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
+                c = bot.getTeam().getMap().getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
                 break;
             case NORD:
-                c = bot.getT().getMap().getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
+                c = bot.getTeam().getMap().getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
                 break;
             case SUD:
-                c = bot.getT().getMap().getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
+                c = bot.getTeam().getMap().getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
                 break;
         }
         return c;

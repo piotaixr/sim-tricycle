@@ -67,7 +67,7 @@ public class PointDeControle extends AbstractZone {
             if (x != null) {
                 if (x.whoIam() == TypeCase.robot) {
                     Robot rob = (Robot) x.getObstacle();
-                    equipe = rob.getT();
+                    equipe = rob.getTeam();
                     if (equipe == this.t) {
                         nballiee++;
                     } else {

@@ -24,13 +24,13 @@ public class Deposer extends AbstractAction{
         
         if (bot.getItemPorte()==null)throw new RuntimeException ("le robot ne porte pas d'objet");
         
-        Case c = bot.getT().getMap().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY());
+        Case c = bot.getTeam().getMap().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY());
         if (c.whoIam()== TypeCase.base){
-            bot.getT().ajouterRessource(bot.getItemPorte().getId());
+            bot.getTeam().ajouterRessource(bot.getItemPorte().getId());
         }
         else {
             if (c.whoIam() == TypeCase.vide){
-                bot.getT().getMap().pop(bot.getItemPorte(),c);                       
+                bot.getTeam().getMap().pop(bot.getItemPorte(),c);                       
             }
             else throw new RuntimeException ("la case n'est pas vide et n'est pas une base on ne peut déposer quelque chose dessus");
         } 

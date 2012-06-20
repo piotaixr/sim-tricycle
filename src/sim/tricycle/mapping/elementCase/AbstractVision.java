@@ -46,7 +46,7 @@ public class AbstractVision extends AbstractObstacle {
         return portee;
     }
 
-    public Team getT() {
+    public Team getTeam() {
         return t;
     }
 
@@ -62,6 +62,6 @@ public class AbstractVision extends AbstractObstacle {
     }
     
     public void majvision(){
-        this.getT().getMap().actualiserCarte( this.portee, pos);
+        this.getTeam().getMap().actualiserCarte( this.portee, pos);
     }
 }

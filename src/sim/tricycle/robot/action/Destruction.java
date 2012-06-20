@@ -19,7 +19,7 @@ public class Destruction extends AbstractAction {
     protected Object doExecute(Robot bot) {
 
         if (bat.getTemps() > 0) {            
-            bot.getT().getMap().getCaseDevant(bot).suprObstacle();
+            bot.getTeam().getMap().getCaseDevant(bot).suprObstacle();
             if (bat.getTemps() == 0) {
                 bat.setTemps(bat.getTemps() - 1);
             }

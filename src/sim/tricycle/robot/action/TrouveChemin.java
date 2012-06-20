@@ -77,7 +77,7 @@ public class TrouveChemin extends AbstractAction {
             //  System.out.println("Y :"+courant.getPoint().getY());
             //System.out.println("Bot :"+bot.getPosition().getX());
 
-            bot.getT().getMap().casesVoisines(bot.getT().getMap(), new Case(courant.getPoint().getX(), courant.getPoint().getY()), listeVoisins);
+            bot.getTeam().getMap().casesVoisines(bot.getTeam().getMap(), new Case(courant.getPoint().getX(), courant.getPoint().getY()), listeVoisins);
             //        System.out.println("nbVoisins :"+listeVoisins.size());
             for (Case c : listeVoisins) {
                 if (!c.hasObstacle()) {

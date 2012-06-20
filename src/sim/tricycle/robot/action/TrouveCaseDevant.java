@@ -34,12 +34,12 @@ public class TrouveCaseDevant extends AbstractAction {
                 break;
                 
             case EST :
-                if (X!=bot.getT().getMap().getLargeur()) X=X+1;
+                if (X!=bot.getTeam().getMap().getLargeur()) X=X+1;
                 else throw new RuntimeException("pas de case face au robot");
                 break;
                 
             case SUD : 
-                if (Y!=bot.getT().getMap().getHauteur()) Y=Y+1;
+                if (Y!=bot.getTeam().getMap().getHauteur()) Y=Y+1;
                 else throw new RuntimeException("pas de case face au robot");
                 break;
                 
