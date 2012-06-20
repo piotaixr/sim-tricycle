@@ -1,7 +1,7 @@
 /*fichier automate*/
 robot{
 
-	etat=normal[tag1]{
+	etat=normal[tag1,tag2]{
 		si(piece_trouvee()){ piece<-piece_plus_proche();
                                     marquer(piece);
                                     etat=deplacement_norm;}
@@ -17,7 +17,7 @@ robot{
                 }
             }
             transition{
-		sinon{allera(var : piece);
+		sinon{aller(var : piece);
 		      etat=normal;
 		}
             }
@@ -34,22 +34,22 @@ robot{
 			     }
             }
             transition{
-		sinon{allera(var :base);
+		sinon{aller(var :base);
 		      etat=deplacement_port;
 		}
             }
 	}
-        tag1{
-            avancer(1);
-            reculer(1);
-            tourner_droite(1);
-            tourner_gauche(1);
+        tag=tag1{
+            avancer=1;
+            reculer=1;
+            tourner_droite=1;
+            tourner_gauche=1;
         }
-        tag2{
-            avancer(2);
-            reculer(2);
-            tourner_droite(1);
-            tourner_gauche(1);
+        tag=tag2{
+            avancer=2;
+            reculer=2;
+            tourner_droite=1;
+            tourner_gauche=1;
         }
 }
 fin

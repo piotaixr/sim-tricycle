@@ -37,7 +37,7 @@ public class Defendre extends AbstractAction{
 
     @Override
     public String getId() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return "defense";
     }
     
 }

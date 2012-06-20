@@ -29,7 +29,7 @@ public class Collecter extends AbstractActionComposee {
         Point point = new Point(piece.getPosition().getX(),piece.getPosition().getY());
         //on crée les "sous-actions"
         getBuilder().addNewReturn("trouvechemin", "chemin", getBuilder().buildVariable("point"))
-                .addNew("allera", getBuilder().buildVariable("chemin"))
+                .addNew("suivrechemin", getBuilder().buildVariable("chemin"))
                 .addNew("ramasser")
                 .addNew("revenirbase");
         
