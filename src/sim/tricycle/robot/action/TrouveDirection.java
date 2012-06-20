@@ -25,9 +25,9 @@ public class TrouveDirection extends AbstractAction{
     
     @Override
     protected Object doExecute(Robot bot) {
-       Point p = (Point)refPoint.getValue();
-       if(p!=null){
-           point=p;
+      
+       if(refPoint!=null){
+           point=(Point)refPoint.getValue();
        }
         return trouveDirection(bot.getCoordonnees(),point);
     }
