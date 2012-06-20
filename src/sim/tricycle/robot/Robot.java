@@ -40,7 +40,7 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
      */
     public Robot(Automate automate, Team equipe) {
         this.automate = automate;
-        this.setT(equipe);
+        this.setTeam(equipe);
     }
 
     public Robot(Automate automate) {
@@ -48,7 +48,7 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
     }
 
     public Robot(Team equipe) {
-        this.setT(equipe);
+        this.setTeam(equipe);
     }
 
     private Transition findTransition() {
@@ -127,7 +127,7 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
 
     public Environnement getEnvironnement() {
         if (environnement == null) {
-            environnement = new Environnement(this.getT(), this);
+            environnement = new Environnement(this.getTeam(), this);
         }
         return environnement;
     }

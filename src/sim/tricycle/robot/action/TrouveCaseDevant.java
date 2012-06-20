@@ -20,7 +20,7 @@ public class TrouveCaseDevant extends AbstractAction {
    
     @Override
     protected Object doExecute(Robot bot){
-        return bot.getT().getMap().getCaseDevant(bot);
+        return bot.getTeam().getMap().getCaseDevant(bot);
     }
     
 //    public Point caseDevant(Robot bot){

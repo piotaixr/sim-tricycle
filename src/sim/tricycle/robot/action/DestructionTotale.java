@@ -25,7 +25,7 @@ public class DestructionTotale extends AbstractActionComposee {
         
         ActionBuilder b = getBuilder();
         
-        Case c = bot.getT().getMap().getCaseDevant(bot);
+        Case c = bot.getTeam().getMap().getCaseDevant(bot);
         
         if(c.getObstacle() instanceof AbstractBatiment){
             AbstractBatiment bat = (AbstractBatiment) c.getObstacle();            

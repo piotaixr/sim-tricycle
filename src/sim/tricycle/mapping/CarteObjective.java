@@ -32,7 +32,7 @@ public class CarteObjective extends AbstractCarte {
         
         for (AbstractVision x: elements){
             if (x.voit(c)){
-                x.getT().getMap().actualiserCarte(x.getPortee(), c);
+                x.getTeam().getMap().actualiserCarte(x.getPortee(), c);
             }
         }
     }
