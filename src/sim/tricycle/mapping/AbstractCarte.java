@@ -6,16 +6,14 @@ import java.awt.Image;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import sim.tricycle.ihm.ViewCarte;
-import sim.tricycle.mapping.elementCase.AbstractObjet;
-import sim.tricycle.mapping.elementCase.AbstractObstacle;
-import sim.tricycle.mapping.elementCase.AbstractZone;
-import sim.tricycle.mapping.elementCase.PointDeControle;
+import sim.tricycle.mapping.elementCase.*;
 import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
@@ -32,6 +30,7 @@ public abstract class AbstractCarte implements CarteInterface {
     protected List<Point> listeBase;
     protected int tailleX, tailleY;
     protected Case[][] carte;
+    protected static ArrayList<AbstractVision> elements = null;
 
     @Override
     public void afficherCarte() {
@@ -212,9 +211,10 @@ public abstract class AbstractCarte implements CarteInterface {
     @Override
     public boolean avancer(Robot bot) {
         Case c = getCaseDevant(bot);
-        if (c != null) {
+        if (c != null) {// si on peut avancer:
             if (bot.getPosition().hasObstacle()) {
                 bot.getPosition().suprObstacle();
+                this.ActualiserBroullard(c);
             }
             if (!c.hasObstacle()) {
                 c.setObstacle(bot);
@@ -236,16 +236,22 @@ public abstract class AbstractCarte implements CarteInterface {
         return c;
     }
 
+    @Override
     public boolean pop(PossedeCaseInterface e, int x, int y) {
         Case c = getCase(x, y);
         return pop(e, c);
     }
 
+    @Override
     public boolean pop(PossedeCaseInterface e, Case c) {
         if (e.typeDeCase() == TypeCase.objet) {
             c.setItem((AbstractObjet) e);
         } else if (e.typeDeCase() == TypeCase.obstacle) {
             c.setObstacle((AbstractObstacle) e);
+            // maj de l'ensemble elements qui contient les unités. 
+            if (elements != null && !elements.contains(e)) {
+                elements.add((AbstractVision) e);
+            }
         } else if (e.typeDeCase() == TypeCase.zone) {
             c.setZone((AbstractZone) e);
         } else {
@@ -254,6 +260,7 @@ public abstract class AbstractCarte implements CarteInterface {
         return true;
     }
 
+    @Override
     public boolean suprimer(PossedeCaseInterface e, Case c) {
         if (e.typeDeCase() == TypeCase.objet) {
             if (c.getItem().equals(e)) {
@@ -264,13 +271,32 @@ public abstract class AbstractCarte implements CarteInterface {
             c.setObstacle((AbstractObstacle) e);
             if (c.getObstacle().equals(e)) {
                 c.suprObstacle();
+                // maj de l'ensemble elements qui contient les unités.
+                if (elements != null && elements.contains(e)) {
+                    elements.remove(e);
+                }
             }
         } else {
             return false;
         }
         return true;
     }
+
+    /**
+     * Actualise le broullard des teams sur une case.
+     *
+     * @param c la case depuis laquelle actualisé.
+     */
+    public void ActualiserBroullard(Case c) {
+
+        for (AbstractVision x : elements) {
+            if (x.voit(c)) {
+                x.getTeam().getMap().actualiserCarte(x.getPortee(), c);
+            }
+        }
+    }
     
+        
      public List<Point> getListeBase() {
         return listeBase;
     }
@@ -279,4 +305,5 @@ public abstract class AbstractCarte implements CarteInterface {
         this.listeBase = listeBase;
 
     }
+
 }
