@@ -11,7 +11,6 @@ import sim.tricycle.robot.action.core.AbstractAction;
 /**
  *
  * @author Adri
- * @deprecated
  */
 public class SeTeleporterA extends AbstractAction{
 
