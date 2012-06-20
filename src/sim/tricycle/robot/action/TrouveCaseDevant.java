@@ -20,36 +20,36 @@ public class TrouveCaseDevant extends AbstractAction {
    
     @Override
     protected Object doExecute(Robot bot){
-        return caseDevant(bot);
+        return bot.getT().getMap().getCaseDevant(bot);
     }
     
-    public Point caseDevant(Robot bot){
-        int X = bot.getCoordonnees().getX();
-        int Y = bot.getCoordonnees().getY();
-
-        switch (bot.getDirection()){
-            case NORD :
-                if (Y>=0)Y=Y-1;
-                else throw new RuntimeException("pas de case face au robot");                       
-                break;
-                
-            case EST :
-                if (X!=bot.getT().getMap().getLargeur()) X=X+1;
-                else throw new RuntimeException("pas de case face au robot");
-                break;
-                
-            case SUD : 
-                if (Y!=bot.getT().getMap().getHauteur()) Y=Y+1;
-                else throw new RuntimeException("pas de case face au robot");
-                break;
-                
-            case OUEST :
-                if (X>=0) X=X-1;
-                else throw new RuntimeException("pas de case face au robot");
-                break;
-        }
-        return new Point(X,Y);        
-    }
+//    public Point caseDevant(Robot bot){
+//        int X = bot.getCoordonnees().getX();
+//        int Y = bot.getCoordonnees().getY();
+//
+//        switch (bot.getDirection()){
+//            case NORD :
+//                if (Y>=0)Y=Y-1;
+//                else throw new RuntimeException("pas de case face au robot");                       
+//                break;
+//                
+//            case EST :
+//                if (X!=bot.getT().getMap().getLargeur()) X=X+1;
+//                else throw new RuntimeException("pas de case face au robot");
+//                break;
+//                
+//            case SUD : 
+//                if (Y!=bot.getT().getMap().getHauteur()) Y=Y+1;
+//                else throw new RuntimeException("pas de case face au robot");
+//                break;
+//                
+//            case OUEST :
+//                if (X>=0) X=X-1;
+//                else throw new RuntimeException("pas de case face au robot");
+//                break;
+//        }
+//        return new Point(X,Y);        
+//    }
         
     @Override
     public String getId(){

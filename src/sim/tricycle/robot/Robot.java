@@ -33,14 +33,6 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
     protected int cout = 0;
     protected AbstractObjet ItemPorte = null;
 
-    public AbstractObjet getItemPorte() {
-        return ItemPorte;
-    }
-
-    public void setItemPorte(AbstractObjet ItemPorte) {
-        this.ItemPorte = ItemPorte;
-    }
-
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
      *
@@ -58,26 +50,6 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
     public Robot(Team equipe) {
         this.setT(equipe);
     }
-
-    /**
-     * Retourne la case qui se trouve devant les robot
-     *
-     * @deprecated
-//     */
-//    public void collerRobotSurMap() {
-//        if (!this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
-//            this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).setObstacle(this);
-//        }
-//    }
-//
-//    /**
-//     * @deprecated
-//     */
-//    public void decollerRobotDeMap() {
-//        if (this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).hasObstacle()) {
-//            this.getMapTeam().getCase(this.coordonnees.getX(), this.coordonnees.getY()).suprObstacle();
-//        }
-//    }
 
     private Transition findTransition() {
         Iterator<Transition> it = etatCourant.getTransitions().iterator();
@@ -214,6 +186,14 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
 
     public void setEtatDestination(Etat etatDestination) {
         this.etatDestination = etatDestination;
+    }
+    
+    public AbstractObjet getItemPorte() {
+        return ItemPorte;
+    }
+
+    public void setItemPorte(AbstractObjet ItemPorte) {
+        this.ItemPorte = ItemPorte;
     }
 
     @Override
