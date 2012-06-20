@@ -3,6 +3,8 @@ package sim.tricycle.robot.action;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.Sens;
 import sim.tricycle.robot.action.core.AbstractAction;
+import sim.tricycle.utils.params.types.Reference;
+import sim.tricycle.utils.params.types.Variable;
 
 /**
  *
@@ -11,6 +13,7 @@ import sim.tricycle.robot.action.core.AbstractAction;
 public class Tourner extends AbstractAction {
 
     private Sens direction;
+    private Reference refDir;
 
     public Tourner() {
         super();
@@ -21,23 +24,36 @@ public class Tourner extends AbstractAction {
         super();
         this.direction = dir;
     }
-    public void setParameters(String direction){
-        this.direction = Sens.valueOf(direction);
-    }
 
     @Override
     protected Object doExecute(Robot bot) {
-
-        bot.setDirection(this.direction);
+        Sens d = (Sens)refDir.getValue();
+        if(d!=null) {
+            this.direction=d;
+        }
+            bot.setDirection(this.direction);
+            
         return null;
     }
-    
+
     public void setDirection(Sens newDir) {
         this.direction = newDir;
     }
 
     public Sens setDirection() {
         return this.direction;
+    }
+
+    public void setParameters(String direction) {
+        this.direction = Sens.valueOf(direction);
+    }
+
+    public void setParameters(Reference direction) {
+        this.refDir = direction;
+    }
+
+    public void setParameters(Variable direction) {
+        this.refDir = direction;
     }
 
     @Override

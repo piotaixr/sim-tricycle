@@ -15,7 +15,8 @@ public class PointConverter implements ParamConverterInterface{
 
     @Override
     public Object convert(String chaine) {
-        return new Point(Integer.parseInt(chaine),Integer.parseInt(chaine));
+        String[] s = chaine.split(" ");
+        return new Point(Integer.parseInt(s[0]),Integer.parseInt(s[1]));
     }
 
     @Override
