@@ -58,6 +58,9 @@ public class RobotParser {
         System.out.println("parseRobot");
         List<Element> etats = racine.getChildren("etat");
         creerEtats(etats, automate);
+        
+        if(automate.getEtat("init") == null)
+            throw new RuntimeException("Un automate doit obligatoirement définir un état initial de nom 'init'");
 
         parseTags(racine, automate);
 
@@ -78,6 +81,7 @@ public class RobotParser {
         while (it.hasNext()) {
             Element e = it.next();
             String id = e.getAttributeValue("id");
+            System.out.println("CREER ETAT: " + id);
             Etat etat = new Etat(id, automate);
             automate.addEtat(etat);
         }

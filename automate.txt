@@ -1,14 +1,25 @@
 /*fichier automate*/
 robot{
 
+        etat=init{
+            transition{
+                sinon{
+                    etat=normal;
+                }
+            }
+        }
 	etat=normal[tag1,tag2]{
-		si(piece_trouvee()){ piece<-piece_plus_proche();
-                                    marquer(piece);
-                                    etat=deplacement_norm;}
-		sinon{attente();
+            transition{
+		si(piece_trouvee()){ piece<-pieceplusproche();
+                                    etat=deplacement_norm;
+                }
+            }
+            transition{
+		sinon{sleep();
 		       etat=normal;
 		}
             }
+        }
 	
 	etat=deplacement_norm[tag1]{
             transition{
