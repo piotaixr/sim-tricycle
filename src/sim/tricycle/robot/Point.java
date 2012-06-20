@@ -35,6 +35,10 @@ public class Point {
         return this.y;
     }
 
+    public String getStringedCoord(){
+        return this.getX()+" "+this.getY();
+    }
+    
     public int distanceDepuis(Point p) {
 
         return Math.abs(p.getX() - this.getX()) + Math.abs(p.getY() - this.getY());
