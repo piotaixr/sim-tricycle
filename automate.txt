@@ -17,7 +17,7 @@ robot{
                 }
             }
             transition{
-		sinon{aller(var : piece);
+		sinon{allerici(var : piece);
 		      etat=normal;
 		}
             }
@@ -34,7 +34,7 @@ robot{
 			     }
             }
             transition{
-		sinon{aller(var :base);
+		sinon{allerici(ref :team.base);
 		      etat=deplacement_port;
 		}
             }
