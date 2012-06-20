@@ -181,7 +181,7 @@ public class Case implements CaseInterface {
 
     @Override
     public void setZone(AbstractZone zo) {
-        if (this.hasZone()) {
+        if (!this.hasZone()) {
             this.zone = zo;
             zo.setCase(this);
         }

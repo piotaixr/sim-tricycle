@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Stack;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
+import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.mapping.elementCase.AbstractVision;
@@ -17,7 +18,7 @@ import sim.tricycle.utils.params.types.Environnement;
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public  class Robot extends AbstractVision implements OrdonnancableInterface {
+public class Robot extends AbstractVision implements OrdonnancableInterface {
 
     protected Environnement environnement = null;
     protected Point coordonnees;
@@ -41,6 +42,7 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
     public Robot(Automate automate, Team equipe) {
         this.automate = automate;
         this.setTeam(equipe);
+        this.etatCourant = automate.getEtat("init");
     }
 
     public Robot(Automate automate) {
@@ -138,7 +140,11 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
     }
 
     public void setCoordonnees(Point newP) {
-        this.coordonnees = newP;
+        this.coordonnees = new Point(newP);
+    }
+
+    public void setCoordonnees(Case newP) {
+        this.coordonnees = new Point(newP.getX(), newP.getY());
     }
 
     public Sens getDirection() {
@@ -190,7 +196,7 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
     public void setEtatDestination(Etat etatDestination) {
         this.etatDestination = etatDestination;
     }
-    
+
     public AbstractObjet getItemPorte() {
         return ItemPorte;
     }
@@ -198,7 +204,7 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
     public void setItemPorte(AbstractObjet ItemPorte) {
         this.ItemPorte = ItemPorte;
     }
-    
+
     public int getTempsConstruction() {
         return tempsConstruction;
     }
@@ -216,7 +222,7 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
         try {
             action.executer(this);
 
-           prix= etatCourant.getValeurAction(action);
+            prix = etatCourant.getValeurAction(action);
             if (action instanceof AbstractActionComposee) {
                 actions.addAll(((AbstractActionComposee) action).getNewActions());
             }
