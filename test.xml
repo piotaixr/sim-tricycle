@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding='ISO-8859-1' standalone='yes' ?>
 <robot>
+    <etat id="init">
+        <transition>
+            <condition nom="true"/>
+            <etat id="normal"/>
+        </transition>
+    </etat>
     <etat id="normal">
         <tag nom="tag1"/>
+        <tag nom="tag2"/>
         <transition>
-            <condition type="multiple" nom="ou">
-                <condition nom="true"/>
-                <condition nom="true"/>
-            </condition>
+            <condition nom="piece_trouvee"/>
             <action nom="pieceplusproche" dest="piece">
             </action>
             <etat id="deplacement_norm"/>
@@ -31,7 +35,7 @@
         </transition>
         <transition>
             <condition nom="true"/>
-            <action nom="allera">
+            <action nom="allerici">
                 <parametre type="var">piece</parametre>
             </action>
             <etat id="normal"/>
@@ -53,22 +57,22 @@
         </transition>
         <transition>
             <condition nom="true"/>
-            <action nom="allera">
-                <parametre type="var">base</parametre>
+            <action nom="allerici">
+                <parametre type="ref">team.base</parametre>
             </action>
             <etat id="deplacement_port"/>
         </transition>
     </etat>
     <tag nom="tag1">
-        <action nom="avancer">1</action>
-        <action nom="reculer">1</action>
-        <action nom="tourner_droite">1</action>
-        <action nom="tourner_gauche">1</action>
+        <action nom="avancer" val="1"/>
+        <action nom="reculer" val="1"/>
+        <action nom="tourner_droite" val="1"/>
+        <action nom="tourner_gauche" val="1"/>
     </tag>
     <tag nom="tag2">
-        <action nom="avancer">2</action>
-        <action nom="reculer">2</action>
-        <action nom="tourner_droite">1</action>
-        <action nom="tourner_gauche">1</action>
+        <action nom="avancer" val="2"/>
+        <action nom="reculer" val="2"/>
+        <action nom="tourner_droite" val="1"/>
+        <action nom="tourner_gauche" val="1"/>
     </tag>
 </robot>

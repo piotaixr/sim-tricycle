@@ -18,8 +18,9 @@ import sim.tricycle.mapping.elementCase.PointDeControle;
 import sim.tricycle.mapping.AbstractCarte;
 
 /**
- *
- * @author nell
+ * Ah ah je modifie ton code thomas je m'empare de ton pouvoir de codage^^ devine qui a écrit ce commentaire 
+ * @author nell 
+ * FISTE
  */
 public class ViewCarte extends javax.swing.JPanel {
 

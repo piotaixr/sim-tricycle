@@ -27,11 +27,11 @@ public class Tourner extends AbstractAction {
 
     @Override
     protected Object doExecute(Robot bot) {
-        Sens d = (Sens)refDir.getValue();
-        if(d!=null) {
-            this.direction=d;
+      
+        if(refDir!=null) {
+            this.direction=(Sens)refDir.getValue();
         }
-            bot.setDirection(this.direction);
+        bot.setDirection(this.direction);
             
         return null;
     }

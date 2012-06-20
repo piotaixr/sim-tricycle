@@ -6,7 +6,8 @@ package sim.tricycle.robot.action;
 
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
-import sim.tricycle.robot.action.core.AbstractAction;
+import sim.tricycle.robot.action.core.AbstractActionComposee;
+import sim.tricycle.utils.ActionBuilder;
 import sim.tricycle.utils.params.types.Reference;
 import sim.tricycle.utils.params.types.Variable;
 
@@ -14,33 +15,32 @@ import sim.tricycle.utils.params.types.Variable;
  *
  * @author Adri
  */
-public class SeTeleporterA extends AbstractAction {
+public class AllerIci extends AbstractActionComposee{
 
     private Point point;
     private Reference refPoint;
-
-    public SeTeleporterA() {
-        super(1);
-    }
-
-    public SeTeleporterA(int poids, Point p) {
-        super(poids);
-        this.point = point;
-    }
-
+    
     @Override
     protected Object doExecute(Robot bot) {
-
-       if(refPoint!=null){
-           this.point=(Point)refPoint.getValue();
-       }
-        if (!bot.getTeam().getMap().getCase(point.getX(), point.getY()).hasObstacle()) {
-           // bot.setCoordonnees(point);
+        
+        if(refPoint!=null){
+            point=(Point)refPoint.getValue();
         }
+        getBuilder().addNewReturn("trouvechemin", "chemin", point)
+                    .addNew("suivrechemin", getBuilder().buildVariable("chemin"));
         return null;
     }
 
-     public void setParameters(Point point) {
+    @Override
+    public String getId() {
+        return "allerici";
+    }
+
+    public AllerIci(ActionBuilder builder) {
+        super(builder);
+    }
+    
+    public void setParameters(Point point) {
         this.point = point;
     }
 
@@ -50,10 +50,5 @@ public class SeTeleporterA extends AbstractAction {
     
     public void setParameters(Variable point) {
         this.refPoint = point;
-    }
-    
-    @Override
-    public String getId() {
-        return "seTeleporter";
-    }
+    } 
 }

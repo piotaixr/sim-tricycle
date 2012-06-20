@@ -10,6 +10,7 @@ public class Point implements Serializable {
 
     private int x;
     private int y;
+    static final long serialVersionUID = 1L;
 
     public Point(int x, int y) {
         this.x = x;

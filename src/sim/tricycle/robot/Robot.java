@@ -6,7 +6,6 @@ import java.util.Stack;
 import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.AbstractObjet;
-import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.mapping.elementCase.AbstractVision;
 import sim.tricycle.robot.action.Sleep;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
@@ -46,6 +45,7 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
 
     public Robot(Automate automate) {
         this.automate = automate;
+        this.etatCourant = automate.getEtat("init");
     }
 
     public Robot(Team equipe) {
@@ -149,10 +149,12 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
         this.direction = newDirection;
     }
 
+    @Override
     public int getPortee() {
         return this.portee;
     }
 
+    @Override
     public void setPortee(int newPortee) {
         this.portee = newPortee;
     }

@@ -58,6 +58,9 @@ let rec parseur pile sortie stream detection nom piece= match stream with parser
 		 |"etat"-> ecriture_aux sortie (nom^"\""^"/>");
 		  ( ecriture_aux_char sortie '\n');
 		  let p=(depiler pile) in (parseur p sortie f detection "" piece)
+		 |"tag"-> ecriture_aux sortie (nom^"\"/>");
+		   ecriture_aux_char sortie ('\n');
+		   parseur pile sortie f detection "" piece
 		 |word->(ecriture_aux sortie ("<"^"/"^word^">"));
 		   (ecriture_aux_char sortie '\n');
 		   let p=(depiler pile) in (parseur p sortie f detection "" piece))
@@ -89,8 +92,15 @@ let rec parseur pile sortie stream detection nom piece= match stream with parser
 
   |[<''=';f>]->( let name = nom
 		in match name with 
-		  |"etat"-> ecriture_aux sortie ("<etat id="^"\""); let p= (empiler "etat" pile) in (parseur p sortie f detection "" piece)
-		  |mot ->parseur pile sortie f detection (nom^(char_to_string '=')) piece)
+		  |"etat"-> ecriture_aux sortie ("<etat id="^"\"");
+		    let p= (empiler "etat" pile) in (parseur p sortie f detection "" piece)
+		  |"tag"->ecriture_aux sortie ("<tag nom=\"");
+		    let p= (empiler "tag" pile) in (parseur p sortie f detection "" piece)
+		  |mot ->if ((sommet_pile pile)="tag")
+		    then (ecriture_aux sortie ("<action nom=\""^mot^"\" val=\"");
+			  parseur pile sortie f detection "" piece)
+			  else (parseur pile sortie f detection (nom^(char_to_string '=')) piece))
+
   |[<'':';f>]->( ecriture_aux sortie ("<parametre type=\""^nom^"\">");
     let p= (empiler "type" pile) in (parseur p sortie f detection "" piece))
 
@@ -100,7 +110,6 @@ let rec parseur pile sortie stream detection nom piece= match stream with parser
 		  |"affectation"-> ecriture_aux sortie ("<action nom=\""^nom^"\" dest=\""^piece^"\">");
 		    (ecriture_aux_char sortie '\n');  
 		    let p=(depiler pile) in (parseur (empiler "action" p) sortie f detection"" piece)
-
 
 		  |autre-> (let name = nom 
 			   in match name with
@@ -160,7 +169,7 @@ let rec parseur pile sortie stream detection nom piece= match stream with parser
 		    (parseur pile sortie f detection "" piece)
 			      
 
-  |[<''1'..'9'|'a'..'z'|'A'..'Z'|'_'  as n; f>] -> parseur pile sortie f detection (nom^(char_to_string n)) piece
+  |[<''1'..'9'|'a'..'z'|'A'..'Z'|'_'|'.'  as n; f>] -> parseur pile sortie f detection (nom^(char_to_string n)) piece
 
   |[<''}';f>]->(let name = (sommet_pile pile) 
 	       in match name with 
@@ -178,14 +187,19 @@ let rec parseur pile sortie stream detection nom piece= match stream with parser
 
 		    |""->parseur pile sortie f detection "" "{"
 
-		    |post-> if ((detect_etat detection "")="etat")
-		      then (ecriture_aux sortie (post^"\""^">");
-		      (ecriture_aux_char sortie '\n');
-		      (parseur pile sortie f detection"" "{"))
+		    |post-> (let word = (detect_etat detection "")
+			    in match word with
+			      |"tag"->ecriture_aux sortie (post^"\""^">");
+				(ecriture_aux_char sortie '\n');
+				(parseur pile sortie f detection"" "{")
 
-		      else (ecriture_aux sortie ("<"^post^">");
-			    (ecriture_aux_char sortie '\n');
-			    let p= (empiler post pile) in (parseur p sortie f detection "" "{")))
+			      |"etat"-> ecriture_aux sortie (post^"\""^">");
+				(ecriture_aux_char sortie '\n');
+				(parseur pile sortie f detection"" "{")
+
+			      |autre-> ecriture_aux sortie ("<"^post^">");
+				(ecriture_aux_char sortie '\n');
+				let p= (empiler post pile) in (parseur p sortie f detection "" "{")))
 
    |[< >]->pile;;
 
@@ -195,7 +209,7 @@ let analyse ent sort =
   in let sortie = open_out (sort^".xml" )
 	in if ((lecture_aux entree)<>"/*fichier automate*/")
 	  then (failwith "erreur de fichier")
-	  else (ecriture_aux sortie ("<?xml version="^"\""^"1.0"^"\""^" encoding='ISO-8859-1' standalone='yes' ?>");
+	  else (ecriture_aux sortie ("<?xml version=\"1.0\" encoding='ISO-8859-1' standalone='yes' ?>");
 		ecriture_aux_char sortie ('\n');
 	    let lect = (lecture_aux entree)
 	       in  let rec boucle pile lect = match lect with

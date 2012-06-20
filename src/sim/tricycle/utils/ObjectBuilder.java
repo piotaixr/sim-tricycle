@@ -59,19 +59,33 @@ public class ObjectBuilder {
     public ActionFactoryInterface getActionFactory() {
         if (actionFactory == null) {
             actionFactory = new ActionFactory(getVarBuilder(), getParamConverterProvider(), getParameterCreator());
-            actionFactory.register(new Avancer())
-                 //   .register(new RamasserPiece())
-                    .register(new Tourner())
-                    .register(new AllerA(getActionBuilder()))
+            actionFactory
+                    .register(new AllerIci(getActionBuilder()))
                     .register(new ArreterTout())
+                    .register(new Attaquer())
+                    .register(new Avancer())
+                    .register(new Collecter(getActionBuilder()))
+                    .register(new CollecterPiecesEnContinu(getActionBuilder()))
+                    .register(new Construction(getActionBuilder()))
+                    .register(new ConstructionApInit(getActionBuilder()))
+                    .register(new ConstructionEnCours())
+                    .register(new Defendre())
+                    .register(new Deposer())
+                    .register(new Destruction())
+                    .register(new DestructionTotale(getActionBuilder()))
+                    .register(new InitialisationConstruction())
+                    .register(new PiecePlusProche())
+                    .register(new Ramasser())
+                    .register(new RevenirBase(getActionBuilder()))
+                    .register(new SeDeplacerUneCase(getActionBuilder()))
                     .register(new SeTeleporterA())
                     .register(new Sleep())
-                    .register(new Ramasser())
-                    .register(new Deposer())
-                    .register(new PiecePlusProche())
+                    .register(new SuivreChemin(getActionBuilder()))
+                    .register(new Tourner())
+                    .register(new TrouveCaseDevant())
                     .register(new TrouveChemin())
-                    .register(new Collecter(getActionBuilder()))
-                    .register(new RevenirBase(getActionBuilder()));
+                    .register(new TrouveCollectable())
+                    .register(new TrouveDirection());
         }
         
         return actionFactory;
