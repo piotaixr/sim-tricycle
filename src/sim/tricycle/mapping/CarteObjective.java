@@ -2,10 +2,13 @@
  */
 package sim.tricycle.mapping;
 
-import java.awt.Point;
+
 import java.util.ArrayList;
 import java.util.List;
+import sim.tricycle.mapping.elementCase.AbstractObjet;
+import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.mapping.elementCase.AbstractVision;
+import sim.tricycle.robot.Point;
 
 /**
  *
@@ -41,5 +44,31 @@ public class CarteObjective extends AbstractCarte {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    
+    public boolean pop(PossedeCaseInterface e, int x, int y) {
+        Case c = getCase(x, y);
+        if (c.hasItem() || c.hasObstacle()) {
+            if (e.obstacleItem() == 1) {
+                c.setItem((AbstractObjet) e);
+            }
+            if (e.obstacleItem() == 2) {
+                c.setObstacle((AbstractObstacle) e);
+            }
+        } else {
+            throw new RuntimeException("Il y a déjà quelque chose sur la case");
+        }
+    }
+
+    public boolean pop(PossedeCaseInterface e, Case c) {
+        if (e.obstacleItem() == 1) {
+            c.setItem((AbstractObjet) e);
+        }
+        if (e.obstacleItem() == 2) {
+            c.setObstacle((AbstractObstacle) e);
+        }
+    }
+
+    //rempli ensemble de bases
+    protected void setDispositionBases(List<Point> dispositionBases) {
+        super.setListeBase(dispositionBases);
+    }
 }

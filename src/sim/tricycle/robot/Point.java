@@ -1,10 +1,12 @@
 package sim.tricycle.robot;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Adri
  */
-public class Point {
+public class Point implements Serializable {
 
     private int x;
     private int y;

@@ -3,9 +3,11 @@
 package sim.tricycle.mapping;
 
 import java.awt.Image;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -15,6 +17,7 @@ import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.mapping.elementCase.AbstractZone;
 import sim.tricycle.mapping.elementCase.PointDeControle;
 import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
+import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 
 /**
@@ -26,6 +29,7 @@ public abstract class AbstractCarte implements CarteInterface {
     protected Image imgFond = null;
     protected Image imgVide = null;
     protected HashSet<PointDeControle> listePt;
+    protected List<Point> listeBase;
     protected int tailleX, tailleY;
     protected Case[][] carte;
 
@@ -265,5 +269,14 @@ public abstract class AbstractCarte implements CarteInterface {
             return false;
         }
         return true;
+    }
+    
+     public List<Point> getListeBase() {
+        return listeBase;
+    }
+
+    public void setListeBase(List<Point> listeBase) {
+        this.listeBase = listeBase;
+
     }
 }
