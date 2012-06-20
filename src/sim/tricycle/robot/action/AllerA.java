@@ -33,10 +33,9 @@ public class AllerA extends AbstractActionComposee {
         Point courant = new Point(chemin.pollFirst().getPoint());
        
         while(!chemin.isEmpty()){
-                   getBuilder().addNew("sedeplacerunecase",getBuilder().buildVariable("courant"));
+                   getBuilder().addNew("sedeplacerunecase",courant);
                    courant = new Point(chemin.pollFirst().getPoint());
         }
-        
         return null;
     }
     

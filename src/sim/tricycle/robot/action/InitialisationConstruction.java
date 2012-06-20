@@ -29,7 +29,7 @@ public class InitialisationConstruction extends AbstractAction {
             throw new RuntimeException("la case n'est pas vide, la construction ne devrait pas etre possible");
         }
 
-        return null;
+        return c.getObstacle();
     }
 
     public void setParameters(String nomBatiment) {

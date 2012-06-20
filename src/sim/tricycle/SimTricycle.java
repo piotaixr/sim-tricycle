@@ -12,7 +12,6 @@ import sim.tricycle.mapping.elementCase.Piece;
 import sim.tricycle.mapping.nosCarte.CrossRiver;
 import sim.tricycle.mapping.nosCarte.MapTest;
 import sim.tricycle.robot.Automate;
-import sim.tricycle.robot.Collecteur;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Sens;
 import sim.tricycle.robot.action.*;

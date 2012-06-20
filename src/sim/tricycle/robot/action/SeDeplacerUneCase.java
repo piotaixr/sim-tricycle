@@ -8,29 +8,44 @@ import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.utils.ActionBuilder;
+import sim.tricycle.utils.params.types.Reference;
 import sim.tricycle.utils.params.types.Variable;
 
 /**
  *
  * @author Adri
  */
-public class SeDeplacerUneCase extends AbstractActionComposee{
+public class SeDeplacerUneCase extends AbstractActionComposee {
 
-    private Variable varPoint;
-    
+    private Point point;
+    private Reference refPoint = null;
+
     public SeDeplacerUneCase(ActionBuilder builder) {
         super(builder);
     }
-    
-    public Object doExecute(Robot bot){
-        Point point = (Point)varPoint.getValue();
-         getBuilder().addNewReturn("trouvedirection","sens",getBuilder().buildVariable("point"))
-                     .addNew("tourner", getBuilder().buildVariable("sens"))
-                     .addNew("Avancer");
+
+    public Object doExecute(Robot bot) {
+//        Point point = (Point)varPoint.getValue();
+        if (refPoint != null) {
+            this.point = (Point) this.refPoint.getValue();
+        }
+        getBuilder().addNewReturn("trouvedirection", "sens", point).addNew("tourner", getBuilder().buildVariable("sens")).addNew("Avancer");
         return null;
     }
+
+    public void setParameters(Point point) {
+        this.point = point;
+    }
+
+    public void setParameters(Reference point) {
+        this.refPoint = point;
+    }
     
-    public String getId(){
+    public void setParameters(Variable point) {
+        this.refPoint = point;
+    }
+
+    public String getId() {
         return "sedeplacerunecase";
     }
 }

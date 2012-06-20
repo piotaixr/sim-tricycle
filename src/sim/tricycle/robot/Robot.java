@@ -32,6 +32,7 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
     protected boolean plante = false;
     protected int cout = 0;
     protected AbstractObjet ItemPorte = null;
+    protected int tempsConstruction = 3;//arbitrarire
 
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
@@ -194,6 +195,14 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
 
     public void setItemPorte(AbstractObjet ItemPorte) {
         this.ItemPorte = ItemPorte;
+    }
+    
+    public int getTempsConstruction() {
+        return tempsConstruction;
+    }
+
+    public void setTempsConstruction(int tempsConstruction) {
+        this.tempsConstruction = tempsConstruction;
     }
 
     @Override
