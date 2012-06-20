@@ -21,7 +21,7 @@ public class AllerA extends AbstractActionComposee {
 
     private Variable varChemin;
 //    private Variable courant;
-    
+
     public AllerA(ActionBuilder builder) {
         super(builder);
     }
@@ -31,14 +31,15 @@ public class AllerA extends AbstractActionComposee {
 
         LinkedList<Noeud> chemin = (LinkedList<Noeud>) varChemin.getValue();
         Point courant = new Point(chemin.pollFirst().getPoint());
-       
-        while(!chemin.isEmpty()){
-                   getBuilder().addNew("sedeplacerunecase",courant);
-                   courant = new Point(chemin.pollFirst().getPoint());
+        if(courant !=null) {
+            while (!chemin.isEmpty()) {
+                getBuilder().addNew("sedeplacerunecase", courant);
+                courant = new Point(chemin.pollFirst().getPoint());
+            }
         }
         return null;
     }
-    
+
     @Override
     public String getId() {
         return "allera";
