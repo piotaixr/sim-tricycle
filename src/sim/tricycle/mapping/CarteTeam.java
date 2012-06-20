@@ -87,18 +87,33 @@ public class CarteTeam extends AbstractCarte {
         return false;
     }
 
-/**
- * Suprime un element de la carte.
- * @param e l'element à suprimer.
- * @param c
- * @return 
- */
-  public boolean suprimer(PossedeCaseInterface e,Case c) {
-        if (this.vraiCarte.suprimer(e,c)) {
-            super.suprimer(e,c);
+    /**
+     * Suprime un element de la carte.
+     *
+     * @param e l'element à suprimer.
+     * @param c
+     * @return
+     */
+    public boolean suprimer(PossedeCaseInterface e, Case c) {
+        if (this.vraiCarte.suprimer(e, c)) {
+            super.suprimer(e, c);
             return true;
         }
         return false;
     }
+
+    
+    protected void placerPoint(String[][] mat) {
+        int i, j;
+        for (i = 0; i < tailleX; i++) {
+            for (j = 0; j < tailleY; j++) {
+                if ("@".equals(mat[i][j])) {
+                    this.actualiserCarte(1, getCase(i, j));
+                }
+
+            }
+        }
+    }
+    
     
 }

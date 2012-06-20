@@ -26,11 +26,11 @@ public abstract class AbstractCarte implements CarteInterface {
 
     protected Image imgFond = null;
     protected Image imgVide = null;
-    protected HashSet<PointDeControle> listePt;
+    protected static HashSet<PointDeControle> listePt;  //Ensemble des points de controles.
     protected List<Point> listeBase;
     protected int tailleX, tailleY;
     protected Case[][] carte;
-    protected static ArrayList<AbstractVision> elements = null;
+    protected static ArrayList<AbstractVision> elements = null; //Ensemble des unités possèdant un champ de vision.
 
     @Override
     public void afficherCarte() {
