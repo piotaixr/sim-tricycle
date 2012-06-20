@@ -11,6 +11,7 @@ import sim.tricycle.AbstractJeu;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.robot.Model;
+import sim.tricycle.team.Team;
 
 /**
  *
@@ -49,7 +50,7 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         int i = 0;
         while (i < jeu.getTeamNumber()) {
             System.out.println("Passe" + i);
-            javax.swing.JPanel newPanTeam = createPanTeam(i);
+            javax.swing.JPanel newPanTeam = createPanTeam(jeu.getTabTeams().get(i));
             addTabTeam(tabPanActionAvailable, newPanTeam, i);
             i++;
         }
@@ -73,21 +74,21 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         tabpan.addTab(cont.getTabTeams().get(index).getNomTeam(), panteam);
     }
 
-    public void addPanAuto(javax.swing.JPanel pan, Model mod) {
-        PanSelectModel panSelect = new PanSelectModel(mod);
+    public void addPanAuto(javax.swing.JPanel pan, Model mod, Team t) {
+        PanSelectModel panSelect = new PanSelectModel(mod,t,oi);
         pan.add(panSelect);
     }
 
-    public void addPansAutomateByTeam(javax.swing.JPanel pan, int numTeam) {
-        for (Model m : cont.getTabTeams().get(numTeam).getModel()) {
-            addPanAuto(pan,m);
+    public void addPansAutomateByTeam(javax.swing.JPanel pan, Team t) {
+        for (Model m : t.getModel()) {
+            addPanAuto(pan,m,t);
         }
     }
 
-    public javax.swing.JPanel createPanTeam(int numTeam) {
+    public javax.swing.JPanel createPanTeam(Team t) {
         javax.swing.JPanel panteam = new javax.swing.JPanel();
         panteam.setLayout(new BoxLayout(panteam, BoxLayout.Y_AXIS));
-        addPansAutomateByTeam(panteam, numTeam);
+        addPansAutomateByTeam(panteam, t);
         return panteam;
     }
 

@@ -134,7 +134,7 @@ public class FrameSelectTeamAndMap extends javax.swing.JFrame {
 
     private void btnValidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnValidMouseClicked
         // TODO add your handling code here:
-        cff = new CarteFromFile(CarteFichier.basename + cbxMap.getSelectedItem());
+        cff = new CarteFromFile(CarteFichier.basename + cbxMap.getSelectedItem(),Integer.parseInt(cbxNumberTeam.getSelectedItem().toString()));
 
         jeu.setCarte(cff);
         jeu.setTeamNumber(Integer.parseInt(cbxNumberTeam.getSelectedItem().toString()));
