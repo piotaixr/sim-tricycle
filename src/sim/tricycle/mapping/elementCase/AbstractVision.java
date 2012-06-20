@@ -38,7 +38,7 @@ public class AbstractVision extends AbstractObstacle {
         this.portee = portee;
     }
 
-    public void setT(Team t) {
+    public void setTeam(Team t) {
         this.t = t;
     }
 

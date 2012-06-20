@@ -48,7 +48,7 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
      */
     public Robot(Automate automate, Team equipe) {
         this.automate = automate;
-        this.setT(equipe);
+        this.setTeam(equipe);
     }
 
     public Robot(Automate automate) {
@@ -56,7 +56,7 @@ public  class Robot extends AbstractVision implements OrdonnancableInterface {
     }
 
     public Robot(Team equipe) {
-        this.setT(equipe);
+        this.setTeam(equipe);
     }
 
     /**
