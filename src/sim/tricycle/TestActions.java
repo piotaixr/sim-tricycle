@@ -22,7 +22,7 @@ public class TestActions {
     public static void main(String[] args) {
         ObjectBuilder builder = new ObjectBuilder();
         
-        Automate automate = builder.getRobotParser().parse(new File("./test_basique.xml"));
+        Automate automate = builder.getRobotParser().parse(new File("./test.xml"));
         
         Robot robot = new Robot(automate);
         System.out.println(automate.getEtat("init"));

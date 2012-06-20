@@ -73,10 +73,12 @@ public abstract class AbstractCarte implements CarteInterface {
         for (i = 0; i < tailleX; i++) {
             for (j = 0; j < tailleY; j++) {
                 if ("@".equals(mat[i][j])) {
+                    System.out.print("\n    Entre dans placer pt\n");
                     //Si pt de controle il lui faut connaitre ses cases voisines.
                     carte[i][j] = new Case(i, j);
                     casesVoisines(this, this.getCase(i, j), liste);
                     PointDeControle pt = new PointDeControle(liste);
+                    System.out.print("\n liste: " + liste.toString());
                     pt.setCase(this.getCase(i, j));
                     this.getCase(i, j).setZone(pt);
                     //On ajoute ce point à la liste des points.
@@ -295,9 +297,8 @@ public abstract class AbstractCarte implements CarteInterface {
             }
         }
     }
-    
-        
-     public List<Point> getListeBase() {
+
+    public List<Point> getListeBase() {
         return listeBase;
     }
 
@@ -305,5 +306,4 @@ public abstract class AbstractCarte implements CarteInterface {
         this.listeBase = listeBase;
 
     }
-
 }

@@ -31,8 +31,8 @@ public class ViewCarte extends javax.swing.JPanel {
     private int tailleOpti;
     private Image img, imgMap, imgVide;
     private int px, py; //pour faire la difference lors du drag
-    private HashMap<String, Image> ensaCharger = null;
-    private HashMap<String, Image> enstteCase = null;
+    private HashMap<String, Image> ensaCharger = new HashMap<String, Image>();
+    private HashMap<String, Image> enstteCase = new HashMap<String, Image>();
 
     /**
      * Constructeur de carte implémentées
@@ -55,7 +55,7 @@ public class ViewCarte extends javax.swing.JPanel {
             // Initialisation des images:
             FilesFinder ff = new FilesFinder();
             ArrayList<String> aCharger = ff.findFilesWithExtensions("./src/sim/tricycle/ihm/images/imageAcharger");
-            ArrayList<String> tteCase = ff.findFilesWithExtensions("./src/sim/tricycle/ihm/images/imageAcharger");
+            ArrayList<String> tteCase = ff.findFilesWithExtensions("./src/sim/tricycle/ihm/images/cases/");
 
             for (String x : aCharger) {
                 ensaCharger.put(x, ImageIO.read(new File("./src/sim/tricycle/ihm/images/imageAcharger/" + x)));
@@ -64,13 +64,6 @@ public class ViewCarte extends javax.swing.JPanel {
             for (String x : tteCase) {
                 enstteCase.put(x, ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/" + x)));
             }
-
-//            imgBase = ImageIO.read(new File("./src/sim/tricycle/ihm/images/base.png"));
-//            imgRobot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robotCR.png"));
-//            imgBonus = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/bonus.png"));
-//            imgBoule = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/boule.png"));
-//            imgPiece = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/piece.png"));
-//            imgPT = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/A5.png"));
         } catch (IOException ex) {
             Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -80,10 +73,7 @@ public class ViewCarte extends javax.swing.JPanel {
     public void paint(Graphics graphic) {
         super.paint(graphic);
         Graphics2D g = (Graphics2D) graphic;
-
         Dimension d = new Dimension(carte.getLargeur() * tailleCase, carte.getHauteur() * tailleCase);
-
-        //this.setPreferredSize(this.getSize());
         this.setPreferredSize(d);
 
         decalageX = 0;
@@ -113,7 +103,6 @@ public class ViewCarte extends javax.swing.JPanel {
                 paintCase(g, carte.getCase(i, j), tailleCase, true, affFond);
             }
         }
-
     }
 
     /**
@@ -144,12 +133,15 @@ public class ViewCarte extends javax.swing.JPanel {
         } else if (c.whoIam() == TypeCase.mur) {                             //MUR
             // SI pas de map de fond => on affiche les murs.
             if (aff) {
-                g.drawImage(enstteCase.get(c.getId() + ".png"), x, y, width, width, this);
+               // g.drawImage(enstteCase.get(c.getId() + ".png"), x, y, width, width, this);
+                g.drawImage(enstteCase.get("X.jpg"), x, y, width, width, this);
             }
+
         } else {                                                            //VIDE
             char ch = c.getId().charAt(0);
             if (ch == 'A' || ch == 'C') {   //Si case à motif 
                 // on recupere l'image corespondante à l'id.
+                g.drawImage(imgVide, x, y, width, width, this);
                 g.drawImage(enstteCase.get(c.getId() + ".png"), x, y, width, width, this);
             } else {
                 g.drawImage(imgVide, x, y, width, width, this);
@@ -185,7 +177,7 @@ public class ViewCarte extends javax.swing.JPanel {
                 g.drawImage(enstteCase.get("A5.png"), x, y, width, width, this);
             }
             if (c.getZone().whoIam() == TypeCase.base) {
-                 g.drawImage(ensaCharger.get("base.png"), x, y, width, width, this);
+                g.drawImage(ensaCharger.get("base.png"), x, y, width, width, this);
             }
 
         }
