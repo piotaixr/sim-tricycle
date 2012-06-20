@@ -2,10 +2,7 @@
  */
 package sim.tricycle.mapping.nosCarte;
 
-import java.util.List;
-import sim.tricycle.mapping.AbstractCarte;
 import sim.tricycle.mapping.CarteObjective;
-import sim.tricycle.robot.Point;
 
 /**
  *
@@ -17,8 +14,7 @@ public class CarteFromFile extends CarteObjective {
         super(tab);
     }
 
-    public CarteFromFile(String nomCarte, int nbTeams) {
-        CarteFichier cf = CarteFichier.fromFile(nomCarte);
+    public CarteFromFile(CarteFichier cf, int nbTeams) {
         if (cf.getFond() != null) {
             setImage(cf.getFond());
         }
@@ -26,4 +22,8 @@ public class CarteFromFile extends CarteObjective {
         setDispositionBases(cf.getDispositionBases(nbTeams));
     }
 
+    public CarteFromFile(String nomCarte, int nbTeams) {
+        this(CarteFichier.fromFile(nomCarte), nbTeams);
+
+    }
 }

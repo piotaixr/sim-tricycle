@@ -4,13 +4,10 @@ package sim.tricycle.mapping;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.mapping.elementCase.AbstractVision;
-import sim.tricycle.mapping.nosCarte.CarteFichier;
 import sim.tricycle.robot.Point;
-import sim.tricycle.team.Team;
 
 /**
  *
@@ -84,7 +81,8 @@ public class CarteObjective extends AbstractCarte {
         }
     }
 
+    //rempli ensemble de bases
     protected void setDispositionBases(List<Point> dispositionBases) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        super.setListeBase(dispositionBases);
     }
 }

@@ -6,7 +6,7 @@ package sim.tricycle.mapping.nosCarte;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -24,11 +24,12 @@ public class CarteFichier implements Serializable {
     private String fond;
     static final long serialVersionUID = 42L;
     public static final String basename = "./Cartes/";
-    private Map<Integer,List<Point>> dispositions = new HashMap();
-    
-    public CarteFichier(String[][] mat, String fond) {
+    private Map<Integer, LinkedList<Point>> dispositions;
+
+    public CarteFichier(String[][] mat, String fond, Map<Integer, LinkedList<Point>> dispositions) {
         this.mat = mat;
         this.fond = fond;
+        this.dispositions = dispositions;
     }
 
     public String getFond() {
@@ -47,8 +48,8 @@ public class CarteFichier implements Serializable {
         this.mat = mat;
     }
 
-    public static void createFile(String nomFichier, String[][] mat, String imageFond, Map<Integer,List<Point>> dispositions) {
-        CarteFichier cf = new CarteFichier(mat, imageFond);
+    public static void createFile(String nomFichier, String[][] mat, String imageFond, Map<Integer, LinkedList<Point>> dispositions) {
+        CarteFichier cf = new CarteFichier(mat, imageFond, dispositions);
         ObjectOutputStream oos = null;
         try {
             File f = new File(basename + nomFichier + ".stc");
@@ -66,9 +67,9 @@ public class CarteFichier implements Serializable {
     }
 
     public static ArrayList<String> getMapNames() {
-         FilesFinder finder = new FilesFinder();
-         //findImg renvoie le nom du fichier et son extension
-         return finder.findFilesWithExtensions("./Cartes/");
+        FilesFinder finder = new FilesFinder();
+        //findImg renvoie le nom du fichier et son extension
+        return finder.findFilesWithExtensions("./Cartes/");
     }
 
     public static CarteFichier fromFile(String nomFichier) {
@@ -91,8 +92,8 @@ public class CarteFichier implements Serializable {
         }
         return cf;
     }
-    
-    public List<Point> getDispositionBases(int nbTeams){
-        
+
+    public List<Point> getDispositionBases(int nbTeams) {
+        return dispositions.get(nbTeams);
     }
 }
