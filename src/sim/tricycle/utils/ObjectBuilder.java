@@ -42,15 +42,19 @@ public class ObjectBuilder {
     public ConditionFactoryInterface getConditionFactory() {
         if (conditionFactory == null) {
             conditionFactory = new ConditionFactory(getParamConverterProvider(), getParameterCreator());
-            conditionFactory.register(new ConditionTrue())
-                    .register(new PieceTrouvee())
-                    .register(new TestCaseRobotEgalCasePiece(getVarBuilder().buildReference("self.case"), getVarBuilder().buildVariable("piece")))
-                    .register(new TestCaseRobotEgalCaseBase(getVarBuilder().buildReference("self.case"), getVarBuilder().buildReference("team.base")))
-                    .register(new Contains())
-                    .register(new PieceExiste(getOrdonnanceur()))
+            conditionFactory
                     .register(new ConditionEt())
                     .register(new ConditionNon())
-                    .register(new ConditionOu());
+                    .register(new ConditionOu())
+                    .register(new ConditionTrue())
+                    .register(new Contains())
+                    .register(new EnnemiDevant(getOrdonnanceur()))
+                    .register(new PieceExiste(getOrdonnanceur()))
+                    .register(new PieceTrouvee())
+                    .register(new PtControleTrouve(getOrdonnanceur()))
+                    .register(new PvNecessaires(getOrdonnanceur()))
+                    .register(new TestCaseRobotEgalCaseBase(getVarBuilder().buildReference("self.case"), getVarBuilder().buildReference("team.base")))
+                    .register(new TestCaseRobotEgalCasePiece(getVarBuilder().buildReference("self.case"), getVarBuilder().buildVariable("piece")));
         }
         
         return conditionFactory;
@@ -75,8 +79,10 @@ public class ObjectBuilder {
                     .register(new DestructionTotale(getActionBuilder()))
                     .register(new InitialisationConstruction())
                     .register(new PiecePlusProche())
+                    .register(new PtDeControlIdeal())
                     .register(new Ramasser())
                     .register(new RevenirBase(getActionBuilder()))
+                    .register(new RobotDevant())
                     .register(new SeDeplacerUneCase(getActionBuilder()))
                     .register(new SeTeleporterA())
                     .register(new Sleep())
@@ -85,7 +91,8 @@ public class ObjectBuilder {
                     .register(new TrouveCaseDevant())
                     .register(new TrouveChemin())
                     .register(new TrouveCollectable())
-                    .register(new TrouveDirection());
+                    .register(new TrouveDirection())
+                    .register(new TrouveZone());
         }
         
         return actionFactory;
