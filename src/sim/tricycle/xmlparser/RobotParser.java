@@ -41,9 +41,10 @@ public class RobotParser {
     public Automate parse(File f) {
         Automate automate = new Automate();
         try {
+             System.out.println("PARSER: fichier : " + f.getAbsolutePath());
             SAXBuilder builder = new SAXBuilder();
             Document document = builder.build(f);
-
+            System.out.println("PARSER: fichier parsé");
             Element racine = document.getRootElement();
 
             parseRobot(racine, automate);

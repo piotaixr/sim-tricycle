@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding='ISO-8859-1' standalone='yes' ?>
+<robot>
+    <etat id="init">
+        <transition>
+            <etat id="1" />
+        </transition>
+    </etat>
+    <etat id="1">
+        <transition>
+            <action nom="allerici">
+                <parametre>1 0</parametre>
+            </action>
+            <etat id="1" />
+        </transition>
+    </etat>
+
+</robot>
