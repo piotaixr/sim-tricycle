@@ -174,9 +174,9 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
 
     public Team createTeam(int ident, String name) {
         Team t = new Team(ident, name, jeu.getCarte());
-        // t.setBase(new Base(jeu.getCarte().getListeBase().get(ident)));       ----------------------------------------------------------
         Base b = new Base();
         jeu.getCarte().pop(b, new Case(jeu.getCarte().getListeBase().get(ident).getX(), jeu.getCarte().getListeBase().get(ident).getY()));
+        jeu.getCarte().getCase(b.getPosition().getX(), b.getPosition().getY()).setZone(b);
         t.setBase(b);
         return t;
     }
