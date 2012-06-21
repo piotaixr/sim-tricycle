@@ -91,7 +91,7 @@ public class CarteTeam extends AbstractCarte {
     public boolean pop(PossedeCaseInterface e, Case c) {
         Case cv = vraiCarte.getCase(c.getX(), c.getY());
         if (super.pop(e, cv)) {
-            this.actualiserCarte(1, c);
+            this.actualiserCarte(2, c);
             return true;
         }
         return false;

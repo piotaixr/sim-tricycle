@@ -26,7 +26,7 @@ public class Attaquer extends AbstractAction {
         }
         adversaire.setPV((int)adversaire.getPV()-(bot.getPA()*(adversaire.getArmure()/100)));
         if(adversaire.getPV()<=0){
-            bot.getTeam().getMap().suprimer(adversaire, c);
+            bot.getTeam().getMap().supprimer(adversaire, c);
         }
         return null;
     }
