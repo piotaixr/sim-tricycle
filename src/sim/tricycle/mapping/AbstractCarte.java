@@ -44,6 +44,10 @@ public abstract class AbstractCarte implements CarteInterface {
         }
     }
 
+    public static HashSet<PointDeControle> getListePt() {
+        return listePt;
+    }
+
     /**
      * Initialise la carte à partir de la matrice contenu dans l'abstraction.
      * @ensure la matrice à était initialisée
@@ -72,21 +76,20 @@ public abstract class AbstractCarte implements CarteInterface {
         //Recherche des points de controles et traitement.
         for (i = 0; i < tailleX; i++) {
             for (j = 0; j < tailleY; j++) {
+
                 if ("@".equals(mat[i][j])) {
-                    System.out.print("\n    Entre dans placer pt\n");
-                    //Si pt de controle il lui faut connaitre ses cases voisines.
                     carte[i][j] = new Case(i, j);
+                    //Si pt de controle il lui faut connaitre ses cases voisines.
                     casesVoisines(this, this.getCase(i, j), liste);
                     PointDeControle pt = new PointDeControle(liste);
-                    System.out.print("\n liste: " + liste.toString());
                     pt.setCase(this.getCase(i, j));
                     this.getCase(i, j).setZone(pt);
-                    //On ajoute ce point à la liste des points.
-                    listeP.add(pt);
+                    listeP.add(pt);// On ajoute ce point à la liste des points.
                 }
-                this.listePt = listeP;
+                 carte[i][j].setTpsNonVu(0);
             }
         }
+        this.listePt = listeP;
     }
 
     public void startInit(String[][] mat) {
