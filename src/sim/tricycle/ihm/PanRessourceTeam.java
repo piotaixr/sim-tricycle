@@ -4,17 +4,42 @@
  */
 package sim.tricycle.ihm;
 
+import sim.tricycle.team.Team;
+
 /**
  *
  * @author morgan
  */
 public class PanRessourceTeam extends javax.swing.JPanel {
 
+    private int gold = 0;
+    private int balls = 0;
+
     /**
      * Creates new form PanRessourceTeam
      */
-    public PanRessourceTeam() {
+    public PanRessourceTeam(Team t) {
         initComponents();
+        if (t.trouveRessourceParItem("Piece") != null) {
+            gold = t.trouveRessourceParItem("Piece").getQuantite();
+        }
+        if (t.trouveRessourceParItem("Boule") != null) {
+            gold = t.trouveRessourceParItem("Boule").getQuantite();
+        }
+        lblGoldValue.setText("" + gold);
+        lblBallValue.setText("" + balls);
+    }
+
+    public void addGold() {
+        gold++;
+        lblGoldValue.setText("" + gold);
+        repaint();
+    }
+
+    public void addBall() {
+        balls++;
+        lblBallValue.setText("" + balls);
+        repaint();
     }
 
     /**
@@ -27,12 +52,56 @@ public class PanRessourceTeam extends javax.swing.JPanel {
     private void initComponents() {
 
         lblTitle = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        lblGold = new javax.swing.JLabel();
+        lblBall = new javax.swing.JLabel();
+        lblGoldValue = new javax.swing.JLabel();
+        lblBallValue = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(85, 81, 78));
 
         lblTitle.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(254, 254, 254));
         lblTitle.setText("Ressources");
+
+        lblGold.setText("Gold : ");
+
+        lblBall.setText("Ball :");
+
+        lblGoldValue.setText("jLabel3");
+
+        lblBallValue.setText("jLabel4");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblBall)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblBallValue))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblGold)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblGoldValue)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGold)
+                    .addComponent(lblGoldValue))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblBall)
+                    .addComponent(lblBallValue))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -42,16 +111,23 @@ public class PanRessourceTeam extends javax.swing.JPanel {
                 .addContainerGap(57, Short.MAX_VALUE)
                 .addComponent(lblTitle)
                 .addGap(67, 67, 67))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTitle)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblBall;
+    private javax.swing.JLabel lblBallValue;
+    private javax.swing.JLabel lblGold;
+    private javax.swing.JLabel lblGoldValue;
     private javax.swing.JLabel lblTitle;
     // End of variables declaration//GEN-END:variables
 }
