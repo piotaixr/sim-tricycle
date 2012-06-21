@@ -198,7 +198,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
                 String automateTxt = ((PanSelectAutomate) c).getStringAutomate();
                 File f = new File(automateTxt);
                 Automate auto = robPars.parse(f);
-                t.addModel(new Robot(auto, t), ((PanSelectAutomate) c).getStringImg());
+                t.addModel(new Robot(auto, t,((PanSelectAutomate) c).getStringImg()), ((PanSelectAutomate) c).getStringImg());
             }
         }
     }

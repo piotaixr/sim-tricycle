@@ -153,7 +153,7 @@ public class PanSelectModel extends javax.swing.JPanel {
 //        if (t.getRessources().get("GOLD") - price > 0)
 //        {
         if (!jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY()).hasObstacle()) {//        if (!t.getBase().getPosition().hasObstacle()) {
-            Robot rob = new Robot(model.getRob().getAutomate(), t);
+            Robot rob = new Robot(model.getRob().getAutomate(), t, model.getRob().getImgBase());
             rob.setCoordonnees(t.getBase().getPosition());           
             rob.setDirection(Sens.SUD);
             
