@@ -169,7 +169,11 @@ public class Team {
     }
 
     public void addModel(Robot rob, String img) {
-        models.add(new Model(rob,img));
+        models.add(new Model(rob, img));
+    }
+
+    public void addModel(Robot rob) {
+        models.add(new Model(rob));
     }
 
     public void removeModel() {

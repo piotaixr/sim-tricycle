@@ -153,10 +153,16 @@ public class PanSelectModel extends javax.swing.JPanel {
 //        if (t.getRessources().get("GOLD") - price > 0)
 //        {
         if (!jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY()).hasObstacle()) {//        if (!t.getBase().getPosition().hasObstacle()) {
-            Robot rob = new Robot(model.getRob().getAutomate(), t, model.getRob().getImgBase());
-            rob.setCoordonnees(t.getBase().getPosition());           
-            rob.setDirection(Sens.SUD);
+           
+            //On recupere le nom du modele et on enleve l'extension pour pouvoir afficher plus tard l'image dans les positions qu'on veut
+            String nameBot = model.getRob().getImgBase();
+            nameBot = nameBot.substring(0, nameBot.lastIndexOf("."));
+            System.out.println(nameBot);
             
+            Robot rob = new Robot(model.getRob().getAutomate(), t, nameBot);
+            rob.setCoordonnees(t.getBase().getPosition());
+            rob.setDirection(Sens.SUD);
+
 //            //Ajout dans la map globale
 //            Case casebase = jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
 //            casebase.setObstacle(rob);
@@ -170,10 +176,10 @@ public class PanSelectModel extends javax.swing.JPanel {
             t.getMap().pop(rob, casePop);
 //            Case casePopMap = jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
 //            jeu.getCarte().pop(rob, casePopMap);
-            
+
             t.addRobot(rob);
             oi.add(rob);
-            
+
             //t.getRessources().get(0).setQuantite(t.getRessources().get(0).getQuantite()- price); Enleve le cout du robot
 
             obs.sendMessage();
