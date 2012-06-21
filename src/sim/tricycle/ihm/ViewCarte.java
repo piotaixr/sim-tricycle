@@ -158,10 +158,10 @@ public class ViewCarte extends javax.swing.JPanel {
                 if (pt.estNeutre()) {
                     coul = Color.lightGray;// Couleur de base si neutre.
                 } else {
-                    coul = pt.getTeam().getColor();// Couleur de la team qui possède
+                    coul = pt.getTeam().getColor();// Couleur de la team qui possède.
                     //le point de controle.
                 }
-                g.setColor(Color.DARK_GRAY);//Rond de fond/
+                g.setColor(Color.DARK_GRAY);//Rond de fond.
                 g.fillOval(x, y, width, width);
                 int coeff = width;
                 if (pt.getTpsCapture() < 5) {// selon l'avancement de la capture.
@@ -177,14 +177,13 @@ public class ViewCarte extends javax.swing.JPanel {
                 } else if (pt.getTpsCapture() < 50) {
                     coeff = width;
                 }
-                g.setColor(coul);// on le desine de la couleur de la team et on le centre.
+                g.setColor(coul);// On le desine de la couleur de la team et on le centre.
                 g.fillOval(x + (width - coeff) / 2, y + (width - coeff) / 2, coeff, coeff);
                 g.drawImage(enstteCase.get("A5.png"), x, y, width, width, this);
             }
             if (c.getZone().whoIam() == TypeCase.base) {
                 g.drawImage(ensaCharger.get("base.png"), x, y, width, width, this);
             }
-
         }
         if (c.whoIam() == TypeCase.piece) {                              //PIECE
             g.drawImage(enstteCase.get("piece.png"), x, y, width, width, this);

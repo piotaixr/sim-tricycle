@@ -29,6 +29,7 @@ public class CarteTeam extends AbstractCarte {
             }
         }
         vraiCarte = source;
+        this.afficherCarte();
     }
 
     /**

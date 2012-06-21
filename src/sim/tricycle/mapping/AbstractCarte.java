@@ -24,8 +24,8 @@ import sim.tricycle.robot.Robot;
  */
 public abstract class AbstractCarte implements CarteInterface {
 
-    protected Image imgFond = null;
-    protected Image imgVide = null;
+    protected static Image imgFond = null;
+    protected static Image imgVide = null;
     protected static HashSet<PointDeControle> listePt;  //Ensemble des points de controles.
     protected List<Point> listeBase;
     protected int tailleX, tailleY;

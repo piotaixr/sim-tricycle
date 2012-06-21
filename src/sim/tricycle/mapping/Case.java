@@ -15,7 +15,7 @@ public class Case implements CaseInterface {
     private AbstractObjet objet = null;
     private AbstractZone zone = null;
     private int x, y;
-    private String idImg = "X";
+    private String idImg = "N";
     private boolean ciblable;
 
     public Case(int cx, int cy) {
