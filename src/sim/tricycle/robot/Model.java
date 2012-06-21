@@ -11,10 +11,15 @@ import java.awt.Image;
  * @author morgan
  */
 public class Model {
+
     private Robot rob;
     private String img;
-    
-    public Model(Robot r, String s){
+
+    public Model(Robot r) {
+        this.rob = r;
+    }
+
+    public Model(Robot r, String s) {
         this.rob = r;
         this.img = s;
     }
