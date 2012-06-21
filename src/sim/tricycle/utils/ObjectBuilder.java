@@ -69,6 +69,7 @@ public class ObjectBuilder {
                     .register(new ArreterTout())
                     .register(new Attaquer())
                     .register(new Avancer())
+                    .register(new BoulePlusProche())
                     .register(new Collecter(getActionBuilder()))
                     .register(new CollecterPiecesEnContinu(getActionBuilder()))
                     .register(new Construction(getActionBuilder()))
