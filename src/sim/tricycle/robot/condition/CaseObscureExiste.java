@@ -4,9 +4,8 @@
  */
 package sim.tricycle.robot.condition;
 
-import sim.tricycle.Ordonnanceur.Ordonnanceur;
+import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.mapping.CarteTeam;
-import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.condition.core.AbstractCondition;
 
@@ -14,30 +13,29 @@ import sim.tricycle.robot.condition.core.AbstractCondition;
  *
  * @author Adri
  */
-public class PieceExiste extends AbstractCondition {
+public class CaseObscureExiste extends AbstractCondition {
 
-    private Ordonnanceur o;
+    private OrdonnanceurInterface ordonnanceur;
 
-    public PieceExiste(Ordonnanceur o) {
-        this.o = o;
+    public CaseObscureExiste(OrdonnanceurInterface ordonnanceur) {
+        this.ordonnanceur = ordonnanceur;
     }
 
-    @Override
-    public String getId() {
-        return "piece_existe";
-    }
-
-    @Override
     public boolean test() {
-        Robot bot = (Robot) o.getActiveTask();
+        Robot bot = (Robot) ordonnanceur.getActiveTask();
         CarteTeam c = bot.getTeam().getMap();
         for (int i = 0; i < c.getLargeur(); i++) {
             for (int j = 0; j < c.getHauteur(); j++) {
-                if (c.getCase(i, j).whoIam() == TypeCase.piece) {
+                if (c.getCase(i, j).JamaisVu()) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    @Override
+    public String getId() {
+        return "case_obscure_existe";
     }
 }

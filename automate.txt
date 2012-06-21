@@ -10,12 +10,12 @@ robot{
         }
 	etat=normal[tag1,tag2]{
             transition{
-		si(boule_trouvee()){ cible<-bouleplusproche();
+		si(boule_existe()){ cible<-bouleplusproche();
                                      etat=deplacement_norm;
                 }
             }
             transition{
-		si(piece_trouvee()){ cible<-pieceplusproche();
+		si(piece_existe()){ cible<-pieceplusproche();
                                     etat=deplacement_norm;
                 }
             }
@@ -24,8 +24,8 @@ robot{
                 }
             }
             transition{
-                si(case_obscure()){ cible<-caseobscureplusproche();
-                                    chemin<-TrouveChemin(cible);
+                si(case_obscure_existe()){ cible<-case_obscure_plus_proche();
+                                    chemin<-trouvechemin(var:cible);
                                     etat=recherche;
                 }
             }

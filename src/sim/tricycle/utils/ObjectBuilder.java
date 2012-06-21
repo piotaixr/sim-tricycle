@@ -43,6 +43,8 @@ public class ObjectBuilder {
         if (conditionFactory == null) {
             conditionFactory = new ConditionFactory(getParamConverterProvider(), getParameterCreator());
             conditionFactory
+                    .register(new BouleExiste(getOrdonnanceur()))
+                    .register(new CaseObscureExiste(getOrdonnanceur()))
                     .register(new ConditionEt())
                     .register(new ConditionNon())
                     .register(new ConditionOu())
@@ -51,7 +53,6 @@ public class ObjectBuilder {
                     .register(new EnnemiDevant(getOrdonnanceur()))
                     .register(new NonVide())
                     .register(new PieceExiste(getOrdonnanceur()))
-                    .register(new PieceTrouvee())
                     .register(new PtControleTrouve(getOrdonnanceur()))
                     .register(new PvNecessaires(getOrdonnanceur()))
                     .register(new TestCaseRobotEgalCaseBase(getVarBuilder().buildReference("self.case"), getVarBuilder().buildReference("team.base")))
@@ -70,6 +71,7 @@ public class ObjectBuilder {
                     .register(new Attaquer())
                     .register(new Avancer())
                     .register(new BoulePlusProche())
+                    .register(new CaseObscurePlusProche())
                     .register(new Collecter(getActionBuilder()))
                     .register(new CollecterPiecesEnContinu(getActionBuilder()))
                     .register(new Construction(getActionBuilder()))

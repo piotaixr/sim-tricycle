@@ -31,6 +31,10 @@ public class Step extends AbstractActionComposee {
         
         return null;
     }
+    
+    public void setParameters(Variable varChemin){
+        this.varChemin = varChemin;
+    }
 
     @Override
     public String getId() {
