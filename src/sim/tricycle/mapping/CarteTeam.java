@@ -29,6 +29,7 @@ public class CarteTeam extends AbstractCarte {
             }
         }
         vraiCarte = source;
+        this.afficherCarte();
     }
 
     /**
@@ -65,11 +66,10 @@ public class CarteTeam extends AbstractCarte {
             }
             rayon--;
         }
-        System.out.print("liste crée    ");
-        System.out.print(liste.toString());
         // Traitement des cases selectionnées:
         for (Case x : liste) {
             this.getCase(x.getX(), x.getY()).copy(x);
+            this.getCase(x.getX(), x.getY()).setTpsNonVu(0);
         }
     }
 

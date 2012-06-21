@@ -24,8 +24,8 @@ import sim.tricycle.robot.Robot;
  */
 public abstract class AbstractCarte implements CarteInterface {
 
-    protected Image imgFond = null;
-    protected Image imgVide = null;
+    protected static Image imgFond = null;
+    protected static Image imgVide = null;
     protected static HashSet<PointDeControle> listePt;  //Ensemble des points de controles.
     protected List<Point> listeBase;
     protected int tailleX, tailleY;
@@ -42,6 +42,10 @@ public abstract class AbstractCarte implements CarteInterface {
             }
             System.out.print("\n");
         }
+    }
+
+    public static HashSet<PointDeControle> getListePt() {
+        return listePt;
     }
 
     /**
@@ -72,21 +76,20 @@ public abstract class AbstractCarte implements CarteInterface {
         //Recherche des points de controles et traitement.
         for (i = 0; i < tailleX; i++) {
             for (j = 0; j < tailleY; j++) {
+
                 if ("@".equals(mat[i][j])) {
-                    System.out.print("\n    Entre dans placer pt\n");
-                    //Si pt de controle il lui faut connaitre ses cases voisines.
                     carte[i][j] = new Case(i, j);
+                    //Si pt de controle il lui faut connaitre ses cases voisines.
                     casesVoisines(this, this.getCase(i, j), liste);
                     PointDeControle pt = new PointDeControle(liste);
-                    System.out.print("\n liste: " + liste.toString());
                     pt.setCase(this.getCase(i, j));
                     this.getCase(i, j).setZone(pt);
-                    //On ajoute ce point à la liste des points.
-                    listeP.add(pt);
+                    listeP.add(pt);// On ajoute ce point à la liste des points.
                 }
-                this.listePt = listeP;
+                 carte[i][j].setTpsNonVu(0);
             }
         }
+        this.listePt = listeP;
     }
 
     public void startInit(String[][] mat) {
@@ -216,7 +219,7 @@ public abstract class AbstractCarte implements CarteInterface {
         if (c != null) {// si on peut avancer:
             if (bot.getPosition().hasObstacle()) {
                 bot.getPosition().suprObstacle();
-                this.ActualiserBroullard(c);
+                this.ActualiserBrouillard(c);
             }
             if (!c.hasObstacle()) {
                 c.setObstacle(bot);
@@ -289,7 +292,7 @@ public abstract class AbstractCarte implements CarteInterface {
      *
      * @param c la case depuis laquelle actualisé.
      */
-    public void ActualiserBroullard(Case c) {
+    public void ActualiserBrouillard(Case c) {
 
         for (AbstractVision x : elements) {
             if (x.voit(c)) {

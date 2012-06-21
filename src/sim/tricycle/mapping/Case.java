@@ -15,8 +15,26 @@ public class Case implements CaseInterface {
     private AbstractObjet objet = null;
     private AbstractZone zone = null;
     private int x, y;
-    private String idImg = "X";
+    private String idImg = "N";
     private boolean ciblable;
+    public int vu = -1;
+
+    /**
+     * Si lacase a déja été observée
+     *
+     * @return vrai si jamais observée
+     */
+    public boolean JamaisVu() {
+        return vu == -1;
+    }
+
+    public int getTpsNonVu() {
+        return vu;
+    }
+
+    public void setTpsNonVu(int vu) {
+        this.vu = vu;
+    }
 
     public Case(int cx, int cy) {
         this.x = cx;
@@ -221,7 +239,7 @@ public class Case implements CaseInterface {
      */
     @Override
     public TypeCase whoIam() {
-        
+
         if (this.hasZone()) {
             return this.getZone().whoIam();
         }

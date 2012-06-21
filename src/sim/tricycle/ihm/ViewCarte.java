@@ -105,7 +105,7 @@ public class ViewCarte extends javax.swing.JPanel {
         //Affichage des autres cases.
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
-                paintCase(g, carte.getCase(i, j), tailleCase, true, affFond);
+                paintCase(g, carte.getCase(i, j), tailleCase, false, affFond);
             }
         }
     }
@@ -129,11 +129,10 @@ public class ViewCarte extends javax.swing.JPanel {
         int x = (c.getY() * width) + decalageX;
         Color coul = null;
 
-        if (quadri) {
-            g.setColor(Color.BLACK);
-            g.drawRect(x, y, width, width);
-        }
-        if (c.whoIam() == TypeCase.base) {                                  //BASE
+         if (c.JamaisVu()) {//affichage brouillard jamais vu.
+            g.setColor(Color.black);
+            g.fillRect(x, y, width, width);
+        } else if (c.whoIam() == TypeCase.base) {                            //BASE
             g.drawImage(imgVide, x, y, width, width, this);
         } else if (c.whoIam() == TypeCase.mur) {                             //MUR
             // SI pas de map de fond => on affiche les murs.
@@ -141,7 +140,6 @@ public class ViewCarte extends javax.swing.JPanel {
                 // g.drawImage(enstteCase.get(c.getId() + ".png"), x, y, width, width, this);
                 g.drawImage(enstteCase.get("X.jpg"), x, y, width, width, this);
             }
-
         } else {                                                            //VIDE
             char ch = c.getId().charAt(0);
             if (ch == 'A' || ch == 'C') {   //Si case à motif 
@@ -158,10 +156,10 @@ public class ViewCarte extends javax.swing.JPanel {
                 if (pt.estNeutre()) {
                     coul = Color.lightGray;// Couleur de base si neutre.
                 } else {
-                    coul = pt.getTeam().getColor();// Couleur de la team qui possède
+                    coul = pt.getTeam().getColor();// Couleur de la team qui possède.
                     //le point de controle.
                 }
-                g.setColor(Color.DARK_GRAY);//Rond de fond/
+                g.setColor(Color.DARK_GRAY);//Rond de fond.
                 g.fillOval(x, y, width, width);
                 int coeff = width;
                 if (pt.getTpsCapture() < 5) {// selon l'avancement de la capture.
@@ -177,14 +175,13 @@ public class ViewCarte extends javax.swing.JPanel {
                 } else if (pt.getTpsCapture() < 50) {
                     coeff = width;
                 }
-                g.setColor(coul);// on le desine de la couleur de la team et on le centre.
+                g.setColor(coul);// On le desine de la couleur de la team et on le centre.
                 g.fillOval(x + (width - coeff) / 2, y + (width - coeff) / 2, coeff, coeff);
                 g.drawImage(enstteCase.get("A5.png"), x, y, width, width, this);
             }
             if (c.getZone().whoIam() == TypeCase.base) {
                 g.drawImage(ensaCharger.get("base.png"), x, y, width, width, this);
             }
-
         }
         if (c.whoIam() == TypeCase.piece) {                              //PIECE
             g.drawImage(enstteCase.get("piece.png"), x, y, width, width, this);
