@@ -1,6 +1,4 @@
-#load "dynlink.cma";;
 
-#load "camlp4o.cma";;
 
 type 'a pile= Pile_vide|Pile_non_vide of 'a*'a pile;;
 (*_______________________________________________________________________*)

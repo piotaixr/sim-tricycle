@@ -20,7 +20,7 @@ robot{
                 }
             }
             transition{
-                si(non_vide(chemin)){etat=recherche;
+                si(non_vide(var: chemin)){etat=recherche;
                 }
             }
             transition{
@@ -38,7 +38,7 @@ robot{
 
         etat=recherche[tag1]{
             transition{
-                sinon { step(chemin);
+                sinon { step(var:chemin);
                         etat=normal;
                 }
             }

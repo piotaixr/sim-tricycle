@@ -10,14 +10,45 @@
         <tag nom="tag1"/>
         <tag nom="tag2"/>
         <transition>
-            <condition nom="piece_trouvee"/>
-            <action nom="pieceplusproche" dest="piece">
+            <condition nom="boule_trouvee"/>
+            <action nom="bouleplusproche" dest="cible">
             </action>
             <etat id="deplacement_norm"/>
         </transition>
         <transition>
+            <condition nom="piece_trouvee"/>
+            <action nom="pieceplusproche" dest="cible">
+            </action>
+            <etat id="deplacement_norm"/>
+        </transition>
+        <transition>
+            <condition nom="non_vide">
+                <parametre type="var">chemin</parametre>
+            </condition>
+            <etat id="recherche"/>
+        </transition>
+        <transition>
+            <condition nom="case_obscure"/>
+            <action nom="caseobscureplusproche" dest="cible">
+            </action>
+            <action nom="TrouveChemin" dest="chemin">
+                <parametre> cible </parametre>
+            </action>
+            <etat id="recherche"/>
+        </transition>
+        <transition>
             <condition nom="true"/>
             <action nom="sleep">
+            </action>
+            <etat id="normal"/>
+        </transition>
+    </etat>
+    <etat id="recherche">
+        <tag nom="tag1"/>
+        <transition>
+            <condition nom="true"/>
+            <action nom="step">
+                <parametre type="var">chemin</parametre>
             </action>
             <etat id="normal"/>
         </transition>
@@ -36,7 +67,7 @@
         <transition>
             <condition nom="true"/>
             <action nom="allerici">
-                <parametre type="var">piece</parametre>
+                <parametre type="var">cible</parametre>
             </action>
             <etat id="normal"/>
         </transition>

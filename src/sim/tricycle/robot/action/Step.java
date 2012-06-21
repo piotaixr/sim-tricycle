@@ -34,6 +34,6 @@ public class Step extends AbstractActionComposee {
 
     @Override
     public String getId() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return "step";
     }
 }
