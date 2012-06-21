@@ -39,11 +39,11 @@ public class ViewCarte extends javax.swing.JPanel {
      */
     public ViewCarte(AbstractJeu cont, int numeroTeam) {
         initComponents();
-        
-        if (numeroTeam -1 >= 0){    //si c'est une team on prend ca carte, sinon on prend la map general (-1 car tab global)
+
+        if (numeroTeam - 1 >= 0) {    //si c'est une team on prend ca carte, sinon on prend la map general (-1 car tab global)
 //        this.carte = cont.getCarte();
-            this.carte = cont.getTabTeams().get(numeroTeam-1).getMap();
-        }else{
+            this.carte = cont.getTabTeams().get(numeroTeam - 1).getMap();
+        } else {
             this.carte = cont.getCarte();
         }
         this.tailleCase = this.tailleCaseBase;
@@ -198,31 +198,32 @@ public class ViewCarte extends javax.swing.JPanel {
         // possible superposition de robot sur objet:
         if (c.robotPresent()) {                                           //ROBOT
             sim.tricycle.robot.Robot bot = c.getRobotPresent();
-            String nomFich = "robotC"; 
+            String nomFich = "robotC";
             switch (bot.getDirection()) {
                 case NORD:
-                    nomFich.concat("Dos");
+                    nomFich = nomFich.concat("Dos");
                     break;
                 case EST:
-                    nomFich.concat("D");
+                    nomFich = nomFich.concat("D");
                     break;
                 case OUEST:
-                    nomFich.concat("G");
+                    nomFich = nomFich.concat("G");
                     break;
                 case SUD:
-                    nomFich.concat("");
+                    nomFich = nomFich.concat("");
                     break;
             }
             //Selon numero de la team, on lui choisit sa couleur.
-            if (bot.getTeam().getId() == 1) {
-                nomFich.concat("R");
+            if (bot.getTeam().getId() == 0) {
+                nomFich = nomFich.concat("R");
+            } else if (bot.getTeam().getId() == 1) {
+                nomFich = nomFich.concat("B");
             } else if (bot.getTeam().getId() == 2) {
-                nomFich.concat("B");
-            } else if (bot.getTeam().getId() == 3) {
-                nomFich.concat("J");
+                nomFich = nomFich.concat("J");
             } else {
-                nomFich.concat("N");
+                nomFich = nomFich.concat("N");
             }//On affiche.
+            System.out.println(nomFich);
             g.drawImage(ensaCharger.get(nomFich + ".png"), x, y, width, width, this);
 
         }

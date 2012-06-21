@@ -80,12 +80,22 @@ public class CarteTeam extends AbstractCarte {
     }
 
     public boolean pop(PossedeCaseInterface e, int x, int y) {
-        if (this.vraiCarte.pop(e, x, y)) {
-            super.pop(e, this.getCase(x, y));
+        Case c= vraiCarte.getCase(x, y);
+        if (super.pop(e, c)) {System.out.println(" pop success !!!\n");
+            this.actualiserCarte(1, this.getCase(x, y)); // On actu notre map.
             return true;
-        }
+        }else System.out.println("echec pop\n");
         return false;
     }
+    
+     public boolean pop(PossedeCaseInterface e, Case c) {
+        Case cv= vraiCarte.getCase(c.getX(), c.getY());
+        if (super.pop(e, c)) {System.out.println(" pop success !!!\n");
+            this.actualiserCarte(1, c);
+            return true;
+        }else System.out.println("echec pop\n");
+        return false;
+     }
 
     /**
      * Suprime un element de la carte.
