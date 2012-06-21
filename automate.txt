@@ -10,14 +10,37 @@ robot{
         }
 	etat=normal[tag1,tag2]{
             transition{
-		si(piece_trouvee()){ piece<-pieceplusproche();
+		si(boule_trouvee()){ cible<-bouleplusproche();
+                                     etat=deplacement_norm;
+                }
+            }
+            transition{
+		si(piece_trouvee()){ cible<-pieceplusproche();
                                     etat=deplacement_norm;
+                }
+            }
+            transition{
+                si(non_vide(chemin)){etat=recherche;
+                }
+            }
+            transition{
+                si(case_obscure()){ cible<-caseobscureplusproche();
+                                    chemin<-TrouveChemin(cible);
+                                    etat=recherche;
                 }
             }
             transition{
 		sinon{sleep();
 		       etat=normal;
 		}
+            }
+        }
+
+        etat=recherche[tag1]{
+            transition{
+                sinon { step(chemin);
+                        etat=normal;
+                }
             }
         }
 	
@@ -28,7 +51,7 @@ robot{
                 }
             }
             transition{
-		sinon{allerici(var : piece);
+		sinon{allerici(var : cible);
 		      etat=normal;
 		}
             }
