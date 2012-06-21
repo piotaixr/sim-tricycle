@@ -14,33 +14,8 @@ public class AbstractVision extends AbstractObstacle {
     protected Team t = null;
     protected int prix = 0;
     protected int porteeMax = 0;
-    protected int armure = 0;
 
-    public int getArmure() {
-        return armure;
-    }
-
-    public void setArmure(int armure) {
-        this.armure = armure;
-    }
-
-    public int getPointAttaque() {
-        return pointAttaque;
-    }
-
-    public void setPointAttaque(int pointAttaque) {
-        this.pointAttaque = pointAttaque;
-    }
-
-    public int getPv() {
-        return pv;
-    }
-
-    public void setPv(int pv) {
-        this.pv = pv;
-    }
-    protected int pv = 0;
-    protected int pointAttaque = 0;
+ 
 
     public int getPorteeMax() {
         return porteeMax;
