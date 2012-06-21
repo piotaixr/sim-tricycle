@@ -30,7 +30,6 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
     protected Etat etatDestination;
     protected Automate automate;
     protected boolean plante = false;
-    protected int cout = 0;
     protected AbstractObjet ItemPorte = null;
     protected int tempsConstruction = 3;//arbitrarire
 
