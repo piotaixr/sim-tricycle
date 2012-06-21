@@ -263,7 +263,7 @@ public abstract class AbstractCarte implements CarteInterface {
     }
 
     @Override
-    public boolean suprimer(PossedeCaseInterface e, Case c) {
+    public boolean supprimer(PossedeCaseInterface e, Case c) {
         if (e.typeDeCase() == TypeCase.objet) {
             if (c.getItem().equals(e)) {
                 c.suprObjet();

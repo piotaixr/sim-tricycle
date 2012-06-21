@@ -80,22 +80,22 @@ public class CarteTeam extends AbstractCarte {
     }
 
     public boolean pop(PossedeCaseInterface e, int x, int y) {
-        Case c= vraiCarte.getCase(x, y);
-        if (super.pop(e, c)) {System.out.println(" pop success !!!\n");
+        Case c = vraiCarte.getCase(x, y);
+        if (super.pop(e, c)) {
             this.actualiserCarte(1, this.getCase(x, y)); // On actu notre map.
             return true;
-        }else System.out.println("echec pop\n");
+        }
         return false;
     }
-    
-     public boolean pop(PossedeCaseInterface e, Case c) {
-        Case cv= vraiCarte.getCase(c.getX(), c.getY());
-        if (super.pop(e, c)) {System.out.println(" pop success !!!\n");
+
+    public boolean pop(PossedeCaseInterface e, Case c) {
+        Case cv = vraiCarte.getCase(c.getX(), c.getY());
+        if (super.pop(e, cv)) {
             this.actualiserCarte(1, c);
             return true;
-        }else System.out.println("echec pop\n");
+        }
         return false;
-     }
+    }
 
     /**
      * Suprime un element de la carte.
@@ -104,15 +104,15 @@ public class CarteTeam extends AbstractCarte {
      * @param c
      * @return
      */
-    public boolean suprimer(PossedeCaseInterface e, Case c) {
-        if (this.vraiCarte.suprimer(e, c)) {
-            super.suprimer(e, c);
+    public boolean supprimer(PossedeCaseInterface e, Case c) {
+        Case cv = vraiCarte.getCase(c.getX(), c.getY());
+        if (vraiCarte.supprimer(e, cv)) {
+            this.actualiserCarte(1, c);
             return true;
         }
         return false;
     }
 
-    
     protected void placerPoint(String[][] mat) {
         int i, j;
         for (i = 0; i < tailleX; i++) {
@@ -124,6 +124,4 @@ public class CarteTeam extends AbstractCarte {
             }
         }
     }
-    
-    
 }
