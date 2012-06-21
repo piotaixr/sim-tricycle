@@ -15,7 +15,6 @@ import sim.tricycle.mapping.CarteInterface;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.PointDeControle;
-import sim.tricycle.mapping.AbstractCarte;
 
 /**
  * Ah ah je modifie ton code thomas je m'empare de ton pouvoir de codage^^
@@ -38,10 +37,15 @@ public class ViewCarte extends javax.swing.JPanel {
     /**
      * Constructeur de carte implémentées
      */
-    public ViewCarte(AbstractJeu cont) {
+    public ViewCarte(AbstractJeu cont, int numeroTeam) {
         initComponents();
-
-        this.carte = cont.getCarte();
+        
+        if (numeroTeam -1 >= 0){    //si c'est une team on prend ca carte, sinon on prend la map general (-1 car tab global)
+//        this.carte = cont.getCarte();
+            this.carte = cont.getTabTeams().get(numeroTeam-1).getMap();
+        }else{
+            this.carte = cont.getCarte();
+        }
         this.tailleCase = this.tailleCaseBase;
         imgMap = carte.getImage();
         initialiserImage(cont);

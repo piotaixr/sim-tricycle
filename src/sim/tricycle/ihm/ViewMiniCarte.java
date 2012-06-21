@@ -32,9 +32,14 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     /**
      * Crée minicarte
      */
-    public ViewMiniCarte(AbstractJeu cont, ViewCarte vc) {
+    public ViewMiniCarte(AbstractJeu cont, ViewCarte vc, int numeroTeam) {
         initComponents();
-        this.carte = cont.getCarte();
+        if (numeroTeam - 1 >= 0) {    //si c'est une team on prend ca carte, sinon on prend la map general (-1 car tab global)
+//        this.carte = cont.getCarte();
+            this.carte = cont.getTabTeams().get(numeroTeam - 1).getMap();
+        } else {
+            this.carte = cont.getCarte();
+        }
         this.tailleCase = this.tailleCaseBase;
         vuc = vc;
         imgMap = carte.getImage();
@@ -83,8 +88,8 @@ public class ViewMiniCarte extends javax.swing.JPanel {
                 g.fillRect(x, y, width, width);
             }
         } else {                                                    //VIDE
-                g.setColor(Color.GREEN);
-                g.fillRect(x, y, width, width);
+            g.setColor(Color.GREEN);
+            g.fillRect(x, y, width, width);
         }
         if (c.hasZone()) {                                    //Pt de controle
             g.setColor(Color.orange);
