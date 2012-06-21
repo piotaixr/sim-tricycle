@@ -28,7 +28,7 @@ public class Team {
     private ArrayList<Case> collectables;
     private Color color = Color.cyan;
     private Base base = null;
-    private int id = 0;
+    private int id = 1;
 
     public Team(int iden, String nomTeam, AbstractCarte carteObj, Case posBase) {
         this.nomTeam = nomTeam;
@@ -169,7 +169,11 @@ public class Team {
     }
 
     public void addModel(Robot rob, String img) {
-        models.add(new Model(rob,img));
+        models.add(new Model(rob, img));
+    }
+
+    public void addModel(Robot rob) {
+        models.add(new Model(rob));
     }
 
     public void removeModel() {

@@ -24,9 +24,9 @@ public class Attaquer extends AbstractAction {
         if(adversaire.getTeam()==bot.getTeam()){
             throw new RuntimeException ("Attention ce robot est dans ton équipe");
         }
-        adversaire.setPv((int)(adversaire.getPv()-(bot.getPointAttaque()*(adversaire.getArmure()/100))));
-        if(adversaire.getPv()<=0){
-            bot.getTeam().getMap().suprimer(adversaire, c);
+        adversaire.setPV((int)adversaire.getPV()-(bot.getPA()*(adversaire.getArmure()/100)));
+        if(adversaire.getPV()<=0){
+            bot.getTeam().getMap().supprimer(adversaire, c);
         }
         return null;
     }

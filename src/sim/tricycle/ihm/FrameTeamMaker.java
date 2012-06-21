@@ -76,7 +76,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
 //        javax.swing.JPanel panTeam2 = new javax.swing.JPanel();
 //        tabPanTeams.addTab("team2", panTeam2);
 
-        System.out.println("hauteur frame : " + this.getHeight() + " taille pan :" + tabPanTeams.getPreferredSize().height);
+//        System.out.println("hauteur frame : " + this.getHeight() + " taille pan :" + tabPanTeams.getPreferredSize().height);
 
         jeu.getCarte().afficherCarte();
 //        System.out.println(jeu.getTeamNumber());
@@ -133,7 +133,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
         for (Component c : tabComp) {
             if (c instanceof PanSelectAutomate) {
                 if (!(((PanSelectAutomate) c).isValidPanAuto())) {
-                    System.out.println("Check Pan pour : " + c.toString());
+                    //System.out.println("Check Pan pour : " + c.toString());
                     return false;
                 }
             }
@@ -142,12 +142,12 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
     }
 
     public boolean isValidFrame() {
-        System.out.println(tabPanTeams.getTabCount());
+        //System.out.println(tabPanTeams.getTabCount());
         for (int i = 0; i < tabPanTeams.getTabCount(); i++) {
             Component c = tabPanTeams.getComponentAt(i);
             if (c instanceof javax.swing.JPanel) {
                 if (!isValidPan((javax.swing.JPanel) c)) {
-                    System.out.println("Check pour : " + i + " " + c.toString());
+                    //System.out.println("Check pour : " + i + " " + c.toString());
                     return false;
                 }
             }
@@ -164,7 +164,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
     }
 
     public void checkValidAll() {
-        System.out.println("Je check!");
+        //System.out.println("Je check!");
         if (isValidFrame()) {
             btnValid.setEnabled(true);
         } else {
@@ -174,9 +174,9 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
 
     public Team createTeam(int ident, String name) {
         Team t = new Team(ident, name, jeu.getCarte());
-       // t.setBase(new Base(jeu.getCarte().getListeBase().get(ident)));       ----------------------------------------------------------
+        // t.setBase(new Base(jeu.getCarte().getListeBase().get(ident)));       ----------------------------------------------------------
         Base b = new Base();
-        jeu.getCarte().pop(b, new Case(jeu. getCarte().getListeBase().get(ident).getX(),jeu. getCarte().getListeBase().get(ident).getY()));
+        jeu.getCarte().pop(b, new Case(jeu.getCarte().getListeBase().get(ident).getX(), jeu.getCarte().getListeBase().get(ident).getY()));
         t.setBase(b);
         return t;
     }
@@ -196,10 +196,9 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
             if (c instanceof PanSelectAutomate) {
                 //pour éviter d'avoir une ligne de code indigerable
                 String automateTxt = ((PanSelectAutomate) c).getStringAutomate();
-                System.out.println(automateTxt);
                 File f = new File(automateTxt);
                 Automate auto = robPars.parse(f);
-                t.addModel(new Robot(auto, t),((PanSelectAutomate) c).getStringImg());
+                t.addModel(new Robot(auto, t,((PanSelectAutomate) c).getStringImg()), ((PanSelectAutomate) c).getStringImg());
             }
         }
     }
@@ -403,17 +402,13 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
 
     private void btnValidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnValidMouseClicked
         // TODO add your handling code here:
-        createAllTeams();
-//        for (Team t : jeu.getTabTeams()) {
-//            System.out.println(t.getNomTeam());
-//            for (Robot mod : t.getModel()) {
-//                System.out.println("" + mod.getAutomate());
-//            }
-//        }
-        if (fg == null) {
-            fg = new FrameGame1(jeu);
-            fg.setVisible(true);
-            this.setVisible(false);
+        if (btnValid.isEnabled()) {
+            createAllTeams();
+            if (fg == null) {
+                fg = new FrameGame1(jeu);
+                fg.setVisible(true);
+                this.setVisible(false);
+            }
         }
     }//GEN-LAST:event_btnValidMouseClicked
 
@@ -474,7 +469,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("event recu!!");
+        //System.out.println("event recu!!");
         if (isPossibleToAddPan((javax.swing.JPanel) tabPanTeams.getSelectedComponent())) {
             btnAddMod.setEnabled(true);
         }

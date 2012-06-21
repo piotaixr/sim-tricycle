@@ -99,5 +99,5 @@ public interface CarteInterface {
      * @param c
      * @return
      */
-    public boolean suprimer(PossedeCaseInterface e, Case c);
+    public boolean supprimer(PossedeCaseInterface e, Case c);
 }

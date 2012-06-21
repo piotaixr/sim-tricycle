@@ -22,7 +22,7 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
 
     protected Environnement environnement = null;
     protected Point coordonnees;
-    protected Sens direction;
+    protected Sens direction = Sens.NORD;
     protected ArrayDeque<ActionInterface> actions = new ArrayDeque();
     protected Stack<AbstractActionComposee> pileActionsComposees = new Stack();
     protected Stack<ArrayDeque<ActionInterface>> pileFileActions = new Stack();
@@ -30,21 +30,63 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
     protected Etat etatDestination;
     protected Automate automate;
     protected boolean plante = false;
-    protected int cout = 0;
     protected AbstractObjet ItemPorte = null;
     protected int tempsConstruction = 3;//arbitrarire
+    protected int armure = 0;
+    protected int PV = 42;
+    protected int PA = 10;
+    protected String imgBase;
+
+    public String getImgBase() {
+        return imgBase;
+    }
+
+    public void setImgBase(String imgBase) {
+        this.imgBase = imgBase;
+    }
+
+    public int getArmure() {
+        return armure;
+    }
+
+    public void setArmure(int armure) {
+        this.armure = armure;
+    }
+
+    public int getPA() {
+        return PA;
+    }
+
+    public void setPA(int PA) {
+        this.PA = PA;
+    }
+
+    public int getPV() {
+        return PV;
+    }
+
+    public void setPV(int PV) {
+        this.PV = PV;
+    }
 
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate
      *
      * @param automate
      */
-    public Robot(Automate automate, Team equipe) {
+    public Robot(Automate automate, Team equipe, String imgB) {
         this.automate = automate;
         this.setTeam(equipe);
         this.etatCourant = automate.getEtat("init");
+        this.imgBase = imgB;
     }
 
+    public Robot(Automate automate, String imgB) {
+        this.automate = automate;
+        this.etatCourant = automate.getEtat("init");
+        this.imgBase = imgB;
+    }
+    
     public Robot(Automate automate) {
         this.automate = automate;
         this.etatCourant = automate.getEtat("init");
@@ -221,6 +263,7 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
     private void executerAction(ActionInterface action) {
         try {
             action.executer(this);
+            System.out.println(">>>>>>>>>>>>>>>>>>>>ACTION: " + action.getId().toUpperCase() + " <<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
             prix = etatCourant.getValeurAction(action);
             if (action instanceof AbstractActionComposee) {

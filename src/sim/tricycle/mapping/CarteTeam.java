@@ -29,6 +29,7 @@ public class CarteTeam extends AbstractCarte {
             }
         }
         vraiCarte = source;
+        this.afficherCarte();
     }
 
     /**
@@ -65,11 +66,10 @@ public class CarteTeam extends AbstractCarte {
             }
             rayon--;
         }
-        System.out.print("liste crée    ");
-        System.out.print(liste.toString());
         // Traitement des cases selectionnées:
         for (Case x : liste) {
             this.getCase(x.getX(), x.getY()).copy(x);
+            this.getCase(x.getX(), x.getY()).setTpsNonVu(0);
         }
     }
 
@@ -80,25 +80,48 @@ public class CarteTeam extends AbstractCarte {
     }
 
     public boolean pop(PossedeCaseInterface e, int x, int y) {
-        if (this.vraiCarte.pop(e, x, y)) {
-            super.pop(e, this.getCase(x, y));
+        Case c = vraiCarte.getCase(x, y);
+        if (super.pop(e, c)) {
+            this.actualiserCarte(1, this.getCase(x, y)); // On actu notre map.
             return true;
         }
         return false;
     }
 
-/**
- * Suprime un element de la carte.
- * @param e l'element à suprimer.
- * @param c
- * @return 
- */
-  public boolean suprimer(PossedeCaseInterface e,Case c) {
-        if (this.vraiCarte.suprimer(e,c)) {
-            super.suprimer(e,c);
+    public boolean pop(PossedeCaseInterface e, Case c) {
+        Case cv = vraiCarte.getCase(c.getX(), c.getY());
+        if (super.pop(e, cv)) {
+            this.actualiserCarte(2, c);
             return true;
         }
         return false;
     }
-    
+
+    /**
+     * Suprime un element de la carte.
+     *
+     * @param e l'element à suprimer.
+     * @param c
+     * @return
+     */
+    public boolean supprimer(PossedeCaseInterface e, Case c) {
+        Case cv = vraiCarte.getCase(c.getX(), c.getY());
+        if (vraiCarte.supprimer(e, cv)) {
+            this.actualiserCarte(1, c);
+            return true;
+        }
+        return false;
+    }
+
+    protected void placerPoint(String[][] mat) {
+        int i, j;
+        for (i = 0; i < tailleX; i++) {
+            for (j = 0; j < tailleY; j++) {
+                if ("@".equals(mat[i][j])) {
+                    this.actualiserCarte(1, getCase(i, j));
+                }
+
+            }
+        }
+    }
 }

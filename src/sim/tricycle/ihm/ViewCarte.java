@@ -15,12 +15,12 @@ import sim.tricycle.mapping.CarteInterface;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.elementCase.PointDeControle;
-import sim.tricycle.mapping.AbstractCarte;
 
 /**
- * Ah ah je modifie ton code thomas je m'empare de ton pouvoir de codage^^ devine qui a écrit ce commentaire 
- * @author nell 
- * FISTE
+ * Ah ah je modifie ton code thomas je m'empare de ton pouvoir de codage^^
+ * devine qui a écrit ce commentaire
+ *
+ * @author nell FISTE
  */
 public class ViewCarte extends javax.swing.JPanel {
 
@@ -37,10 +37,15 @@ public class ViewCarte extends javax.swing.JPanel {
     /**
      * Constructeur de carte implémentées
      */
-    public ViewCarte(AbstractJeu cont) {
+    public ViewCarte(AbstractJeu cont, int numeroTeam) {
         initComponents();
 
-        this.carte = cont.getCarte();
+        if (numeroTeam - 1 >= 0) {    //si c'est une team on prend ca carte, sinon on prend la map general (-1 car tab global)
+//        this.carte = cont.getCarte();
+            this.carte = cont.getTabTeams().get(numeroTeam - 1).getMap();
+        } else {
+            this.carte = cont.getCarte();
+        }
         this.tailleCase = this.tailleCaseBase;
         imgMap = carte.getImage();
         initialiserImage(cont);
@@ -100,7 +105,7 @@ public class ViewCarte extends javax.swing.JPanel {
         //Affichage des autres cases.
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
-                paintCase(g, carte.getCase(i, j), tailleCase, true, affFond);
+                paintCase(g, carte.getCase(i, j), tailleCase, false, affFond);
             }
         }
     }
@@ -124,19 +129,17 @@ public class ViewCarte extends javax.swing.JPanel {
         int x = (c.getY() * width) + decalageX;
         Color coul = null;
 
-        if (quadri) {
-            g.setColor(Color.BLACK);
-            g.drawRect(x, y, width, width);
-        }
-        if (c.whoIam() == TypeCase.base) {                                  //BASE
+         if (c.JamaisVu()) {//affichage brouillard jamais vu.
+            g.setColor(Color.black);
+            g.fillRect(x, y, width, width);
+        } else if (c.whoIam() == TypeCase.base) {                            //BASE
             g.drawImage(imgVide, x, y, width, width, this);
         } else if (c.whoIam() == TypeCase.mur) {                             //MUR
             // SI pas de map de fond => on affiche les murs.
             if (aff) {
-               // g.drawImage(enstteCase.get(c.getId() + ".png"), x, y, width, width, this);
+                // g.drawImage(enstteCase.get(c.getId() + ".png"), x, y, width, width, this);
                 g.drawImage(enstteCase.get("X.jpg"), x, y, width, width, this);
             }
-
         } else {                                                            //VIDE
             char ch = c.getId().charAt(0);
             if (ch == 'A' || ch == 'C') {   //Si case à motif 
@@ -153,10 +156,10 @@ public class ViewCarte extends javax.swing.JPanel {
                 if (pt.estNeutre()) {
                     coul = Color.lightGray;// Couleur de base si neutre.
                 } else {
-                    coul = pt.getTeam().getColor();// Couleur de la team qui possède
+                    coul = pt.getTeam().getColor();// Couleur de la team qui possède.
                     //le point de controle.
                 }
-                g.setColor(Color.DARK_GRAY);//Rond de fond/
+                g.setColor(Color.DARK_GRAY);//Rond de fond.
                 g.fillOval(x, y, width, width);
                 int coeff = width;
                 if (pt.getTpsCapture() < 5) {// selon l'avancement de la capture.
@@ -172,14 +175,13 @@ public class ViewCarte extends javax.swing.JPanel {
                 } else if (pt.getTpsCapture() < 50) {
                     coeff = width;
                 }
-                g.setColor(coul);// on le desine de la couleur de la team et on le centre.
+                g.setColor(coul);// On le desine de la couleur de la team et on le centre.
                 g.fillOval(x + (width - coeff) / 2, y + (width - coeff) / 2, coeff, coeff);
                 g.drawImage(enstteCase.get("A5.png"), x, y, width, width, this);
             }
             if (c.getZone().whoIam() == TypeCase.base) {
                 g.drawImage(ensaCharger.get("base.png"), x, y, width, width, this);
             }
-
         }
         if (c.whoIam() == TypeCase.piece) {                              //PIECE
             g.drawImage(enstteCase.get("piece.png"), x, y, width, width, this);
@@ -192,8 +194,35 @@ public class ViewCarte extends javax.swing.JPanel {
         }
         // possible superposition de robot sur objet:
         if (c.robotPresent()) {                                           //ROBOT
-            sim.tricycle.robot.Robot rob = c.getRobotPresent();
-            g.drawImage(ensaCharger.get("robotCR.png"), x, y, width, width, this);
+            sim.tricycle.robot.Robot bot = c.getRobotPresent();
+            String nomFich = "robotC";
+            switch (bot.getDirection()) {
+                case NORD:
+                    nomFich = nomFich.concat("Dos");
+                    break;
+                case EST:
+                    nomFich = nomFich.concat("D");
+                    break;
+                case OUEST:
+                    nomFich = nomFich.concat("G");
+                    break;
+                case SUD:
+                    nomFich = nomFich.concat("");
+                    break;
+            }
+            //Selon numero de la team, on lui choisit sa couleur.
+            if (bot.getTeam().getId() == 0) {
+                nomFich = nomFich.concat("R");
+            } else if (bot.getTeam().getId() == 1) {
+                nomFich = nomFich.concat("B");
+            } else if (bot.getTeam().getId() == 2) {
+                nomFich = nomFich.concat("J");
+            } else {
+                nomFich = nomFich.concat("N");
+            }//On affiche.
+            System.out.println(nomFich);
+            g.drawImage(ensaCharger.get(nomFich + ".png"), x, y, width, width, this);
+
         }
     }
 

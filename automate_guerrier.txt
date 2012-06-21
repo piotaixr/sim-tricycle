@@ -1,0 +1,82 @@
+/*fichier automate*/
+robot{
+
+        etat=init{
+            transition{
+                sinon{
+                    etat=normal;
+                }
+            }
+        }
+	etat=normal{
+	    transition{
+		si(ennemi_devant()&&pv_necessaire()){ ennemi<-robot_devant();
+						      etat=attaque;
+		}
+            }
+            transition{
+		si(ennemi_devant()&&!pv_necessaire()){ ennemi<-robot_devant();
+						       etat=defense;
+		}
+            }
+	    transition{
+		si(contains(caseCourante,ptrechercher)){ sleep();
+				                         etat=normal;
+                }
+            }
+            transition{
+		si(pt_control_trouve()){  ptrechercher<-PtDeControlIdeal();
+                                          etat=deplacement_norm;
+                }
+            }
+            transition{
+		sinon{sleep();
+		       etat=normal;
+		}
+            }
+        }
+	
+	etat=deplacement_norm{
+            transition{
+		si(contains(caseCourante,ptrechercher)){ sleep();
+				     etat=normal;
+                }
+            }
+            transition{
+		sinon{allerici(var : ptrechercher);
+		      etat=normal;
+		}
+            }
+	}
+
+	etat=attaque{
+            transition{
+		si(!robot_devant()){etat=normal;
+		}
+	    }
+	    tarnsition{
+		si(!pv_necessaire()){defendre();
+                                     etat=defense;
+		}
+	    transition{
+		sinon{attaquer();
+		      etat=attaque;
+		}
+	    }
+	}
+
+	etat=defense{
+            transition{
+		si(!robot_devant){etat=normal;
+		}
+            }
+            transition{
+		sinon{defendre();
+		      etat=defense;
+		}
+            }
+	}
+        
+}
+fin
+

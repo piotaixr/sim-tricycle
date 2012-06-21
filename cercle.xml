@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding='ISO-8859-1' standalone='yes' ?>
 <robot>
-    <etat id="1">
+    <etat id="init">
         <transition>
-            <condition nom="pieceexiste"></condition>
-            <action nom="pieceplusproche" dest="piece"></action>
-            <action nom="collecter">
-                <parametre type="var">piece</parametre>
-            </action>
             <etat id="1" />
         </transition>
+    </etat>
+    <etat id="1">
         <transition>
+            <action nom="tourner">
+                <parametre>NORD</parametre>
+            </action>
             <action nom="avancer"></action>
             <action nom="tourner">
                 <parametre>EST</parametre>

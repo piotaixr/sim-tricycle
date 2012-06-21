@@ -4,17 +4,20 @@
  */
 package sim.tricycle.ihm;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import sim.tricycle.AbstractJeu;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
+import sim.tricycle.mapping.Case;
 import sim.tricycle.robot.Model;
-import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.Sens;
 import sim.tricycle.team.Team;
@@ -30,16 +33,19 @@ public class PanSelectModel extends javax.swing.JPanel {
     private int price = 0;
     private OrdonnanceurInterface oi = null;
     private Image imgBot = null;
+    private AbstractJeu jeu;
+    private MyObs obs = new MyObs();
 
     /**
      * Creates new form PanSelectModel
      */
-    public PanSelectModel(Model mod, Team t, OrdonnanceurInterface oi) {
+    public PanSelectModel(Model mod, Team t, OrdonnanceurInterface oi, AbstractJeu jeu) {
         initComponents();
         this.model = mod;
         this.t = t;
         this.price = model.getRob().getPrix();
         this.oi = oi;
+        this.jeu = jeu;
         try {
             imgBot = ImageIO.read(new File("./src/sim/tricycle/ihm/images/robots/" + model.getImg()));
         } catch (IOException ex) {
@@ -55,6 +61,24 @@ public class PanSelectModel extends javax.swing.JPanel {
         Graphics2D g = (Graphics2D) graphic;
 
         g.drawImage(imgBot, 20, 20, 60, 60, this);
+    }
+
+//    public void mapsRepaint() {
+//        for (Component c : this.getParent().getParent().getComponents()) {
+//            if (c.getClass().getSimpleName() == "");
+//        }
+//    }
+    public Observable getObs() {
+        return obs;
+    }
+
+    private class MyObs extends Observable {
+
+        public void sendMessage() {
+            setChanged();
+            notifyObservers();
+//            System.out.println("coucou");
+        }
     }
 
     /**
@@ -128,13 +152,44 @@ public class PanSelectModel extends javax.swing.JPanel {
         // TODO add your handling code here:
 //        if (t.getRessources().get("GOLD") - price > 0)
 //        {
-        if (!t.getBase().getPosition().hasObstacle()) {
-            Robot rob = new Robot(model.getRob().getAutomate(), t);
+        if (!jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY()).hasObstacle()) {//        if (!t.getBase().getPosition().hasObstacle()) {
+           
+            //On recupere le nom du modele et on enleve l'extension pour pouvoir afficher plus tard l'image dans les positions qu'on veut
+            String nameBot = model.getRob().getImgBase();
+            nameBot = nameBot.substring(0, nameBot.lastIndexOf("."));
+            System.out.println(nameBot);
+            
+            Robot rob = new Robot(model.getRob().getAutomate(), t, nameBot);
             rob.setCoordonnees(t.getBase().getPosition());
-            rob.setDirection(Sens.NORD);
+            rob.setDirection(Sens.SUD);
+
+//            //Ajout dans la map globale
+//            Case casebase = jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
+//            casebase.setObstacle(rob);
+//            jeu.getCarte().ActualiserBroullard(casebase);
+//            //Ajout dans la map Team
+//            Case caseTest = t.getMap().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
+//            caseTest.setObstacle(rob);
+//            t.getMap().ActualiserBroullard(caseTest);
+//            
+            Case casePop = t.getMap().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
+            t.getMap().pop(rob, casePop);
+//            Case casePopMap = jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
+//            jeu.getCarte().pop(rob, casePopMap);
+
+            t.addRobot(rob);
             oi.add(rob);
-            this.getParent().repaint();
+
+            //t.getRessources().get(0).setQuantite(t.getRessources().get(0).getQuantite()- price); Enleve le cout du robot
+
+            obs.sendMessage();
+            System.out.println("OK");
+
+        } else {
+            System.out.println("Y deja un truc sur la case ducon");
         }
+
+
         //       }
     }//GEN-LAST:event_btnCreateBotMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
