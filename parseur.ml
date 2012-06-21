@@ -1,6 +1,6 @@
-(*#load "dynlink.cma";;
+#load "dynlink.cma";;
 
-#load "camlp4o.cma";;*)
+#load "camlp4o.cma";;
 
 type 'a pile= Pile_vide|Pile_non_vide of 'a*'a pile;;
 (*_______________________________________________________________________*)
@@ -27,18 +27,24 @@ let ecriture_aux_char sortie char = output_char sortie char;;
 let transf entree= Stream.of_string(input_line entree);;
 let transf2 string = Stream.of_string(string);;
 
-let rec indenter i sortie = 
-  while !i>0 do 
-    output_char sortie '\t';
-    i:=!i-1
-  done ;;
-
 (* detect_etat permet quand on a une accolade et que dans le sommet de la pile est un etat de différencier un état d'autre chose par exemple une transition:
 exemple etat=norma{
             transition{
             }
        }
 *)
+
+let rec detect_condition stream = match stream with parser 
+  |[<'' ';f>]->detect_condition f
+  |[<''a'..'z'|'A'..'Z'|'_'|'('|')'|',';f>]->detect_condition f
+  |[<''&';''&'>]-> "et"
+  |[<''|';''|'>]->"ou"
+  |[<''!'>]->"non"
+  |[<>]->"";;
+
+let cond_test = transf2("si(bla()||jdr())");;
+detect_condition cond_test;;
+
 
 let rec detect_etat stream nom = match stream with parser
   |[<'' ';f>]-> detect_etat f nom
@@ -52,6 +58,7 @@ let rec parseur pile sortie stream detection nom piece= match stream with parser
   |[<''-';f>]->(parseur pile sortie f detection nom piece);
   |[<''\n';f>]->(parseur pile sortie f detection nom piece);
   |[<''\t';f>]->(parseur pile sortie f detection nom piece);
+  |[<''!'|'&'|'|';f>]->(parseur pile sortie f detection "" piece);
   |[<''<';f>]-> let p= (empiler "affectation" pile) in (parseur p sortie f detection "" nom)
   |[<'';';f>]->(let name = (sommet_pile pile) 
 	       in match name with 
@@ -113,16 +120,25 @@ let rec parseur pile sortie stream detection nom piece= match stream with parser
 
 		  |autre-> (let name = nom 
 			   in match name with
-			     |"si"-> ecriture_aux sortie ("<condition nom=");
-			       let p= (empiler "condition" pile) in (parseur p sortie f detection "" "si")
-			     |post-> if (piece="si")
-			       then ((ecriture_aux sortie ("\""^post^"\""));
-				     let p = (empiler "condition_avec_para" pile) 
-				     in (parseur p sortie f detection "" piece))
+			     |"si"-> let cond = detect_condition detection
+				     in if (cond <>"")
+				       then ((ecriture_aux sortie ("<condition type=\"multiple\" nom=\""^cond^"\">"));
+					     let p=(empiler "condition" pile) in (parseur p sortie f detection "" "condition_multiple"))
+ 
+				       else ((ecriture_aux sortie ("<condition nom="));
+					      let p= (empiler "condition" pile) in (parseur p sortie f detection "" "si"))
 
-			   else ( ecriture_aux sortie ("<action nom="^"\""^post^"\""^">");
-				   (ecriture_aux_char sortie '\n'); 
-				   let p= (empiler "action" pile) in (parseur p sortie f detection "" piece))))
+			     |post->(let item = piece
+				     in match item with 
+				       |"si"->(ecriture_aux sortie ("\""^post^"\""));
+					 let p = (empiler "condition_avec_para" pile)  in (parseur p sortie f detection "" piece)
+
+				       |"condition_multiple"-> (ecriture_aux sortie ("<condition nom=\""^post^"\""));
+					 let p= (empiler "condition" pile) in (parseur (empiler "condition_avec_para" p) sortie f detection "" "si")
+
+				       |inconnu->(ecriture_aux sortie ("<action nom="^"\""^post^"\""^">"));
+						   (ecriture_aux_char sortie '\n'); 
+						   let p= (empiler "action" pile) in (parseur p sortie f detection "" piece))))
 		
    |[<'')';f>]->(let name = (sommet_pile pile)
 		in match name with 
@@ -130,9 +146,17 @@ let rec parseur pile sortie stream detection nom piece= match stream with parser
 		    then ((ecriture_aux sortie ("/>")); 
 			  (ecriture_aux_char sortie '\n');
 		    let p= (depiler pile) in(parseur p sortie f detection "" "sans_parametre"))
-		    else ((ecriture_aux sortie ("<parametre>"^" "^nom^" "^"</parametre>"));
-			 ( ecriture_aux_char sortie '\n');
-			  (let p = (depiler pile) in (parseur p sortie f detection "" "parametre")))
+		    else (
+		      if (piece="si")
+		      then ((ecriture_aux sortie (">"));
+			  (ecriture_aux_char sortie ('\n'));
+			  (ecriture_aux sortie ("<parametre>"^" "^nom^" "^"</parametre>"));
+			  (ecriture_aux_char sortie ('\n'));
+			  let p = (depiler pile) in (parseur p sortie f detection "" "parametre"))
+		      else (
+			(ecriture_aux sortie ("<parametre>"^" "^nom^" "^"</parametre>"));
+			( ecriture_aux_char sortie '\n');
+			(let p = (depiler pile) in (parseur p sortie f detection "" "parametre"))))
 
 		  |"condition"->(let word = piece 
 				 in match word with 
@@ -220,7 +244,7 @@ let analyse ent sort =
      close_out sortie;
      close_in entree;;
 
-analyse "automate" "test";;
+analyse "pile" "test";;
 
 
 
