@@ -56,8 +56,8 @@ public class AbstractVision extends AbstractObstacle {
      * @return vrai s'il voit la case.
      */
     public boolean voit(Case c) {
-        int x=(Math.abs(c.getX()- this.pos.getX()));
-        int y=Math.abs(c.getX()- this.pos.getX());
+        int x=Math.abs(c.getX()- this.pos.getX());
+        int y=Math.abs(c.getY()- this.pos.getY());
         return (x+y>this.portee);
     }
     
