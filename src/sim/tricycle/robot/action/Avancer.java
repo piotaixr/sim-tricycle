@@ -16,7 +16,9 @@ public class Avancer extends AbstractAction {
 
     @Override
     protected Object doExecute(Robot bot) {
-        bot.getTeam().getMap().avancer(bot);
+        if(!bot.getTeam().getMap().avancer(bot)){
+            throw new RuntimeException("Erreur lors du deplacement du robot");
+        }
         return null;
     }
     
