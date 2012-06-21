@@ -62,6 +62,7 @@ public class AbstractVision extends AbstractObstacle {
     }
     
     public void majvision(){
-        this.getTeam().getMap().actualiserCarte( this.portee, pos);
+        this.getTeam().getMap().actualiserCarte(this.portee, pos);
     }
+    
 }
