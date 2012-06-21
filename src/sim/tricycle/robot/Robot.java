@@ -32,6 +32,35 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
     protected boolean plante = false;
     protected AbstractObjet ItemPorte = null;
     protected int tempsConstruction = 3;//arbitrarire
+    protected int armure = 0;
+    protected int PV = 42; 
+    protected int PA = 10;
+
+    
+    public int getArmure() {
+        return armure;
+    }
+
+    public void setArmure(int armure) {
+        this.armure = armure;
+    }
+    
+    public int getPA() {
+        return PA;
+    }
+
+    public void setPA(int PA) {
+        this.PA = PA;
+    }
+
+    public int getPV() {
+        return PV;
+    }
+
+    public void setPV(int PV) {
+        this.PV = PV;
+    }
+    
 
     /**
      * @todo Initialiser le robot avec l'etat initial de l'automate

@@ -155,7 +155,7 @@ public class PanSelectModel extends javax.swing.JPanel {
         if (!jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY()).hasObstacle()) {//        if (!t.getBase().getPosition().hasObstacle()) {
             Robot rob = new Robot(model.getRob().getAutomate(), t);
             rob.setCoordonnees(t.getBase().getPosition());           
-            rob.setDirection(Sens.NORD);
+            rob.setDirection(Sens.SUD);
             
 //            //Ajout dans la map globale
 //            Case casebase = jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
