@@ -51,7 +51,7 @@ robot{
 
 	etat=attaque{
             transition{
-		si(!robot_devant()){etat=normal;
+		si(!ennemi_devant()){etat=normal;
 		}
 	    }
 	    tarnsition{
@@ -67,7 +67,7 @@ robot{
 
 	etat=defense{
             transition{
-		si(!robot_devant){etat=normal;
+		si(!ennemi_devant){etat=normal;
 		}
             }
             transition{
