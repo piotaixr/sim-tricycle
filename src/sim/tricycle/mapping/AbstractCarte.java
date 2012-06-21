@@ -30,7 +30,7 @@ public abstract class AbstractCarte implements CarteInterface {
     protected List<Point> listeBase;
     protected int tailleX, tailleY;
     protected Case[][] carte;
-    protected static ArrayList<AbstractVision> elements = null;
+    protected static ArrayList<AbstractVision> elements = new ArrayList();
 
     @Override
     public void afficherCarte() {
