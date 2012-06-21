@@ -196,7 +196,8 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
             if (c instanceof PanSelectAutomate) {
                 //pour éviter d'avoir une ligne de code indigerable
                 String automateTxt = ((PanSelectAutomate) c).getStringAutomate();
-                File f = new File(automateTxt);
+                File f = new File("Automates/"+automateTxt);
+//                System.out.println(f.getAbsolutePath());
                 Automate auto = robPars.parse(f);
                 t.addModel(new Robot(auto, t,((PanSelectAutomate) c).getStringImg()), ((PanSelectAutomate) c).getStringImg());
             }
