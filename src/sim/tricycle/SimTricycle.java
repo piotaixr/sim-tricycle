@@ -135,8 +135,8 @@ public class SimTricycle {
 //        FrameGame1 fg = new FrameGame1(jeu);
 //        fg.setVisible(true);
 //        
-//        AbstractJeu superGameDeLaMortQuiTue = new Jeu();
-//        FrameMenu fm = new FrameMenu(superGameDeLaMortQuiTue);
-//        fm.setVisible(true);
+        AbstractJeu superGameDeLaMortQuiTue = new Jeu();
+        FrameMenu fm = new FrameMenu(superGameDeLaMortQuiTue);
+        fm.setVisible(true);
     }
 }
