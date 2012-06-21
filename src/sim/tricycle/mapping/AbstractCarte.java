@@ -44,6 +44,10 @@ public abstract class AbstractCarte implements CarteInterface {
         }
     }
 
+    public static HashSet<PointDeControle> getListePt() {
+        return listePt;
+    }
+
     /**
      * Initialise la carte à partir de la matrice contenu dans l'abstraction.
      * @ensure la matrice à était initialisée
@@ -72,21 +76,20 @@ public abstract class AbstractCarte implements CarteInterface {
         //Recherche des points de controles et traitement.
         for (i = 0; i < tailleX; i++) {
             for (j = 0; j < tailleY; j++) {
+
                 if ("@".equals(mat[i][j])) {
-                    System.out.print("\n    Entre dans placer pt\n");
-                    //Si pt de controle il lui faut connaitre ses cases voisines.
                     carte[i][j] = new Case(i, j);
+                    //Si pt de controle il lui faut connaitre ses cases voisines.
                     casesVoisines(this, this.getCase(i, j), liste);
                     PointDeControle pt = new PointDeControle(liste);
-                    System.out.print("\n liste: " + liste.toString());
                     pt.setCase(this.getCase(i, j));
                     this.getCase(i, j).setZone(pt);
-                    //On ajoute ce point à la liste des points.
-                    listeP.add(pt);
+                    listeP.add(pt);// On ajoute ce point à la liste des points.
                 }
-                this.listePt = listeP;
+                carte[i][j].setTpsNonVu(0);
             }
         }
+        this.listePt = listeP;
     }
 
     public void startInit(String[][] mat) {
@@ -194,17 +197,17 @@ public abstract class AbstractCarte implements CarteInterface {
     public Case getCaseDevant(Robot bot) {
         Case c = null;
         switch (bot.getDirection()) {
-            case EST:
-                c = bot.getTeam().getMap().getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
-                break;
-            case OUEST:
-                c = bot.getTeam().getMap().getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
-                break;
             case NORD:
-                c = bot.getTeam().getMap().getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
+                c = this.getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
                 break;
             case SUD:
-                c = bot.getTeam().getMap().getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
+                c = this.getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
+                break;
+            case EST:
+                c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
+                break;
+            case OUEST:
+                c =this.getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
                 break;
         }
         return c;
@@ -213,13 +216,14 @@ public abstract class AbstractCarte implements CarteInterface {
     @Override
     public boolean avancer(Robot bot) {
         Case c = getCaseDevant(bot);
+        System.out.print("\n\n\n" + c.getX() + c.getY());
         if (c != null) {// si on peut avancer:
-            if (bot.getPosition().hasObstacle()) {
-                bot.getPosition().suprObstacle();
-                this.ActualiserBroullard(c);
-            }
             if (!c.hasObstacle()) {
+                bot.getPosition().suprObstacle();
+                bot.setCase(c);
                 c.setObstacle(bot);
+                System.out.print("\n\n\n" + bot.getCoordonnees().getStringedCoord());
+                // this.ActualiserBrouillard(c);
             }
         } else {
             return false;
@@ -289,7 +293,7 @@ public abstract class AbstractCarte implements CarteInterface {
      *
      * @param c la case depuis laquelle actualisé.
      */
-    public void ActualiserBroullard(Case c) {
+    public void ActualiserBrouillard(Case c) {
 
         for (AbstractVision x : elements) {
             if (x.voit(c)) {

@@ -79,8 +79,10 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         //On calcule les coordonées de la case.
         int y = (c.getX() * width);
         int x = (c.getY() * width);
-
-        if (c.whoIam() == TypeCase.mur) {                             //MUR
+        if (c.JamaisVu()) {//affichage brouillard jamais vu.
+            g.setColor(Color.black);
+            g.fillRect(x, y, width, width);
+        } else if (c.whoIam() == TypeCase.mur) {                             //MUR
             // SI pas de map de fond donc pas besoin de tout afficher
             // ou si obstacle redesinnable:
             if (aff || c.getId().charAt(0) == 'X') {

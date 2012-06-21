@@ -105,7 +105,7 @@ public class ViewCarte extends javax.swing.JPanel {
         //Affichage des autres cases.
         for (int i = 0; i < carte.getHauteur(); i++) {
             for (int j = 0; j < carte.getLargeur(); j++) {
-                paintCase(g, carte.getCase(i, j), tailleCase, true, affFond);
+                paintCase(g, carte.getCase(i, j), tailleCase, false, affFond);
             }
         }
     }
@@ -129,11 +129,10 @@ public class ViewCarte extends javax.swing.JPanel {
         int x = (c.getY() * width) + decalageX;
         Color coul = null;
 
-        if (quadri) {
-            g.setColor(Color.BLACK);
-            g.drawRect(x, y, width, width);
-        }
-        if (c.whoIam() == TypeCase.base) {                                  //BASE
+         if (c.JamaisVu()) {//affichage brouillard jamais vu.
+            g.setColor(Color.black);
+            g.fillRect(x, y, width, width);
+        } else if (c.whoIam() == TypeCase.base) {                            //BASE
             g.drawImage(imgVide, x, y, width, width, this);
         } else if (c.whoIam() == TypeCase.mur) {                             //MUR
             // SI pas de map de fond => on affiche les murs.
@@ -141,7 +140,6 @@ public class ViewCarte extends javax.swing.JPanel {
                 // g.drawImage(enstteCase.get(c.getId() + ".png"), x, y, width, width, this);
                 g.drawImage(enstteCase.get("X.jpg"), x, y, width, width, this);
             }
-
         } else {                                                            //VIDE
             char ch = c.getId().charAt(0);
             if (ch == 'A' || ch == 'C') {   //Si case à motif 
