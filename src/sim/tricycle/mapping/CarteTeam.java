@@ -42,7 +42,8 @@ public class CarteTeam extends AbstractCarte {
         if (!vraiCarte.avancer(bot)) {
             return false;
         } else {
-            this.actualiserCarte(bot.getPortee(), this.getCase(bot.getPosition().getX(), bot.getPosition().getX())); // On actu notre map.
+            // On actu notre map.
+            this.actualiserCarte(bot.getPortee(), this.getCase(bot.getPosition().getX(), bot.getPosition().getY()));
             return true;
         }
     }

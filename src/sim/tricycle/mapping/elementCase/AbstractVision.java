@@ -13,9 +13,8 @@ public class AbstractVision extends AbstractObstacle {
 
     protected Team t = null;
     protected int prix = 0;
-    protected int porteeMax = 0;
-
- 
+    protected int porteeMax = 1;
+    protected int portee=1;
 
     public int getPorteeMax() {
         return porteeMax;
@@ -24,7 +23,6 @@ public class AbstractVision extends AbstractObstacle {
     public int getPrix() {
         return prix;
     }
-    protected int portee;
 
     public void setPorteeMax(int porteeMax) {
         this.porteeMax = porteeMax;

@@ -214,6 +214,7 @@ public class Case implements CaseInterface {
     public void copy(Case nouv) {
         this.objet = nouv.objet;
         this.obstacle = nouv.obstacle;
+        this.zone = nouv.zone;
     }
 
     @Override
