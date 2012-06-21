@@ -27,8 +27,8 @@ public class Defendre extends AbstractAction{
         
         bot.setArmure(bot.getArmure()+10);
         
-        adversaire.setPv((int)(adversaire.getPv()-(bot.getPointAttaque()*(0.10)*(adversaire.getArmure()/100))));
-        if(adversaire.getPv()<=0){
+        adversaire.setPV((int)(adversaire.getPV()-(bot.getPA()*(0.10)*(adversaire.getArmure()/100))));
+        if(adversaire.getPV()<=0){
             bot.getTeam().getMap().suprimer(adversaire, c);
         }
         
