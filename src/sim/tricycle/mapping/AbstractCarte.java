@@ -86,7 +86,7 @@ public abstract class AbstractCarte implements CarteInterface {
                     this.getCase(i, j).setZone(pt);
                     listeP.add(pt);// On ajoute ce point à la liste des points.
                 }
-                 carte[i][j].setTpsNonVu(0);
+                carte[i][j].setTpsNonVu(0);
             }
         }
         this.listePt = listeP;
@@ -197,17 +197,17 @@ public abstract class AbstractCarte implements CarteInterface {
     public Case getCaseDevant(Robot bot) {
         Case c = null;
         switch (bot.getDirection()) {
-            case EST:
-                c = bot.getTeam().getMap().getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
-                break;
-            case OUEST:
-                c = bot.getTeam().getMap().getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
-                break;
             case NORD:
-                c = bot.getTeam().getMap().getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
+                c = this.getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
                 break;
             case SUD:
-                c = bot.getTeam().getMap().getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
+                c = this.getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
+                break;
+            case EST:
+                c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
+                break;
+            case OUEST:
+                c =this.getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
                 break;
         }
         return c;
@@ -216,13 +216,14 @@ public abstract class AbstractCarte implements CarteInterface {
     @Override
     public boolean avancer(Robot bot) {
         Case c = getCaseDevant(bot);
+        System.out.print("\n\n\n" + c.getX() + c.getY());
         if (c != null) {// si on peut avancer:
-            if (bot.getPosition().hasObstacle()) {
-                bot.getPosition().suprObstacle();
-                this.ActualiserBrouillard(c);
-            }
             if (!c.hasObstacle()) {
+                bot.getPosition().suprObstacle();
+                bot.setCase(c);
                 c.setObstacle(bot);
+                System.out.print("\n\n\n" + bot.getCoordonnees().getStringedCoord());
+                // this.ActualiserBrouillard(c);
             }
         } else {
             return false;

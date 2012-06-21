@@ -39,12 +39,11 @@ public class CarteTeam extends AbstractCarte {
      * @return vrai si deplacement réussi
      */
     public boolean avancer(Robot bot) {
-        boolean res = vraiCarte.avancer(bot);
-
-        if (!res) {
+        if (!vraiCarte.avancer(bot)) {
             return false;
         } else {
-            return super.avancer(bot);
+              this.actualiserCarte(bot.getPortee(), bot.getPosition()); // On actu notre map.
+            return true;
         }
     }
 
