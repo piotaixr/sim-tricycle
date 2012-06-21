@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import sim.tricycle.AbstractJeu;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
+import sim.tricycle.ihm.PanRessourceTeam;
 import sim.tricycle.robot.Model;
 import sim.tricycle.team.Team;
 
@@ -35,8 +36,8 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
 
-        vc = new ViewCarte(jeu);
-        vmc = new ViewMiniCarte(jeu, vc);
+        vc = new ViewCarte(jeu, -1);
+        vmc = new ViewMiniCarte(jeu, vc, -1);
 
         panMiniMap.setLayout(new BorderLayout());
         vmc.setVisible(true);
@@ -75,20 +76,41 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
     }
 
     public void addPanAuto(javax.swing.JPanel pan, Model mod, Team t) {
-        PanSelectModel panSelect = new PanSelectModel(mod,t,oi);
+        PanSelectModel panSelect = new PanSelectModel(mod, t, oi, cont);
         pan.add(panSelect);
+        panSelect.getObs().addObserver(this);
     }
 
     public void addPansAutomateByTeam(javax.swing.JPanel pan, Team t) {
         for (Model m : t.getModel()) {
-            addPanAuto(pan,m,t);
+            addPanAuto(pan, m, t);
         }
     }
 
     public javax.swing.JPanel createPanTeam(Team t) {
         javax.swing.JPanel panteam = new javax.swing.JPanel();
-        panteam.setLayout(new BoxLayout(panteam, BoxLayout.Y_AXIS));
-        addPansAutomateByTeam(panteam, t);
+        javax.swing.JPanel panteamAuto = new javax.swing.JPanel();
+        javax.swing.JPanel panRessTeam = createPanRessource(t);
+        
+        panteam.setLayout(new BorderLayout());
+        panteamAuto.setLayout(new BoxLayout(panteamAuto, BoxLayout.Y_AXIS));
+        addPansAutomateByTeam(panteamAuto, t);
+        
+        panteam.add(panteamAuto, BorderLayout.CENTER);
+        panteam.add(panRessTeam, BorderLayout.SOUTH);
+
+        return panteam;
+    }
+
+    public void addRessourceTeam(javax.swing.JPanel pan, Team t) {
+        PanRessourceTeam panSelect = new PanRessourceTeam();
+        pan.add(panSelect);
+    }
+
+    public javax.swing.JPanel createPanRessource(Team t) {
+        javax.swing.JPanel panteam = new javax.swing.JPanel();
+        panteam.setLayout(new BorderLayout());
+        addRessourceTeam(panteam, t);
         return panteam;
     }
 
@@ -329,6 +351,12 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
                 .addGap(104, 104, 104))
         );
 
+        tabPanActionAvailable.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tabPanActionAvailableStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout panActionAvailableGlobaleLayout = new javax.swing.GroupLayout(panActionAvailableGlobale);
         panActionAvailableGlobale.setLayout(panActionAvailableGlobaleLayout);
         panActionAvailableGlobaleLayout.setHorizontalGroup(
@@ -492,6 +520,29 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         oi.setPeriod(oi.getPeriod() / 2);
     }//GEN-LAST:event_buttonSpeedUpMousePressed
 
+    private void tabPanActionAvailableStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabPanActionAvailableStateChanged
+        // TODO add your handling code here:
+        if (cont != null) {
+            panMiniMap.remove(vmc);
+            vc = new ViewCarte(cont, tabPanActionAvailable.getSelectedIndex());
+            vmc = new ViewMiniCarte(cont, vc, tabPanActionAvailable.getSelectedIndex());
+
+
+            vmc.setVisible(true);
+
+
+            jspanMap.setViewportView(vc);                    //////// A VOIR SI CA PREND PAS TROP DE TEMPS DE FAIRE CA A CHAQUE FOIS
+            panMiniMap.add(vmc);
+
+            jspanMap.repaint();
+            panMiniMap.repaint();
+//            repaint();
+//            System.out.println("Map changée");
+
+//            cont.getTabTeams().get(tabPanActionAvailable.getSelectedIndex() - 1).getMap().afficherCarte();
+        }
+    }//GEN-LAST:event_tabPanActionAvailableStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -563,8 +614,17 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        lblTime.setText(String.valueOf(oi.getTime()));
-        cont.getCarte().routinePt();
-        repaint();
+        if (o.equals((Ordonnanceur) oi)) {
+            lblTime.setText(String.valueOf(oi.getTime()));
+            cont.getCarte().routinePt();
+            repaint();
+        } else {
+//            tabPanActionAvailableStateChanged(null);
+            jspanMap.repaint();
+            panMiniMap.repaint();
+//            repaint();
+            System.out.println("COuCOU");
+        }
+
     }
 }
