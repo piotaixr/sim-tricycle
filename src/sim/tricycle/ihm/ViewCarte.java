@@ -18,9 +18,10 @@ import sim.tricycle.mapping.elementCase.PointDeControle;
 import sim.tricycle.mapping.AbstractCarte;
 
 /**
- * Ah ah je modifie ton code thomas je m'empare de ton pouvoir de codage^^ devine qui a écrit ce commentaire 
- * @author nell 
- * FISTE
+ * Ah ah je modifie ton code thomas je m'empare de ton pouvoir de codage^^
+ * devine qui a écrit ce commentaire
+ *
+ * @author nell FISTE
  */
 public class ViewCarte extends javax.swing.JPanel {
 
@@ -133,7 +134,7 @@ public class ViewCarte extends javax.swing.JPanel {
         } else if (c.whoIam() == TypeCase.mur) {                             //MUR
             // SI pas de map de fond => on affiche les murs.
             if (aff) {
-               // g.drawImage(enstteCase.get(c.getId() + ".png"), x, y, width, width, this);
+                // g.drawImage(enstteCase.get(c.getId() + ".png"), x, y, width, width, this);
                 g.drawImage(enstteCase.get("X.jpg"), x, y, width, width, this);
             }
 
@@ -192,8 +193,34 @@ public class ViewCarte extends javax.swing.JPanel {
         }
         // possible superposition de robot sur objet:
         if (c.robotPresent()) {                                           //ROBOT
-            sim.tricycle.robot.Robot rob = c.getRobotPresent();
-            g.drawImage(ensaCharger.get("robotCR.png"), x, y, width, width, this);
+            sim.tricycle.robot.Robot bot = c.getRobotPresent();
+            String nomFich = "robotC"; 
+            switch (bot.getDirection()) {
+                case NORD:
+                    nomFich.concat("Dos");
+                    break;
+                case EST:
+                    nomFich.concat("D");
+                    break;
+                case OUEST:
+                    nomFich.concat("G");
+                    break;
+                case SUD:
+                    nomFich.concat("");
+                    break;
+            }
+            //Selon numero de la team, on lui choisit sa couleur.
+            if (bot.getTeam().getId() == 1) {
+                nomFich.concat("R");
+            } else if (bot.getTeam().getId() == 2) {
+                nomFich.concat("B");
+            } else if (bot.getTeam().getId() == 3) {
+                nomFich.concat("J");
+            } else {
+                nomFich.concat("N");
+            }//On affiche.
+            g.drawImage(ensaCharger.get(nomFich + ".png"), x, y, width, width, this);
+
         }
     }
 
