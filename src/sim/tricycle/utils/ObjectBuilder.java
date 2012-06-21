@@ -86,6 +86,7 @@ public class ObjectBuilder {
                     .register(new SeDeplacerUneCase(getActionBuilder()))
                     .register(new SeTeleporterA())
                     .register(new Sleep())
+                    .register(new Step(getActionBuilder()))
                     .register(new SuivreChemin(getActionBuilder()))
                     .register(new Tourner())
                     .register(new TrouveCaseDevant())
