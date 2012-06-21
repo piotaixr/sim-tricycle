@@ -78,13 +78,13 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
         this.automate = automate;
         this.setTeam(equipe);
         this.etatCourant = automate.getEtat("init");
-        this.imgBase = imgB.substring(0, imgB.lastIndexOf("."));;
+        this.imgBase = imgB;
     }
 
     public Robot(Automate automate, String imgB) {
         this.automate = automate;
         this.etatCourant = automate.getEtat("init");
-        this.imgBase = imgB.substring(0, imgB.lastIndexOf("."));
+        this.imgBase = imgB;
     }
     
     public Robot(Automate automate) {
