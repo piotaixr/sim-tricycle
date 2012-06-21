@@ -22,7 +22,7 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
 
     protected Environnement environnement = null;
     protected Point coordonnees;
-    protected Sens direction;
+    protected Sens direction = Sens.NORD;
     protected ArrayDeque<ActionInterface> actions = new ArrayDeque();
     protected Stack<AbstractActionComposee> pileActionsComposees = new Stack();
     protected Stack<ArrayDeque<ActionInterface>> pileFileActions = new Stack();
@@ -263,6 +263,7 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
     private void executerAction(ActionInterface action) {
         try {
             action.executer(this);
+            System.out.println(">>>>>>>>>>>>>>>>>>>>ACTION: " + action.getId().toUpperCase() + " <<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
             prix = etatCourant.getValeurAction(action);
             if (action instanceof AbstractActionComposee) {
