@@ -103,7 +103,7 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
     }
 
     public void addRessourceTeam(javax.swing.JPanel pan, Team t) {
-        PanRessourceTeam panSelect = new PanRessourceTeam();
+        PanRessourceTeam panSelect = new PanRessourceTeam(t);
         pan.add(panSelect);
     }
 

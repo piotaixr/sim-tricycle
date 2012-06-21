@@ -23,7 +23,7 @@ robot{
 	
 	etat=deplacement_norm[tag1]{
             transition{
-		si(contains(caseCourante,pieceRecherchee)){ ramasser();
+		si(contains(ref:self.case,var:piece)){ ramasser();
 				     etat=porteur;
                 }
             }

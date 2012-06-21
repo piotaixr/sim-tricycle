@@ -21,11 +21,11 @@ public class PtDeControlIdeal extends AbstractAction {
         for (int i = 0; i < c.getLargeur(); i++) {
             for (int j = 0; j < c.getHauteur(); j++) {
                 if (c.getCase(i, j).whoIam() == TypeCase.ptDeControle) {
-                    if(c.getCase(i, j).getRobotPresent()==null || c.getCase(i, j).getRobotPresent().getTeam() != bot.getTeam()){
+                    if (c.getCase(i, j).getRobotPresent() == null || c.getCase(i, j).getRobotPresent().getTeam() != bot.getTeam()) {
                         return c.getCase(i, j);
                     }
-               }
-        }
+                }
+            }
         }
         return null;
     }
@@ -34,5 +34,4 @@ public class PtDeControlIdeal extends AbstractAction {
     public String getId() {
         return "point_control_ideal";
     }
-    
-    }
+}
