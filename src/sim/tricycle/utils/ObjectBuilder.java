@@ -49,6 +49,7 @@ public class ObjectBuilder {
                     .register(new ConditionTrue())
                     .register(new Contains())
                     .register(new EnnemiDevant(getOrdonnanceur()))
+                    .register(new NonVide())
                     .register(new PieceExiste(getOrdonnanceur()))
                     .register(new PieceTrouvee())
                     .register(new PtControleTrouve(getOrdonnanceur()))
