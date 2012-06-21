@@ -219,7 +219,7 @@ public abstract class AbstractCarte implements CarteInterface {
         if (c != null) {// si on peut avancer:
             if (bot.getPosition().hasObstacle()) {
                 bot.getPosition().suprObstacle();
-                this.ActualiserBroullard(c);
+                this.ActualiserBrouillard(c);
             }
             if (!c.hasObstacle()) {
                 c.setObstacle(bot);
@@ -292,7 +292,7 @@ public abstract class AbstractCarte implements CarteInterface {
      *
      * @param c la case depuis laquelle actualisé.
      */
-    public void ActualiserBroullard(Case c) {
+    public void ActualiserBrouillard(Case c) {
 
         for (AbstractVision x : elements) {
             if (x.voit(c)) {
