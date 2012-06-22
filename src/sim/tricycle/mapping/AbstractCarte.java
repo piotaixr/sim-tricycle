@@ -38,7 +38,7 @@ public abstract class AbstractCarte implements CarteInterface {
         System.out.println("");
         for (i = 0; i < this.getLargeur(); i++) {
             for (j = 0; j < this.getHauteur(); j++) {
-                System.out.print(this.getCase(i, j).toString() + this.getCase(i, j).getId());
+                System.out.print(this.getCase(i, j).toString());
             }
             System.out.print("\n");
         }
@@ -216,14 +216,13 @@ public abstract class AbstractCarte implements CarteInterface {
     @Override
     public boolean avancer(Robot bot) {
         Case c = getCaseDevant(bot);
-        System.out.print("\n\n\n" + c.getX() + c.getY());
+      
         if (c != null) {// si on peut avancer:
             if (!c.hasObstacle()) {
                 bot.getPosition().suprObstacle();
                 bot.setCase(c);
                 c.setObstacle(bot);
-                System.out.print("\n\n\n" + bot.getCoordonnees().getStringedCoord());
-                // this.ActualiserBrouillard(c);
+                 this.ActualiserBrouillard(c);
             }
         } else {
             return false;

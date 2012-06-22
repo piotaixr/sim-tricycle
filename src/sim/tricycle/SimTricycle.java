@@ -70,77 +70,7 @@ public class SimTricycle {
 //
 //        fg.setVisible(true);
 
-//String[][] mat = new String[][]{
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "AP4", "APN2", "AP8", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "AP5", "APN1", "AP9", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"}, {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "CPE5",    "V",    "V", "CPE6", "V", "V", "V", "V", "V", "X", "X", "X", "X",   "CR6",   "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"X", "X", "X", "X", "X", "X", "X", "X", "X", "X",    "CPE9", "CPE10",   "X", "X", "X", "X", "X", "X", "X", "X", "X", "CR4", "CR5", "CR7", "V", "V", "V", "V", "V", "X", "CPO1", "CPO2", "X", "X", "V", "V", "V", "V", "V", "X"},
-//            {"X", "X", "X", "X", "X", "X", "X", "X", "X", "X",    "CPE8", "CPE11",   "X", "X", "X", "X", "X", "X", "X", "X", "CRA2", "CRA3", "X", "X", "X", "X", "X", "X", "X", "X", "CPO3", "CPO4", "X", "X", "X", "X", "X", "X", "X", "X"},
-//            {"X", "X", "X", "X", "X", "X", "X", "X", "X", "X",    "CPE7", "CPE12",   "X", "X", "X", "X", "X", "X", "X", "CRA4", "@", "CRA6", "X", "X", "X", "X", "X", "X", "X", "X", "CPO5", "CPO6", "X", "X", "X", "X", "X", "X", "X", "X"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "CPE1", "CPE2", "CPE3", "CPE4", "V", "V", "V", "V", "X", "X", "CRA7", "CRA8", "X", "X", "X", "X", "X", "X", "X", "X", "X", "CPO7", "CPO8", "X", "X", "X", "X", "X", "X", "X", "X"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "CR1", "CR3", "X", "X", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "CR2", "X", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "AP4", "AP6", "AP8", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "AP5", "AP7", "AP9", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},
-//            {"V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V"},};
-//
-// 
-//        HashMap<Integer, LinkedList<sim.tricycle.robot.Point>> dispositions = new HashMap();
-//        sim.tricycle.robot.Point zero = new Point(0, 0);
-//        sim.tricycle.robot.Point zero2 = new sim.tricycle.robot.Point(39, 39);
-//        LinkedList listzero = new LinkedList<sim.tricycle.robot.Point>();
-//        listzero.add(zero);
-//        listzero.add(zero2);
-//        dispositions.put(2, listzero);
-//
-//        sim.tricycle.robot.Point un = new sim.tricycle.robot.Point(0, 0);
-//        sim.tricycle.robot.Point un2 = new sim.tricycle.robot.Point(0, 39);
-//        sim.tricycle.robot.Point un3 = new sim.tricycle.robot.Point(39, 39);
-//        LinkedList listun = new LinkedList<sim.tricycle.robot.Point>();
-//        listun.add(un);
-//        listun.add(un2);
-//        listun.add(un3);
-//        dispositions.put(3, listun);
-//
-//        sim.tricycle.robot.Point deux = new sim.tricycle.robot.Point(0, 0);
-//        sim.tricycle.robot.Point deux2 = new sim.tricycle.robot.Point(0, 39);
-//        sim.tricycle.robot.Point deux3 = new sim.tricycle.robot.Point(39, 39);
-//        sim.tricycle.robot.Point deux4 = new sim.tricycle.robot.Point(39, 0);
-//        LinkedList listdeux = new LinkedList<sim.tricycle.robot.Point>();
-//        listdeux.add(deux);
-//        listdeux.add(deux2);
-//        listdeux.add(deux3);
-//        listdeux.add(deux4);
-//        dispositions.put(4, listdeux);
-//
-//        CarteFichier.createFile("CrossRiverBase", mat, "crossriver.png", dispositions);
+
 //        
 //        CarteFichier cf = new CarteFichier(mat, null, dispositions);
 //        CarteFromFile cff = new CarteFromFile(cf,2);
@@ -150,7 +80,7 @@ public class SimTricycle {
 //        Team t2 = new Team(2, "coucou2", cff);
 //        tabTeam.add(t1);
 //        tabTeam.add(t2);
-//        
+        
 //        Jeu jeu = new Jeu();
 //        jeu.setCarte(cff);
 //        jeu.setObjectBuilder(ob);
