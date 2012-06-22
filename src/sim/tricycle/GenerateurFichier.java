@@ -113,7 +113,7 @@ public class GenerateurFichier {
             {"X", "X", "X", "X", "X", "V", "X", "V", "X", "V", "V", "V", "X", "X", "V", "X", "V", "X", "V", "X"},
             {"V", "V", "V", "V", "X", "V", "X", "X", "V", "V", "V", "X", "X", "X", "V", "X", "V", "X", "V", "V"},
             {"V", "X", "V", "V", "X", "V", "X", "V", "A1","A2","A3", "V", "X", "X", "V", "X", "V", "X", "X", "V"},
-            {"V", "X", "V", "X", "X", "V", "V", "V","A5", "@","A6", "V", "X", "V", "V", "X", "V", "V", "V", "V"},
+            {"V", "X", "V", "X", "X", "V", "V", "V","A4", "@","A6", "V", "X", "V", "V", "X", "V", "V", "V", "V"},
             {"V", "X", "V", "V", "V", "V", "X", "V","A7","A8","A9", "V", "V", "V", "V", "X", "X", "X", "V", "X"},
             {"V", "X", "X", "X", "X", "X", "X", "V", "V", "V", "V", "V", "V", "V", "V", "V", "V", "X", "V", "V"},
             {"V", "V", "V", "V", "V", "V", "X", "X", "X", "X", "X", "X", "V", "X", "V", "X", "V", "X", "V", "X"},
@@ -155,6 +155,7 @@ public class GenerateurFichier {
 
         //  CarteFichier.createFile("CrossRiver", mat, "crossriver.png", dispositions);
         CarteFichier.createFile("labyrinthe", mat, null, dispositions);
+        System.exit(0);
 //        
 //        CarteFichier cf = new CarteFichier(mat, null, dispositions);
 //        CarteFromFile cff = new CarteFromFile(cf,2);
