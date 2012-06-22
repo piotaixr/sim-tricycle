@@ -24,7 +24,7 @@ public class PanRessourceTeam extends javax.swing.JPanel {
         initComponents();
         this.t = team;
         if (t.getQuantityRessource("Piece") != null) {
-            gold = t.getQuantityRessource("Pièce");
+            gold = t.getQuantityRessource("Piece");
         }
         if (t.getQuantityRessource("Boule") != null) {
             gold = t.getQuantityRessource("Boule");
@@ -49,7 +49,7 @@ public class PanRessourceTeam extends javax.swing.JPanel {
     public void paint(Graphics graphic) {
         super.paint(graphic);
         if (t.getQuantityRessource("Piece") != null) {
-            gold = t.getQuantityRessource("Pièce");
+            gold = t.getQuantityRessource("Piece");
         }
         if (t.getQuantityRessource("Boule") != null) {
             gold = t.getQuantityRessource("Boule");

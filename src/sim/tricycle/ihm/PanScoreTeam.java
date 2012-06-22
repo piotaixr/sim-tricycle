@@ -24,7 +24,7 @@ public class PanScoreTeam extends javax.swing.JPanel {
         
         this.t = team;
         if (t.getQuantityRessource("Piece") != null) {
-            scoreBall = t.getQuantityRessource("Pièce");
+            scoreBall = t.getQuantityRessource("Piece");
         }
         lblScore.setText("" + scoreBall);
         lblTeam.setText(t.getNomTeam());
@@ -34,8 +34,8 @@ public class PanScoreTeam extends javax.swing.JPanel {
     @Override
     public void paint(Graphics graphic) {
         super.paint(graphic);
-        if (t.getQuantityRessource("Piece") != null) {
-            scoreBall = t.getQuantityRessource("Pièce");
+        if (t.getQuantityRessource("Boule") != null) {
+            scoreBall = t.getQuantityRessource("Boule");
         }
         lblScore.setText("" + scoreBall);
     }
