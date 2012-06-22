@@ -20,7 +20,7 @@ public class Reference implements ReferenceInterface {
     public Reference(String selector, OrdonnanceurInterface ordonnanceur) {
         this.selector = selector;
         this.ordonnanceur = ordonnanceur;
-
+        System.out.println("Ref create " + selector);
     }
 
     public Environnement getEnvironnement() {

@@ -3,6 +3,7 @@ package sim.tricycle.mapping.elementCase;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.PossedeCaseInterface;
 import sim.tricycle.mapping.TypeCase;
+import sim.tricycle.robot.Point;
 
 /**
  *
@@ -29,7 +30,7 @@ public abstract class AbstractObjet implements PossedeCaseInterface {
     public Case getPosition() {
         return pos;
     }
-    
+
     /*
      * Supprimer l'objet de la case. @ensure l'objet n'est plus sur la carte.
      */
@@ -46,16 +47,32 @@ public abstract class AbstractObjet implements PossedeCaseInterface {
         pos.setItem(this);
     }
 
+    @Override
     public String toString() {
         return "O";
     }
-    
+
     @Override
-    public TypeCase typeDeCase (){
+    public TypeCase typeDeCase() {
         return TypeCase.objet;
     }
 
+    @Override
     public void setPosition(Case c) {
         pos = c;
+    }
+
+    public boolean equals(Object o) {
+        if (o instanceof AbstractObjet) {
+            return equalsObj((AbstractObjet) o);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean equalsObj(AbstractObjet aob) {
+        Point pthis = this.getPosition().toPoint();
+        Point paob = aob.getPosition().toPoint();
+        return pthis.getX() == paob.getX() && pthis.getY() == paob.getY();
     }
 }

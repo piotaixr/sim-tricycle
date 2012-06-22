@@ -32,4 +32,8 @@ public class Environnement {
     public Map<String, Object> getVar() {
         return var;
     }
+
+    public void cleanVars() {
+        this.var.clear();
+    }
 }

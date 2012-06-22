@@ -115,6 +115,7 @@ public class TrouveChemin extends AbstractAction {
             lastNode = lastNode.getParent();
         }
         //cheminFinal.add(lastNode);
+        cheminFinal.pollLast();
         return cheminFinal;
     }
 
@@ -137,5 +138,10 @@ public class TrouveChemin extends AbstractAction {
 
     public void setParameters(Variable refPointDest) {
         this.refPointDest = refPointDest;
+    }
+    
+
+    public void setParameters(Point pointDest) {
+        this.pDest = pointDest;
     }
 }

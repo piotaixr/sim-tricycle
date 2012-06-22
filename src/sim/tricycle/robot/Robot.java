@@ -268,7 +268,7 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
             e.printStackTrace();
             if (pileActionsComposees.isEmpty()) {
                 //on plante
-                plante = true;
+                backToInit();
                 return;
             }
             //si action composee au sommet de la pile est l'action qui a planté, on la depile.
@@ -279,7 +279,7 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
             //si il n'y a plus d'actions composées, on plante
             if (pileActionsComposees.isEmpty()) {
                 //on plante
-                plante = true;
+                backToInit();
                 return;
             }
             //ICI, on a une action comp a relancer
@@ -289,5 +289,11 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
             acomp.relaunch();
             actions.addAll(acomp.getNewActions());
         }
+    }
+
+    private void backToInit() {
+        etatDestination = null;
+        etatCourant = automate.getEtat("init");
+        getEnvironnement().cleanVars();
     }
 }
