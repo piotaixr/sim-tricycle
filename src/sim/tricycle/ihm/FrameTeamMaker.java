@@ -41,8 +41,8 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
         initComponents();
 
         jeu = paraJeu;
-        ObjectBuilder o = new ObjectBuilder();
-        robPars = o.getRobotParser();
+//        ObjectBuilder o = new ObjectBuilder();
+        robPars = jeu.getObjectBuilder().getRobotParser();
         this.setLayout(new BorderLayout());
         this.add(panTitile, BorderLayout.PAGE_START);
         this.add(panFooter, BorderLayout.PAGE_END);
