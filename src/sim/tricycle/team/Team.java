@@ -1,7 +1,6 @@
 package sim.tricycle.team;
 
 import java.awt.Color;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -9,10 +8,8 @@ import sim.tricycle.mapping.AbstractCarte;
 import sim.tricycle.mapping.CarteObjective;
 import sim.tricycle.mapping.CarteTeam;
 import sim.tricycle.mapping.Case;
-import sim.tricycle.mapping.elementCase.AbstractObjet;
 import sim.tricycle.mapping.elementCase.Base;
 import sim.tricycle.robot.Model;
-import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 
 /**
@@ -90,7 +87,6 @@ public class Team {
 //    public void setRessourcesz(ArrayList<Ressource> ressources) {
 //        this.ressourcesz = ressources;
 //    }
-
     public HashMap<String, Integer> getRessources() {
         return ressources;
     }
@@ -108,12 +104,16 @@ public class Team {
     }
 
     public void addQtyRes(String res, Integer qty) {
-        this.ressources.put(res, this.ressources.get(res) + qty);
+        if (!ressources.containsKey(res)) {
+            addRessource(res, qty);
+        } else {
+            this.ressources.put(res, this.ressources.get(res) + qty);
+        }
     }
 
     public boolean consumeRes(String res, Integer qty) {
         if (getQuantityRessource(res) > qty) {
-            addRessource(res, -qty);
+            addQtyRes(res, -qty);
             return true;
         } else {
             return false;
@@ -137,7 +137,6 @@ public class Team {
 //
 //        return resSearched;
 //    }
-
     /**
      * @todo virer le if(true)
      *
@@ -171,7 +170,6 @@ public class Team {
 //            throw new RuntimeException("quantité insuffisante");
 //        }
 //    }
-
     public LinkedList<Robot> getArmee() {
         return armee;
     }
