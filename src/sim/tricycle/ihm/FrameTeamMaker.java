@@ -192,6 +192,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
         File f = new File("Automates/test.xml");
         Automate auto = robPars.parse(f);
         Robot robotByDefaut = new Robot(auto, t, "wall");
+        robotByDefaut.setPosition(t.getBase().getPosition());
         t.addRobot(robotByDefaut);
     }
 
