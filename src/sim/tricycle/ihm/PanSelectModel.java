@@ -150,36 +150,35 @@ public class PanSelectModel extends javax.swing.JPanel {
 
     private void btnCreateBotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateBotMouseClicked
         // TODO add your handling code here:
-//        if (t.getRessources().get("GOLD") - price > 0)
-//        {
-        if (!jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY()).hasObstacle()) {//        if (!t.getBase().getPosition().hasObstacle()) {
-           
-            //On recupere le nom du modele et on enleve l'extension pour pouvoir afficher plus tard l'image dans les positions qu'on veut
-            String nameBot = model.getRob().getImgBase();
-            nameBot = nameBot.substring(0, nameBot.lastIndexOf("."));
-            System.out.println(nameBot);
-            
-            Robot rob = new Robot(model.getRob().getAutomate(), t, nameBot);
-            rob.setPosition(t.getBase().getPosition());
-            rob.setDirection(Sens.SUD);
+        if (t.getQuantityRessource("Piece") >= price) {
+            if (!jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY()).hasObstacle()) {//        if (!t.getBase().getPosition().hasObstacle()) {
 
-           
-            Case casePop = t.getMap().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
-            t.getMap().pop(rob, casePop);
+                //On recupere le nom du modele et on enleve l'extension pour pouvoir afficher plus tard l'image dans les positions qu'on veut
+                String nameBot = model.getRob().getImgBase();
+                nameBot = nameBot.substring(0, nameBot.lastIndexOf("."));
+                System.out.println(nameBot);
 
-            t.addRobot(rob);
-            oi.add(rob);
+                Robot rob = new Robot(model.getRob().getAutomate(), t, nameBot);
+                rob.setPosition(t.getBase().getPosition());
+                rob.setDirection(Sens.SUD);
 
-            //t.getRessources().get(0).setQuantite(t.getRessources().get(0).getQuantite()- price); Enleve le cout du robot
 
-            obs.sendMessage();
+                Case casePop = t.getMap().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
+                t.getMap().pop(rob, casePop);
 
-        } else {
-            System.out.println("Y deja un truc sur la case ducon");
+                t.addRobot(rob);
+                oi.add(rob);
+
+                //t.getRessources().get(0).setQuantite(t.getRessources().get(0).getQuantite()- price); Enleve le cout du robot
+
+                obs.sendMessage();
+
+            } else {
+                System.out.println("Y deja un truc sur la case ducon");
+            }
+
+
         }
-
-
-        //       }
     }//GEN-LAST:event_btnCreateBotMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreateBot;

@@ -2,6 +2,7 @@ package sim.tricycle.mapping;
 
 import java.awt.Image;
 import java.util.HashSet;
+import java.util.Set;
 import sim.tricycle.robot.Robot;
 
 /**
@@ -25,7 +26,7 @@ public interface CarteInterface {
      * @param pos la case de départ.
      * @param liste Les cases déja présentes.
      */
-    public void casesVoisines(AbstractCarte source, Case pos, HashSet<Case> liste);
+    public Set<Case> casesVoisines(AbstractCarte source, Case pos, HashSet<Case> liste);
 
     /**
      * Fournit la hauteur de la carte.
@@ -100,4 +101,12 @@ public interface CarteInterface {
      * @return
      */
     public boolean supprimer(PossedeCaseInterface e, Case c);
+    /**
+     * Renvoie vrai si il existe un chemin entre c1 et c2
+     * 
+     * @param c1
+     * @param c2
+     * @return 
+     */
+    public boolean isConnexe(Case c1, Case c2);
 }

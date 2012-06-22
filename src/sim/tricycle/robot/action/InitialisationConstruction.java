@@ -6,6 +6,7 @@ package sim.tricycle.robot.action;
 
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
+import sim.tricycle.mapping.elementCase.AbstractBatiment;
 import sim.tricycle.mapping.elementCase.AbstractObstacle;
 import sim.tricycle.mapping.elementCase.Tour;
 import sim.tricycle.robot.Robot;
@@ -24,7 +25,11 @@ public class InitialisationConstruction extends AbstractAction {
 
         Case c = bot.getTeam().getMap().getCaseDevant(bot);
         if (c.whoIam() == TypeCase.vide) {
-            c.setObstacle(getBatimentFromNom());
+            if (getBatimentFromNom().getPrix() < bot.getTeam().getQuantityRessource("Piece")) {
+                c.setObstacle(getBatimentFromNom());
+            } else {
+                throw new RuntimeException("Pas assez d'Or pour construire");
+            }
         } else {
             throw new RuntimeException("la case n'est pas vide, la construction ne devrait pas etre possible");
         }
@@ -41,7 +46,7 @@ public class InitialisationConstruction extends AbstractAction {
         return "initialisation construction";
     }
 
-    private AbstractObstacle getBatimentFromNom() {
+    private AbstractBatiment getBatimentFromNom() {
         return new Tour();
     }
 }
