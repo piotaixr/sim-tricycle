@@ -38,7 +38,7 @@ public abstract class AbstractCarte implements CarteInterface {
         System.out.println("");
         for (i = 0; i < this.getLargeur(); i++) {
             for (j = 0; j < this.getHauteur(); j++) {
-                System.out.print(this.getCase(i, j).toString() + this.getCase(i, j).getId());
+                System.out.print(this.getCase(i, j).toString());
             }
             System.out.print("\n");
         }
@@ -198,16 +198,16 @@ public abstract class AbstractCarte implements CarteInterface {
         Case c = null;
         switch (bot.getDirection()) {
             case NORD:
-                c = this.getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
+                c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
                 break;
             case SUD:
-                c = this.getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
-                break;
-            case EST:
                 c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
                 break;
+            case EST:
+                c = this.getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
+                break;
             case OUEST:
-                c =this.getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
+                c = this.getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
                 break;
         }
         return c;
@@ -216,14 +216,14 @@ public abstract class AbstractCarte implements CarteInterface {
     @Override
     public boolean avancer(Robot bot) {
         Case c = getCaseDevant(bot);
-        System.out.print("\n\n\n" + c.getX() + c.getY());
+        System.out.print("Case devant: " + c.toPoint().getStringedCoord());
         if (c != null) {// si on peut avancer:
             if (!c.hasObstacle()) {
                 bot.getPosition().suprObstacle();
                 bot.setPosition(c);
                 c.setObstacle(bot);
-                System.out.print("\n\n\n" + bot.getPosition().toPoint().getStringedCoord());
-                // this.ActualiserBrouillard(c);
+                System.out.println(" Case robot: " + bot.getPosition().toPoint().getStringedCoord());
+                this.ActualiserBrouillard(c);
             }
         } else {
             return false;
