@@ -5,6 +5,7 @@
 
 package sim.tricycle.robot.condition;
 
+import java.util.Collection;
 import sim.tricycle.robot.condition.core.AbstractCondition;
 import sim.tricycle.utils.params.types.Variable;
 
@@ -18,7 +19,15 @@ public class NonVide extends AbstractCondition {
     
     @Override
     public boolean test() {
-        return var.getValue() != null;
+        Object value = var.getValue();
+        if(value == null)
+            return false;
+        else if(value instanceof Collection){
+            return !((Collection) value).isEmpty();
+        } else {
+            return true;
+        }
+        
     }
 
     @Override

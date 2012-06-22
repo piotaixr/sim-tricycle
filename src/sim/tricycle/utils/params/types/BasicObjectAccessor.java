@@ -45,16 +45,13 @@ public class BasicObjectAccessor extends VariableAccessor {
     }
 
     private Method getGetter(Class c, String attribute) {
-        System.out.println("getter");
         Method m = null;
         try {
             m = c.getMethod("get" + ucfirst(attribute));
         } catch (NoSuchMethodException ex) {
-            System.out.println("pas get" + ucfirst(attribute));
             try {
                 m = c.getMethod("is" + ucfirst(attribute));
             } catch (NoSuchMethodException ex1) {
-                System.out.println("pas is" + ucfirst(attribute));
                 return null;
             } catch (SecurityException ex1) {
                 return null;

@@ -82,7 +82,7 @@ public abstract class AbstractCarte implements CarteInterface {
                     //Si pt de controle il lui faut connaitre ses cases voisines.
                     casesVoisines(this, this.getCase(i, j), liste);
                     PointDeControle pt = new PointDeControle(liste);
-                    pt.setCase(this.getCase(i, j));
+                    pt.setPosition(this.getCase(i, j));
                     this.getCase(i, j).setZone(pt);
                     listeP.add(pt);// On ajoute ce point à la liste des points.
                 }
@@ -201,13 +201,13 @@ public abstract class AbstractCarte implements CarteInterface {
                 c = this.getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
                 break;
             case SUD:
-                c = this.getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
+                c = this.getCase(bot.getPosition().getX()+ 1, bot.getPosition().getY() );
                 break;
             case EST:
                 c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
                 break;
             case OUEST:
-                c =this.getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
+                c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
                 break;
         }
         return c;
@@ -216,13 +216,14 @@ public abstract class AbstractCarte implements CarteInterface {
     @Override
     public boolean avancer(Robot bot) {
         Case c = getCaseDevant(bot);
-      
+        System.out.print("Case devant: " + c.toPoint().getStringedCoord());
+        System.out.println(" Case robot: " + bot.getPosition().toPoint().getStringedCoord());
         if (c != null) {// si on peut avancer:
             if (!c.hasObstacle()) {
                 bot.getPosition().suprObstacle();
-                bot.setCase(c);
+                bot.setPosition(c);
                 c.setObstacle(bot);
-                 this.ActualiserBrouillard(c);
+                this.ActualiserBrouillard(c);
             }
         } else {
             return false;
@@ -300,6 +301,20 @@ public abstract class AbstractCarte implements CarteInterface {
                 x.getTeam().getMap().actualiserCarte(x.getPortee(), c);
             }
         }
+    }
+    
+    public boolean isCaseValide(Case c){
+        
+        HashSet<Case> v=new HashSet<Case>();
+        this.casesVoisines(this, c, v);
+        int i=0;
+        
+        for(Case test : v){
+            if(test.hasObstacle() || test.JamaisVu()){
+                i++;
+            }
+        }
+        return i==8;
     }
 
     public List<Point> getListeBase() {

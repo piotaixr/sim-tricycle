@@ -7,7 +7,7 @@
     </etat>
     <etat id="1">
         <transition>
-            <action nom="allerici">
+            <action nom="sedeplacerunecase">
                 <parametre>1 0</parametre>
             </action>
             <etat id="1" />

@@ -37,7 +37,7 @@ public class Team {
         this.models = new LinkedList<Model>();
         this.ressources = new ArrayList<Ressource>();
         this.base = new Base();
-        this.base.setCase(posBase);
+        this.base.setPosition(posBase);
         this.base.setT(this);
         this.id = iden;
     }
@@ -103,9 +103,12 @@ public class Team {
 
         return resSearched;
     }
-
+/**
+ * @todo virer le if(true)
+ * @param idItem 
+ */
     public void ajouterRessource(String idItem) {
-
+if(true) return;
         Ressource r = new Ressource(idItem, 1);
 
         if (this.ressources.contains(r)) {
