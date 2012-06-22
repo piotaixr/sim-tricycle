@@ -48,7 +48,7 @@ public class Team {
                 this.color = Color.BLACK;
                 break;
         }
-
+        construireListeCasesObscures();
     }
 
     public Team(int iden, String nomTeam, CarteObjective carteObj) {
@@ -72,7 +72,6 @@ public class Team {
                 this.color = Color.BLACK;
                 break;
         }
-        construireListeCasesObscures();
     }
 
     private void construireListeCasesObscures() {
@@ -92,6 +91,7 @@ public class Team {
 
     public void setBase(Base base) {
         this.base = base;
+        construireListeCasesObscures();
     }
 
     public void setMap(CarteTeam map) {
