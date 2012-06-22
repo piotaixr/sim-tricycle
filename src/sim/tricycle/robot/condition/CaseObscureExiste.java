@@ -33,6 +33,8 @@ public class CaseObscureExiste extends AbstractCondition {
             Case c = it.next();
             if (c.JamaisVu()) {
                 return true;
+            } else {
+                it.remove();
             }
         }
         return false;
