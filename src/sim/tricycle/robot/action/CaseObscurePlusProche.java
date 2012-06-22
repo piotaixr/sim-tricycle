@@ -4,7 +4,10 @@
  */
 package sim.tricycle.robot.action;
 
+import java.util.Iterator;
+import java.util.List;
 import sim.tricycle.mapping.CarteTeam;
+import sim.tricycle.mapping.Case;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractAction;
 
@@ -19,15 +22,17 @@ public class CaseObscurePlusProche extends AbstractAction {
 
     @Override
     protected Object doExecute(Robot bot) {
-        CarteTeam c = bot.getTeam().getMap();
-        for (int i = 0; i < c.getLargeur(); i++) {
-            for (int j = 0; j < c.getHauteur(); j++) {
-                if (c.getCase(i, j).JamaisVu()) {
-                    return c.getCase(i, j);
-                }
+        List<Case> cases = bot.getTeam().getCasesObscures();
+        Iterator<Case> it = cases.iterator();
+        while (it.hasNext()) {
+            Case c = it.next();
+            if (c.JamaisVu()) {
+                return c;
+            } else {
+                it.remove();
             }
         }
-        return null;
+        throw new RuntimeException("Plus de cases obscures");
     }
 
     @Override

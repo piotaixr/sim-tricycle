@@ -135,5 +135,5 @@ public class CarteTeam extends AbstractCarte {
     public boolean isConnexe(Case c1, Case c2) {
         return vraiCarte.isConnexe(c1, c2);
     }
-    
+
 }
