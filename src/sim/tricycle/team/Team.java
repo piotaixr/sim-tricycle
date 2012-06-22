@@ -49,6 +49,20 @@ public class Team {
         this.armee = new LinkedList<Robot>();
         this.models = new LinkedList<Model>();
         this.ressources = new ArrayList<Ressource>();
+        switch (this.id) {
+            case 0:
+                this.color = Color.red;
+                break;
+            case 1:
+                this.color = Color.blue;
+                break;
+            case 2:
+                this.color = Color.yellow;
+                break;
+            default:
+                this.color = Color.BLACK;
+                break;
+        }
     }
 
     public int getId() {
