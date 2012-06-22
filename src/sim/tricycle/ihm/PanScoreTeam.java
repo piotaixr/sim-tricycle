@@ -4,6 +4,7 @@
  */
 package sim.tricycle.ihm;
 
+import java.awt.Graphics;
 import sim.tricycle.team.Team;
 
 /**
@@ -13,18 +14,30 @@ import sim.tricycle.team.Team;
 public class PanScoreTeam extends javax.swing.JPanel {
 
     private int scoreBall = 0;
+    private Team t;
 
     /**
      * Creates new form PanScoreTeam
      */
-    public PanScoreTeam(Team t) {
+    public PanScoreTeam(Team team) {
         initComponents();
+        
+        this.t = team;
         if (t.getQuantityRessource("Piece") != null) {
             scoreBall = t.getQuantityRessource("Pièce");
         }
-        lblScore.setText(""+scoreBall);
+        lblScore.setText("" + scoreBall);
         lblTeam.setText(t.getNomTeam());
         lblBalls.setText("Ball(s)");
+    }
+
+    @Override
+    public void paint(Graphics graphic) {
+        super.paint(graphic);
+        if (t.getQuantityRessource("Piece") != null) {
+            scoreBall = t.getQuantityRessource("Pièce");
+        }
+        lblScore.setText("" + scoreBall);
     }
 
     /**
