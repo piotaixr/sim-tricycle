@@ -73,11 +73,12 @@ public class CarteTeam extends AbstractCarte {
         }
     }
 
-    public void popAlea(PossedeCaseInterface e) {
-        Case c = null;
-        super.popAlea(e, c);
-        this.actualiserCarte(0, c);
-    }
+//    public Case popAlea(PossedeCaseInterface e) {
+//        Case c = null;
+//        c = super.popAlea(e);
+//        this.actualiserCarte(0, c);
+//        return null;
+//    }
 
     public boolean pop(PossedeCaseInterface e, int x, int y) {
         Case c = vraiCarte.getCase(x, y);
