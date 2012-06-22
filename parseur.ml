@@ -248,7 +248,7 @@ let analyse ent sort =
      close_out sortie;
      close_in entree;;
 
-analyse "automate" "test";;
+analyse "automate" "demo";;
 
 
 
