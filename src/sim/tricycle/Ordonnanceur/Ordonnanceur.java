@@ -102,7 +102,6 @@ public class Ordonnanceur extends Observable implements OrdonnanceurInterface {
              * Tant que la liste des actions faites n'est pas vide
              */
         }
-        System.out.println("------- Remplissage des actions à faire -------");
     }
 
     class TaskAction extends TimerTask {

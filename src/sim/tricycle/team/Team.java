@@ -3,6 +3,7 @@ package sim.tricycle.team;
 import java.awt.Color;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import sim.tricycle.mapping.AbstractCarte;
 import sim.tricycle.mapping.CarteObjective;
@@ -24,7 +25,8 @@ public class Team {
     private LinkedList<Robot> armee;
     private LinkedList<Model> models;
     private CarteTeam map;
-    private ArrayList<Ressource> ressources;
+    private ArrayList<Ressource> ressourcesz;
+    private HashMap<String, Integer> ressources;
     private ArrayList<Case> collectables;
     private Color color = Color.cyan;
     private Base base = null;
@@ -35,9 +37,10 @@ public class Team {
         this.map = new CarteTeam((CarteObjective) carteObj);
         this.armee = new LinkedList<Robot>();
         this.models = new LinkedList<Model>();
-        this.ressources = new ArrayList<Ressource>();
+        this.ressourcesz = new ArrayList<Ressource>();
+        this.ressources = new HashMap();
         this.base = new Base();
-        this.base.setCase(posBase);
+        this.base.setPosition(posBase);
         this.base.setT(this);
         this.id = iden;
     }
@@ -48,21 +51,8 @@ public class Team {
         this.map = new CarteTeam(carteObj);
         this.armee = new LinkedList<Robot>();
         this.models = new LinkedList<Model>();
-        this.ressources = new ArrayList<Ressource>();
-        switch (this.id) {
-            case 0:
-                this.color = Color.red;
-                break;
-            case 1:
-                this.color = Color.blue;
-                break;
-            case 2:
-                this.color = Color.yellow;
-                break;
-            default:
-                this.color = Color.BLACK;
-                break;
-        }
+        this.ressourcesz = new ArrayList<Ressource>();
+        this.ressources = new HashMap();
     }
 
     public int getId() {
@@ -93,57 +83,94 @@ public class Team {
         return this.nomTeam;
     }
 
-    public ArrayList<Ressource> getRessources() {
+//    public ArrayList<Ressource> getRessourcesz() {
+//        return ressourcesz;
+//    }
+//
+//    public void setRessourcesz(ArrayList<Ressource> ressources) {
+//        this.ressourcesz = ressources;
+//    }
+
+    public HashMap<String, Integer> getRessources() {
         return ressources;
     }
 
-    public void setRessources(ArrayList<Ressource> ressources) {
-        this.ressources = ressources;
+    public void setRessources(HashMap<String, Integer> res) {
+        this.ressources = res;
+    }
+
+    public Integer getQuantityRessource(String res) {
+        return this.ressources.get(res);
+    }
+
+    public void addRessource(String res, Integer qty) {
+        this.ressources.put(res, qty);
+    }
+
+    public void addQtyRes(String res, Integer qty) {
+        this.ressources.put(res, this.ressources.get(res) + qty);
+    }
+
+    public boolean consumeRes(String res, Integer qty) {
+        if (getQuantityRessource(res) > qty) {
+            addRessource(res, -qty);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /*
      * Au secours j'y comprend rien
      */
-    public Ressource trouveRessourceParItem(String idItem) {
-        Ressource resSearched = null;
-        for (Ressource res : ressources) {
-            if (res.getIdItem().equals(idItem)) {
-                if (ressources.get(ressources.indexOf(new Ressource(idItem, 0))) != null) {
-                    resSearched = ressources.get(ressources.indexOf(new Ressource(idItem, 0)));
-                }
-                return null;
-            }
-        }
+//    public Ressource trouveRessourceParItem(String idItem) {
+//        Ressource resSearched = null;
+//        for (Ressource res : ressourcesz) {
+//            if (res.getIdItem().equals(idItem)) {
+//                if (ressourcesz.get(ressourcesz.indexOf(new Ressource(idItem, 0))) != null) {
+//                    resSearched = ressourcesz.get(ressourcesz.indexOf(new Ressource(idItem, 0)));
+//                }
+//                return null;
+//            }
+//        }
+//
+//        return resSearched;
+//    }
 
-        return resSearched;
-    }
-
-    public void ajouterRessource(String idItem) {
-
-        Ressource r = new Ressource(idItem, 1);
-
-        if (this.ressources.contains(r)) {
-            r = trouveRessourceParItem(idItem);
-            r.setQuantite(r.getQuantite() + 1);
-        } else {
-            this.ressources.add(r);
-        }
-    }
-
-    public void supprimerRessource(String idItem, int q) {
-        Ressource r = new Ressource(idItem, 0);
-
-        if (this.ressources.contains(r)) {
-            r = trouveRessourceParItem(idItem);
-            if (r.getQuantite() >= q) {
-                r.setQuantite(r.getQuantite() - q);
-            } else {
-                throw new RuntimeException("quantité insuffisante");
-            }
-        } else {
-            throw new RuntimeException("quantité insuffisante");
-        }
-    }
+    /**
+     * @todo virer le if(true)
+     *
+     * @param idItem
+     */
+//    public void ajouterRessource(String idItem) {
+//        if (true) {
+//            return;
+//        }
+//        Ressource r = new Ressource(idItem, 1);
+//
+//        if (this.ressourcesz.contains(r)) {
+//            r = trouveRessourceParItem(idItem);
+//            r.setQuantite(r.getQuantite() + 1);
+//        } else {
+//            this.ressourcesz.add(r);
+//        }
+//    }
+//
+//    public void supprimerRessource(String idItem, int q) {
+//        Ressource r = new Ressource(idItem, 0);
+//
+//        if (this.ressourcesz.contains(r)) {
+//            r = trouveRessourceParItem(idItem);
+//            if (r.getQuantite() >= q) {
+//                r.setQuantite(r.getQuantite() - q);
+//            } else {
+//                throw new RuntimeException("quantité insuffisante");
+//            }
+//        } else {
+//            throw new RuntimeException("quantité insuffisante");
+//        }
+//    }
 
     public LinkedList<Robot> getArmee() {
         return armee;

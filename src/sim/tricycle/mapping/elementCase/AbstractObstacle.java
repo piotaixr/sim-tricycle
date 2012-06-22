@@ -10,15 +10,15 @@ import sim.tricycle.mapping.TypeCase;
  */
 public class AbstractObstacle implements PossedeCaseInterface {
 
-    protected Case pos;
+    protected Case position;
 
     @Override
     public Case getPosition() {
-        return pos;
+        return position;
     }
 
     public void supprimerObstacle() {
-        pos.suprObstacle();
+        position.suprObstacle();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class AbstractObstacle implements PossedeCaseInterface {
     }
 
     @Override
-    public void setCase(Case c) {
-        pos = c;
+    public void setPosition(Case c) {
+        position = c;
     }
 }

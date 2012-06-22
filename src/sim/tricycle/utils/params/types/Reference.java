@@ -18,10 +18,9 @@ public class Reference implements ReferenceInterface {
     private OrdonnanceurInterface ordonnanceur;
 
     public Reference(String selector, OrdonnanceurInterface ordonnanceur) {
-        System.out.println("Ref create " + selector);
         this.selector = selector;
         this.ordonnanceur = ordonnanceur;
-
+        System.out.println("Ref create " + selector);
     }
 
     public Environnement getEnvironnement() {
@@ -38,7 +37,6 @@ public class Reference implements ReferenceInterface {
 
     @Override
     public Object getValue() {
-        System.out.println("Ref getValue " + selector);
         try {
             return new BasicObjectAccessor(getEnvironnement()).getValue(selector);
         } catch (Exception ex) {

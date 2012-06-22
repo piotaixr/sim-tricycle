@@ -20,11 +20,11 @@ public class PanRessourceTeam extends javax.swing.JPanel {
      */
     public PanRessourceTeam(Team t) {
         initComponents();
-        if (t.trouveRessourceParItem("Piece") != null) {
-            gold = t.trouveRessourceParItem("Piece").getQuantite();
+        if (t.getQuantityRessource("Piece") != null) {
+            gold = t.getQuantityRessource("Pièce");
         }
-        if (t.trouveRessourceParItem("Boule") != null) {
-            gold = t.trouveRessourceParItem("Boule").getQuantite();
+        if (t.getQuantityRessource("Boule") != null) {
+            gold = t.getQuantityRessource("Boule");
         }
         lblGoldValue.setText("" + gold);
         lblBallValue.setText("" + balls);

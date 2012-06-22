@@ -46,7 +46,7 @@ public class TrouveChemin extends AbstractAction {
                 System.out.println(pDest.getStringedCoord());
             }
         }
-        return plusCourtChemin(new Point(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()), bot);
+        return plusCourtChemin(bot.getPosition().toPoint(), bot);
     }
 
     private void insereEnOrdre(Noeud n, LinkedList<Noeud> listeNoeuds) {
@@ -87,7 +87,7 @@ public class TrouveChemin extends AbstractAction {
             bot.getTeam().getMap().casesVoisines(bot.getTeam().getMap(), new Case(courant.getPoint().getX(), courant.getPoint().getY()), listeVoisins);
             //        System.out.println("nbVoisins :"+listeVoisins.size());
             for (Case c : listeVoisins) {
-                if (!c.hasObstacle()) {
+                if (!c.hasObstacle() && isAuMoinsUneVoisineConnexe(bot,c)) {
                     n = new Noeud(new Point(c.getX(), c.getY()), courant);
                     n.setPoids(n.getPoint().distanceDepuis(pDest));
                     //  System.out.println(n.getPoids());
@@ -115,6 +115,7 @@ public class TrouveChemin extends AbstractAction {
             lastNode = lastNode.getParent();
         }
         //cheminFinal.add(lastNode);
+        cheminFinal.pollLast();
         return cheminFinal;
     }
 
@@ -137,5 +138,21 @@ public class TrouveChemin extends AbstractAction {
 
     public void setParameters(Variable refPointDest) {
         this.refPointDest = refPointDest;
+    }
+
+    public void setParameters(Point pointDest) {
+        this.pDest = pointDest;
+    }
+
+    private boolean isAuMoinsUneVoisineConnexe(Robot bot, Case c) {
+
+        HashSet<Case> v = new HashSet<Case>();
+        bot.getTeam().getMap().casesVoisines(bot.getTeam().getMap(), c, v);
+        for (Case test : v) {
+            if (bot.getTeam().getMap().isConnexe(c,test)) {
+               return true;
+            }
+        }
+        return false;
     }
 }

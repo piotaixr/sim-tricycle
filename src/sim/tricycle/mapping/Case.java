@@ -1,6 +1,7 @@
 package sim.tricycle.mapping;
 
 import sim.tricycle.mapping.elementCase.*;
+import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 
 /**
@@ -178,7 +179,7 @@ public class Case implements CaseInterface {
             //      throw new CaseMultipleObjetException("Superpostion d'objets.");
         } else {
             this.objet = ob;
-            ob.setCase(this);
+            ob.setPosition(this);
         }
     }
 
@@ -193,7 +194,7 @@ public class Case implements CaseInterface {
 //            throw new CaseMultipleObstacleException("Superpostion d'obstacles.");
         } else {
             this.obstacle = obst;
-            obst.setCase(this);
+            obst.setPosition(this);
         }
     }
 
@@ -201,7 +202,7 @@ public class Case implements CaseInterface {
     public void setZone(AbstractZone zo) {
         if (!this.hasZone()) {
             this.zone = zo;
-            zo.setCase(this);
+            zo.setPosition(this);
         }
     }
 
@@ -303,5 +304,9 @@ public class Case implements CaseInterface {
 
     public void setCiblable(boolean ciblable) {
         this.ciblable = ciblable;
+    }
+    
+    public Point toPoint(){
+        return new Point(x, y);
     }
 }
