@@ -12,8 +12,10 @@ import sim.tricycle.AbstractJeu;
 import sim.tricycle.Jeu;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
+import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.elementCase.Piece;
 import sim.tricycle.robot.Model;
+import sim.tricycle.robot.Robot;
 import sim.tricycle.team.Team;
 
 /**
@@ -48,15 +50,17 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         panMiniMap.add(vmc);
 
         scorePanel.setLayout(new FlowLayout());
-        
+
         addOrdonnaceur(jeu.getObjectBuilder().getOrdonnanceur());
 
         int i = 0;
         while (i < jeu.getTeamNumber()) {
-            System.out.println("Passe" + i);
+
             javax.swing.JPanel newPanTeam = createPanTeam(jeu.getTabTeams().get(i));
             addTabTeam(tabPanActionAvailable, newPanTeam, i);
-            addScoreTeam(scorePanel,jeu.getTabTeams().get(i));
+            addScoreTeam(scorePanel, jeu.getTabTeams().get(i));
+            System.out.println("Pop defaut : " + i);
+            popDefaultBot(jeu.getTabTeams().get(i));
             i++;
         }
 
@@ -67,10 +71,10 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
 //        tabPanActionAvailable.insertTab("team test", null, panTeam1, null, WIDTH);
 //        tabPanActionAvailable.insertTab("team test", null, panTeam2, null, WIDTH);
 //        tabPanActionAvailable.insertTab("team test", null, panTeam3, null, WIDTH);
-for(int Z = 0; Z<40; Z++){
-        Piece p = new Piece();
-        jeu.getCarte().popAlea(p);
-}
+        for (int Z = 0; Z < 40; Z++) {
+            Piece p = new Piece();
+            jeu.getCarte().popAlea(p);
+        }
     }
 
     public void addOrdonnaceur(Ordonnanceur oi) {
@@ -130,6 +134,14 @@ for(int Z = 0; Z<40; Z++){
         javax.swing.JPanel panteam = new javax.swing.JPanel();
         addRessourceTeam(panteam, t);
         return panteam;
+    }
+
+    public void popDefaultBot(Team t) {
+        Case casePop = t.getMap().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
+        Robot rob = t.getArmee().getFirst();
+        t.getMap().pop(rob, casePop);
+        oi.add(rob);
+
     }
 
     /**
@@ -583,7 +595,7 @@ for(int Z = 0; Z<40; Z++){
             jspanMap.repaint();
             panMiniMap.repaint();
 //            repaint();
-            System.out.println("COuCOU");
+//            System.out.println("COuCOU");
         }
 
     }
