@@ -149,7 +149,7 @@ public class TrouveChemin extends AbstractAction {
         HashSet<Case> v = new HashSet<Case>();
         bot.getTeam().getMap().casesVoisines(bot.getTeam().getMap(), c, v);
         for (Case test : v) {
-            if (bot.getTeam().getMap().isConnexe(c,test)) {
+            if (bot.getTeam().getMap().isConnexe(bot.getPosition(),test)) {
                return true;
             }
         }

@@ -24,12 +24,12 @@ public abstract class AbstractCarte implements CarteInterface {
 
     protected static Image imgFond = null;
     protected static Image imgVide = null;
-    protected static HashSet<PointDeControle> listePt;  //Ensemble des points de controles.
+    protected HashSet<PointDeControle> listePt;  //Ensemble des points de controles.
     protected List<Point> listeBase;
     protected int tailleX, tailleY;
     protected Case[][] carte;
     protected int[][] connexe;
-    protected static ArrayList<AbstractVision> elements = new ArrayList();
+    protected ArrayList<AbstractVision> elements = new ArrayList();
 
     @Override
     public void afficherCarte() {
@@ -43,7 +43,7 @@ public abstract class AbstractCarte implements CarteInterface {
         }
     }
 
-    public static HashSet<PointDeControle> getListePt() {
+    public HashSet<PointDeControle> getListePt() {
         return listePt;
     }
 

@@ -1,18 +1,10 @@
 package sim.tricycle.team;
 
 import java.awt.Color;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import sim.tricycle.mapping.AbstractCarte;
-import sim.tricycle.mapping.CarteObjective;
-import sim.tricycle.mapping.CarteTeam;
-import sim.tricycle.mapping.Case;
-import sim.tricycle.mapping.elementCase.AbstractObjet;
+import java.util.*;
+import sim.tricycle.mapping.*;
 import sim.tricycle.mapping.elementCase.Base;
 import sim.tricycle.robot.Model;
-import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 
 /**
@@ -25,25 +17,24 @@ public class Team {
     private LinkedList<Robot> armee;
     private LinkedList<Model> models;
     private CarteTeam map;
-    private ArrayList<Ressource> ressourcesz;
     private HashMap<String, Integer> ressources;
     private ArrayList<Case> collectables;
     private Color color = Color.cyan;
     private Base base = null;
     private int id = 1;
+    protected List<Case> casesObscures;
 
     public Team(int iden, String nomTeam, AbstractCarte carteObj, Case posBase) {
         this.nomTeam = nomTeam;
         this.map = new CarteTeam((CarteObjective) carteObj);
         this.armee = new LinkedList<Robot>();
         this.models = new LinkedList<Model>();
-        this.ressourcesz = new ArrayList<Ressource>();
         this.ressources = new HashMap();
         this.base = new Base();
         this.base.setPosition(posBase);
         this.base.setT(this);
         this.id = iden;
-         switch (this.id) {
+        switch (this.id) {
             case 0:
                 this.color = Color.red;
                 break;
@@ -57,7 +48,7 @@ public class Team {
                 this.color = Color.BLACK;
                 break;
         }
-
+        construireListeCasesObscures();
     }
 
     public Team(int iden, String nomTeam, CarteObjective carteObj) {
@@ -66,9 +57,8 @@ public class Team {
         this.map = new CarteTeam(carteObj);
         this.armee = new LinkedList<Robot>();
         this.models = new LinkedList<Model>();
-        this.ressourcesz = new ArrayList<Ressource>();
         this.ressources = new HashMap();
-         switch (this.id) {
+        switch (this.id) {
             case 0:
                 this.color = Color.red;
                 break;
@@ -82,7 +72,20 @@ public class Team {
                 this.color = Color.BLACK;
                 break;
         }
+    }
 
+    private void construireListeCasesObscures() {
+        casesObscures = new ArrayList<Case>(map.getHauteur() * map.getLargeur());
+
+        for (int x = 0; x < map.getLargeur(); x++) {
+            for (int y = 0; y < map.getHauteur(); y++) {
+                Case c = map.getCase(x, y);
+                if (map.isConnexe(c, base.getPosition())) {
+                    casesObscures.add(c);
+                }
+            }
+        }
+        Collections.sort(casesObscures, new CaseDistanceManhattanComparator(base));
     }
 
     public int getId() {
@@ -91,6 +94,7 @@ public class Team {
 
     public void setBase(Base base) {
         this.base = base;
+        construireListeCasesObscures();
     }
 
     public void setMap(CarteTeam map) {
@@ -113,14 +117,6 @@ public class Team {
         return this.nomTeam;
     }
 
-//    public ArrayList<Ressource> getRessourcesz() {
-//        return ressourcesz;
-//    }
-//
-//    public void setRessourcesz(ArrayList<Ressource> ressources) {
-//        this.ressourcesz = ressources;
-//    }
-
     public HashMap<String, Integer> getRessources() {
         return ressources;
     }
@@ -138,69 +134,22 @@ public class Team {
     }
 
     public void addQtyRes(String res, Integer qty) {
-        this.ressources.put(res, this.ressources.get(res) + qty);
+        if (!ressources.containsKey(res)) {
+            addRessource(res, qty);
+        } else {
+            this.ressources.put(res, this.ressources.get(res) + qty);
+        }
     }
 
     public boolean consumeRes(String res, Integer qty) {
         if (getQuantityRessource(res) > qty) {
-            addRessource(res, -qty);
+            addQtyRes(res, -qty);
             return true;
         } else {
             return false;
         }
 
     }
-
-    /*
-     * Au secours j'y comprend rien
-     */
-//    public Ressource trouveRessourceParItem(String idItem) {
-//        Ressource resSearched = null;
-//        for (Ressource res : ressourcesz) {
-//            if (res.getIdItem().equals(idItem)) {
-//                if (ressourcesz.get(ressourcesz.indexOf(new Ressource(idItem, 0))) != null) {
-//                    resSearched = ressourcesz.get(ressourcesz.indexOf(new Ressource(idItem, 0)));
-//                }
-//                return null;
-//            }
-//        }
-//
-//        return resSearched;
-//    }
-
-    /**
-     * @todo virer le if(true)
-     *
-     * @param idItem
-     */
-//    public void ajouterRessource(String idItem) {
-//        if (true) {
-//            return;
-//        }
-//        Ressource r = new Ressource(idItem, 1);
-//
-//        if (this.ressourcesz.contains(r)) {
-//            r = trouveRessourceParItem(idItem);
-//            r.setQuantite(r.getQuantite() + 1);
-//        } else {
-//            this.ressourcesz.add(r);
-//        }
-//    }
-//
-//    public void supprimerRessource(String idItem, int q) {
-//        Ressource r = new Ressource(idItem, 0);
-//
-//        if (this.ressourcesz.contains(r)) {
-//            r = trouveRessourceParItem(idItem);
-//            if (r.getQuantite() >= q) {
-//                r.setQuantite(r.getQuantite() - q);
-//            } else {
-//                throw new RuntimeException("quantité insuffisante");
-//            }
-//        } else {
-//            throw new RuntimeException("quantité insuffisante");
-//        }
-//    }
 
     public LinkedList<Robot> getArmee() {
         return armee;
@@ -259,5 +208,9 @@ public class Team {
 
     public void removeModel() {
         models.remove();
+    }
+
+    public List<Case> getCasesObscures() {
+        return casesObscures;
     }
 }

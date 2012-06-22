@@ -4,8 +4,11 @@
  */
 package sim.tricycle.robot.condition;
 
+import java.util.Iterator;
+import java.util.List;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.mapping.CarteTeam;
+import sim.tricycle.mapping.Case;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.condition.core.AbstractCondition;
 
@@ -21,14 +24,17 @@ public class CaseObscureExiste extends AbstractCondition {
         this.ordonnanceur = ordonnanceur;
     }
 
+    @Override
     public boolean test() {
         Robot bot = (Robot) ordonnanceur.getActiveTask();
-        CarteTeam c = bot.getTeam().getMap();
-        for (int i = 0; i < c.getLargeur(); i++) {
-            for (int j = 0; j < c.getHauteur(); j++) {
-                if (c.getCase(i, j).JamaisVu()) {
-                    return true;
-                }
+        List<Case> cases = bot.getTeam().getCasesObscures();
+        Iterator<Case> it = cases.iterator();
+        while (it.hasNext()) {
+            Case c = it.next();
+            if (c.JamaisVu()) {
+                return true;
+            } else {
+                it.remove();
             }
         }
         return false;
