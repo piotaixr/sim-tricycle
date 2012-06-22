@@ -54,13 +54,13 @@ public class AbstractVision extends AbstractObstacle {
      * @return vrai s'il voit la case.
      */
     public boolean voit(Case c) {
-        int x=Math.abs(c.getX()- this.pos.getX());
-        int y=Math.abs(c.getY()- this.pos.getY());
+        int x=Math.abs(c.getX()- this.position.getX());
+        int y=Math.abs(c.getY()- this.position.getY());
         return (x+y>this.portee);
     }
     
     public void majvision(){
-        this.getTeam().getMap().actualiserCarte(this.portee, pos);
+        this.getTeam().getMap().actualiserCarte(this.portee, position);
     }
     
 }

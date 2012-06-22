@@ -29,7 +29,7 @@ public class TrouveDirection extends AbstractAction{
        if(refPoint!=null){
            point=(Point)refPoint.getValue();
        }
-        return trouveDirection(bot.getCoordonnees(),point);
+        return trouveDirection(bot.getPosition().toPoint(),point);
     }
     
     private Sens trouveDirection(Point p1, Point p2) {

@@ -55,7 +55,7 @@ public abstract class AbstractObjet implements PossedeCaseInterface {
         return TypeCase.objet;
     }
 
-    public void setCase(Case c) {
+    public void setPosition(Case c) {
         pos = c;
     }
 }

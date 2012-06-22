@@ -46,7 +46,7 @@ public class TrouveChemin extends AbstractAction {
                 System.out.println(pDest.getStringedCoord());
             }
         }
-        return plusCourtChemin(new Point(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()), bot);
+        return plusCourtChemin(bot.getPosition().toPoint(), bot);
     }
 
     private void insereEnOrdre(Noeud n, LinkedList<Noeud> listeNoeuds) {

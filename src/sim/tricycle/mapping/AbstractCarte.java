@@ -82,7 +82,7 @@ public abstract class AbstractCarte implements CarteInterface {
                     //Si pt de controle il lui faut connaitre ses cases voisines.
                     casesVoisines(this, this.getCase(i, j), liste);
                     PointDeControle pt = new PointDeControle(liste);
-                    pt.setCase(this.getCase(i, j));
+                    pt.setPosition(this.getCase(i, j));
                     this.getCase(i, j).setZone(pt);
                     listeP.add(pt);// On ajoute ce point à la liste des points.
                 }
@@ -220,9 +220,9 @@ public abstract class AbstractCarte implements CarteInterface {
         if (c != null) {// si on peut avancer:
             if (!c.hasObstacle()) {
                 bot.getPosition().suprObstacle();
-                bot.setCase(c);
+                bot.setPosition(c);
                 c.setObstacle(bot);
-                System.out.print("\n\n\n" + bot.getCoordonnees().getStringedCoord());
+                System.out.print("\n\n\n" + bot.getPosition().toPoint().getStringedCoord());
                 // this.ActualiserBrouillard(c);
             }
         } else {

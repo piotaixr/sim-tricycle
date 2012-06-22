@@ -37,7 +37,7 @@ public class Team {
         this.models = new LinkedList<Model>();
         this.ressources = new ArrayList<Ressource>();
         this.base = new Base();
-        this.base.setCase(posBase);
+        this.base.setPosition(posBase);
         this.base.setT(this);
         this.id = iden;
     }

@@ -178,18 +178,6 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
         return environnement;
     }
 
-    public Point getCoordonnees() {
-        return this.coordonnees;
-    }
-
-    public void setCoordonnees(Point newP) {
-        this.coordonnees = new Point(newP);
-    }
-
-    public void setCoordonnees(Case newP) {
-        this.coordonnees = new Point(newP.getX(), newP.getY());
-    }
-
     public Sens getDirection() {
         return this.direction;
     }
