@@ -163,19 +163,9 @@ public class PanSelectModel extends javax.swing.JPanel {
             rob.setCoordonnees(t.getBase().getPosition());
             rob.setDirection(Sens.SUD);
 
-//            //Ajout dans la map globale
-//            Case casebase = jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
-//            casebase.setObstacle(rob);
-//            jeu.getCarte().ActualiserBroullard(casebase);
-//            //Ajout dans la map Team
-//            Case caseTest = t.getMap().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
-//            caseTest.setObstacle(rob);
-//            t.getMap().ActualiserBroullard(caseTest);
-//            
+           
             Case casePop = t.getMap().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
             t.getMap().pop(rob, casePop);
-//            Case casePopMap = jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
-//            jeu.getCarte().pop(rob, casePopMap);
 
             t.addRobot(rob);
             oi.add(rob);
@@ -183,7 +173,6 @@ public class PanSelectModel extends javax.swing.JPanel {
             //t.getRessources().get(0).setQuantite(t.getRessources().get(0).getQuantite()- price); Enleve le cout du robot
 
             obs.sendMessage();
-            System.out.println("OK");
 
         } else {
             System.out.println("Y deja un truc sur la case ducon");
