@@ -1,0 +1,46 @@
+/*fichier automate*/
+robot{
+
+        etat=init{
+            transition{
+                sinon{
+                    etat=cherchercase;
+                }
+            }
+        }
+
+	etat=cherchercase{		
+            transition{
+		sinon{cible<-casealea();
+		      etat=deplacement;
+		}
+            }
+        }
+
+        etat=deplacement{
+            transition{
+		si(!contains(caseCourante,cible)){ allerici(var : cible);
+						   etat=deplacement;
+                }
+            }	
+	    transition{
+		si(case_devant_vide()){ construiction("tour");
+					etat=construire;
+		}
+	    }
+	    transition{
+		sinon{etat=cherchercase;
+		}
+	    }
+        }
+	
+	etat=construction{           
+            transition{
+		sinon{etat=cherchercase;
+		}
+            }
+	}
+	
+}
+fin
+
