@@ -198,16 +198,16 @@ public abstract class AbstractCarte implements CarteInterface {
         Case c = null;
         switch (bot.getDirection()) {
             case NORD:
-                c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
+                c = this.getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
                 break;
             case SUD:
-                c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
+                c = this.getCase(bot.getPosition().getX()+ 1, bot.getPosition().getY() );
                 break;
             case EST:
-                c = this.getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
+                c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
                 break;
             case OUEST:
-                c = this.getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
+                c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
                 break;
         }
         return c;
@@ -217,12 +217,12 @@ public abstract class AbstractCarte implements CarteInterface {
     public boolean avancer(Robot bot) {
         Case c = getCaseDevant(bot);
         System.out.print("Case devant: " + c.toPoint().getStringedCoord());
+        System.out.println(" Case robot: " + bot.getPosition().toPoint().getStringedCoord());
         if (c != null) {// si on peut avancer:
             if (!c.hasObstacle()) {
                 bot.getPosition().suprObstacle();
                 bot.setPosition(c);
                 c.setObstacle(bot);
-                System.out.println(" Case robot: " + bot.getPosition().toPoint().getStringedCoord());
                 this.ActualiserBrouillard(c);
             }
         } else {

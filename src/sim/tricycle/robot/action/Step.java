@@ -27,6 +27,9 @@ public class Step extends AbstractActionComposee {
     protected Object doExecute(Robot bot) {
         LinkedList<Noeud> chemin = (LinkedList<Noeud>) varChemin.getValue();
         Noeud n = chemin.pollFirst();
+        if(chemin.isEmpty()){
+            varChemin.setValue(null);
+        }
         getBuilder().addNew("sedeplacerunecase", n.getPoint());
         
         return null;

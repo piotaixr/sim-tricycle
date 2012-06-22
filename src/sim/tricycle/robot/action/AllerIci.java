@@ -4,6 +4,7 @@
  */
 package sim.tricycle.robot.action;
 
+import sim.tricycle.mapping.PossedeCaseInterface;
 import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
@@ -23,9 +24,17 @@ public class AllerIci extends AbstractActionComposee{
     
     @Override
     protected Object doExecute(Robot bot) {
-        
+        Object o = refPoint.getValue();
         if(refPoint!=null){
-            point=(Point)refPoint.getValue();
+            if(o instanceof Point)
+                point = (Point) o;
+            else if(o instanceof PossedeCaseInterface)
+                point = ((PossedeCaseInterface)o).getPosition().toPoint();
+            else{
+                System.out.println("Mauvais type passé en parametre!");
+                return null;
+            }
+               
         }
         getBuilder().addNewReturn("trouvechemin", "chemin", point)
                     .addNew("suivrechemin", getBuilder().buildVariable("chemin"));
