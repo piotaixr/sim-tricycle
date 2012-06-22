@@ -216,14 +216,13 @@ public abstract class AbstractCarte implements CarteInterface {
     @Override
     public boolean avancer(Robot bot) {
         Case c = getCaseDevant(bot);
-        System.out.print("\n\n\n" + c.getX() + c.getY());
+      
         if (c != null) {// si on peut avancer:
             if (!c.hasObstacle()) {
                 bot.getPosition().suprObstacle();
                 bot.setCase(c);
                 c.setObstacle(bot);
-                System.out.print("\n\n\n" + bot.getCoordonnees().getStringedCoord());
-                // this.ActualiserBrouillard(c);
+                 this.ActualiserBrouillard(c);
             }
         } else {
             return false;
