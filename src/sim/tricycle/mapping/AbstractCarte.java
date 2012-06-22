@@ -38,7 +38,7 @@ public abstract class AbstractCarte implements CarteInterface {
         System.out.println("");
         for (i = 0; i < this.getLargeur(); i++) {
             for (j = 0; j < this.getHauteur(); j++) {
-                System.out.print(this.getCase(i, j).toString() + this.getCase(i, j).getId());
+                System.out.print(this.getCase(i, j).toString());
             }
             System.out.print("\n");
         }
