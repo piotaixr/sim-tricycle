@@ -36,10 +36,17 @@ public class TrouveChemin extends AbstractAction {
     @Override
     protected Object doExecute(Robot bot) {
         //  System.out.print("Coucou");
-        if(refPointDest != null){
-            pDest = (Point) refPointDest.getValue();
+        if (refPointDest != null) {
+            System.out.println(refPointDest.getValue().getClass().toString());
+            if (refPointDest.getValue() instanceof Case) {
+                Case c = (Case) refPointDest.getValue();
+                pDest = new Point(c.getX(), c.getY());
+            } else {
+                pDest = (Point) refPointDest.getValue();
+                System.out.println(pDest.getStringedCoord());
+            }
         }
-        return  plusCourtChemin(new Point(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()), bot);
+        return plusCourtChemin(new Point(bot.getCoordonnees().getX(), bot.getCoordonnees().getY()), bot);
     }
 
     private void insereEnOrdre(Noeud n, LinkedList<Noeud> listeNoeuds) {

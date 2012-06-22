@@ -220,7 +220,7 @@ public class ViewCarte extends javax.swing.JPanel {
             } else {
                 nomFich = nomFich.concat("N");
             }//On affiche.
-            System.out.println(nomFich);
+//            System.out.println(nomFich);
             g.drawImage(ensaCharger.get(nomFich + ".png"), x, y, width, width, this);
 
         }
