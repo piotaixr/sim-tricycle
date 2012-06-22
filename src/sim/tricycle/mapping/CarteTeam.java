@@ -38,6 +38,7 @@ public class CarteTeam extends AbstractCarte {
      * @param bot
      * @return vrai si deplacement réussi
      */
+    @Override
     public boolean avancer(Robot bot) {
         if (!vraiCarte.avancer(bot)) {
             return false;
@@ -80,6 +81,7 @@ public class CarteTeam extends AbstractCarte {
 //        return null;
 //    }
 
+    @Override
     public boolean pop(PossedeCaseInterface e, int x, int y) {
         Case c = vraiCarte.getCase(x, y);
         if (super.pop(e, c)) {
@@ -89,6 +91,7 @@ public class CarteTeam extends AbstractCarte {
         return false;
     }
 
+    @Override
     public boolean pop(PossedeCaseInterface e, Case c) {
         Case cv = vraiCarte.getCase(c.getX(), c.getY());
         if (super.pop(e, cv)) {
@@ -105,6 +108,7 @@ public class CarteTeam extends AbstractCarte {
      * @param c
      * @return
      */
+    @Override
     public boolean supprimer(PossedeCaseInterface e, Case c) {
         Case cv = vraiCarte.getCase(c.getX(), c.getY());
         if (vraiCarte.supprimer(e, cv)) {
@@ -114,6 +118,7 @@ public class CarteTeam extends AbstractCarte {
         return false;
     }
 
+    @Override
     protected void placerPoint(String[][] mat) {
         int i, j;
         for (i = 0; i < tailleX; i++) {
@@ -125,4 +130,10 @@ public class CarteTeam extends AbstractCarte {
             }
         }
     }
+
+    @Override
+    public boolean isConnexe(Case c1, Case c2) {
+        return vraiCarte.isConnexe(c1, c2);
+    }
+    
 }
