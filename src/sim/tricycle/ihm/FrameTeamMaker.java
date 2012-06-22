@@ -79,8 +79,6 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
 //        System.out.println("hauteur frame : " + this.getHeight() + " taille pan :" + tabPanTeams.getPreferredSize().height);
 
         jeu.getCarte().afficherCarte();
-//        System.out.println(jeu.getTeamNumber());
-
 
         while (teamNumber <= jeu.getTeamNumber()) {
             javax.swing.JPanel newPanTeam = createPanTeam();
@@ -184,9 +182,18 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
     public void createAllTeams() {
         for (int i = 0; i < tabPanTeams.getTabCount(); i++) {
             Team t = createTeam(i, tabPanTeams.getTitleAt(i));
+            addDefautBot(t);
+            createModels(t,i);
             jeu.addTeam(t);
-            createModels(t, i);
         }
+    }
+
+    public void addDefautBot(Team t) {
+        File f = new File("Automates/test.xml");
+        Automate auto = robPars.parse(f);
+        Robot robotByDefaut = new Robot(auto, t, "wall");
+        robotByDefaut.setPosition(t.getBase().getPosition());
+        t.addRobot(robotByDefaut);
     }
 
     public void createModels(Team t, int index) {
@@ -196,10 +203,10 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
             if (c instanceof PanSelectAutomate) {
                 //pour éviter d'avoir une ligne de code indigerable
                 String automateTxt = ((PanSelectAutomate) c).getStringAutomate();
-                File f = new File("Automates/"+automateTxt);
+                File f = new File("Automates/" + automateTxt);
 //                System.out.println(f.getAbsolutePath());
                 Automate auto = robPars.parse(f);
-                t.addModel(new Robot(auto, t,((PanSelectAutomate) c).getStringImg()), ((PanSelectAutomate) c).getStringImg());
+                t.addModel(new Robot(auto, t, ((PanSelectAutomate) c).getStringImg()), ((PanSelectAutomate) c).getStringImg());
             }
         }
     }
@@ -271,7 +278,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
             .addGroup(panTitileLayout.createSequentialGroup()
                 .addGap(62, 62, 62)
                 .addComponent(lblSentence)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
         panTitileLayout.setVerticalGroup(
             panTitileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,6 +294,8 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
 
         btnAddMod.setText("Add Model");
         btnAddMod.setEnabled(false);
+        btnAddMod.setMaximumSize(new java.awt.Dimension(130, 30));
+        btnAddMod.setMinimumSize(new java.awt.Dimension(130, 30));
         btnAddMod.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAddModMouseClicked(evt);
@@ -295,6 +304,8 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
 
         btnValid.setText("Validate");
         btnValid.setEnabled(false);
+        btnValid.setMaximumSize(new java.awt.Dimension(130, 30));
+        btnValid.setMinimumSize(new java.awt.Dimension(130, 30));
         btnValid.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnValidMouseClicked(evt);
@@ -303,6 +314,8 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
 
         btnRemoveMod.setText("Remove Model");
         btnRemoveMod.setEnabled(false);
+        btnRemoveMod.setMaximumSize(new java.awt.Dimension(130, 30));
+        btnRemoveMod.setMinimumSize(new java.awt.Dimension(130, 30));
         btnRemoveMod.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRemoveModMouseClicked(evt);
@@ -314,12 +327,12 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
         panFooterLayout.setHorizontalGroup(
             panFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panFooterLayout.createSequentialGroup()
-                .addGap(207, 207, 207)
-                .addComponent(btnAddMod, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(171, 171, 171)
+                .addComponent(btnAddMod, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRemoveMod, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRemoveMod, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnValid, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnValid, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panFooterLayout.setVerticalGroup(
@@ -327,9 +340,9 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
             .addGroup(panFooterLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnValid)
-                    .addComponent(btnAddMod)
-                    .addComponent(btnRemoveMod))
+                    .addComponent(btnValid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRemoveMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 

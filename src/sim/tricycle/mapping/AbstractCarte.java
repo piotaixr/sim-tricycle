@@ -305,20 +305,6 @@ public abstract class AbstractCarte implements CarteInterface {
         }
     }
 
-    public boolean isCaseValide(Case c) {
-
-        HashSet<Case> v = new HashSet<Case>();
-        this.casesVoisines(this, c, v);
-        int i = 0;
-
-        for (Case test : v) {
-            if (test.hasObstacle() || test.JamaisVu()) {
-                i++;
-            }
-        }
-        return i == 8;
-    }
-
     public List<Point> getListeBase() {
         return listeBase;
     }
@@ -355,6 +341,7 @@ public abstract class AbstractCarte implements CarteInterface {
         }
     }
 
+    @Override
     public boolean isConnexe(Case c1, Case c2) {
         return connexe[c1.getX()][c1.getY()] == connexe[c2.getX()][c2.getY()];
     }
