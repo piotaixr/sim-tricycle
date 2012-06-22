@@ -72,6 +72,7 @@ public class Team {
                 this.color = Color.BLACK;
                 break;
         }
+        construireListeCasesObscures();
     }
 
     private void construireListeCasesObscures() {
