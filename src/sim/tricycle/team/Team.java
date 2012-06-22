@@ -43,6 +43,21 @@ public class Team {
         this.base.setPosition(posBase);
         this.base.setT(this);
         this.id = iden;
+         switch (this.id) {
+            case 0:
+                this.color = Color.red;
+                break;
+            case 1:
+                this.color = Color.blue;
+                break;
+            case 2:
+                this.color = Color.yellow;
+                break;
+            default:
+                this.color = Color.BLACK;
+                break;
+        }
+
     }
 
     public Team(int iden, String nomTeam, CarteObjective carteObj) {
@@ -53,6 +68,21 @@ public class Team {
         this.models = new LinkedList<Model>();
         this.ressourcesz = new ArrayList<Ressource>();
         this.ressources = new HashMap();
+         switch (this.id) {
+            case 0:
+                this.color = Color.red;
+                break;
+            case 1:
+                this.color = Color.blue;
+                break;
+            case 2:
+                this.color = Color.yellow;
+                break;
+            default:
+                this.color = Color.BLACK;
+                break;
+        }
+
     }
 
     public int getId() {
