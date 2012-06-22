@@ -79,7 +79,10 @@ public class Team {
 
         for (int x = 0; x < map.getLargeur(); x++) {
             for (int y = 0; y < map.getHauteur(); y++) {
-                casesObscures.add(map.getCase(x, y));
+                Case c = map.getCase(x, y);
+                if (map.isConnexe(c, base.getPosition())) {
+                    casesObscures.add(c);
+                }
             }
         }
         Collections.sort(casesObscures, new CaseDistanceManhattanComparator(base));
