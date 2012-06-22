@@ -4,8 +4,6 @@
  */
 package sim.tricycle.team;
 
-import sim.tricycle.mapping.elementCase.AbstractObjet;
-
 /**
  *
  * @author marion

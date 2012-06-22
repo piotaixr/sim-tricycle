@@ -26,7 +26,8 @@ public class Deposer extends AbstractAction{
         
         Case c = bot.getPosition();
         if (c.whoIam()== TypeCase.base){
-            bot.getTeam().ajouterRessource(bot.getItemPorte().getId());
+//            bot.getTeam().ajouterRessource(bot.getItemPorte().getId());
+            bot.getTeam().addQtyRes(bot.getItemPorte().getId(),1);
         }
         else {
             if (c.whoIam() == TypeCase.vide){

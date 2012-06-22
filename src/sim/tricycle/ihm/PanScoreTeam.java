@@ -19,8 +19,8 @@ public class PanScoreTeam extends javax.swing.JPanel {
      */
     public PanScoreTeam(Team t) {
         initComponents();
-        if (t.trouveRessourceParItem("Piece") != null) {
-            scoreBall = t.trouveRessourceParItem("Piece").getQuantite();
+        if (t.getQuantityRessource("Piece") != null) {
+            scoreBall = t.getQuantityRessource("Pièce");
         }
         lblScore.setText(""+scoreBall);
         lblTeam.setText(t.getNomTeam());
