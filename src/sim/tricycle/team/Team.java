@@ -91,7 +91,17 @@ public class Team {
      * Au secours j'y comprend rien
      */
     public Ressource trouveRessourceParItem(String idItem) {
-        return ressources.get(ressources.indexOf(new Ressource(idItem, 0)));
+        Ressource resSearched = null;
+        for (Ressource res : ressources) {
+            if (res.getIdItem().equals(idItem)) {
+                if (ressources.get(ressources.indexOf(new Ressource(idItem, 0))) != null) {
+                    resSearched = ressources.get(ressources.indexOf(new Ressource(idItem, 0)));
+                }
+                return null;
+            }
+        }
+
+        return resSearched;
     }
 
     public void ajouterRessource(String idItem) {

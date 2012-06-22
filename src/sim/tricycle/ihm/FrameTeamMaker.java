@@ -174,9 +174,9 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
 
     public Team createTeam(int ident, String name) {
         Team t = new Team(ident, name, jeu.getCarte());
-        // t.setBase(new Base(jeu.getCarte().getListeBase().get(ident)));       ----------------------------------------------------------
         Base b = new Base();
         jeu.getCarte().pop(b, new Case(jeu.getCarte().getListeBase().get(ident).getX(), jeu.getCarte().getListeBase().get(ident).getY()));
+        jeu.getCarte().getCase(b.getPosition().getX(), b.getPosition().getY()).setZone(b);
         t.setBase(b);
         return t;
     }
@@ -196,7 +196,8 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
             if (c instanceof PanSelectAutomate) {
                 //pour éviter d'avoir une ligne de code indigerable
                 String automateTxt = ((PanSelectAutomate) c).getStringAutomate();
-                File f = new File(automateTxt);
+                File f = new File("Automates/"+automateTxt);
+//                System.out.println(f.getAbsolutePath());
                 Automate auto = robPars.parse(f);
                 t.addModel(new Robot(auto, t,((PanSelectAutomate) c).getStringImg()), ((PanSelectAutomate) c).getStringImg());
             }

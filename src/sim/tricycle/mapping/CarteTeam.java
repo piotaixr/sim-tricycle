@@ -39,12 +39,12 @@ public class CarteTeam extends AbstractCarte {
      * @return vrai si deplacement réussi
      */
     public boolean avancer(Robot bot) {
-        boolean res = vraiCarte.avancer(bot);
-
-        if (!res) {
+        if (!vraiCarte.avancer(bot)) {
             return false;
         } else {
-            return super.avancer(bot);
+            // On actu notre map.
+            this.actualiserCarte(bot.getPortee(), this.getCase(bot.getPosition().getX(), bot.getPosition().getY()));
+            return true;
         }
     }
 
@@ -73,11 +73,12 @@ public class CarteTeam extends AbstractCarte {
         }
     }
 
-    public void popAlea(PossedeCaseInterface e) {
-        Case c = null;
-        super.popAlea(e, c);
-        this.actualiserCarte(0, c);
-    }
+//    public Case popAlea(PossedeCaseInterface e) {
+//        Case c = null;
+//        c = super.popAlea(e);
+//        this.actualiserCarte(0, c);
+//        return null;
+//    }
 
     public boolean pop(PossedeCaseInterface e, int x, int y) {
         Case c = vraiCarte.getCase(x, y);

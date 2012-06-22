@@ -14,17 +14,17 @@ import sim.tricycle.robot.condition.core.AbstractCondition;
  *
  * @author Adri
  */
-public class PieceExiste extends AbstractCondition {
+public class BouleExiste extends AbstractCondition {
 
     private Ordonnanceur o;
 
-    public PieceExiste(Ordonnanceur o) {
+    public BouleExiste(Ordonnanceur o) {
         this.o = o;
     }
 
     @Override
     public String getId() {
-        return "piece_existe";
+        return "boule_existe";
     }
 
     @Override
@@ -33,7 +33,7 @@ public class PieceExiste extends AbstractCondition {
         CarteTeam c = bot.getTeam().getMap();
         for (int i = 0; i < c.getLargeur(); i++) {
             for (int j = 0; j < c.getHauteur(); j++) {
-                if (c.getCase(i, j).whoIam() == TypeCase.piece) {
+                if (c.getCase(i, j).whoIam() == TypeCase.boule) {
                     return true;
                 }
             }

@@ -8,6 +8,7 @@ import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.utils.ActionBuilder;
+import sim.tricycle.utils.params.converter.PointConverter;
 import sim.tricycle.utils.params.types.Reference;
 import sim.tricycle.utils.params.types.Variable;
 
@@ -33,6 +34,11 @@ public class SeDeplacerUneCase extends AbstractActionComposee {
         return null;
     }
 
+    public void setParameters(String point) {
+        PointConverter pc = new PointConverter();
+        this.point = (Point) pc.convert(point);
+    }
+
     public void setParameters(Point point) {
         this.point = point;
     }
@@ -40,7 +46,7 @@ public class SeDeplacerUneCase extends AbstractActionComposee {
     public void setParameters(Reference point) {
         this.refPoint = point;
     }
-    
+
     public void setParameters(Variable point) {
         this.refPoint = point;
     }

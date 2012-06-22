@@ -8,6 +8,7 @@ import sim.tricycle.robot.Point;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.utils.ActionBuilder;
+import sim.tricycle.utils.params.converter.PointConverter;
 import sim.tricycle.utils.params.types.Reference;
 import sim.tricycle.utils.params.types.Variable;
 
@@ -38,6 +39,11 @@ public class AllerIci extends AbstractActionComposee{
 
     public AllerIci(ActionBuilder builder) {
         super(builder);
+    }
+    
+    public void setParameters(String point) {
+        PointConverter pc = new PointConverter();
+        this.point = (Point)pc.convert(point);
     }
     
     public void setParameters(Point point) {

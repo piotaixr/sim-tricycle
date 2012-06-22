@@ -19,8 +19,13 @@ public class TestParser {
 
 
         RobotParser parser = builder.getRobotParser();
-        System.out.println("aaaa");
-        parser.parse(new File("./test_basique.xml"));
+
+        //System.out.println("aaaa");
+        //parser.parse(new File("./test_basique.xml"));
         parser.parse(new File("./test.xml"));
+        System.out.println("aaaa");
+     //   parser.parse(new File("./test_basique.xml"));
+        parser.parse(new File("./Automates/trajet.xml"));
+
     }
 }
