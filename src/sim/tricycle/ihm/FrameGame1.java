@@ -8,6 +8,7 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BoxLayout;
 import sim.tricycle.AbstractJeu;
+import sim.tricycle.Jeu;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.mapping.elementCase.Piece;
@@ -93,11 +94,11 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         javax.swing.JPanel panteam = new javax.swing.JPanel();
         javax.swing.JPanel panteamAuto = new javax.swing.JPanel();
         javax.swing.JPanel panRessTeam = createPanRessource(t);
-        
+
         panteam.setLayout(new BorderLayout());
         panteamAuto.setLayout(new BoxLayout(panteamAuto, BoxLayout.Y_AXIS));
         addPansAutomateByTeam(panteamAuto, t);
-        
+
         panteam.add(panteamAuto, BorderLayout.CENTER);
         panteam.add(panRessTeam, BorderLayout.SOUTH);
 
@@ -251,13 +252,8 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         buttonExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/eject.gif"))); // NOI18N
         buttonExit.setText("Exit");
         buttonExit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                buttonExitMousePressed(evt);
-            }
-        });
-        buttonExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonExitActionPerformed(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonExitMouseClicked(evt);
             }
         });
 
@@ -477,11 +473,6 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonExitMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonExitMousePressed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_buttonExitMousePressed
-
     private void buttonPauseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonPauseMousePressed
         oi.stop();
     }//GEN-LAST:event_buttonPauseMousePressed
@@ -506,11 +497,6 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
         sldZoom.setValue(sldZoom.getValue() - evt.getWheelRotation() * evt.getScrollAmount());
     }//GEN-LAST:event_jspanMapMouseWheelMoved
-
-    private void buttonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_buttonExitActionPerformed
 
     private void buttonStepPlayMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonStepPlayMousePressed
         // TODO add your handling code here:
@@ -544,6 +530,14 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
 //            cont.getTabTeams().get(tabPanActionAvailable.getSelectedIndex() - 1).getMap().afficherCarte();
         }
     }//GEN-LAST:event_tabPanActionAvailableStateChanged
+
+    private void buttonExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonExitMouseClicked
+        // TODO add your handling code here:
+        AbstractJeu superGameDeLaMortQuiTue = new Jeu();
+        FrameMenu fm = new FrameMenu(superGameDeLaMortQuiTue);
+        fm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_buttonExitMouseClicked
 
     /**
      * @param args the command line arguments
