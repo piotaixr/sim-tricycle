@@ -231,8 +231,9 @@ public abstract class AbstractCarte implements CarteInterface {
         return true;
     }
 
-    public Case popAlea(PossedeCaseInterface e, Case c) {
+    public Case popAlea(PossedeCaseInterface e) {
         int l, h;
+        Case c;
         do {
             l = (int) (Math.random() * this.getLargeur());
             h = (int) (Math.random() * this.getHauteur());

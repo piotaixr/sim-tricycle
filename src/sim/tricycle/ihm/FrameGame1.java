@@ -11,6 +11,8 @@ import sim.tricycle.AbstractJeu;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.ihm.PanRessourceTeam;
+import sim.tricycle.mapping.Case;
+import sim.tricycle.mapping.elementCase.Piece;
 import sim.tricycle.robot.Model;
 import sim.tricycle.team.Team;
 
@@ -64,6 +66,8 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
 //        tabPanActionAvailable.insertTab("team test", null, panTeam2, null, WIDTH);
 //        tabPanActionAvailable.insertTab("team test", null, panTeam3, null, WIDTH);
 
+        Piece p = new Piece();
+        jeu.getCarte().popAlea(p);
     }
 
     public void addOrdonnaceur(Ordonnanceur oi) {
