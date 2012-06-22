@@ -216,6 +216,7 @@ public class Case implements CaseInterface {
         this.objet = nouv.objet;
         this.obstacle = nouv.obstacle;
         this.zone = nouv.zone;
+        this.idImg=nouv.idImg;
     }
 
     @Override
