@@ -30,7 +30,10 @@ public class SeDeplacerUneCase extends AbstractActionComposee {
         if (refPoint != null) {
             this.point = (Point) this.refPoint.getValue();
         }
-        getBuilder().addNewReturn("trouvedirection", "sens", point).addNew("tourner", getBuilder().buildVariable("sens")).addNew("Avancer");
+        getBuilder()
+                .addNewReturn("trouvedirection", "sens", point)
+                .addNew("tourner", getBuilder().buildVariable("sens"))
+                .addNew("avancer");
         return null;
     }
 

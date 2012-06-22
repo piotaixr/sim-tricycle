@@ -10,8 +10,6 @@ import javax.swing.BoxLayout;
 import sim.tricycle.AbstractJeu;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
-import sim.tricycle.ihm.PanRessourceTeam;
-import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.elementCase.Piece;
 import sim.tricycle.robot.Model;
 import sim.tricycle.team.Team;

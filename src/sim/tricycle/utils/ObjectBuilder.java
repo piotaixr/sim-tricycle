@@ -132,11 +132,7 @@ public class ObjectBuilder {
     }
 
     public ActionBuilder getActionBuilder() {
-        if (actionBuilder == null) {
-            actionBuilder = new ActionBuilder(getOrdonnanceur(), getParameterCreator(), getActionFactory());
-        }
-
-        return actionBuilder;
+            return new ActionBuilder(getOrdonnanceur(), getParameterCreator(), getActionFactory());
     }
 
     public ParameterCreator getParameterCreator() {

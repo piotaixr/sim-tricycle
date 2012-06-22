@@ -86,7 +86,7 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
         this.etatCourant = automate.getEtat("init");
         this.imgBase = imgB;
     }
-    
+
     public Robot(Automate automate) {
         this.automate = automate;
         this.etatCourant = automate.getEtat("init");
@@ -161,10 +161,11 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
                     if (t == null) {
                         //si on ne trouve pas de transition, on ajoute une action vide de cout 1: sleep
                         prix++;
+                    } else {
+                        // transition trouvée. On récupère les actions a executer ainsi que l'etet de destination
+                        actions.addAll(t.getActions());
+                        etatDestination = t.getEtatDestination();
                     }
-                    // transition trouvée. On récupère les actions a executer ainsi que l'etet de destination
-                    actions.addAll(t.getActions());
-                    etatDestination = t.getEtatDestination();
                 }
             }
         }
@@ -194,6 +195,7 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
     }
 
     public void setDirection(Sens newDirection) {
+        System.out.println("changeDirection " + newDirection.name());
         this.direction = newDirection;
     }
 
@@ -274,6 +276,8 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
              * Si action composée empilée, on vide la file et on relance SAUF SI
              * ON PLANTE LORS DU LANCEMENT D'UNE ACTION COMPOSEE
              */
+            System.out.println("Exception levee");
+            e.printStackTrace();
             if (pileActionsComposees.isEmpty()) {
                 //on plante
                 plante = true;
