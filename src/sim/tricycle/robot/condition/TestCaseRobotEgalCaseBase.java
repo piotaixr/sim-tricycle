@@ -5,7 +5,6 @@
 package sim.tricycle.robot.condition;
 
 import sim.tricycle.mapping.Case;
-import sim.tricycle.mapping.elementCase.Piece;
 import sim.tricycle.robot.condition.core.AbstractCondition;
 import sim.tricycle.utils.params.types.Reference;
 
@@ -29,7 +28,7 @@ public class TestCaseRobotEgalCaseBase extends AbstractCondition {
      */
     public boolean test() {
         Case c = (Case) refCase.getValue();
-        Case cp = ((Piece)refPiece.getValue()).getPosition();
+        Case cp = (Case)refPiece.getValue();
         
         return c.equals(cp);
     }

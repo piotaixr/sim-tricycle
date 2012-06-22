@@ -29,7 +29,7 @@ public class TrouveDirection extends AbstractAction{
        if(refPoint!=null){
            point=(Point)refPoint.getValue();
        }
-        return trouveDirection(bot.getCoordonnees(),point);
+        return trouveDirection(bot.getPosition().toPoint(),point);
     }
     
     private Sens trouveDirection(Point p1, Point p2) {
@@ -37,13 +37,13 @@ public class TrouveDirection extends AbstractAction{
         Sens newSens = Sens.NORD;
 
         if (p1.getX() < p2.getX()) {
-            newSens = Sens.NORD;
-        } else if (p1.getY() < p2.getY()) {
-            newSens = Sens.OUEST;
-        } else if (p2.getX() < p1.getX()) {
             newSens = Sens.SUD;
-        } else if (p2.getY() < p1.getY()) {
+        } else if (p1.getY() < p2.getY()) {
             newSens = Sens.EST;
+        } else if (p2.getX() < p1.getX()) {
+            newSens = Sens.NORD;
+        } else if (p2.getY() < p1.getY()) {
+            newSens = Sens.OUEST;
         }
 
         return newSens;

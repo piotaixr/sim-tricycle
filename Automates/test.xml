@@ -1,109 +1,109 @@
 <?xml version="1.0" encoding='ISO-8859-1' standalone='yes' ?>
 <robot>
-<etat id="init">
-<transition>
-<condition nom="true"/>
-<etat id="normal"/>
-</transition>
-</etat>
-<etat id="normal">
-<tag nom="tag1"/>
-<tag nom="tag2"/>
-<transition>
-<condition nom="boule_existe"/>
-<action nom="bouleplusproche" dest="cible">
-</action>
-<etat id="deplacement_norm"/>
-</transition>
-<transition>
-<condition nom="piece_existe"/>
-<action nom="pieceplusproche" dest="cible">
-</action>
-<etat id="deplacement_norm"/>
-</transition>
-<transition>
-<condition nom="non_vide">
-<parametre type="var">chemin</parametre>
-</condition>
-<etat id="recherche"/>
-</transition>
-<transition>
-<condition nom="case_obscure_existe"/>
-<action nom="case_obscure_plus_proche" dest="cible">
-</action>
-<action nom="trouvechemin" dest="chemin">
-<parametre type="var">cible</parametre>
-</action>
-<etat id="recherche"/>
-</transition>
-<transition>
-<condition nom="true"/>
-<action nom="sleep">
-</action>
-<etat id="normal"/>
-</transition>
-</etat>
-<etat id="recherche">
-<tag nom="tag1"/>
-<transition>
-<condition nom="true"/>
-<action nom="step">
-<parametre type="var">chemin</parametre>
-</action>
-<etat id="normal"/>
-</transition>
-</etat>
-<etat id="deplacement_norm">
-<tag nom="tag1"/>
-<transition>
-<condition nom="contains">
-<parametre type="ref">self.case</parametre>
-<parametre type="var">piece</parametre>
-</condition>
-<action nom="ramasser">
-</action>
-<etat id="porteur"/>
-</transition>
-<transition>
-<condition nom="true"/>
-<action nom="allerici">
-<parametre type="var">cible</parametre>
-</action>
-<etat id="normal"/>
-</transition>
-</etat>
-<etat id="porteur">
-<tag nom="tag2"/>
-<transition>
-<etat id="deplacement_port"/>
-</transition>
-</etat>
-<etat id="deplacement_port">
-<tag nom="tag2"/>
-<transition>
-<condition nom="case==base"/>
-<action nom="deposer">
-</action>
-<etat id="normal"/>
-</transition>
-<transition>
-<condition nom="true"/>
-<action nom="allerici">
-<parametre type="ref">team.base</parametre>
-</action>
-<etat id="deplacement_port"/>
-</transition>
-</etat>
-<tag nom="tag1">
-<action nom="avancer" val="1"/>
-<action nom="reculer" val="1"/>
-<action nom="tourner_droite" val="1"/>
-<action nom="tourner_gauche" val="1"/>
-</tag>
-<tag nom="tag2">
-<action nom="avancer" val="2"/>
-<action nom="reculer" val="2"/>
-<action nom="tourner_droite" val="1"/>
-<action nom="tourner_gauche" val="1"/>
-</tag>
+    <etat id="init">
+        <transition>
+            <condition nom="true"/>
+            <etat id="normal"/>
+        </transition>
+    </etat>
+    <etat id="normal">
+        <tag nom="tag1"/>
+        <tag nom="tag2"/>
+        <transition>
+            <condition nom="boule_existe"/>
+            <action nom="bouleplusproche" dest="cible">
+            </action>
+            <etat id="deplacement_norm"/>
+        </transition>
+        <transition>
+            <condition nom="piece_existe"/>
+            <action nom="pieceplusproche" dest="cible">
+            </action>
+            <etat id="deplacement_norm"/>
+        </transition>
+        <transition>
+            <condition nom="non_vide">
+                <parametre type="var">chemin</parametre>
+            </condition>
+            <etat id="recherche"/>
+        </transition>
+        <transition>
+            <condition nom="case_obscure_existe"/>
+            <action nom="case_obscure_plus_proche" dest="cible">
+            </action>
+            <action nom="trouvechemin" dest="chemin">
+                <parametre type="var">cible</parametre>
+            </action>
+            <etat id="recherche"/>
+        </transition>
+        <transition>
+            <condition nom="true"/>
+            <action nom="sleep">
+            </action>
+            <etat id="normal"/>
+        </transition>
+    </etat>
+    <etat id="recherche">
+        <tag nom="tag1"/>
+        <transition>
+            <condition nom="true"/>
+            <action nom="step">
+                <parametre type="var">chemin</parametre>
+            </action>
+            <etat id="normal"/>
+        </transition>
+    </etat>
+    <etat id="deplacement_norm">
+        <tag nom="tag1"/>
+        <transition>
+            <condition nom="contains">
+                <parametre type="ref">self.case</parametre>
+                <parametre type="var">cible</parametre>
+            </condition>
+            <action nom="ramasser">
+            </action>
+            <etat id="porteur"/>
+        </transition>
+        <transition>
+            <condition nom="true"/>
+            <action nom="allerici">
+                <parametre type="var">cible</parametre>
+            </action>
+            <etat id="normal"/>
+        </transition>
+    </etat>
+    <etat id="porteur">
+        <tag nom="tag2"/>
+        <transition>
+            <etat id="deplacement_port"/>
+        </transition>
+    </etat>
+    <etat id="deplacement_port">
+        <tag nom="tag2"/>
+        <transition>
+            <condition nom="case==base"/>
+            <action nom="deposer">
+            </action>
+            <etat id="normal"/>
+        </transition>
+        <transition>
+            <condition nom="true"/>
+            <action nom="allerici">
+                <parametre type="ref">team.base</parametre>
+            </action>
+            <etat id="deplacement_port"/>
+        </transition>
+    </etat>
+    <tag nom="tag1">
+        <action nom="avancer" val="1"/>
+        <action nom="reculer" val="1"/>
+        <action nom="tourner_droite" val="1"/>
+        <action nom="tourner_gauche" val="1"/>
+    </tag>
+    <tag nom="tag2">
+        <action nom="avancer" val="2"/>
+        <action nom="reculer" val="2"/>
+        <action nom="tourner_droite" val="1"/>
+        <action nom="tourner_gauche" val="1"/>
+    </tag>
 </robot>

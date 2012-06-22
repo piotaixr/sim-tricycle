@@ -38,7 +38,7 @@ public class AbstractZone implements PossedeCaseInterface {
     }
 
     @Override
-    public void setCase(Case c) {
+    public void setPosition(Case c) {
         pos = c;
     }
 

@@ -24,7 +24,7 @@ public class Ramasser extends AbstractAction{
         if (bot.getItemPorte()!=null){
             throw new RuntimeException ("Le robot porte déjà un objet");                    
         }
-        Case c = bot.getTeam().getMap().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY());
+        Case c = bot.getPosition();
         bot.setItemPorte(c.getItem());
         c.getItem().supprimerObjet();
     //    System.out.println("Ramassage: " + bot.getCoordonnees().getX()+" "+bot.getCoordonnees().getY());

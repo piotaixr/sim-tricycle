@@ -3,15 +3,15 @@
 package sim.tricycle.ihm;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BoxLayout;
 import sim.tricycle.AbstractJeu;
+import sim.tricycle.Jeu;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
-import sim.tricycle.ihm.PanRessourceTeam;
-import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.elementCase.Piece;
 import sim.tricycle.robot.Model;
 import sim.tricycle.team.Team;
@@ -44,10 +44,11 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         panMiniMap.setLayout(new BorderLayout());
         vmc.setVisible(true);
 
-
         jspanMap.setViewportView(vc);
         panMiniMap.add(vmc);
 
+        scorePanel.setLayout(new FlowLayout());
+        
         addOrdonnaceur(jeu.getObjectBuilder().getOrdonnanceur());
 
         int i = 0;
@@ -55,6 +56,7 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
             System.out.println("Passe" + i);
             javax.swing.JPanel newPanTeam = createPanTeam(jeu.getTabTeams().get(i));
             addTabTeam(tabPanActionAvailable, newPanTeam, i);
+            addScoreTeam(scorePanel,jeu.getTabTeams().get(i));
             i++;
         }
 
@@ -65,9 +67,10 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
 //        tabPanActionAvailable.insertTab("team test", null, panTeam1, null, WIDTH);
 //        tabPanActionAvailable.insertTab("team test", null, panTeam2, null, WIDTH);
 //        tabPanActionAvailable.insertTab("team test", null, panTeam3, null, WIDTH);
-
+for(int Z = 0; Z<40; Z++){
         Piece p = new Piece();
         jeu.getCarte().popAlea(p);
+}
     }
 
     public void addOrdonnaceur(Ordonnanceur oi) {
@@ -95,11 +98,11 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         javax.swing.JPanel panteam = new javax.swing.JPanel();
         javax.swing.JPanel panteamAuto = new javax.swing.JPanel();
         javax.swing.JPanel panRessTeam = createPanRessource(t);
-        
+
         panteam.setLayout(new BorderLayout());
         panteamAuto.setLayout(new BoxLayout(panteamAuto, BoxLayout.Y_AXIS));
         addPansAutomateByTeam(panteamAuto, t);
-        
+
         panteam.add(panteamAuto, BorderLayout.CENTER);
         panteam.add(panRessTeam, BorderLayout.SOUTH);
 
@@ -114,6 +117,17 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
     public javax.swing.JPanel createPanRessource(Team t) {
         javax.swing.JPanel panteam = new javax.swing.JPanel();
         panteam.setLayout(new BorderLayout());
+        addRessourceTeam(panteam, t);
+        return panteam;
+    }
+
+    public void addScoreTeam(javax.swing.JPanel pan, Team t) {
+        PanScoreTeam pst = new PanScoreTeam(t);
+        pan.add(pst);
+    }
+
+    public javax.swing.JPanel createPanScore(Team t) {
+        javax.swing.JPanel panteam = new javax.swing.JPanel();
         addRessourceTeam(panteam, t);
         return panteam;
     }
@@ -133,12 +147,6 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         buttonStepPlay = new javax.swing.JButton();
         buttonSpeedUp = new javax.swing.JButton();
         scorePanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txtscoreBallTeam1 = new javax.swing.JLabel();
-        txtScoreGoldTeam1 = new javax.swing.JLabel();
-        txtScoreBallTeam2 = new javax.swing.JLabel();
-        txtScoreGoldTeam2 = new javax.swing.JLabel();
         buttonExit = new javax.swing.JButton();
         lblUnitTime = new javax.swing.JLabel();
         lblTime = new javax.swing.JLabel();
@@ -200,70 +208,27 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
 
         scorePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setText("Balls ");
-
-        jLabel2.setText("Gold ");
-
-        txtscoreBallTeam1.setText("scoreBallTeam1");
-
-        txtScoreGoldTeam1.setText("scoreGoldTeam1");
-
-        txtScoreBallTeam2.setText("scoreBallTeam2");
-
-        txtScoreGoldTeam2.setText("scoreGoldTeam2");
-
         javax.swing.GroupLayout scorePanelLayout = new javax.swing.GroupLayout(scorePanel);
         scorePanel.setLayout(scorePanelLayout);
         scorePanelLayout.setHorizontalGroup(
             scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(scorePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtscoreBallTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtScoreGoldTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addGap(8, 8, 8)
-                .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(scorePanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(txtScoreBallTeam2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtScoreGoldTeam2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+            .addGap(0, 58, Short.MAX_VALUE)
         );
         scorePanelLayout.setVerticalGroup(
             scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(scorePanelLayout.createSequentialGroup()
-                .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtscoreBallTeam1)
-                    .addComponent(txtScoreBallTeam2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtScoreGoldTeam1))
-                    .addComponent(txtScoreGoldTeam2))
-                .addContainerGap())
+            .addGap(0, 54, Short.MAX_VALUE)
         );
 
         buttonExit.setBackground(new java.awt.Color(204, 204, 255));
         buttonExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/eject.gif"))); // NOI18N
         buttonExit.setText("Exit");
         buttonExit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                buttonExitMousePressed(evt);
-            }
-        });
-        buttonExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonExitActionPerformed(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonExitMouseClicked(evt);
             }
         });
 
-        lblUnitTime.setText("Unités de temps :");
+        lblUnitTime.setText("Time Unit :");
 
         lblTime.setText("0");
 
@@ -284,11 +249,11 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scorePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(186, 186, 186)
                 .addComponent(lblUnitTime)
                 .addGap(18, 18, 18)
                 .addComponent(lblTime)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addComponent(buttonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -374,7 +339,6 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
 
         tabPanActionAvailable.addTab("Global", panActionAvailableGlobale);
 
-        jspanMap.setBackground(new java.awt.Color(255, 102, 102));
         jspanMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jspanMap.setMaximumSize(new java.awt.Dimension(1000, 1000));
         jspanMap.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
@@ -479,11 +443,6 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonExitMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonExitMousePressed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_buttonExitMousePressed
-
     private void buttonPauseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonPauseMousePressed
         oi.stop();
     }//GEN-LAST:event_buttonPauseMousePressed
@@ -508,11 +467,6 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
         sldZoom.setValue(sldZoom.getValue() - evt.getWheelRotation() * evt.getScrollAmount());
     }//GEN-LAST:event_jspanMapMouseWheelMoved
-
-    private void buttonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_buttonExitActionPerformed
 
     private void buttonStepPlayMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonStepPlayMousePressed
         // TODO add your handling code here:
@@ -546,6 +500,14 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
 //            cont.getTabTeams().get(tabPanActionAvailable.getSelectedIndex() - 1).getMap().afficherCarte();
         }
     }//GEN-LAST:event_tabPanActionAvailableStateChanged
+
+    private void buttonExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonExitMouseClicked
+        // TODO add your handling code here:
+        AbstractJeu superGameDeLaMortQuiTue = new Jeu();
+        FrameMenu fm = new FrameMenu(superGameDeLaMortQuiTue);
+        fm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_buttonExitMouseClicked
 
     /**
      * @param args the command line arguments
@@ -596,8 +558,6 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton buttonStepPlay;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JPanel headband;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jspanMap;
     private javax.swing.JLabel lblMap;
     private javax.swing.JLabel lblTime;
@@ -610,10 +570,6 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
     private javax.swing.JPanel scorePanel;
     private javax.swing.JSlider sldZoom;
     private javax.swing.JTabbedPane tabPanActionAvailable;
-    private javax.swing.JLabel txtScoreBallTeam2;
-    private javax.swing.JLabel txtScoreGoldTeam1;
-    private javax.swing.JLabel txtScoreGoldTeam2;
-    private javax.swing.JLabel txtscoreBallTeam1;
     // End of variables declaration//GEN-END:variables
 
     @Override

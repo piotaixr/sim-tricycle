@@ -30,12 +30,10 @@ public class SuivreChemin extends AbstractActionComposee {
     protected Object doExecute(Robot bot) {
 
         LinkedList<Noeud> chemin = (LinkedList<Noeud>) varChemin.getValue();
-        Point courant = new Point(chemin.pollFirst().getPoint());
-        if(courant !=null) {
-            while (!chemin.isEmpty()) {
-                getBuilder().addNew("sedeplacerunecase", courant);
-                courant = new Point(chemin.pollFirst().getPoint());
-            }
+
+        while (!chemin.isEmpty()) {
+            Point courant = new Point(chemin.pollLast().getPoint());
+            getBuilder().addNew("sedeplacerunecase", courant);
         }
         return null;
     }
@@ -43,5 +41,9 @@ public class SuivreChemin extends AbstractActionComposee {
     @Override
     public String getId() {
         return "suivrechemin";
+    }
+
+    public void setParameters(Variable varChemin) {
+        this.varChemin = varChemin;
     }
 }

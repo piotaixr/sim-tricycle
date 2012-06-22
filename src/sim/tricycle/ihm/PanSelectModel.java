@@ -160,7 +160,7 @@ public class PanSelectModel extends javax.swing.JPanel {
             System.out.println(nameBot);
             
             Robot rob = new Robot(model.getRob().getAutomate(), t, nameBot);
-            rob.setCoordonnees(t.getBase().getPosition());
+            rob.setPosition(t.getBase().getPosition());
             rob.setDirection(Sens.SUD);
 
 //            //Ajout dans la map globale

@@ -33,5 +33,5 @@ public interface PossedeCaseInterface {
      *
      * @param c la case à placer.
      */
-    public void setCase(Case c);
+    public void setPosition(Case c);
 }
