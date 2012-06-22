@@ -4,6 +4,7 @@
  */
 package sim.tricycle.ihm;
 
+import java.awt.Color;
 import sim.tricycle.AbstractJeu;
 import sim.tricycle.Jeu;
 import sim.tricycle.utils.ObjectBuilder;
@@ -25,6 +26,7 @@ public class FrameMenu extends javax.swing.JFrame {
         ObjectBuilder ob = new ObjectBuilder();
         superGameDeLaMortQuiTue = jeu;
         superGameDeLaMortQuiTue.setObjectBuilder(ob);
+        this.setBackground(Color.black);
     }
 
     /**
@@ -42,9 +44,9 @@ public class FrameMenu extends javax.swing.JFrame {
         btnPlay = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(153, 51, 0));
 
         panHead.setBackground(new java.awt.Color(85, 81, 78));
-        panHead.setBorder(null);
 
         btnCredit.setText("Credits");
 
@@ -56,7 +58,7 @@ public class FrameMenu extends javax.swing.JFrame {
             panHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panHeadLayout.createSequentialGroup()
                 .addComponent(btnCredit, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 328, Short.MAX_VALUE)
                 .addComponent(btnGuid, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         panHeadLayout.setVerticalGroup(
@@ -68,7 +70,7 @@ public class FrameMenu extends javax.swing.JFrame {
 
         btnGuid.getAccessibleContext().setAccessibleName("btnGuid");
 
-        btnPlay.setText("PLAY");
+        btnPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/Play.jpg"))); // NOI18N
         btnPlay.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPlayMouseClicked(evt);
@@ -81,17 +83,17 @@ public class FrameMenu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panHead, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(229, 229, 229)
-                .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(240, Short.MAX_VALUE))
+                .addGap(219, 219, 219)
+                .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 296, Short.MAX_VALUE)
-                .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
+                .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
         );
 
         pack();

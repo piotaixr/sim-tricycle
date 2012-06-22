@@ -3,6 +3,7 @@
 package sim.tricycle.ihm;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.util.Observable;
 import java.util.Observer;
@@ -43,10 +44,11 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         panMiniMap.setLayout(new BorderLayout());
         vmc.setVisible(true);
 
-
         jspanMap.setViewportView(vc);
         panMiniMap.add(vmc);
 
+        scorePanel.setLayout(new FlowLayout());
+        
         addOrdonnaceur(jeu.getObjectBuilder().getOrdonnanceur());
 
         int i = 0;
@@ -54,6 +56,7 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
             System.out.println("Passe" + i);
             javax.swing.JPanel newPanTeam = createPanTeam(jeu.getTabTeams().get(i));
             addTabTeam(tabPanActionAvailable, newPanTeam, i);
+            addScoreTeam(scorePanel,jeu.getTabTeams().get(i));
             i++;
         }
 
@@ -118,6 +121,17 @@ for(int Z = 0; Z<40; Z++){
         return panteam;
     }
 
+    public void addScoreTeam(javax.swing.JPanel pan, Team t) {
+        PanScoreTeam pst = new PanScoreTeam(t);
+        pan.add(pst);
+    }
+
+    public javax.swing.JPanel createPanScore(Team t) {
+        javax.swing.JPanel panteam = new javax.swing.JPanel();
+        addRessourceTeam(panteam, t);
+        return panteam;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -133,12 +147,6 @@ for(int Z = 0; Z<40; Z++){
         buttonStepPlay = new javax.swing.JButton();
         buttonSpeedUp = new javax.swing.JButton();
         scorePanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txtscoreBallTeam1 = new javax.swing.JLabel();
-        txtScoreGoldTeam1 = new javax.swing.JLabel();
-        txtScoreBallTeam2 = new javax.swing.JLabel();
-        txtScoreGoldTeam2 = new javax.swing.JLabel();
         buttonExit = new javax.swing.JButton();
         lblUnitTime = new javax.swing.JLabel();
         lblTime = new javax.swing.JLabel();
@@ -200,53 +208,15 @@ for(int Z = 0; Z<40; Z++){
 
         scorePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setText("Balls ");
-
-        jLabel2.setText("Gold ");
-
-        txtscoreBallTeam1.setText("scoreBallTeam1");
-
-        txtScoreGoldTeam1.setText("scoreGoldTeam1");
-
-        txtScoreBallTeam2.setText("scoreBallTeam2");
-
-        txtScoreGoldTeam2.setText("scoreGoldTeam2");
-
         javax.swing.GroupLayout scorePanelLayout = new javax.swing.GroupLayout(scorePanel);
         scorePanel.setLayout(scorePanelLayout);
         scorePanelLayout.setHorizontalGroup(
             scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(scorePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtscoreBallTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtScoreGoldTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addGap(8, 8, 8)
-                .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(scorePanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(txtScoreBallTeam2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtScoreGoldTeam2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+            .addGap(0, 58, Short.MAX_VALUE)
         );
         scorePanelLayout.setVerticalGroup(
             scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(scorePanelLayout.createSequentialGroup()
-                .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtscoreBallTeam1)
-                    .addComponent(txtScoreBallTeam2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(scorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtScoreGoldTeam1))
-                    .addComponent(txtScoreGoldTeam2))
-                .addContainerGap())
+            .addGap(0, 54, Short.MAX_VALUE)
         );
 
         buttonExit.setBackground(new java.awt.Color(204, 204, 255));
@@ -258,7 +228,7 @@ for(int Z = 0; Z<40; Z++){
             }
         });
 
-        lblUnitTime.setText("Unités de temps :");
+        lblUnitTime.setText("Time Unit :");
 
         lblTime.setText("0");
 
@@ -279,11 +249,11 @@ for(int Z = 0; Z<40; Z++){
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scorePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(186, 186, 186)
                 .addComponent(lblUnitTime)
                 .addGap(18, 18, 18)
                 .addComponent(lblTime)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addComponent(buttonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -369,7 +339,6 @@ for(int Z = 0; Z<40; Z++){
 
         tabPanActionAvailable.addTab("Global", panActionAvailableGlobale);
 
-        jspanMap.setBackground(new java.awt.Color(255, 102, 102));
         jspanMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jspanMap.setMaximumSize(new java.awt.Dimension(1000, 1000));
         jspanMap.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
@@ -589,8 +558,6 @@ for(int Z = 0; Z<40; Z++){
     private javax.swing.JButton buttonStepPlay;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JPanel headband;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jspanMap;
     private javax.swing.JLabel lblMap;
     private javax.swing.JLabel lblTime;
@@ -603,10 +570,6 @@ for(int Z = 0; Z<40; Z++){
     private javax.swing.JPanel scorePanel;
     private javax.swing.JSlider sldZoom;
     private javax.swing.JTabbedPane tabPanActionAvailable;
-    private javax.swing.JLabel txtScoreBallTeam2;
-    private javax.swing.JLabel txtScoreGoldTeam1;
-    private javax.swing.JLabel txtScoreGoldTeam2;
-    private javax.swing.JLabel txtscoreBallTeam1;
     // End of variables declaration//GEN-END:variables
 
     @Override
