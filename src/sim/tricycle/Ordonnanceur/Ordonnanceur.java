@@ -27,6 +27,9 @@ public class Ordonnanceur extends Observable implements OrdonnanceurInterface {
     private boolean running = false; // Par défaut l'ordonnaceur est sur "pause"
     private Random randomGenerator = new Random();
     private long time = 0;
+    private long maxTime =25000;
+
+
     private OrdonnancableInterface activeTask = null;
 
     /*
@@ -102,14 +105,16 @@ public class Ordonnanceur extends Observable implements OrdonnanceurInterface {
              * Tant que la liste des actions faites n'est pas vide
              */
         }
-        System.out.println("------- Remplissage des actions à faire -------");
+        time++;
+        setChanged();
+        notifyObservers();
     }
 
     class TaskAction extends TimerTask {
 
         @Override
         public void run() {
-            if (running) {
+            if (running && time<=maxTime) {
                 next();
             }
 
@@ -124,12 +129,9 @@ public class Ordonnanceur extends Observable implements OrdonnanceurInterface {
         //new TaskAction().run();
         if (!subscribersActionToDo.isEmpty()) {
             actionAndRemoveFromToDo();
-            time++;
         } else {
             intializeActionToDo();
         }
-        setChanged();
-        notifyObservers();
     }
 
     @Override
@@ -196,5 +198,13 @@ public class Ordonnanceur extends Observable implements OrdonnanceurInterface {
     @Override
     public synchronized OrdonnancableInterface getActiveTask() {
         return activeTask;
+    }
+    
+    public long getMaxTime() {
+        return maxTime;
+    }
+
+    public void setMaxTime(long maxTime) {
+        this.maxTime = maxTime;
     }
 }

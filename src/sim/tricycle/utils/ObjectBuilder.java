@@ -26,7 +26,7 @@ public class ObjectBuilder {
     private ConditionFactoryInterface conditionFactory = null;
     private ActionFactoryInterface actionFactory = null;
     private ParamConverterProviderInterface paramConverterProvider = null;
-    private Ordonnanceur ordonnanceur = null;
+    private static Ordonnanceur ordonnanceur = null;
     private ActionBuilder actionBuilder = null;
     private VarBuilder varBuilder = null;
     private ParameterCreator parameterCreator = null;
@@ -43,14 +43,16 @@ public class ObjectBuilder {
         if (conditionFactory == null) {
             conditionFactory = new ConditionFactory(getParamConverterProvider(), getParameterCreator());
             conditionFactory
+                    .register(new BouleExiste(getOrdonnanceur()))
+                    .register(new CaseObscureExiste(getOrdonnanceur()))
                     .register(new ConditionEt())
                     .register(new ConditionNon())
                     .register(new ConditionOu())
                     .register(new ConditionTrue())
                     .register(new Contains())
                     .register(new EnnemiDevant(getOrdonnanceur()))
+                    .register(new NonVide())
                     .register(new PieceExiste(getOrdonnanceur()))
-                    .register(new PieceTrouvee())
                     .register(new PtControleTrouve(getOrdonnanceur()))
                     .register(new PvNecessaires(getOrdonnanceur()))
                     .register(new TestCaseRobotEgalCaseBase(getVarBuilder().buildReference("self.case"), getVarBuilder().buildReference("team.base")))
@@ -68,6 +70,8 @@ public class ObjectBuilder {
                     .register(new ArreterTout())
                     .register(new Attaquer())
                     .register(new Avancer())
+                    .register(new BoulePlusProche())
+                    .register(new CaseObscurePlusProche())
                     .register(new Collecter(getActionBuilder()))
                     .register(new CollecterPiecesEnContinu(getActionBuilder()))
                     .register(new Construction(getActionBuilder()))
@@ -86,12 +90,14 @@ public class ObjectBuilder {
                     .register(new SeDeplacerUneCase(getActionBuilder()))
                     .register(new SeTeleporterA())
                     .register(new Sleep())
+                    .register(new Step(getActionBuilder()))
                     .register(new SuivreChemin(getActionBuilder()))
                     .register(new Tourner())
                     .register(new TrouveCaseDevant())
                     .register(new TrouveChemin())
                     .register(new TrouveCollectable())
                     .register(new TrouveDirection())
+                    .register(new TrouveEnnemi())
                     .register(new TrouveZone());
         }
         
@@ -111,7 +117,7 @@ public class ObjectBuilder {
         return paramConverterProvider;
     }
     
-    public Ordonnanceur getOrdonnanceur() {
+    public static Ordonnanceur getOrdonnanceur() {
         if (ordonnanceur == null) {
             ordonnanceur = new Ordonnanceur();
         }
@@ -127,11 +133,7 @@ public class ObjectBuilder {
     }
 
     public ActionBuilder getActionBuilder() {
-        if (actionBuilder == null) {
-            actionBuilder = new ActionBuilder(getOrdonnanceur(), getParameterCreator(), getActionFactory());
-        }
-
-        return actionBuilder;
+            return new ActionBuilder(getOrdonnanceur(), getParameterCreator(), getActionFactory());
     }
 
     public ParameterCreator getParameterCreator() {

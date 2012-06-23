@@ -1,0 +1,51 @@
+/*fichier automate*/
+robot{
+
+        etat=init{
+            transition{
+                sinon{
+                    etat=chercherbat;
+                }
+            }
+        }
+
+	etat=chercherbat{		
+            transition{
+		si(bat_trouve()){cible<-batpluspres();
+		                 etat=deplacement;
+		}
+            }
+	    transition{
+		sinon{sleep();
+		      etat=chercherbat;
+		}
+            }
+        }
+
+        etat=deplacement{
+            transition{
+		si(!contains(caseCourante,cible)){ allerici(var : cible);
+						   etat=deplacement;
+                }
+            }	
+	    transition{
+		si(case_devant_bat()){ destructiontotale();
+					etat=destruire;
+		}
+	    }
+	    transition{
+		sinon{etat=chercherbat;
+		}
+	    }
+        }
+	
+	etat=destruction{           
+            transition{
+		sinon{etat=cherchercase;
+		}
+            }
+	}
+	
+}
+fin
+

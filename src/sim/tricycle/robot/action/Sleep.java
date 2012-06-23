@@ -16,6 +16,7 @@ public class Sleep extends AbstractAction {
     @Override
     protected Object doExecute(Robot bot) {
         System.out.println("Sleep " + bot);
+        bot.getTeam().getMap().actualiserCarte(2, bot.getPosition());
         return null;
     }
 

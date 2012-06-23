@@ -11,16 +11,17 @@ public class GenerateurCarte {
     String[][] mat;
 
     public static void main(String[] args) {
-        int tX = 40;
-        int tY = 40;
+        int tX = 20;
+        int tY = 20;
         GenerateurCarte gen = new GenerateurCarte();
         gen.mat = gen.creerCarte(tX, tY);
 //------------------------------------------------------------------------
-        for (int i = 0; i < tX; i++) {
-            for (int j = 19; j < 22; j++) {
-                gen.set("X", j, i);
-            }
-        }
+//        for (int i = 0; i < tX; i++) {
+//            for (int j = 19; j < 22; j++) {
+//                gen.set("X", j, i);
+//            }
+//        }
+        gen.setPt(9,9);
 //------------------------------------------------------------------------
         gen.afficherMat(gen.mat);
 

@@ -20,7 +20,6 @@ import sim.tricycle.utils.params.Parameter;
 import sim.tricycle.utils.tag.Tag;
 
 /**
- * @todo implementation non finie. Il doit rester des fonctions a ajouter
  *
  * @author Rémi PIOTAIX <remi.piotaix@gmail.com>
  */
@@ -113,7 +112,6 @@ public class RobotParser {
     }
 
     /**
-     * @todo Finir l'implementation de cette fonction
      *
      * @param t
      * @param elemTransition
@@ -178,7 +176,7 @@ public class RobotParser {
             Element tagElement = it.next();
             String nomTag = tagElement.getAttributeValue("nom").trim();
             if (nomTag.equals("")) {
-                continue; // TODO: afficher un warning
+                continue;
             }
             e.addTag(automate.getTag(nomTag));
         }

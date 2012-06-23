@@ -23,7 +23,7 @@
             </transition>
             <transition>
                 <condition nom="true"/>
-                <action nom="allera">
+                <action nom="allerici">
                     <para>piece</para>
                     <para>tempos</para>
                 </action>

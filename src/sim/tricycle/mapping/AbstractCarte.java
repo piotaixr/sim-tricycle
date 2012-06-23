@@ -6,12 +6,11 @@ import java.awt.Image;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.ihm.ViewCarte;
 import sim.tricycle.mapping.elementCase.*;
 import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
@@ -30,7 +29,8 @@ public abstract class AbstractCarte implements CarteInterface {
     protected List<Point> listeBase;
     protected int tailleX, tailleY;
     protected Case[][] carte;
-    protected static ArrayList<AbstractVision> elements = new ArrayList();
+    protected int[][] connexe;
+    protected ArrayList<AbstractVision> elements = new ArrayList();
 
     @Override
     public void afficherCarte() {
@@ -38,13 +38,13 @@ public abstract class AbstractCarte implements CarteInterface {
         System.out.println("");
         for (i = 0; i < this.getLargeur(); i++) {
             for (j = 0; j < this.getHauteur(); j++) {
-                System.out.print(this.getCase(i, j).toString() + this.getCase(i, j).getId());
+                System.out.print(this.getCase(i, j).toString());
             }
             System.out.print("\n");
         }
     }
 
-    public static HashSet<PointDeControle> getListePt() {
+    public HashSet<PointDeControle> getListePt() {
         return listePt;
     }
 
@@ -81,9 +81,11 @@ public abstract class AbstractCarte implements CarteInterface {
                     carte[i][j] = new Case(i, j);
                     //Si pt de controle il lui faut connaitre ses cases voisines.
                     casesVoisines(this, this.getCase(i, j), liste);
+                    liste.add(carte[i][j]);
+                    System.out.println(liste);
                     PointDeControle pt = new PointDeControle(liste);
-                    pt.setCase(this.getCase(i, j));
-                    this.getCase(i, j).setZone(pt);
+                    pt.setPosition(this.getCase(i, j));
+                    this.pop(pt, i, j);
                     listeP.add(pt);// On ajoute ce point à la liste des points.
                 }
                 carte[i][j].setTpsNonVu(0);
@@ -92,6 +94,7 @@ public abstract class AbstractCarte implements CarteInterface {
         this.listePt = listeP;
     }
 
+    @Override
     public void startInit(String[][] mat) {
         this.tailleX = mat.length;
         this.tailleY = mat[0].length;
@@ -99,6 +102,7 @@ public abstract class AbstractCarte implements CarteInterface {
         setVide("vide");
         initAllCases(mat);
         placerPoint(mat);
+        construireConnexe();
     }
 
     @Override
@@ -142,7 +146,7 @@ public abstract class AbstractCarte implements CarteInterface {
     }
 
     @Override
-    public void casesVoisines(AbstractCarte source, Case pos, HashSet<Case> liste) {
+    public Set<Case> casesVoisines(AbstractCarte source, Case pos, HashSet<Case> liste) {
 
         // Si case en bordure verticale droite:
         if ((this.tailleX - 1) > pos.getX()) {
@@ -172,6 +176,7 @@ public abstract class AbstractCarte implements CarteInterface {
                 liste.add(bas);
             }
         }
+        return liste;
     }
 
     @Override
@@ -183,12 +188,15 @@ public abstract class AbstractCarte implements CarteInterface {
     public int getLargeur() {
         return this.tailleX;
     }
-
+/**
+ * @deprecated 
+ */
     @Override
     public void routinePt() {
         if (!listePt.isEmpty()) {
             for (PointDeControle x : this.listePt) {
-                x.analyseCapture();
+                //x.analyseCapture();
+                System.out.println("DEGAGE");
             }
         }
     }
@@ -196,19 +204,22 @@ public abstract class AbstractCarte implements CarteInterface {
     @Override
     public Case getCaseDevant(Robot bot) {
         Case c = null;
-        switch (bot.getDirection()) {
-            case NORD:
-                c = this.getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
-                break;
-            case SUD:
-                c = this.getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
-                break;
-            case EST:
-                c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
-                break;
-            case OUEST:
-                c =this.getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
-                break;
+        try {
+            switch (bot.getDirection()) {
+                case NORD:
+                    c = this.getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
+                    break;
+                case SUD:
+                    c = this.getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
+                    break;
+                case EST:
+                    c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
+                    break;
+                case OUEST:
+                    c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
+                    break;
+            }
+        } catch (Exception e) {
         }
         return c;
     }
@@ -216,14 +227,14 @@ public abstract class AbstractCarte implements CarteInterface {
     @Override
     public boolean avancer(Robot bot) {
         Case c = getCaseDevant(bot);
-        System.out.print("\n\n\n" + c.getX() + c.getY());
+        System.out.print("Case devant: " + c.toPoint().getStringedCoord());
+        System.out.println(" Case robot: " + bot.getPosition().toPoint().getStringedCoord());
         if (c != null) {// si on peut avancer:
             if (!c.hasObstacle()) {
                 bot.getPosition().suprObstacle();
-                bot.setCase(c);
+                bot.setPosition(c);
                 c.setObstacle(bot);
-                System.out.print("\n\n\n" + bot.getCoordonnees().getStringedCoord());
-                // this.ActualiserBrouillard(c);
+                this.ActualiserBrouillard(c);
             }
         } else {
             return false;
@@ -231,8 +242,9 @@ public abstract class AbstractCarte implements CarteInterface {
         return true;
     }
 
-    public Case popAlea(PossedeCaseInterface e, Case c) {
+    public Case popAlea(PossedeCaseInterface e) {
         int l, h;
+        Case c;
         do {
             l = (int) (Math.random() * this.getLargeur());
             h = (int) (Math.random() * this.getHauteur());
@@ -297,7 +309,7 @@ public abstract class AbstractCarte implements CarteInterface {
 
         for (AbstractVision x : elements) {
             if (x.voit(c)) {
-                x.getTeam().getMap().actualiserCarte(x.getPortee(), c);
+                x.getTeam().getMap().actualiserCarte(x.getPortee(), x.getPosition());
             }
         }
     }
@@ -308,6 +320,63 @@ public abstract class AbstractCarte implements CarteInterface {
 
     public void setListeBase(List<Point> listeBase) {
         this.listeBase = listeBase;
+    }
 
+    private void construireConnexe() {
+        Map<Integer, Set<Case>> indexnum = initConnexe();
+//pour chaque case
+        for (int x = 0; x < getLargeur(); x++) {
+            for (int y = 0; y < getHauteur(); y++) {
+                Case courante = getCase(x, y);
+                Set<Case> ensCaseNumCourante = indexnum.get(getGroup(courante));
+                //on prend les voisines
+                Set<Case> voisinesCourante = casesVoisines(this, courante, new HashSet<Case>());
+
+                for (Case c : voisinesCourante) {
+                    //pour chaque voisine
+                    if (!isConnexe(c, courante)) {
+                        //si groupe différent
+                        //on prend toutes les cases de ce groupe et on supprime ce groupe
+                        Set<Case> casesNumChange = indexnum.remove(getGroup(c));
+                        for (Case change : casesNumChange) {
+                            // pour chacune de ces cases, on les change de groupe
+                            setGroup(change, getGroup(courante));
+                            ensCaseNumCourante.add(change);
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean isConnexe(Case c1, Case c2) {
+        return connexe[c1.getX()][c1.getY()] == connexe[c2.getX()][c2.getY()];
+    }
+
+    private int getGroup(Case c) {
+        return connexe[c.getX()][c.getY()];
+    }
+
+    private void setGroup(Case c, int numgroup) {
+        connexe[c.getX()][c.getY()] = numgroup;
+    }
+
+    private Map<Integer, Set<Case>> initConnexe() {
+        Map<Integer, Set<Case>> indexnum = new HashMap();
+        connexe = new int[getLargeur()][getHauteur()];
+        int i = 0;
+        for (int x = 0; x < getLargeur(); x++) {
+            for (int y = 0; y < getHauteur(); y++) {
+                connexe[x][y] = i;
+                Set<Case> set = new HashSet();
+                set.add(getCase(x, y));
+                indexnum.put(i, set);
+                i++;
+            }
+        }
+
+        return indexnum;
     }
 }

@@ -12,6 +12,7 @@ import sim.tricycle.robot.action.Sleep;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.robot.action.core.ActionInterface;
 import sim.tricycle.team.Team;
+import sim.tricycle.utils.ObjectBuilder;
 import sim.tricycle.utils.params.types.Environnement;
 
 /**
@@ -70,7 +71,6 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
     }
 
     /**
-     * @todo Initialiser le robot avec l'etat initial de l'automate
      *
      * @param automate
      */
@@ -86,7 +86,7 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
         this.etatCourant = automate.getEtat("init");
         this.imgBase = imgB;
     }
-    
+
     public Robot(Automate automate) {
         this.automate = automate;
         this.etatCourant = automate.getEtat("init");
@@ -112,7 +112,6 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
     /**
      * Fonction appelée a chaque tick d'horloge
      *
-     * @todo coder cette fonction
      */
     @Override
     public void tick() {
@@ -161,10 +160,11 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
                     if (t == null) {
                         //si on ne trouve pas de transition, on ajoute une action vide de cout 1: sleep
                         prix++;
+                    } else {
+                        // transition trouvée. On récupère les actions a executer ainsi que l'etet de destination
+                        actions.addAll(t.getActions());
+                        etatDestination = t.getEtatDestination();
                     }
-                    // transition trouvée. On récupère les actions a executer ainsi que l'etet de destination
-                    actions.addAll(t.getActions());
-                    etatDestination = t.getEtatDestination();
                 }
             }
         }
@@ -177,23 +177,12 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
         return environnement;
     }
 
-    public Point getCoordonnees() {
-        return this.coordonnees;
-    }
-
-    public void setCoordonnees(Point newP) {
-        this.coordonnees = new Point(newP);
-    }
-
-    public void setCoordonnees(Case newP) {
-        this.coordonnees = new Point(newP.getX(), newP.getY());
-    }
-
     public Sens getDirection() {
         return this.direction;
     }
 
     public void setDirection(Sens newDirection) {
+        System.out.println("changeDirection " + newDirection.name());
         this.direction = newDirection;
     }
 
@@ -274,9 +263,11 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
              * Si action composée empilée, on vide la file et on relance SAUF SI
              * ON PLANTE LORS DU LANCEMENT D'UNE ACTION COMPOSEE
              */
+            System.out.println("Exception levee");
+            e.printStackTrace();
             if (pileActionsComposees.isEmpty()) {
                 //on plante
-                plante = true;
+                backToInit();
                 return;
             }
             //si action composee au sommet de la pile est l'action qui a planté, on la depile.
@@ -287,7 +278,7 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
             //si il n'y a plus d'actions composées, on plante
             if (pileActionsComposees.isEmpty()) {
                 //on plante
-                plante = true;
+                backToInit();
                 return;
             }
             //ICI, on a une action comp a relancer
@@ -297,5 +288,18 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
             acomp.relaunch();
             actions.addAll(acomp.getNewActions());
         }
+    }
+
+    private void backToInit() {
+        etatDestination = null;
+        etatCourant = automate.getEtat("init");
+        getEnvironnement().cleanVars();
+    }
+
+    public void mourrir() {
+        ObjectBuilder.getOrdonnanceur().remove(this);
+        getTeam().getMap().supprimer(this, getPosition());
+        getTeam().supprimerRobot(this);
+        System.out.println("robot mort");
     }
 }

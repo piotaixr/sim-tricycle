@@ -195,7 +195,7 @@ public class ViewCarte extends javax.swing.JPanel {
         // possible superposition de robot sur objet:
         if (c.robotPresent()) {                                           //ROBOT
             sim.tricycle.robot.Robot bot = c.getRobotPresent();
-            String nomFich = "robotC";
+            String nomFich = bot.getImgBase();
             switch (bot.getDirection()) {
                 case NORD:
                     nomFich = nomFich.concat("Dos");
@@ -220,7 +220,7 @@ public class ViewCarte extends javax.swing.JPanel {
             } else {
                 nomFich = nomFich.concat("N");
             }//On affiche.
-            System.out.println(nomFich);
+//            System.out.println(nomFich);
             g.drawImage(ensaCharger.get(nomFich + ".png"), x, y, width, width, this);
 
         }

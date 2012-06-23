@@ -31,7 +31,8 @@ public class ConstructionEnCours extends AbstractAction {
         if (c.getObstacle() instanceof AbstractBatiment){
             AbstractBatiment bat = (AbstractBatiment) c.getObstacle();
             if (bat.getTemps() == 0) {
-                bot.getTeam().supprimerRessource("Piece", bat.getPrix());
+//                bot.getTeam().supprimerRessource("Piece", bat.getPrix());
+                bot.getTeam().consumeRes("Piece", bat.getPrix());
                 bat.setTemps(bat.getTemps() + 1);
                 bot.getTeam().getMap().getCaseDevant(bot).setObstacle(bat);
             } else {

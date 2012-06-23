@@ -4,6 +4,11 @@
  */
 package sim.tricycle.ihm;
 
+import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import sim.tricycle.AbstractJeu;
 import sim.tricycle.Jeu;
 import sim.tricycle.utils.ObjectBuilder;
@@ -16,7 +21,7 @@ public class FrameMenu extends javax.swing.JFrame {
 
     private AbstractJeu superGameDeLaMortQuiTue = new Jeu();
     private FrameSelectTeamAndMap fstam = null;
-
+    private FrameCredit fcred = null;
     /**
      * Creates new form FrameMenu
      */
@@ -25,6 +30,7 @@ public class FrameMenu extends javax.swing.JFrame {
         ObjectBuilder ob = new ObjectBuilder();
         superGameDeLaMortQuiTue = jeu;
         superGameDeLaMortQuiTue.setObjectBuilder(ob);
+        this.setBackground(Color.black);
     }
 
     /**
@@ -39,16 +45,36 @@ public class FrameMenu extends javax.swing.JFrame {
         panHead = new javax.swing.JPanel();
         btnCredit = new javax.swing.JButton();
         btnGuid = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         btnPlay = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(153, 51, 0));
 
         panHead.setBackground(new java.awt.Color(85, 81, 78));
-        panHead.setBorder(null);
 
         btnCredit.setText("Credits");
+        btnCredit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreditActionPerformed(evt);
+            }
+        });
 
         btnGuid.setText("User Guide");
+        btnGuid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuidActionPerformed(evt);
+            }
+        });
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/Exit.jpg"))); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panHeadLayout = new javax.swing.GroupLayout(panHead);
         panHead.setLayout(panHeadLayout);
@@ -56,24 +82,37 @@ public class FrameMenu extends javax.swing.JFrame {
             panHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panHeadLayout.createSequentialGroup()
                 .addComponent(btnCredit, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(95, 95, 95)
                 .addComponent(btnGuid, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         panHeadLayout.setVerticalGroup(
             panHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(btnCredit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnGuid, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnGuid, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         btnGuid.getAccessibleContext().setAccessibleName("btnGuid");
 
-        btnPlay.setText("PLAY");
+        btnPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/Play.jpg"))); // NOI18N
         btnPlay.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPlayMouseClicked(evt);
             }
         });
+        btnPlay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlayActionPerformed(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(240, 240, 239));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/lol.png"))); // NOI18N
+        jButton2.setText(" ");
+        jButton2.setBorder(null);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,17 +120,24 @@ public class FrameMenu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panHead, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(229, 229, 229)
-                .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(240, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(219, 219, 219)
+                        .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(144, 144, 144)
+                        .addComponent(jButton2)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 296, Short.MAX_VALUE)
-                .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                .addGap(53, 53, 53)
+                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(61, 61, 61)
+                .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
         );
 
         pack();
@@ -105,6 +151,34 @@ public class FrameMenu extends javax.swing.JFrame {
             this.setVisible(false);
         }
     }//GEN-LAST:event_btnPlayMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnGuidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuidActionPerformed
+        // TODO add your handling code here:
+        File f=new File("Manuel.pdf");
+        try {
+            java.awt.Desktop.getDesktop().open(f);
+        } catch (IOException ex) {
+            Logger.getLogger(FrameMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnGuidActionPerformed
+
+    private void btnCreditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreditActionPerformed
+        // TODO add your handling code here:
+                   if (fcred == null) {
+            fcred = new FrameCredit(superGameDeLaMortQuiTue);
+            fcred.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_btnCreditActionPerformed
+
+    private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPlayActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,6 +226,8 @@ public class FrameMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnCredit;
     private javax.swing.JButton btnGuid;
     private javax.swing.JButton btnPlay;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel panHead;
     // End of variables declaration//GEN-END:variables
 }

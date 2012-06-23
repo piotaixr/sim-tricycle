@@ -5,6 +5,7 @@
 package sim.tricycle.robot.condition;
 
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
+import sim.tricycle.mapping.Case;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.robot.condition.core.AbstractCondition;
 
@@ -28,6 +29,10 @@ public class EnnemiDevant extends AbstractCondition {
     @Override
     public boolean test() {
         Robot bot = (Robot) ordonnanceur.getActiveTask();
-        return bot.getTeam().getMap().getCaseDevant(bot).getRobotPresent() != null ? true : false;
+        Case c = bot.getTeam().getMap().getCaseDevant(bot);
+        if(c == null)
+            return false;
+
+        return c.robotPresent() && !c.getRobotPresent().getTeam().equals(bot.getTeam());
     }
 }

@@ -1,0 +1,111 @@
+/*fichier automate*/
+robot{
+
+        etat=init{
+            transition{
+                sinon{
+                    etat=normal;
+                }
+            }
+        }
+        etat=recherche{
+            transition{
+                sinon { step(var:chemin);
+                        etat=normal;
+                }
+            }
+        }
+	etat=normal{
+	    transition{
+		si(ennemi_devant()){ ennemi<-robot_devant();
+				     etat=strategie;
+		}
+            }
+	    transition{
+		si(contains(ref: self.case,var: ptrechercher)){ sleep();
+				                         etat=normal;
+                }
+            }
+            transition{
+		si(pt_control_trouve()){  ptrechercher<-point_control_ideal();
+                                          etat=deplacement_norm;
+                }
+            }
+            transition{
+                si(non_vide(var: chemin)){etat=recherche;
+                }
+            }
+            transition{
+                si(case_obscure_existe()){ cible<-case_obscure_plus_proche();
+                                    chemin<-trouvechemin(var:cible);
+                                    etat=recherche;
+                }
+            }
+            transition{
+		sinon{sleep();
+		       etat=normal;
+		}
+            }
+        }
+
+        etat=strategie{
+            transition{
+                si(pv_necessaire()){ attaquer();
+                                     etat=attaque;
+                }
+            }
+            transition{
+                sinon{ defendre();
+                       etat=defense;
+                }
+            }
+       }
+           
+	
+	etat=deplacement_norm{
+            transition{
+		si(contains(ref: self.case,var: ptrechercher)){ sleep();
+				     etat=normal;
+                }
+            }
+            transition{
+		sinon{allerici(var : ptrechercher);
+		      etat=normal;
+		}
+            }
+	}
+
+	etat=attaque{
+            transition{
+		si(!ennemi_devant()){
+etat=normal;
+		}
+	    }
+	    transition{
+		si(!pv_necessaire()){defendre();
+                                     etat=defense;
+		}
+            }
+	    transition{
+		sinon{attaquer();
+		      etat=attaque;
+		}
+	    }
+	}
+
+	etat=defense{
+            transition{
+		si(!ennemi_devant){etat=normal;
+		}
+            }
+            transition{
+		sinon{defendre();
+		      etat=defense;
+		}
+            }
+	}
+        
+}
+fin
+
+

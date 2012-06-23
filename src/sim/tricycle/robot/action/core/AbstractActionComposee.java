@@ -12,7 +12,7 @@ import sim.tricycle.utils.ActionBuilder;
  *
  * @author Adri
  */
-public abstract class AbstractActionComposee extends AbstractAction {
+public abstract class AbstractActionComposee extends AbstractAction implements Cloneable {
 
     private ActionBuilder builder;
 
@@ -24,11 +24,17 @@ public abstract class AbstractActionComposee extends AbstractAction {
     public ActionBuilder getBuilder() {
         return builder;
     }
-    
-    public Deque<ActionInterface> getNewActions(){
+
+    public Deque<ActionInterface> getNewActions() {
         return builder.getActions();
     }
 
+    @Override
+    public void executer(Robot bot) {
+        builder.reinit();
+        super.executer(bot);
+    }
+     
     @Override
     protected abstract Object doExecute(Robot bot);
 
@@ -36,8 +42,8 @@ public abstract class AbstractActionComposee extends AbstractAction {
     public boolean isComposee() {
         return true;
     }
-    
-    public void relaunch(){
+
+    public void relaunch() {
         builder.reinit();
     }
 }

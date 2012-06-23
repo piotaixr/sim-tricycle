@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding='ISO-8859-1' standalone='yes' ?>
+<robot>
+    <etat id="init">
+        <transition>
+            <condition nom="true"/>
+            <etat id="normal"/>
+        </transition>
+    </etat>
+    <etat id="recherche">
+        <transition>
+            <condition nom="true"/>
+            <action nom="step">
+                <parametre type="var">chemin</parametre>
+            </action>
+            <etat id="normal"/>
+        </transition>
+    </etat>
+    <etat id="normal">
+        <transition>
+            <condition nom="ennemi_devant"/>
+            <action nom="robot_devant" dest="ennemi">
+            </action>
+            <etat id="strategie"/>
+        </transition>
+        <transition>
+            <condition nom="contains">
+                <parametre type="ref">self.case</parametre>
+                <parametre type="var">ptrechercher</parametre>
+            </condition>
+            <action nom="sleep">
+            </action>
+            <etat id="normal"/>
+        </transition>
+        <transition>
+            <condition nom="pt_control_trouve"/>
+            <action nom="point_control_ideal" dest="ptrechercher">
+            </action>
+            <etat id="deplacement_norm"/>
+        </transition>
+        <transition>
+            <condition nom="non_vide">
+                <parametre type="var">chemin</parametre>
+            </condition>
+            <etat id="recherche"/>
+        </transition>
+        <transition>
+            <condition nom="case_obscure_existe"/>
+            <action nom="case_obscure_plus_proche" dest="cible">
+            </action>
+            <action nom="trouvechemin" dest="chemin">
+                <parametre type="var">cible</parametre>
+            </action>
+            <etat id="recherche"/>
+        </transition>
+        <transition>
+            <condition nom="true"/>
+            <action nom="sleep">
+            </action>
+            <etat id="normal"/>
+        </transition>
+    </etat>
+    <etat id="strategie">
+        <transition>
+            <condition nom="pv_necessaire"/>
+            <action nom="attaquer">
+            </action>
+            <etat id="attaque"/>
+        </transition>
+        <transition>
+            <condition nom="true"/>
+            <action nom="defendre">
+            </action>
+            <etat id="defense"/>
+        </transition>
+    </etat>
+    <etat id="deplacement_norm">
+        <transition>
+            <condition nom="contains">
+                <parametre type="ref">self.case</parametre>
+                <parametre type="var">ptrechercher</parametre>
+            </condition>
+            <action nom="sleep">
+            </action>
+            <etat id="normal"/>
+        </transition>
+        <transition>
+            <condition nom="true"/>
+            <action nom="allerici">
+                <parametre type="var">ptrechercher</parametre>
+            </action>
+            <etat id="normal"/>
+        </transition>
+    </etat>
+    <etat id="attaque">
+        <!--<transition>
+            <condition nom="ennemi_devant"/>
+            <etat id="normal"/>
+        </transition>
+        <transition>
+            <condition nom="pv_necessaire"/>
+            <action nom="defendre">
+            </action>
+            <etat id="defense"/>
+        </transition>-->
+        <transition>
+            <condition nom="true"/>
+            <action nom="attaquer">
+            </action>
+            <etat id="attaque"/>
+        </transition>
+    </etat>
+    <etat id="defense">
+        <!--<transition>
+            <condition nom="ennemi_devant"/>
+            <etat id="normal"/>
+        </transition>-->
+        <transition>
+            <condition nom="true"/>
+            <action nom="defendre">
+            </action>
+            <etat id="defense"/>
+        </transition>
+    </etat>
+</robot>

@@ -13,9 +13,8 @@ public class AbstractVision extends AbstractObstacle {
 
     protected Team t = null;
     protected int prix = 0;
-    protected int porteeMax = 0;
-
- 
+    protected int porteeMax = 1;
+    protected int portee=1;
 
     public int getPorteeMax() {
         return porteeMax;
@@ -24,7 +23,6 @@ public class AbstractVision extends AbstractObstacle {
     public int getPrix() {
         return prix;
     }
-    protected int portee;
 
     public void setPorteeMax(int porteeMax) {
         this.porteeMax = porteeMax;
@@ -56,13 +54,13 @@ public class AbstractVision extends AbstractObstacle {
      * @return vrai s'il voit la case.
      */
     public boolean voit(Case c) {
-        int x=Math.abs(c.getX()- this.pos.getX());
-        int y=Math.abs(c.getY()- this.pos.getY());
+        int x=Math.abs(c.getX()- this.position.getX());
+        int y=Math.abs(c.getY()- this.position.getY());
         return (x+y>this.portee);
     }
     
     public void majvision(){
-        this.getTeam().getMap().actualiserCarte(this.portee, pos);
+        this.getTeam().getMap().actualiserCarte(this.portee, position);
     }
     
 }

@@ -1,6 +1,4 @@
-#load "dynlink.cma";;
 
-#load "camlp4o.cma";;
 
 type 'a pile= Pile_vide|Pile_non_vide of 'a*'a pile;;
 (*_______________________________________________________________________*)
@@ -275,4 +273,4 @@ let analyse ent sort =
      close_out sortie;
      close_in entree;;
 
-analyse "pile" "test";;
+analyse "automate_guerrier_no_multiple" "test";;

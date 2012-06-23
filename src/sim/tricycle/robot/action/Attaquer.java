@@ -24,16 +24,16 @@ public class Attaquer extends AbstractAction {
         if(adversaire.getTeam()==bot.getTeam()){
             throw new RuntimeException ("Attention ce robot est dans ton équipe");
         }
-        adversaire.setPV((int)adversaire.getPV()-(bot.getPA()*(adversaire.getArmure()/100)));
+        adversaire.setPV((int)adversaire.getPV()-(bot.getPA()*(1-adversaire.getArmure()/100)));
         if(adversaire.getPV()<=0){
-            bot.getTeam().getMap().supprimer(adversaire, c);
+            bot.mourrir();
         }
         return null;
     }
 
     @Override
     public String getId() {
-        return "Attaque";
+        return "attaquer";
     }
     
     

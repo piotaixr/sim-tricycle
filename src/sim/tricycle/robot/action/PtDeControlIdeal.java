@@ -22,7 +22,7 @@ public class PtDeControlIdeal extends AbstractAction {
             for (int j = 0; j < c.getHauteur(); j++) {
                 if (c.getCase(i, j).whoIam() == TypeCase.ptDeControle) {
                     if (c.getCase(i, j).getRobotPresent() == null || c.getCase(i, j).getRobotPresent().getTeam() != bot.getTeam()) {
-                        return c.getCase(i, j);
+                        return c.getCase(i, j).getZone();
                     }
                 }
             }

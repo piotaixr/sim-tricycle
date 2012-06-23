@@ -24,9 +24,10 @@ public class Deposer extends AbstractAction{
         
         if (bot.getItemPorte()==null)throw new RuntimeException ("le robot ne porte pas d'objet");
         
-        Case c = bot.getTeam().getMap().getCase(bot.getCoordonnees().getX(), bot.getCoordonnees().getY());
+        Case c = bot.getPosition();
         if (c.whoIam()== TypeCase.base){
-            bot.getTeam().ajouterRessource(bot.getItemPorte().getId());
+//            bot.getTeam().ajouterRessource(bot.getItemPorte().getId());
+            bot.getTeam().addQtyRes(bot.getItemPorte().getId(),1);
         }
         else {
             if (c.whoIam() == TypeCase.vide){

@@ -24,7 +24,7 @@ public class PieceExiste extends AbstractCondition {
 
     @Override
     public String getId() {
-        return "pieceexiste";
+        return "piece_existe";
     }
 
     @Override
