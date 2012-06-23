@@ -33,7 +33,7 @@ public class Attaquer extends AbstractAction {
 
     @Override
     public String getId() {
-        return "Attaque";
+        return "attaquer";
     }
     
     

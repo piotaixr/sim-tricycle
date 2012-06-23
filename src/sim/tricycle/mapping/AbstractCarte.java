@@ -80,9 +80,10 @@ public abstract class AbstractCarte implements CarteInterface {
                     carte[i][j] = new Case(i, j);
                     //Si pt de controle il lui faut connaitre ses cases voisines.
                     casesVoisines(this, this.getCase(i, j), liste);
+                    liste.add(carte[i][j]);
                     PointDeControle pt = new PointDeControle(liste);
                     pt.setPosition(this.getCase(i, j));
-                    this.pop(pt,i,j);
+                    this.pop(pt, i, j);
                     listeP.add(pt);// On ajoute ce point à la liste des points.
                 }
                 carte[i][j].setTpsNonVu(0);
@@ -199,19 +200,22 @@ public abstract class AbstractCarte implements CarteInterface {
     @Override
     public Case getCaseDevant(Robot bot) {
         Case c = null;
-        switch (bot.getDirection()) {
-            case NORD:
-                c = this.getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
-                break;
-            case SUD:
-                c = this.getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
-                break;
-            case EST:
-                c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
-                break;
-            case OUEST:
-                c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
-                break;
+        try {
+            switch (bot.getDirection()) {
+                case NORD:
+                    c = this.getCase(bot.getPosition().getX() - 1, bot.getPosition().getY());
+                    break;
+                case SUD:
+                    c = this.getCase(bot.getPosition().getX() + 1, bot.getPosition().getY());
+                    break;
+                case EST:
+                    c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() + 1);
+                    break;
+                case OUEST:
+                    c = this.getCase(bot.getPosition().getX(), bot.getPosition().getY() - 1);
+                    break;
+            }
+        } catch (Exception e) {
         }
         return c;
     }

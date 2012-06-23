@@ -2,6 +2,9 @@ package sim.tricycle.robot.condition;
 
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.PossedeCaseInterface;
+import sim.tricycle.mapping.elementCase.AbstractObjet;
+import sim.tricycle.mapping.elementCase.AbstractObstacle;
+import sim.tricycle.mapping.elementCase.AbstractZone;
 import sim.tricycle.robot.condition.core.AbstractCondition;
 import sim.tricycle.utils.params.types.Reference;
 import sim.tricycle.utils.params.types.Variable;
@@ -19,11 +22,27 @@ public class Contains extends AbstractCondition {
     public boolean test() {
         Case c = (Case) refcase.getValue();
         PossedeCaseInterface obj = (PossedeCaseInterface) refpiece.getValue();
-        if (c.hasItem()) {
-            return c.getItem().equals(obj);
-        } else {
-            return false;
+
+        if (obj instanceof AbstractObjet) {
+            if (c.hasItem()) {
+                return c.getItem().equals(obj);
+            } else {
+                return false;
+            }
+        } else if (obj instanceof AbstractZone) {
+            if (c.hasZone()) {
+                return c.getZone().equals(obj);
+            } else {
+                return false;
+            }
+        } else if (obj instanceof AbstractObstacle) {
+            if (c.hasZone()) {
+                return c.getObstacle().equals(obj);
+            } else {
+                return false;
+            }
         }
+        return false;
     }
 
     @Override

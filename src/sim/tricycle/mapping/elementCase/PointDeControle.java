@@ -89,7 +89,7 @@ public class PointDeControle extends AbstractZone {
             if (this.tpsPopBoule <= 0) {
                 Boule b= new Boule();
                 this.getTeam().getMap().pop(b, pos.getX()-1,pos.getY());
-                b.setPosition(pos);
+                //b.setPosition(pos);
                 initTpspop();
             }
             this.tpsPopBoule -= 1;

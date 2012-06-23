@@ -40,6 +40,6 @@ public class PtControleTrouve extends AbstractCondition {
 
     @Override
     public String getId() {
-        return "point_control_trouve";
+        return "pt_control_trouve";
     }
 }

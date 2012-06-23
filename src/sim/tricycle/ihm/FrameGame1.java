@@ -13,6 +13,7 @@ import sim.tricycle.Jeu;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
 import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.mapping.Case;
+import sim.tricycle.mapping.elementCase.Boule;
 import sim.tricycle.mapping.elementCase.Piece;
 import sim.tricycle.robot.Model;
 import sim.tricycle.robot.Robot;
@@ -71,10 +72,11 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
 //        tabPanActionAvailable.insertTab("team test", null, panTeam1, null, WIDTH);
 //        tabPanActionAvailable.insertTab("team test", null, panTeam2, null, WIDTH);
 //        tabPanActionAvailable.insertTab("team test", null, panTeam3, null, WIDTH);
-        for (int Z = 0; Z < 40; Z++) {
-            Piece p = new Piece();
-            jeu.getCarte().popAlea(p);
-        }
+//        for (int Z = 0; Z < 40; Z++) {
+//            Piece p = new Piece();
+//            jeu.getCarte().popAlea(p);
+//        }
+        jeu.getCarte().pop(new Boule(), 10, 11);
     }
 
     public void addOrdonnaceur(Ordonnanceur oi) {
