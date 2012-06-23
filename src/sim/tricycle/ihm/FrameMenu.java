@@ -5,6 +5,10 @@
 package sim.tricycle.ihm;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import sim.tricycle.AbstractJeu;
 import sim.tricycle.Jeu;
 import sim.tricycle.utils.ObjectBuilder;
@@ -17,7 +21,7 @@ public class FrameMenu extends javax.swing.JFrame {
 
     private AbstractJeu superGameDeLaMortQuiTue = new Jeu();
     private FrameSelectTeamAndMap fstam = null;
-
+    private FrameCredit fcred = null;
     /**
      * Creates new form FrameMenu
      */
@@ -51,8 +55,18 @@ public class FrameMenu extends javax.swing.JFrame {
         panHead.setBackground(new java.awt.Color(85, 81, 78));
 
         btnCredit.setText("Credits");
+        btnCredit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreditActionPerformed(evt);
+            }
+        });
 
         btnGuid.setText("User Guide");
+        btnGuid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuidActionPerformed(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sim/tricycle/ihm/images/Exit.jpg"))); // NOI18N
         jButton1.setBorder(null);
@@ -87,6 +101,11 @@ public class FrameMenu extends javax.swing.JFrame {
         btnPlay.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPlayMouseClicked(evt);
+            }
+        });
+        btnPlay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlayActionPerformed(evt);
             }
         });
 
@@ -137,6 +156,29 @@ public class FrameMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnGuidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuidActionPerformed
+        // TODO add your handling code here:
+        File f=new File("Manuel.pdf");
+        try {
+            java.awt.Desktop.getDesktop().open(f);
+        } catch (IOException ex) {
+            Logger.getLogger(FrameMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnGuidActionPerformed
+
+    private void btnCreditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreditActionPerformed
+        // TODO add your handling code here:
+                   if (fcred == null) {
+            fcred = new FrameCredit(superGameDeLaMortQuiTue);
+            fcred.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_btnCreditActionPerformed
+
+    private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPlayActionPerformed
 
     /**
      * @param args the command line arguments

@@ -82,7 +82,7 @@ public abstract class AbstractCarte implements CarteInterface {
                     casesVoisines(this, this.getCase(i, j), liste);
                     PointDeControle pt = new PointDeControle(liste);
                     pt.setPosition(this.getCase(i, j));
-                    this.getCase(i, j).setZone(pt);
+                    this.pop(pt,i,j);
                     listeP.add(pt);// On ajoute ce point à la liste des points.
                 }
                 carte[i][j].setTpsNonVu(0);
@@ -191,7 +191,7 @@ public abstract class AbstractCarte implements CarteInterface {
         if (!listePt.isEmpty()) {
             for (PointDeControle x : this.listePt) {
                 x.analyseCapture();
-                System.out.println("coordonées pt:"+ x.getTpsCapture() +" pop:"+ x.getTpspop()+"\n");
+                System.out.println("tps capture:" + x.getTpsCapture() + " pop:" + x.getTpspop() + "\n");
             }
         }
     }
