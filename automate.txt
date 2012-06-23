@@ -1,9 +1,9 @@
 /*fichier automate*/
-robot_porteur{
-
+robot{
         etat=init{
             transition{
                 sinon{
+                    sleep();
                     etat=normal;
                 }
             }
@@ -30,7 +30,8 @@ robot_porteur{
                 }
             }
             transition{
-		sinon{sleep();
+		sinon{casecible<-casealea();
+                    allerici(var:casecible);
 		       etat=normal;
 		}
             }
@@ -86,188 +87,4 @@ robot_porteur{
             tourner_gauche=1;
         }
 }
-
-robot_guerrier{
-        etat=init{
-            transition{
-                sinon{
-                    etat=normal;
-                }
-            }
-        }
-	etat=normal{
-	    transition{
-		si(ennemi_devant()){ ennemi<-robot_devant();
-				     etat=strategie;
-		}
-            }
-	    transition{
-		si(contains(caseCourante,ptrechercher)){ sleep();
-				                         etat=normal;
-                }
-            }
-            transition{
-		si(pt_control_trouve()){  ptrechercher<-PtDeControlIdeal();
-                                          etat=deplacement_norm;
-                }
-            }
-            transition{
-		sinon{sleep();
-		       etat=normal;
-		}
-            }
-        }
-
-        etat=strategie{
-            transition{
-                si(pv_necessaire()){ attaquer();
-                                     etat=attaque;
-                }
-            }
-            transition{
-                sinon{ defendre();
-                       etat=defense;
-                }
-            }
-       }
-           
-	
-	etat=deplacement_norm{
-            transition{
-		si(contains(caseCourante,ptrechercher)){ sleep();
-				     etat=normal;
-                }
-            }
-            transition{
-		sinon{allerici(var : ptrechercher);
-		      etat=normal;
-		}
-            }
-	}
-
-	etat=attaque{
-            transition{
-		si(!ennemi_devant()){etat=normal;
-		}
-	    }
-	    transition{
-		si(!pv_necessaire()){defendre();
-                                     etat=defense;
-		}
-            }
-	    transition{
-		sinon{attaquer();
-		      etat=attaque;
-		}
-	    }
-       }
-
-	etat=defense{
-            transition{
-		si(!ennemi_devant){etat=normal;
-		}
-            }
-            transition{
-		sinon{defendre();
-		      etat=defense;
-		}
-            }
-	}
-        
-}
-
-robot_constructeur{
-
-        etat=init{
-            transition{
-                sinon{
-                    etat=cherchercase;
-                }
-            }
-        }
-
-	etat=cherchercase{		
-            transition{
-		sinon{cible<-casealea();
-		      etat=deplacement;
-		}
-            }
-        }
-
-        etat=deplacement{
-            transition{
-		si(contains(caseCourante,cible)){ allerici(var : cible);
-						   etat=deplacement;
-                }
-            }	
-	    transition{
-		si(case_devant_vide()){ construiction(string: tour);
-					etat=construire;
-		}
-	    }
-	    transition{
-		sinon{etat=cherchercase;
-		}
-	    }
-        }
-	
-	etat=construction{           
-            transition{
-		sinon{etat=cherchercase;
-		}
-            }
-	}
-	
-}
-
-robot_destructeur{
-
-        etat=init{
-            transition{
-                sinon{
-                    etat=chercherbat;
-                }
-            }
-        }
-
-	etat=chercherbat{		
-            transition{
-		si(bat_trouve()){cible<-batpluspres();
-		                 etat=deplacement;
-		}
-            }
-	    transition{
-		sinon{sleep();
-		      etat=chercherbat;
-		}
-            }
-        }
-
-        etat=deplacement{
-            transition{
-		si(!contains(caseCourante,cible)){ allerici(var : cible);
-						   etat=deplacement;
-                }
-            }	
-	    transition{
-		si(case_devant_bat()){ destructiontotale();
-					etat=destruire;
-		}
-	    }
-	    transition{
-		sinon{etat=chercherbat;
-		}
-	    }
-        }
-	
-	etat=destruction{           
-            transition{
-		sinon{etat=cherchercase;
-		}
-            }
-	}
-	
-}
-
-
 fin

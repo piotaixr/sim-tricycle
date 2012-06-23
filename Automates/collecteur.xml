@@ -38,7 +38,10 @@
         </transition>
         <transition>
             <condition nom="true"/>
-            <action nom="sleep">
+            <action nom="casealea" dest="casecible">
+            </action>
+            <action nom="allerici">
+                <parametre type="var">casecible</parametre>
             </action>
             <etat id="normal"/>
         </transition>
