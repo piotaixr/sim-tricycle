@@ -4,38 +4,43 @@
  */
 package sim.tricycle.robot.action;
 
+import sim.tricycle.mapping.Case;
+import sim.tricycle.mapping.elementCase.AbstractBatiment;
 import sim.tricycle.robot.Robot;
-import sim.tricycle.robot.action.core.AbstractActionComposee;
-import sim.tricycle.utils.ActionBuilder;
+import sim.tricycle.robot.action.core.AbstractAction;
 
 /**
  *
- * @author marion
+ * @author Marion DALLE mariondallesoulard@gmail.com
  */
-public class Construction extends AbstractActionComposee {
-    
-    private String nombat;
-    
-    public void setParameters (String nombat){
-        this.nombat = nombat;
-    }
+public class Construction extends AbstractAction {
 
-    public Construction(ActionBuilder builder) {
-        super(builder);
-    }
+  
 
     @Override
     protected Object doExecute(Robot bot) {
-        ActionBuilder b = getBuilder();
-        b.addNewReturn("InitialisationConstruction","bat", b.buildVariable("nombat"));
-        b.addNew("ConstructionApInit",b.buildVariable("bat"));
+
+        Case c = bot.getTeam().getMap().getCaseDevant(bot);
+        
+        if (!c.hasObstacle())throw new RuntimeException("Pas de batiment");
+        
+        if (c.getObstacle() instanceof AbstractBatiment){
+            AbstractBatiment bat = (AbstractBatiment) c.getObstacle();
+            if (bat.getTemps() == 0) {
+//                bot.getTeam().supprimerRessource("Piece", bat.getPrix());
+                bot.getTeam().consumeRes("Piece", bat.getPrix());
+                bat.setTemps(bat.getTemps() + 1);
+                bot.getTeam().getMap().getCaseDevant(bot).setObstacle(bat);
+            } else {
+            bat.setTemps(bat.getTemps() + 1);
+            }
+        }
+        else throw new RuntimeException("Pas de batiment");
         return null;
     }
 
     @Override
     public String getId() {
-        return "Construction éffectuée";
+        return "construction";
     }
-
-   
 }

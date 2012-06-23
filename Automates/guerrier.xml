@@ -92,16 +92,20 @@
         </transition>
     </etat>
     <etat id="attaque">
-        <!--<transition>
-            <condition nom="ennemi_devant"/>
+        <transition>
+            <condition type="multiple" nom="non">
+                <condition nom="ennemi_devant"/>
+            </condition>
             <etat id="normal"/>
         </transition>
         <transition>
-            <condition nom="pv_necessaire"/>
+            <condition type="multiple" nom="non">
+                <condition nom="pv_necessaire"/>
+            </condition>
             <action nom="defendre">
             </action>
             <etat id="defense"/>
-        </transition>-->
+        </transition>
         <transition>
             <condition nom="true"/>
             <action nom="attaquer">
@@ -110,10 +114,11 @@
         </transition>
     </etat>
     <etat id="defense">
-        <!--<transition>
-            <condition nom="ennemi_devant"/>
+        <transition>
+            <condition type="multiple" nom="non">
+            </condition>
             <etat id="normal"/>
-        </transition>-->
+        </transition>
         <transition>
             <condition nom="true"/>
             <action nom="defendre">

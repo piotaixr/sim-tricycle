@@ -19,12 +19,12 @@ robot{
 
         etat=deplacement{
             transition{
-		si(contains(caseCourante,cible)){ allerici(var : cible);
+		si(contains(ref: self.case,var:cible)){ allerici(var : cible);
 						   etat=deplacement;
                 }
             }	
 	    transition{
-		si(case_devant_vide()){ construiction(string: tour);
+		si(case_devant_vide()){ construire(string: tour);
 					etat=construire;
 		}
 	    }

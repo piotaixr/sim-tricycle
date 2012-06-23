@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding='ISO-8859-1' standalone='yes' ?>
+<robot>
+<etat id="init">
+<transition>
+<condition nom="true"/>
+<etat id="cherchercase"/>
+</transition>
+</etat>
+<etat id="cherchercase">
+<transition>
+<condition nom="true"/>
+<action nom="casealea" dest="cible">
+</action>
+<etat id="deplacement"/>
+</transition>
+</etat>
+<etat id="deplacement">
+<transition>
+<condition nom="contains">
+<parametre type="ref">self.case</parametre>
+<parametre type="var">cible</parametre>
+</condition>
+<action nom="allerici">
+<parametre type="var">cible</parametre>
+</action>
+<etat id="deplacement"/>
+</transition>
+<transition>
+<condition nom="case_devant_vide"/>
+<action nom="construire">
+<parametre type="string">tour</parametre>
+</action>
+<etat id="construire"/>
+</transition>
+<transition>
+<condition nom="true"/>
+<etat id="cherchercase"/>
+</transition>
+</etat>
+<etat id="construction">
+<transition>
+<condition nom="true"/>
+<etat id="cherchercase"/>
+</transition>
+</etat>
+</robot>

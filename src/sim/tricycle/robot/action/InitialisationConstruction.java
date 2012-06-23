@@ -43,7 +43,7 @@ public class InitialisationConstruction extends AbstractAction {
 
     @Override
     public String getId() {
-        return "initialisation construction";
+        return "initialisation_construction";
     }
 
     private AbstractBatiment getBatimentFromNom() {

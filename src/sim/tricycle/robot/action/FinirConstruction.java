@@ -14,7 +14,7 @@ import sim.tricycle.utils.params.types.Variable;
  *
  * @author marion
  */
-public class ConstructionApInit extends AbstractActionComposee{
+public class FinirConstruction extends AbstractActionComposee{
     
     private Variable varbat;
     
@@ -22,23 +22,25 @@ public class ConstructionApInit extends AbstractActionComposee{
         this.varbat = varbat;
     }
     
-    public ConstructionApInit(ActionBuilder builder) {
+    public FinirConstruction(ActionBuilder builder) {
         super(builder);
     }
 
     @Override
     protected Object doExecute(Robot bot) {
-        AbstractBatiment bat = (AbstractBatiment)varbat.getValue();
+        AbstractBatiment bat = (AbstractBatiment) varbat.getValue();
         ActionBuilder b = getBuilder();
-        while(bat.getTemps() < bat.getTempsMax()){
-            b.addNew("ConstructionEnCours",bat);
+        int temps = bat.getTemps();
+        while(temps <= bat.getTempsMax()){
+            b.addNew("construction");
+            temps++;
         }
         return null;
     }
 
     @Override
     public String getId() {
-        return "construction en boucle OK";
+        return "finir_construction";
     }
     
 }
