@@ -36,13 +36,15 @@ exemple etat=norma{
 
 let rec detect_condition stream = match stream with parser 
   |[<'' ';f>]->detect_condition f
+  |[<''\t';f>]->detect_condition f
+  |[<''\n';f>]->detect_condition f
   |[<''a'..'z'|'A'..'Z'|'_'|'('|')'|','|'{'|'}';f>]->detect_condition f
   |[<''&';''&'>]-> "et"
   |[<''|';''|'>]->"ou"
   |[<''!'>]->"non"
   |[<>]->"";;
 
-let cond_test = transf2("si(bla()||jdr())");;
+let cond_test = transf2("si(!bla()");;
 detect_condition cond_test;;
 
 
@@ -205,17 +207,14 @@ let rec parseur pile sortie stream detection nom piece= match stream with parser
 
   |[<''1'..'9'|'a'..'z'|'A'..'Z'|'_'|'.'  as n; f>] -> parseur pile sortie f detection (nom^(char_to_string n)) piece
 
-  |[<''}';f>]->(let name = (sommet_pile pile) 
+ |[<''}';f>]->(let name = (sommet_pile pile) 
 	       in match name with 
 		 |"condition"-> (let p = depiler pile 
 				in if ((sommet_pile p)="condition_multiple")
-				  then (ecriture_aux sortie ("</condition>");
-					(ecriture_aux_char sortie '\n');
-					let pp = depiler p in (parseur pp sortie f detection "" piece))
+				  then (let pp = depiler p in (parseur pp sortie f detection "" piece))
 				  else (parseur p sortie f detection "" piece
 				  ))
-		 |"condition_multiple"->ecriture_aux sortie ("</condition>"); (ecriture_aux_char sortie '\n');
-		   let p=(depiler pile) in (parseur p sortie f detection "" piece)
+		 |"condition_multiple"->let p=(depiler pile) in (parseur p sortie f detection "" piece)
 
 		 |word-> ecriture_aux sortie ("<"^"/"^word^">");
 		   (ecriture_aux_char sortie '\n');
@@ -227,8 +226,16 @@ let rec parseur pile sortie stream detection nom piece= match stream with parser
 		    |"sinon"->ecriture_aux sortie ("<condition nom="^"\""^"true"^"\""^"/>");
 		      (ecriture_aux_char sortie '\n');
 		      let p= (empiler "condition" pile) in (parseur p sortie f detection "" "{")
-
-		    |""->parseur pile sortie f detection "" "{"
+		    |"robot"-> (ecriture_aux sortie ("<robot>"));
+		      (ecriture_aux_char sortie ('\n'));
+		      let p= (empiler "robot" pile) in (parseur p sortie f detection "" "{")
+		      
+		    |""->  (let p = depiler pile 
+				in if ((sommet_pile p)="condition_multiple")
+				  then (ecriture_aux sortie ("</condition>");
+					(ecriture_aux_char sortie '\n');
+					(parseur pile sortie f detection "" "{"))
+				  else (parseur pile sortie f detection "" "{"))
 
 		    |post-> (let word = (detect_etat detection "")
 			    in match word with
@@ -240,11 +247,16 @@ let rec parseur pile sortie stream detection nom piece= match stream with parser
 				(ecriture_aux_char sortie '\n');
 				(parseur pile sortie f detection"" "{")
 
-			      |autre-> ecriture_aux sortie ("<"^post^">");
+			      |autre-> (let p = depiler pile 
+				in if ((sommet_pile p)="condition_multiple")
+				  then (ecriture_aux sortie ("</condition>");
+					(ecriture_aux_char sortie '\n');
+					(parseur pile sortie f detection "" "{"))
+				  else (ecriture_aux sortie ("<"^post^">");
 				(ecriture_aux_char sortie '\n');
-				let p= (empiler post pile) in (parseur p sortie f detection "" "{")))
+				let pp= (empiler post pile) in (parseur pp sortie f detection "" "{")))))
 
-   |[< >]->pile;;
+|[< >]->pile;;
 
 
 let analyse ent sort = 
@@ -263,11 +275,4 @@ let analyse ent sort =
      close_out sortie;
      close_in entree;;
 
-analyse "autome_constructeur" "test";;
-
-
-
-
-
-
-
+analyse "pile" "test";;
