@@ -24,7 +24,7 @@ public abstract class AbstractCarte implements CarteInterface {
 
     protected static Image imgFond = null;
     protected static Image imgVide = null;
-    protected HashSet<PointDeControle> listePt;  //Ensemble des points de controles.
+    protected static HashSet<PointDeControle> listePt;  //Ensemble des points de controles.
     protected List<Point> listeBase;
     protected int tailleX, tailleY;
     protected Case[][] carte;
@@ -191,6 +191,7 @@ public abstract class AbstractCarte implements CarteInterface {
         if (!listePt.isEmpty()) {
             for (PointDeControle x : this.listePt) {
                 x.analyseCapture();
+                System.out.println("coordonées pt:"+ x.getTpsCapture() +" pop:"+ x.getTpspop()+"\n");
             }
         }
     }
@@ -300,7 +301,7 @@ public abstract class AbstractCarte implements CarteInterface {
 
         for (AbstractVision x : elements) {
             if (x.voit(c)) {
-                x.getTeam().getMap().actualiserCarte(x.getPortee(), c);
+                x.getTeam().getMap().actualiserCarte(x.getPortee(), x.getPosition());
             }
         }
     }

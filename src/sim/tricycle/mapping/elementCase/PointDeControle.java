@@ -16,7 +16,7 @@ import sim.tricycle.team.Team;
  */
 public class PointDeControle extends AbstractZone {
 
-    private int tpsCapture = 50;
+    private int tpsCapture = 100;
     private int tpsPopBoule = 300;
     private Team t = null;
 
@@ -87,7 +87,9 @@ public class PointDeControle extends AbstractZone {
 
         if (!this.estNeutre()) {
             if (this.tpsPopBoule <= 0) {
-                this.pos.setItem(new Boule());
+                Boule b= new Boule();
+                this.getTeam().getMap().pop(b, pos.getX()-1,pos.getY());
+                b.setPosition(pos);
                 initTpspop();
             }
             this.tpsPopBoule -= 1;
