@@ -50,6 +50,7 @@ public class AllerIci extends AbstractActionComposee {
 
     public AllerIci(ActionBuilder builder) {
         super(builder);
+        setPoids(1);
     }
 
     public void setParameters(String point) {
