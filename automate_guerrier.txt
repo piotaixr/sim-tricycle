@@ -54,10 +54,11 @@ robot{
 		si(!ennemi_devant()){etat=normal;
 		}
 	    }
-	    tarnsition{
+	    transition{
 		si(!pv_necessaire()){defendre();
                                      etat=defense;
 		}
+            }
 	    transition{
 		sinon{attaquer();
 		      etat=attaque;
