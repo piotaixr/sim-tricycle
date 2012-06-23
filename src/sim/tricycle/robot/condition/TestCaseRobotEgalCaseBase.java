@@ -24,7 +24,6 @@ public class TestCaseRobotEgalCaseBase extends AbstractCondition {
 
     @Override
     /**
-     * @todo creer une methode dans case pour tester l'egalite de deux cases
      */
     public boolean test() {
         Case c = (Case) refCase.getValue();

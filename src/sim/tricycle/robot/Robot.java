@@ -70,7 +70,6 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
     }
 
     /**
-     * @todo Initialiser le robot avec l'etat initial de l'automate
      *
      * @param automate
      */
@@ -112,7 +111,6 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
     /**
      * Fonction appelée a chaque tick d'horloge
      *
-     * @todo coder cette fonction
      */
     @Override
     public void tick() {
