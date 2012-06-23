@@ -261,4 +261,4 @@ let analyse ent sort =
      close_out sortie;
      close_in entree;;
 
-analyse "autome_constructeur" "test";;
+analyse "automate_guerrier_no_multiple" "test";;

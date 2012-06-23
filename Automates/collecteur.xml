@@ -3,44 +3,54 @@
     <etat id="init">
         <transition>
             <condition nom="true"/>
-            <etat id="cherchercase"/>
+            <etat id="normal"/>
         </transition>
     </etat>
-    <etat id="cherchercase">
+    <etat id="normal">
+        <tag nom="tag1"/>
+        <tag nom="tag2"/>
         <transition>
-            <condition nom="true"/>
-            <action nom="casealea" dest="cible">
+            <condition nom="boule_existe"/>
+            <action nom="bouleplusproche" dest="cible">
             </action>
-            <etat id="deplacement"/>
+            <etat id="deplacement_norm"/>
         </transition>
-    </etat>
-    <etat id="deplacement">
         <transition>
-            <condition nom="contains">
-                <parametre> caseCourante </parametre>
-                <parametre> cible </parametre>
+            <condition nom="piece_existe"/>
+            <action nom="pieceplusproche" dest="cible">
+            </action>
+            <etat id="deplacement_norm"/>
+        </transition>
+        <transition>
+            <condition nom="non_vide">
+                <parametre type="var">chemin</parametre>
             </condition>
-            <action nom="allerici">
+            <etat id="recherche"/>
+        </transition>
+        <transition>
+            <condition nom="case_obscure_existe"/>
+            <action nom="case_obscure_plus_proche" dest="cible">
+            </action>
+            <action nom="trouvechemin" dest="chemin">
                 <parametre type="var">cible</parametre>
             </action>
-            <etat id="deplacement"/>
-        </transition>
-        <transition>
-            <condition nom="case_devant_vide"/>
-            <action nom="construiction">
-                <parametre type="string">tour</parametre>
-            </action>
-            <etat id="construire"/>
+            <etat id="recherche"/>
         </transition>
         <transition>
             <condition nom="true"/>
-            <etat id="cherchercase"/>
+            <action nom="sleep">
+            </action>
+            <etat id="normal"/>
         </transition>
     </etat>
-    <etat id="construction">
+    <etat id="recherche">
+        <tag nom="tag1"/>
         <transition>
             <condition nom="true"/>
-            <etat id="cherchercase"/>
+            <action nom="step">
+                <parametre type="var">chemin</parametre>
+            </action>
+            <etat id="normal"/>
         </transition>
     </etat>
     <etat id="deplacement_norm">

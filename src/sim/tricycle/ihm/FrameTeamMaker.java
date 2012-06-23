@@ -189,7 +189,7 @@ public final class FrameTeamMaker extends javax.swing.JFrame implements Observer
     }
 
     public void addDefautBot(Team t) {
-        File f = new File("Automates/test.xml");
+        File f = new File("Automates/collecteur.xml");
         Automate auto = robPars.parse(f);
         Robot robotByDefaut = new Robot(auto, t, "wall");
         robotByDefaut.setPosition(t.getBase().getPosition());

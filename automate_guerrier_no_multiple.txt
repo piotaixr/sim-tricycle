@@ -77,7 +77,8 @@ robot{
 
 	etat=attaque{
             transition{
-		si(!ennemi_devant(f)){etat=normal;
+		si(!ennemi_devant()){
+etat=normal;
 		}
 	    }
 	    transition{
