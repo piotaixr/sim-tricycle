@@ -4,17 +4,20 @@
 package sim.tricycle.mapping.elementCase;
 
 import java.util.HashSet;
+import sim.tricycle.Ordonnanceur.OrdonnancableInterface;
+import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.mapping.Case;
 import sim.tricycle.mapping.TypeCase;
 import sim.tricycle.mapping.mapException.CaptureParEquipeNullException;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.team.Team;
+import sim.tricycle.utils.ObjectBuilder;
 
 /**
  *
  * @author Thomas Nds nds.thomas@gmail.com
  */
-public class PointDeControle extends AbstractZone {
+public class PointDeControle extends AbstractZone implements OrdonnancableInterface {
 
     private int tpsCapture = 100;
     private int tpsPopBoule = 300;
@@ -22,6 +25,7 @@ public class PointDeControle extends AbstractZone {
 
     public PointDeControle(HashSet<Case> h) {
         this.liste = h;
+        ObjectBuilder.getOrdonnanceur().add(this);
     }
 
     public Team getTeam() {
@@ -65,7 +69,7 @@ public class PointDeControle extends AbstractZone {
         // Analyse des robots présent.
         for (Case x : liste) {
             if (x != null) {
-                if (x.whoIam() == TypeCase.robot) {
+                if (x.hasObstacle() && x.getObstacle().whoIam() == TypeCase.robot) {
                     Robot rob = (Robot) x.getObstacle();
                     equipe = rob.getTeam();
                     if (equipe == this.t) {
@@ -130,5 +134,10 @@ public class PointDeControle extends AbstractZone {
     @Override
     public String toString() {
         return " @ ";
+    }
+
+    @Override
+    public void tick() {
+        analyseCapture();
     }
 }

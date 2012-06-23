@@ -26,7 +26,7 @@ public class ObjectBuilder {
     private ConditionFactoryInterface conditionFactory = null;
     private ActionFactoryInterface actionFactory = null;
     private ParamConverterProviderInterface paramConverterProvider = null;
-    private Ordonnanceur ordonnanceur = null;
+    private static Ordonnanceur ordonnanceur = null;
     private ActionBuilder actionBuilder = null;
     private VarBuilder varBuilder = null;
     private ParameterCreator parameterCreator = null;
@@ -116,7 +116,7 @@ public class ObjectBuilder {
         return paramConverterProvider;
     }
     
-    public Ordonnanceur getOrdonnanceur() {
+    public static Ordonnanceur getOrdonnanceur() {
         if (ordonnanceur == null) {
             ordonnanceur = new Ordonnanceur();
         }

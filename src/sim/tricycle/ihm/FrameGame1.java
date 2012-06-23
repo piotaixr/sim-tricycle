@@ -18,6 +18,7 @@ import sim.tricycle.mapping.elementCase.Piece;
 import sim.tricycle.robot.Model;
 import sim.tricycle.robot.Robot;
 import sim.tricycle.team.Team;
+import sim.tricycle.utils.ObjectBuilder;
 
 /**
  *
@@ -52,7 +53,7 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
 
         scorePanel.setLayout(new FlowLayout());
 
-        addOrdonnaceur(jeu.getObjectBuilder().getOrdonnanceur());
+        addOrdonnaceur(ObjectBuilder.getOrdonnanceur());
 
         int i = 0;
         while (i < jeu.getTeamNumber()) {
@@ -538,7 +539,7 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
     public void update(Observable o, Object arg) {
         if (o.equals((Ordonnanceur) oi)) {
             lblTime.setText(String.valueOf(oi.getTime()));
-            cont.getCarte().routinePt();
+            //cont.getCarte().routinePt();
             repaint();
         } else {
 //            tabPanActionAvailableStateChanged(null);

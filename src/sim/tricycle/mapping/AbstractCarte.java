@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import sim.tricycle.Ordonnanceur.OrdonnanceurInterface;
 import sim.tricycle.ihm.ViewCarte;
 import sim.tricycle.mapping.elementCase.*;
 import sim.tricycle.mapping.mapException.CasesHorsMatriceDemandeException;
@@ -81,6 +82,7 @@ public abstract class AbstractCarte implements CarteInterface {
                     //Si pt de controle il lui faut connaitre ses cases voisines.
                     casesVoisines(this, this.getCase(i, j), liste);
                     liste.add(carte[i][j]);
+                    System.out.println(liste);
                     PointDeControle pt = new PointDeControle(liste);
                     pt.setPosition(this.getCase(i, j));
                     this.pop(pt, i, j);
@@ -186,13 +188,15 @@ public abstract class AbstractCarte implements CarteInterface {
     public int getLargeur() {
         return this.tailleX;
     }
-
+/**
+ * @deprecated 
+ */
     @Override
     public void routinePt() {
         if (!listePt.isEmpty()) {
             for (PointDeControle x : this.listePt) {
-                x.analyseCapture();
-                System.out.println("tps capture:" + x.getTpsCapture() + " pop:" + x.getTpspop() + "\n");
+                //x.analyseCapture();
+                System.out.println("DEGAGE");
             }
         }
     }

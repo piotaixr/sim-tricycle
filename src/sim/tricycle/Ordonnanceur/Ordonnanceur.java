@@ -105,6 +105,9 @@ public class Ordonnanceur extends Observable implements OrdonnanceurInterface {
              * Tant que la liste des actions faites n'est pas vide
              */
         }
+        time++;
+        setChanged();
+        notifyObservers();
     }
 
     class TaskAction extends TimerTask {
@@ -126,12 +129,9 @@ public class Ordonnanceur extends Observable implements OrdonnanceurInterface {
         //new TaskAction().run();
         if (!subscribersActionToDo.isEmpty()) {
             actionAndRemoveFromToDo();
-            time++;
         } else {
             intializeActionToDo();
         }
-        setChanged();
-        notifyObservers();
     }
 
     @Override
