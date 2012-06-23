@@ -213,4 +213,8 @@ public class Team {
     public List<Case> getCasesObscures() {
         return casesObscures;
     }
+
+    public void supprimerRobot(Robot bot) {
+        armee.remove(bot);
+    }
 }
