@@ -32,7 +32,7 @@ public class EnnemiDevant extends AbstractCondition {
         Case c = bot.getTeam().getMap().getCaseDevant(bot);
         if(c == null)
             return false;
-        
-        return c.getRobotPresent() != null ? true : false;
+
+        return c.robotPresent() && !c.getRobotPresent().getTeam().equals(bot.getTeam());
     }
 }
