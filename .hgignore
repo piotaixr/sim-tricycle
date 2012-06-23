@@ -6,3 +6,6 @@ nbproject/private
 \.chg\..*$
 \.rej$
 \.conflict\~$
+\.cmi$
+\.cmo$
+te
