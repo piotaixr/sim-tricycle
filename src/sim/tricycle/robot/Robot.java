@@ -12,6 +12,7 @@ import sim.tricycle.robot.action.Sleep;
 import sim.tricycle.robot.action.core.AbstractActionComposee;
 import sim.tricycle.robot.action.core.ActionInterface;
 import sim.tricycle.team.Team;
+import sim.tricycle.utils.ObjectBuilder;
 import sim.tricycle.utils.params.types.Environnement;
 
 /**
@@ -293,5 +294,12 @@ public class Robot extends AbstractVision implements OrdonnancableInterface {
         etatDestination = null;
         etatCourant = automate.getEtat("init");
         getEnvironnement().cleanVars();
+    }
+
+    public void mourrir() {
+        ObjectBuilder.getOrdonnanceur().remove(this);
+        getTeam().getMap().supprimer(this, getPosition());
+        getTeam().supprimerRobot(this);
+        System.out.println("robot mort");
     }
 }
