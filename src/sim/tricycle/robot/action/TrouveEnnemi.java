@@ -13,18 +13,18 @@ import sim.tricycle.robot.action.core.AbstractAction;
  *
  * @author Adri
  */
-public class TrouveEnnemi extends AbstractAction{
+public class TrouveEnnemi extends AbstractAction {
 
     @Override
     protected Object doExecute(Robot bot) {
-                CarteTeam c = bot.getTeam().getMap();
+        CarteTeam c = bot.getTeam().getMap();
         for (int i = 0; i < c.getLargeur(); i++) {
             for (int j = 0; j < c.getHauteur(); j++) {
-                if (c.getCase(i, j).whoIam() == TypeCase.robot ) {
-                    Robot rob = (Robot)c.getCase(i, j).getObstacle();
-                   if( rob.getTeam().getColor().equals(bot.getTeam().getColor())){
-                    return c.getCase(i, j).getObstacle();
-                   }
+                if (c.getCase(i, j).whoIam() == TypeCase.robot) {
+                    Robot rob = (Robot) c.getCase(i, j).getObstacle();
+                    if (!rob.getTeam().getColor().equals(bot.getTeam().getColor())) {
+                        return c.getCase(i, j).getObstacle();
+                    }
                 }
             }
         }

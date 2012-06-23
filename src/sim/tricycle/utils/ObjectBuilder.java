@@ -97,6 +97,7 @@ public class ObjectBuilder {
                     .register(new TrouveChemin())
                     .register(new TrouveCollectable())
                     .register(new TrouveDirection())
+                    .register(new TrouveEnnemi())
                     .register(new TrouveZone());
         }
         
