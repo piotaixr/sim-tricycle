@@ -9,5 +9,6 @@ import sim.tricycle.utils.IdentifiableInterface;
 public interface ConditionInterface extends Cloneable, IdentifiableInterface<String> {
 
     public boolean test();
+
     public ConditionInterface clone() throws CloneNotSupportedException;
 }
