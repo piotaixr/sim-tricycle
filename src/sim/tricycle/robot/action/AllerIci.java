@@ -33,6 +33,9 @@ public class AllerIci extends AbstractActionComposee {
                 point = ((PossedeCaseInterface) o).getPosition().toPoint();
             } else if (o instanceof Case) {
                 point = ((Case) o).toPoint();
+            }else if (o instanceof String) {
+                PointConverter pc = new PointConverter();
+                point = (Point)pc.convert((String)o);
             } else {
                 System.out.println("Mauvais type passé en parametre! : " + o.getClass().getName());
                 return null;

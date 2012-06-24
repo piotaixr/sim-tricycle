@@ -134,7 +134,7 @@ public class ViewCarte extends javax.swing.JPanel {
             g.fillRect(x, y, width, width);
         } else if (c.whoIam() == TypeCase.base) {                            //BASE
             g.drawImage(imgVide, x, y, width, width, this);
-        } else if (c.whoIam() == TypeCase.mur) {                             //MUR
+        } else if (c.whoIam() == TypeCase.mur || c.whoIam() == TypeCase.tour) {                             //MUR
             // SI pas de map de fond => on affiche les murs.
             if (aff) {
                 // g.drawImage(enstteCase.get(c.getId() + ".png"), x, y, width, width, this);

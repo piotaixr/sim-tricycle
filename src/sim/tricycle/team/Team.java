@@ -128,6 +128,10 @@ public class Team {
     public Integer getQuantityRessource(String res) {
         return this.ressources.get(res);
     }
+    
+    public void setQuantityRessource(String res,Integer quantity) {
+       this.ressources.put(res, quantity);
+    }
 
     public void addRessource(String res, Integer qty) {
         this.ressources.put(res, qty);

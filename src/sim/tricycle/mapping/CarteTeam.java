@@ -1,6 +1,7 @@
 package sim.tricycle.mapping;
 
 import java.util.HashSet;
+import sim.tricycle.mapping.elementCase.AbstractBatiment;
 import sim.tricycle.robot.Robot;
 
 /**
@@ -49,6 +50,10 @@ public class CarteTeam extends AbstractCarte {
         }
     }
 
+    public void construire(Case c, AbstractBatiment bat){
+        this.vraiCarte.getCase(c.getX(), c.getY()).setObstacle(bat);
+    }
+    
     /**
      * Actualise la carte dans un rayon donné autour d'une case pos.
      *

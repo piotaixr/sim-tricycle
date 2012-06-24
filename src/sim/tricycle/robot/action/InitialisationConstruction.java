@@ -24,9 +24,11 @@ public class InitialisationConstruction extends AbstractAction {
     protected Object doExecute(Robot bot) {
 
         Case c = bot.getTeam().getMap().getCaseDevant(bot);
-        if (c.whoIam() == TypeCase.vide) {
-            if (getBatimentFromNom().getPrix() < bot.getTeam().getQuantityRessource("Piece")) {
-                c.setObstacle(getBatimentFromNom());
+        if (c!=null && c.whoIam() == TypeCase.vide) {
+            if (getBatimentFromNom().getPrix() <= bot.getTeam().getQuantityRessource("Piece")) {
+                //c.setObstacle(getBatimentFromNom());
+                bot.getTeam().getMap().construire(c, getBatimentFromNom());
+                System.out.println("TOUR CONSTRUITE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             } else {
                 throw new RuntimeException("Pas assez d'Or pour construire");
             }

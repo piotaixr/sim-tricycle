@@ -150,7 +150,7 @@ public class PanSelectModel extends javax.swing.JPanel {
 
     private void btnCreateBotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateBotMouseClicked
         // TODO add your handling code here:
-        if (t.getQuantityRessource("Piece") >= price) {
+        if (t.getQuantityRessource("Piece") >= 1) {
             if (!jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY()).hasObstacle()) {//        if (!t.getBase().getPosition().hasObstacle()) {
 
                 //On recupere le nom du modele et on enleve l'extension pour pouvoir afficher plus tard l'image dans les positions qu'on veut
@@ -161,12 +161,13 @@ public class PanSelectModel extends javax.swing.JPanel {
                 Robot rob = new Robot(model.getRob().getAutomate(), t, nameBot);
                 rob.setPosition(t.getBase().getPosition());
                 rob.setDirection(Sens.SUD);
-
+                
 
                 Case casePop = t.getMap().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY());
                 t.getMap().pop(rob, casePop);
 
                 t.addRobot(rob);
+                t.setQuantityRessource("Piece", (t.getQuantityRessource("Piece")-1));
                 oi.add(rob);
 
                 //t.getRessources().get(0).setQuantite(t.getRessources().get(0).getQuantite()- price); Enleve le cout du robot

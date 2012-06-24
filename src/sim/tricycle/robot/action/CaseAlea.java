@@ -22,6 +22,7 @@ public class CaseAlea extends AbstractAction {
         int ymax = map.getHauteur();
         int x = (int) (Math.random() * xmax);
         int y = (int) (Math.random() * ymax);
+        
         Case c = map.getCase(x,y);
         return c; 
     }

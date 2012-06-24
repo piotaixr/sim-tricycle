@@ -16,28 +16,21 @@
 </etat>
 <etat id="deplacement">
 <transition>
-<condition nom="contains">
-<parametre type="ref">self.case</parametre>
-<parametre type="var">cible</parametre>
-</condition>
+<condition nom="true"/>
 <action nom="allerici">
 <parametre type="var">cible</parametre>
 </action>
-<etat id="deplacement"/>
+<etat id="construction"/>
 </transition>
+</etat>
+<etat id="construction">
 <transition>
 <condition nom="case_devant_vide"/>
 <action nom="construire">
 <parametre type="string">tour</parametre>
 </action>
-<etat id="construire"/>
-</transition>
-<transition>
-<condition nom="true"/>
 <etat id="cherchercase"/>
 </transition>
-</etat>
-<etat id="construction">
 <transition>
 <condition nom="true"/>
 <etat id="cherchercase"/>
