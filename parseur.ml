@@ -273,4 +273,4 @@ let analyse ent sort =
      close_out sortie;
      close_in entree;;
 
-analyse "automate_guerrier_no_multiple" "test";;
+analyse "automate" "test";;

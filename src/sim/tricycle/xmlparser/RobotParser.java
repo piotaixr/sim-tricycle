@@ -12,9 +12,9 @@ import sim.tricycle.robot.Transition;
 import sim.tricycle.robot.action.core.ActionFactoryInterface;
 import sim.tricycle.robot.action.core.ActionInterface;
 import sim.tricycle.robot.condition.core.AbstractConditionMultiple;
+import sim.tricycle.robot.condition.core.ConditionFactoryInterface;
 import sim.tricycle.robot.condition.core.ConditionInterface;
 import sim.tricycle.utils.ParameterCreator;
-import sim.tricycle.robot.condition.core.ConditionFactoryInterface;
 import sim.tricycle.utils.params.ParamConverterProviderInterface;
 import sim.tricycle.utils.params.Parameter;
 import sim.tricycle.utils.tag.Tag;
@@ -147,6 +147,7 @@ public class RobotParser {
             ConditionInterface condition = condifionFactory.create(conditionNom);
             if(condition instanceof AbstractConditionMultiple){
                 AbstractConditionMultiple acm = (AbstractConditionMultiple) condition;
+                acm.reset();
                 List<Element> listSousConditionElements = conditionElement.getChildren("condition");
                 for(Element e:listSousConditionElements){
                     acm.addCondition(creerCondition(e));
