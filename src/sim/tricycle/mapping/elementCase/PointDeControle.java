@@ -54,7 +54,7 @@ public class PointDeControle extends AbstractZone implements OrdonnancableInterf
     }
 
     public void initTpspop() {
-        this.tpsPopBoule = 100;
+        this.tpsPopBoule = 500;
     }
 
     /**
@@ -93,7 +93,8 @@ public class PointDeControle extends AbstractZone implements OrdonnancableInterf
             if (this.tpsPopBoule <= 0) {
                 Boule b= new Boule();
                 this.getTeam().getMap().pop(b, pos.getX()-1,pos.getY());
-                //b.setPosition(pos);
+//                System.out.println("BOUUULE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+//                b.setPosition(pos);
                 initTpspop();
             }
             this.tpsPopBoule -= 1;
