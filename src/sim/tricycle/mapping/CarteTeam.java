@@ -95,7 +95,7 @@ public class CarteTeam extends AbstractCarte {
         //parcours du tableau 
         for (i = 0; i < tailleX; i++) {
             for (j = 0; j < tailleY; j++) {
-                for (AbstractVision x : this.vraiCarte.elements) {
+                for (AbstractVision x : this.elements) {
                     if (x.voit(carte[i][j])) {
                         x.getTeam().getMap().carte[i][j].setTpsNonVu(0);
                     }
@@ -116,6 +116,9 @@ public class CarteTeam extends AbstractCarte {
         Case c = vraiCarte.getCase(x, y);
         if (super.pop(e, c)) {
             this.actualiserCarte(1, this.getCase(x, y)); // On actu notre map.
+            if (e instanceof AbstractVision) {
+                elements.add((AbstractVision) e);
+            }
             return true;
         }
         return false;
@@ -126,6 +129,9 @@ public class CarteTeam extends AbstractCarte {
         Case cv = vraiCarte.getCase(c.getX(), c.getY());
         if (super.pop(e, cv)) {
             this.actualiserCarte(2, c);
+            if (e instanceof AbstractVision) {
+                elements.add((AbstractVision) e);
+            }
             return true;
         }
         return false;
@@ -143,6 +149,9 @@ public class CarteTeam extends AbstractCarte {
         Case cv = vraiCarte.getCase(c.getX(), c.getY());
         if (vraiCarte.supprimer(e, cv)) {
             this.actualiserCarte(1, c);
+            if (e instanceof AbstractVision) {
+                elements.remove((AbstractVision) e);
+            }
             return true;
         }
         return false;
