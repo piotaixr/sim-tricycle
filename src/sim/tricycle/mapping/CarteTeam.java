@@ -2,6 +2,7 @@ package sim.tricycle.mapping;
 
 import java.util.HashSet;
 import sim.tricycle.mapping.elementCase.AbstractBatiment;
+import sim.tricycle.mapping.elementCase.AbstractVision;
 import sim.tricycle.robot.Robot;
 
 /**
@@ -50,10 +51,10 @@ public class CarteTeam extends AbstractCarte {
         }
     }
 
-    public void construire(Case c, AbstractBatiment bat){
+    public void construire(Case c, AbstractBatiment bat) {
         this.vraiCarte.getCase(c.getX(), c.getY()).setObstacle(bat);
     }
-    
+
     /**
      * Actualise la carte dans un rayon donné autour d'une case pos.
      *
@@ -73,9 +74,34 @@ public class CarteTeam extends AbstractCarte {
             rayon--;
         }
         // Traitement des cases selectionnées:
+        veillirCase();
         for (Case x : liste) {
             this.getCase(x.getX(), x.getY()).copy(x);
             this.getCase(x.getX(), x.getY()).setTpsNonVu(0);
+        }
+    }
+
+    public void veillirCase() {
+        int i, j;
+        for (i = 0; i < tailleX; i++) {
+            for (j = 0; j < tailleY; j++) {
+                if (carte[i][j].getTpsNonVu() == 0) {
+                    carte[i][j].setTpsNonVu(1);
+                }
+                //On grise toutes les cases.
+            }
+        }
+
+        //parcours du tableau 
+        for (i = 0; i < tailleX; i++) {
+            for (j = 0; j < tailleY; j++) {
+                for (AbstractVision x : this.vraiCarte.elements) {
+                    if (x.voit(carte[i][j])) {
+                        x.getTeam().getMap().carte[i][j].setTpsNonVu(0);
+                    }
+                }
+
+            }
         }
     }
 
@@ -85,7 +111,6 @@ public class CarteTeam extends AbstractCarte {
 //        this.actualiserCarte(0, c);
 //        return null;
 //    }
-
     @Override
     public boolean pop(PossedeCaseInterface e, int x, int y) {
         Case c = vraiCarte.getCase(x, y);
@@ -140,5 +165,4 @@ public class CarteTeam extends AbstractCarte {
     public boolean isConnexe(Case c1, Case c2) {
         return vraiCarte.isConnexe(c1, c2);
     }
-
 }

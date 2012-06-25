@@ -28,6 +28,7 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     private Image imgMap = null, imgMur, imgVide;
     private int px, py, tLmini, tHmini; //pour faire la difference lors du drag
     private ViewCarte vuc;
+    Image imgGris;
 
     /**
      * Crée minicarte
@@ -49,6 +50,11 @@ public class ViewMiniCarte extends javax.swing.JPanel {
     public void initialiserImage() {
         // Initialisation des images:
         imgVide = carte.getVide();
+        try {
+            imgGris = ImageIO.read(new File("./src/sim/tricycle/ihm/images/cases/gris.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCarte.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -79,6 +85,7 @@ public class ViewMiniCarte extends javax.swing.JPanel {
         //On calcule les coordonées de la case.
         int y = (c.getX() * width);
         int x = (c.getY() * width);
+
         if (c.JamaisVu()) {//affichage brouillard jamais vu.
             g.setColor(Color.black);
             g.fillRect(x, y, width, width);
@@ -115,6 +122,9 @@ public class ViewMiniCarte extends javax.swing.JPanel {
             g.fillOval(x, y, width, width);
         }
 
+        if (c.getTpsNonVu() == 1) {
+            g.drawImage(imgGris, x, y, width, width, this);
+        }
     }
 
     /**

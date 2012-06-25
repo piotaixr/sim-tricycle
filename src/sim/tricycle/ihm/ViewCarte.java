@@ -129,7 +129,7 @@ public class ViewCarte extends javax.swing.JPanel {
         int x = (c.getY() * width) + decalageX;
         Color coul = null;
 
-         if (c.JamaisVu()) {//affichage brouillard jamais vu.
+        if (c.JamaisVu()) {//affichage brouillard jamais vu.
             g.setColor(Color.black);
             g.fillRect(x, y, width, width);
         } else if (c.whoIam() == TypeCase.base) {                            //BASE
@@ -223,6 +223,9 @@ public class ViewCarte extends javax.swing.JPanel {
 //            System.out.println(nomFich);
             g.drawImage(ensaCharger.get(nomFich + ".png"), x, y, width, width, this);
 
+        }
+        if (c.getTpsNonVu() == 1) {
+            g.drawImage(enstteCase.get("gris.png"), x, y, width, width, this);
         }
     }
 

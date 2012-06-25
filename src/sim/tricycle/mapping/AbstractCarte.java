@@ -25,7 +25,7 @@ public abstract class AbstractCarte implements CarteInterface {
 
     protected static Image imgFond = null;
     protected static Image imgVide = null;
-    protected static HashSet<PointDeControle> listePt;  //Ensemble des points de controles.
+    protected HashSet<PointDeControle> listePt;  //Ensemble des points de controles.
     protected List<Point> listeBase;
     protected int tailleX, tailleY;
     protected Case[][] carte;
@@ -71,7 +71,7 @@ public abstract class AbstractCarte implements CarteInterface {
     protected void placerPoint(String[][] mat) {
         int i, j;
         HashSet<Case> liste = new HashSet<Case>();
-        HashSet<Case> liste2 = new HashSet<Case>();
+     //   HashSet<Case> liste2 = new HashSet<Case>();
         HashSet<PointDeControle> listeP = new HashSet<PointDeControle>();
 
         //Recherche des points de controles et traitement.
@@ -83,13 +83,13 @@ public abstract class AbstractCarte implements CarteInterface {
                     //Si pt de controle il lui faut connaitre ses cases voisines.
                     casesVoisines(this, this.getCase(i, j), liste);
                     //
-                    for(Case c:liste){
-                        c.setZone(new AbstractZone());
-                        liste2.add(c);
-                    }
-                    liste2.add(carte[i][j]);
+//                    for(Case c:liste){
+//                        c.setZone(new AbstractZone());
+//                        liste2.add(c);
+//                    }
+                    liste.add(carte[i][j]);
                     //System.out.println(liste);
-                    PointDeControle pt = new PointDeControle(liste2);
+                    PointDeControle pt = new PointDeControle(liste);
                     pt.setPosition(this.getCase(i, j));
                     this.pop(pt, i, j);
                     listeP.add(pt);// On ajoute ce point à la liste des points.
