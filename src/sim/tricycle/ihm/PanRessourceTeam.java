@@ -4,6 +4,7 @@
  */
 package sim.tricycle.ihm;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import sim.tricycle.team.Team;
 
@@ -27,10 +28,11 @@ public class PanRessourceTeam extends javax.swing.JPanel {
             gold = t.getQuantityRessource("Piece");
         }
         if (t.getQuantityRessource("Boule") != null) {
-            gold = t.getQuantityRessource("Boule");
+            balls = t.getQuantityRessource("Boule");
         }
         lblGoldValue.setText("" + gold);
         lblBallValue.setText("" + balls);
+        this.setBackground(team.getColor());
     }
 
     public void addGold() {
@@ -52,7 +54,7 @@ public class PanRessourceTeam extends javax.swing.JPanel {
             gold = t.getQuantityRessource("Piece");
         }
         if (t.getQuantityRessource("Boule") != null) {
-            gold = t.getQuantityRessource("Boule");
+            balls = t.getQuantityRessource("Boule");
         }
         lblGoldValue.setText("" + gold);
         lblBallValue.setText("" + balls);

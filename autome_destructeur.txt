@@ -1,17 +1,44 @@
 /*fichier automate*/
 robot{
 
-        etat=init{
+       etat=init{
             transition{
                 sinon{
-                    etat=chercherbat;
+                    etat=cherchercase;
                 }
             }
         }
 
-	etat=chercherbat{		
+	etat=cherchercase{		
             transition{
-		si(bat_trouve()){cible<-batpluspres();
+		sinon{cible<-casealea();
+		      etat=deplacement;
+		}
+            }
+        }
+
+        etat=deplacement{
+            transition{
+		si(contains(ref: self.case,var:cible)){ allerici(var : cible);
+						   etat=deplacement;
+                }
+            }	
+	    transition{
+		sinon{etat=cherchercase;
+		}
+	    }
+        }
+	
+	
+	
+}
+fin
+
+
+
+etat=chercherbat{		
+            transition{
+		si(batiment_existe()){cible<-batpluspres();
 		                 etat=deplacement;
 		}
             }
@@ -22,30 +49,16 @@ robot{
             }
         }
 
-        etat=deplacement{
-            transition{
-		si(!contains(caseCourante,cible)){ allerici(var : cible);
-						   etat=deplacement;
-                }
-            }	
-	    transition{
-		si(case_devant_bat()){ destructiontotale();
-					etat=destruire;
+
+ transition{
+		si(batiment_devant()){ destruction_totale();
+					etat=destruction;
 		}
 	    }
-	    transition{
-		sinon{etat=chercherbat;
-		}
-	    }
-        }
-	
-	etat=destruction{           
+
+etat=destruction{           
             transition{
 		sinon{etat=cherchercase;
 		}
             }
 	}
-	
-}
-fin
-

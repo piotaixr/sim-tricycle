@@ -43,7 +43,7 @@ public class DestructionTotale extends AbstractActionComposee {
 
     @Override
     public String getId() {
-        return "destruction totale";
+        return "destruction_totale";
     }
        
     

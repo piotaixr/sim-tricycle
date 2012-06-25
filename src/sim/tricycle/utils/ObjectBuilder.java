@@ -43,6 +43,8 @@ public class ObjectBuilder {
         if (conditionFactory == null) {
             conditionFactory = new ConditionFactory(getParamConverterProvider(), getParameterCreator());
             conditionFactory
+                    .register(new BatimentDevant(getOrdonnanceur()))
+                    .register(new BatimentExiste(getOrdonnanceur()))
                     .register(new BouleExiste(getOrdonnanceur()))
                     .register(new CaseObscureExiste(getOrdonnanceur()))
                     .register(new CaseDevantVide(getOrdonnanceur()))
@@ -72,6 +74,7 @@ public class ObjectBuilder {
                     .register(new Attaquer())
                     .register(new Avancer())
                     .register(new BoulePlusProche())
+                    .register(new BatPlusPres())
                     .register(new CaseAlea())
                     .register(new CaseObscurePlusProche())
                     .register(new Collecter(getActionBuilder()))

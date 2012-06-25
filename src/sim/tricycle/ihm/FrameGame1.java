@@ -55,30 +55,34 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
         scorePanel.setLayout(new FlowLayout());
 
         addOrdonnaceur(ObjectBuilder.getOrdonnanceur());
-
+     
+        javax.swing.JPanel panGlobal = new javax.swing.JPanel();
+        
         int i = 0;
-        while (i < jeu.getTeamNumber()) {
+        while (i < jeu.getTeamNumber()) {          
+            
+            addRessourceTeam(panGlobal, jeu.getTabTeams().get(i));
+//        PanRessourceTeam panSelect = new PanRessourceTeam(t);
+//
+//           tabPanActionAvailable.add(createPanRessource(jeu.getTabTeams().get(i)));
 
             javax.swing.JPanel newPanTeam = createPanTeam(jeu.getTabTeams().get(i));
             addTabTeam(tabPanActionAvailable, newPanTeam, i);
             addScoreTeam(scorePanel, jeu.getTabTeams().get(i));
-            System.out.println("Pop defaut : " + i);
+//            System.out.println("Pop defaut : " + i);
             popDefaultBot(jeu.getTabTeams().get(i));
             i++;
         }
 
-//        javax.swing.JPanel panTeam1 = new javax.swing.JPanel();
-//        javax.swing.JPanel panTeam2 = new javax.swing.JPanel();
-//        javax.swing.JPanel panTeam3 = new javax.swing.JPanel();
-//
-//        tabPanActionAvailable.insertTab("team test", null, panTeam1, null, WIDTH);
-//        tabPanActionAvailable.insertTab("team test", null, panTeam2, null, WIDTH);
-//        tabPanActionAvailable.insertTab("team test", null, panTeam3, null, WIDTH);
-//        for (int Z = 0; Z < 40; Z++) {
-//            Piece p = new Piece();
-//            jeu.getCarte().popAlea(p);
-//        }
-        jeu.getCarte().pop(new Boule(), 10, 11);
+        tabPanActionAvailable.setComponentAt(0, panGlobal);
+        
+
+        for (int Z = 0; Z < 40; Z++) {
+            Piece p = new Piece();
+            jeu.getCarte().popAlea(p);
+        }
+        //jeu.getCarte().pop(new Boule(), 10, 11);
+         jeu.getCarte().popAlea(new Boule());
     }
 
     public void addOrdonnaceur(Ordonnanceur oi) {
@@ -538,18 +542,18 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Ordonnanceur ordo =(Ordonnanceur) oi;
+        Ordonnanceur ordo = (Ordonnanceur) oi;
         if (o.equals(ordo)) {
             lblTime.setText(String.valueOf(ordo.getTime()));
             //cont.getCarte().routinePt();
-            if(ordo.getTime()>=ordo.getMaxTime()){
-                
-                JOptionPane p = new JOptionPane("The Winner is team N°"+this.cont.getWinner());
+            if (ordo.getTime() >= ordo.getMaxTime()) {
+
+                JOptionPane p = new JOptionPane("The Winner is team N°" + this.cont.getWinner());
                 JDialog dlg = p.createDialog("Winner");
                 dlg.setVisible(true);
-               // showMessageDialog();
-     
-              }
+                // showMessageDialog();
+
+            }
             repaint();
         } else {
 //            tabPanActionAvailableStateChanged(null);
