@@ -70,8 +70,8 @@ public abstract class AbstractCarte implements CarteInterface {
      */
     protected void placerPoint(String[][] mat) {
         int i, j;
-        HashSet<Case> liste = new HashSet<Case>();
-     //   HashSet<Case> liste2 = new HashSet<Case>();
+
+        //   HashSet<Case> liste2 = new HashSet<Case>();
         HashSet<PointDeControle> listeP = new HashSet<PointDeControle>();
 
         //Recherche des points de controles et traitement.
@@ -79,6 +79,7 @@ public abstract class AbstractCarte implements CarteInterface {
             for (j = 0; j < tailleY; j++) {
 
                 if ("@".equals(mat[i][j])) {
+                    HashSet<Case> liste = new HashSet<Case>();
                     carte[i][j] = new Case(i, j);
                     //Si pt de controle il lui faut connaitre ses cases voisines.
                     casesVoisines(this, this.getCase(i, j), liste);
@@ -194,9 +195,10 @@ public abstract class AbstractCarte implements CarteInterface {
     public int getLargeur() {
         return this.tailleX;
     }
-/**
- * @deprecated 
- */
+
+    /**
+     * @deprecated
+     */
     @Override
     public void routinePt() {
         if (!listePt.isEmpty()) {
@@ -334,14 +336,15 @@ public abstract class AbstractCarte implements CarteInterface {
         for (int x = 0; x < getLargeur(); x++) {
             for (int y = 0; y < getHauteur(); y++) {
                 Case courante = getCase(x, y);
-                if(courante.hasObstacle())
+                if (courante.hasObstacle()) {
                     continue;
+                }
                 Set<Case> ensCaseNumCourante = indexnum.get(getGroup(courante));
                 //on prend les voisines
                 Set<Case> voisinesCourante = casesVoisines(this, courante, new HashSet<Case>());
 
                 for (Case c : voisinesCourante) {
-                    if(c.hasObstacle()){
+                    if (c.hasObstacle()) {
                         continue;
                     }
                     //pour chaque voisine

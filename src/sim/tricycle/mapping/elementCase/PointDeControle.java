@@ -54,7 +54,7 @@ public class PointDeControle extends AbstractZone implements OrdonnancableInterf
     }
 
     public void initTpspop() {
-        this.tpsPopBoule = 100;
+        this.tpsPopBoule = 500;
     }
 
     /**
