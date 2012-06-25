@@ -334,11 +334,16 @@ public abstract class AbstractCarte implements CarteInterface {
         for (int x = 0; x < getLargeur(); x++) {
             for (int y = 0; y < getHauteur(); y++) {
                 Case courante = getCase(x, y);
+                if(courante.hasObstacle())
+                    continue;
                 Set<Case> ensCaseNumCourante = indexnum.get(getGroup(courante));
                 //on prend les voisines
                 Set<Case> voisinesCourante = casesVoisines(this, courante, new HashSet<Case>());
 
                 for (Case c : voisinesCourante) {
+                    if(c.hasObstacle()){
+                        continue;
+                    }
                     //pour chaque voisine
                     if (!isConnexe(c, courante)) {
                         //si groupe différent
