@@ -2,6 +2,7 @@
  */
 package sim.tricycle;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import sim.tricycle.team.Ressource;
 import sim.tricycle.team.Team;
@@ -16,4 +17,5 @@ public class Jeu extends AbstractJeu {
         tabTeams = new ArrayList<Team>();
         ressourcesDefaut = null;
     }
+    
 }
