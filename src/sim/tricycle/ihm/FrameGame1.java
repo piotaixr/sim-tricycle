@@ -3,11 +3,12 @@
 package sim.tricycle.ihm;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.BoxLayout;
+import javax.swing.*;
 import sim.tricycle.AbstractJeu;
 import sim.tricycle.Jeu;
 import sim.tricycle.Ordonnanceur.Ordonnanceur;
@@ -537,9 +538,18 @@ public final class FrameGame1 extends javax.swing.JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (o.equals((Ordonnanceur) oi)) {
-            lblTime.setText(String.valueOf(oi.getTime()));
+        Ordonnanceur ordo =(Ordonnanceur) oi;
+        if (o.equals(ordo)) {
+            lblTime.setText(String.valueOf(ordo.getTime()));
             //cont.getCarte().routinePt();
+            if(ordo.getTime()>=ordo.getMaxTime()){
+                
+                JOptionPane p = new JOptionPane("The Winner is team N°"+this.cont.getWinner());
+                JDialog dlg = p.createDialog("Winner");
+                dlg.setVisible(true);
+               // showMessageDialog();
+     
+              }
             repaint();
         } else {
 //            tabPanActionAvailableStateChanged(null);

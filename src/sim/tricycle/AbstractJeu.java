@@ -2,6 +2,7 @@
  */
 package sim.tricycle;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import sim.tricycle.mapping.CarteObjective;
 import sim.tricycle.team.Ressource;
@@ -62,5 +63,18 @@ public abstract class AbstractJeu {
         }
         tabTeams.add(t);
 
+    }
+
+    public int getWinner() {
+        int nbBoules = 0;
+        int id = 0;
+        for (int i = 0; i < tabTeams.size(); i++) {
+
+            if (this.tabTeams.get(i).getRessources().containsKey("Boule") && this.tabTeams.get(i).getQuantityRessource("Boule") > nbBoules) {
+                id = this.tabTeams.get(i).getId();
+                nbBoules = this.tabTeams.get(i).getQuantityRessource("Boule");
+            }
+        }
+        return id+1;
     }
 }

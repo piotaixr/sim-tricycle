@@ -150,7 +150,8 @@ public class PanSelectModel extends javax.swing.JPanel {
 
     private void btnCreateBotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateBotMouseClicked
         // TODO add your handling code here:
-        if (t.getQuantityRessource("Piece") >= 1) {
+        if (t.getRessources().containsKey("Piece")
+            && t.getQuantityRessource("Piece") >= 1) {
             if (!jeu.getCarte().getCase(t.getBase().getPosition().getX(), t.getBase().getPosition().getY()).hasObstacle()) {//        if (!t.getBase().getPosition().hasObstacle()) {
 
                 //On recupere le nom du modele et on enleve l'extension pour pouvoir afficher plus tard l'image dans les positions qu'on veut
